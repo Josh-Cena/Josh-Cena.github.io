@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkpersonal_page=self.webpackChunkpersonal_page||[]).push([[4174],{8677:function(a){a.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"/blog/tags/back-end","name":"back end","count":1,"permalink":"/blog/tags/back-end"}')}}]);

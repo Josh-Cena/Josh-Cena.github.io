@@ -1,0 +1,18 @@
+version: 2.1
+
+jobs:
+  noop:
+    docker:
+      - image: circleci/node:16.4.1
+    steps:
+      - checkout
+
+workflows:
+  version: 2.1
+  build-deploy:
+    jobs:
+      - noop:
+          filters:
+            branches:
+              ignore:
+                - gh-pages

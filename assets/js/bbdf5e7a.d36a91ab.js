@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkpersonal_page=self.webpackChunkpersonal_page||[]).push([[2659],{9244:function(a){a.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"/blog/tags/bash","name":"bash","count":1,"permalink":"/blog/tags/bash"}')}}]);
