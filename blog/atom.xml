@@ -9,7 +9,7 @@
     <icon>https://josh-cena.github.io/img/favicon/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[Caroline: a script font]]></title>
-        <id>Caroline: a script font</id>
+        <id>/2021/06/09/font</id>
         <link href="https://josh-cena.github.io/blog/2021/06/09/font"/>
         <updated>2021-06-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[This font is developed by an Indonesian (Fatma Wati), and I just absolutely loved it. (FYI my personal server's hostname is Caroline as well. Caroline is truely a special name.)]]></summary>
@@ -27,7 +27,7 @@ import clsx from &#x27;clsx&#x27;;
     </entry>
     <entry>
         <title type="html"><![CDATA[Interactive code block!]]></title>
-        <id>Interactive code block!</id>
+        <id>/2021/05/06/codeblock</id>
         <link href="https://josh-cena.github.io/blog/2021/05/06/codeblock"/>
         <updated>2021-05-06T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Hey!]]></summary>
@@ -59,7 +59,7 @@ import clsx from &#x27;clsx&#x27;;
     </entry>
     <entry>
         <title type="html"><![CDATA[Champions league reached!]]></title>
-        <id>Champions league reached!</id>
+        <id>/2021/04/26/champion</id>
         <link href="https://josh-cena.github.io/blog/2021/04/26/champion"/>
         <updated>2021-04-26T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[April 26, 2021—after 1 year and 5 months since I started this game, I finally reached 6K (champions league) in Clash Royale.]]></summary>
@@ -71,7 +71,7 @@ import clsx from &#x27;clsx&#x27;;
     </entry>
     <entry>
         <title type="html"><![CDATA[Random thoughts on a new programming language]]></title>
-        <id>Random thoughts on a new programming language</id>
+        <id>/2021/04/25/lang</id>
         <link href="https://josh-cena.github.io/blog/2021/04/25/lang"/>
         <updated>2021-04-25T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[I'm just putting together some random thoughts that I wish to turn into a new programming language. These are notations I often use in comments for C++ algorithms. A lot of the syntax may have been realized by mathematical languages like Mathematica or Python.]]></summary>
@@ -117,7 +117,7 @@ num a = sum&lt;1, 10&gt;(x =&gt; x^2); // a = 385
     </entry>
     <entry>
         <title type="html"><![CDATA[A thousand words with Zhi]]></title>
-        <id>A thousand words with Zhi</id>
+        <id>/2021/04/01/zhi</id>
         <link href="https://josh-cena.github.io/blog/2021/04/01/zhi"/>
         <updated>2021-04-01T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Happy April Fool's Day!]]></summary>
@@ -129,7 +129,7 @@ num a = sum&lt;1, 10&gt;(x =&gt; x^2); // a = 385
     </entry>
     <entry>
         <title type="html"><![CDATA[Running a Laravel app]]></title>
-        <id>Running a Laravel app</id>
+        <id>/2021/03/25/laravel</id>
         <link href="https://josh-cena.github.io/blog/2021/03/25/laravel"/>
         <updated>2021-03-25T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Recently I came upon a Laravel project: SAM, the legacy system of our club. As an absolute newcomer in backend, I had zero idea how I should start the app.]]></summary>
@@ -185,7 +185,7 @@ Migrated:  2014_10_12_000000_create_users_table
     </entry>
     <entry>
         <title type="html"><![CDATA[Choosing a color palette]]></title>
-        <id>Choosing a color palette</id>
+        <id>/2021/03/15/color</id>
         <link href="https://josh-cena.github.io/blog/2021/03/15/color"/>
         <updated>2021-03-15T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Choosing a color palette is no easy task—especially if you have already chosen your favorite color as the theme color.]]></summary>
@@ -197,7 +197,7 @@ Migrated:  2014_10_12_000000_create_users_table
     </entry>
     <entry>
         <title type="html"><![CDATA[Automating bulk file processing]]></title>
-        <id>Automating bulk file processing</id>
+        <id>/2021/03/12/bash</id>
         <link href="https://josh-cena.github.io/blog/2021/03/12/bash"/>
         <updated>2021-03-12T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Thou shalt not modify 30 files by hand.]]></summary>
@@ -273,7 +273,7 @@ done
     </entry>
     <entry>
         <title type="html"><![CDATA[Building a docusaurus app]]></title>
-        <id>Building a docusaurus app</id>
+        <id>/2021/03/09/docusaurus</id>
         <link href="https://josh-cena.github.io/blog/2021/03/09/docusaurus"/>
         <updated>2021-03-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[I switched to Docusaurus in March as framework for this website. This blog summarizes my experience.]]></summary>
@@ -344,7 +344,7 @@ module.exports = {
     </entry>
     <entry>
         <title type="html"><![CDATA[Hello world!]]></title>
-        <id>Hello world!</id>
+        <id>/2021/02/27/hello</id>
         <link href="https://josh-cena.github.io/blog/2021/02/27/hello"/>
         <updated>2021-02-27T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[It was hard getting all these done, but now this webpage is all set — docusaurus is configured, auto CI is up, we have an organization account on GitHub to host this site... I'd say we are good to go!]]></summary>

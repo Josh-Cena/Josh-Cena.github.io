@@ -9,7 +9,7 @@
     <icon>https://josh-cena.github.io/zh-Hans/img/favicon/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[Caroline: 一种书法字体]]></title>
-        <id>Caroline: 一种书法字体</id>
+        <id>/2021/06/09/font</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/06/09/font"/>
         <updated>2021-06-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[This font is developed by an Indonesian (Fatma Wati), and I just absolutely loved it. (FYI my personal server's hostname is Caroline as well. Caroline is truely a special name.)]]></summary>
@@ -27,7 +27,7 @@ import clsx from &#x27;clsx&#x27;;
     </entry>
     <entry>
         <title type="html"><![CDATA[可交互代码框！]]></title>
-        <id>可交互代码框！</id>
+        <id>/2021/05/06/codeblock</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/05/06/codeblock"/>
         <updated>2021-05-06T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Hey!]]></summary>
@@ -59,7 +59,7 @@ import clsx from &#x27;clsx&#x27;;
     </entry>
     <entry>
         <title type="html"><![CDATA[到达冠军联赛了！]]></title>
-        <id>到达冠军联赛了！</id>
+        <id>/2021/04/26/champion</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/04/26/champion"/>
         <updated>2021-04-26T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[April 26, 2021—after 1 year and 5 months since I started this game, I finally reached 6K (champions league) in Clash Royale.]]></summary>
@@ -71,7 +71,7 @@ import clsx from &#x27;clsx&#x27;;
     </entry>
     <entry>
         <title type="html"><![CDATA[关于设计一门新编程语言的一点想法]]></title>
-        <id>关于设计一门新编程语言的一点想法</id>
+        <id>/2021/04/25/lang</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/04/25/lang"/>
         <updated>2021-04-25T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[I'm just putting together some random thoughts that I wish to turn into a new programming language. These are notations I often use in comments for C++ algorithms. A lot of the syntax may have been realized by mathematical languages like Mathematica or Python.]]></summary>
@@ -117,7 +117,7 @@ num a = sum&lt;1, 10&gt;(x =&gt; x^2); // a = 385
     </entry>
     <entry>
         <title type="html"><![CDATA[千彘文]]></title>
-        <id>千彘文</id>
+        <id>/2021/04/01/zhi</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/04/01/zhi"/>
         <updated>2021-04-01T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[愚人节快乐！]]></summary>
@@ -129,7 +129,7 @@ num a = sum&lt;1, 10&gt;(x =&gt; x^2); // a = 385
     </entry>
     <entry>
         <title type="html"><![CDATA[运行 Laravel 应用]]></title>
-        <id>运行 Laravel 应用</id>
+        <id>/2021/03/25/laravel</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/03/25/laravel"/>
         <updated>2021-03-25T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[最近我遇到了一个 Laravel 项目：SAM，它是我们社团的历史项目。作为后端的纯新手，我对如何启动应用完全没有想法。]]></summary>
@@ -185,7 +185,7 @@ Migrated:  2014_10_12_000000_create_users_table
     </entry>
     <entry>
         <title type="html"><![CDATA[选择配色方案]]></title>
-        <id>选择配色方案</id>
+        <id>/2021/03/15/color</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/03/15/color"/>
         <updated>2021-03-15T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[选择配色方案可不简单——尤其是你已经把你最喜欢的颜色设成主题色时。]]></summary>
@@ -197,7 +197,7 @@ Migrated:  2014_10_12_000000_create_users_table
     </entry>
     <entry>
         <title type="html"><![CDATA[自动化文件处理]]></title>
-        <id>自动化文件处理</id>
+        <id>/2021/03/12/bash</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/03/12/bash"/>
         <updated>2021-03-12T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[汝毋手动修改 30 个文件。]]></summary>
@@ -273,7 +273,7 @@ done
     </entry>
     <entry>
         <title type="html"><![CDATA[搭建 Docusaurus 应用]]></title>
-        <id>搭建 Docusaurus 应用</id>
+        <id>/2021/03/09/docusaurus</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/03/09/docusaurus"/>
         <updated>2021-03-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[我在三月把这个网页迁移到了 Docusaurus。这篇博文总结了我的经历。]]></summary>
@@ -344,7 +344,7 @@ module.exports = {
     </entry>
     <entry>
         <title type="html"><![CDATA[Hello world!]]></title>
-        <id>Hello world!</id>
+        <id>/2021/02/27/hello</id>
         <link href="https://josh-cena.github.io/zh-Hans/blog/2021/02/27/hello"/>
         <updated>2021-02-27T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[把这些都搞定还是很难的，但现在，网站已经准备就绪了——Docusaurus 已经配置完毕，自动集成已经到位，网站已经部署在 GitHub pages 上……我们可以继续前进了！]]></summary>
