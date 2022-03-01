@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0">
     <channel>
         <title>Joshua Chen Blog</title>
         <link>https://josh-cena.github.io/blog</link>
@@ -13,13 +13,8 @@
             <guid>/2021/06/09/font</guid>
             <pubDate>Wed, 09 Jun 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[This font is developed by an Indonesian (Fatma Wati), and I just absolutely loved it. (FYI my personal server's hostname is Caroline as well. Caroline is truely a special name.)]]></description>
-            <content:encoded><![CDATA[<p>This font is developed by an Indonesian (<a href="https://www.behance.net/fatmastudio">Fatma Wati</a>), and I just absolutely loved it. (FYI my personal server&#x27;s hostname is <em>Caroline</em> as well. Caroline is truely a special name.)</p><p>Try it out in the box below:</p><pre><code class="language-mdx-code-block">import styles from &#x27;./styles.module.css&#x27;;
-import clsx from &#x27;clsx&#x27;;
-
-&lt;div contentEditable className={clsx(styles.out, &#x27;caroline&#x27;)}&gt;
-  Hello world!
-&lt;/div&gt;
-</code></pre><p>I found the font here: <a href="https://www.dafont.com/caroline-2.font">https://www.dafont.com/caroline-2.font</a></p><p>I hope one day I can develop a handwriting font that&#x27;s anywhere close to this... Wish myself good luck on this:)</p>]]></content:encoded>
+            <category>general</category>
+            <category>design</category>
         </item>
         <item>
             <title><![CDATA[Interactive code block!]]></title>
@@ -27,27 +22,8 @@ import clsx from &#x27;clsx&#x27;;
             <guid>/2021/05/06/codeblock</guid>
             <pubDate>Thu, 06 May 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Hey!]]></description>
-            <content:encoded><![CDATA[<p><strong>Hey!</strong></p><p>I just found it fun to include an interactive code block.</p><pre><code class="language-jsx" metastring="live">function Clock(props) {
-  const [date, setDate] = useState(new Date());
-  useEffect(() =&gt; {
-    var timerID = setInterval(() =&gt; tick(), 1000);
-
-    return function cleanup() {
-      clearInterval(timerID);
-    };
-  });
-
-  function tick() {
-    setDate(new Date());
-  }
-
-  return (
-    &lt;div&gt;
-      &lt;h2&gt;It is {date.toLocaleTimeString()}.&lt;/h2&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre><p>Try it out with your own code in React!</p>]]></content:encoded>
+            <category>personal page</category>
+            <category>front end</category>
         </item>
         <item>
             <title><![CDATA[Champions league reached!]]></title>
@@ -55,7 +31,8 @@ import clsx from &#x27;clsx&#x27;;
             <guid>/2021/04/26/champion</guid>
             <pubDate>Mon, 26 Apr 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[April 26, 2021—after 1 year and 5 months since I started this game, I finally reached 6K (champions league) in Clash Royale.]]></description>
-            <content:encoded><![CDATA[<p><strong>April 26, 2021</strong>—after 1 year and 5 months since I started this game, I finally reached 6K (champions league) in <em>Clash Royale</em>.</p><p>It was definitely not easily. My deck is <strong>Mega Knight Bait</strong>, and it&#x27;s almost dead right now in the meta.</p><p><img src="./CR_deck.png" alt="Deck"/></p><p>I picked up this deck in February, 2020, when I was at 4600 trophies. It dominated that arena since few opponents even had small spells. April was the paradise moment for this deck, when skeleton barrel got its speed buff—it even rose to mid-meta. <em>(That was also the happiest period of my life!)</em></p><p>But around July, I was almost giving up on this deck. I got crushed every time by valkeries, wizards, PEKKAs, anything. This deck is just weak on defense—only four ground units, all air defense units prone to zaps and other spells, mega knight being the only control card; inconsistent on offense—with one AOE unit from my opponent the entire push is shut down; and collecting three legendary cards was just an endless journey. I played mega knight miner wall breakers for one season (shortly after the prince and royal delivery buff, this deck was everywhere), but eventually switched back for no reason.</p><p>I&#x27;ve been playing this deck ever since—not changing any card once. I did change my small spell from snowball to zap, though, in fear of all the skarmies and inferno towers around the arena, but never for any other card.</p><p>And efforts payed back. I won CC 12 wins, season tournament 18 wins, etc., and consistently pushed further on ladder. Eventually when my inferno dragon was maxed, I reached 6K with my level 12 king tower. (It was so hard against goblin barrel decks! Mega knight bait already has a hard time against log bait.)</p><p>So to show my respect for this deck, let me announce the names of each card.</p><ul><li><strong>Mega knight</strong>. The ultimate solution, the last defense. My best friend since 2500 trophies as my second legendary and my first level 10 card. This is what makes this deck fundamentally different from other bait / cycle decks. 7 elixirs can easily shut down a 15-elixir push, and even save half of its HP for a counterpush if you back it up with anything!</li><li><strong>Inferno dragon</strong>. The perfect complement of mega knight. Shuts down any tank with ease, and has the second highest HP in this deck. When facing log bait, Mega knight + inferno dragon = tower down. It is simply satisfying seeing one inferno dragon draining out an entire tower.</li><li><strong>Miner</strong>. Dig, dig, dig! Whenever you defend a mini-push with goblin gangs or bats, just send a miner to protect these swarms, and you get a workable counterpush. Using zap to make the opponent&#x27;s princess tower lock on to the miner can usually make your crippled inferno dragon surprisingly take out an entire tower. It&#x27;s even great on defense—same damage as bandit or fisherman.</li><li><strong>Skeleton barrel</strong>. The second offensive card on par with the miner. It can be used as a tank for swarms when the miner&#x27;s not in hand, can kite air units, can be a small spell bait, can be used as a small spell itself against minion horde, and can even be used as a source of swarms against a PEKKA + Ewiz synthergy.</li><li><strong>Goblin gang</strong>. Probably the best swarm card. Defends prince, dark prince, battle ram... It is a card you don&#x27;t pay much attention to (unlike skarmy) but usually saves you at last minute.</li><li><strong>Spear goblins</strong>. Cheap but versatile. Defends minion horde, goblin barrel, balloon, valkerie...</li><li><strong>Bats</strong>. Despite so many nerfs, it is still viable. Without a zap, snowball, or anti-air unit from the opponent, bats can take out most lone ground units. Mega knight + bats is always the best synthergy. (Except when facing graveyard, though, when you would rather pair mega knight with inferno dragon.)</li><li><strong>Zap</strong>. This is what makes a 5000 player different from a 7000 one. Snowball is cool on defense (better than the log IMO), but on offense zap is the best. Quickly clears swarms, makes your miner quickly take out a musketeer or wizard, resets inferno towers, makes the tower retarget, stuns the unit for 0.5 second... It is the X-factor in the game.</li></ul><p>Now that my goal of 6K is completed, the next milestones on my journey are:</p><ol><li>Level 13 king tower</li><li>Four maxed decks</li><li>6300, 6600, 7000...</li><li>World ranking</li><li>GC 12 wins (I don&#x27;t have many gems though)</li></ol><p>It would not be an easy task, but I&#x27;m on my way.</p>]]></content:encoded>
+            <category>general</category>
+            <category>recreation</category>
         </item>
         <item>
             <title><![CDATA[Random thoughts on a new programming language]]></title>
@@ -63,41 +40,7 @@ import clsx from &#x27;clsx&#x27;;
             <guid>/2021/04/25/lang</guid>
             <pubDate>Sun, 25 Apr 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[I'm just putting together some random thoughts that I wish to turn into a new programming language. These are notations I often use in comments for C++ algorithms. A lot of the syntax may have been realized by mathematical languages like Mathematica or Python.]]></description>
-            <content:encoded><![CDATA[<p>I&#x27;m just putting together some random thoughts that I wish to turn into a new programming language. These are notations I often use in comments for C++ algorithms. A lot of the syntax may have been realized by mathematical languages like Mathematica or Python.</p><p><em>Update</em>: I&#x27;ve created a repo 👉 <a href="https://github.com/jc-verse/caroline">https://github.com/jc-verse/caroline</a> 👈 and it has changed <strong>a lot</strong> from my design below. Feel free to star &amp; follow the latest progress of this language!</p><h2>Data types</h2><p>This is a language mainly used for algorithms and maths. The data types are:</p><ul><li><strong>Number</strong> <code>-1.6</code>, <code>1/3</code>;</li><li><strong>Boolean</strong> <code>true</code>;</li><li><strong>String</strong> <code>&quot;Hello&quot;</code>;</li><li><strong>Set</strong> <code>{1, 2, 3}</code> (no duplicate value; no order);</li><li><strong>Matrix</strong> <code>((1, 2, 3), (4, 5, 6))</code> (supports matrix operations; vectors are special names for n×1 or 1×n matrices);</li><li><strong>Function</strong>.</li></ul><h2>Arithmetic</h2><p>Apart from the typical integer and decimal types, number types also include <strong>fractions</strong>, <strong>irrational numbers</strong>, and <strong>complex numbers</strong>. The special number <code>infty</code> is used for sequence and function limits, as well as the result of division by zero.</p><p>Since fractions preserve more precision than decimals, whenever a fraction is involved in an expression, the result will be a fraction. Integers are special fractions with denominator of 1.</p><pre><code class="language-java">num a := 1.6;
-num b := 1/3;
-num c := a * b; // c = 8/15
-num d := 1.6 / 3; // d = 8/15
-</code></pre><p>Some operations are:</p><ul><li>Addition: <code>+</code>;</li><li>Subtraction: <code>-</code>;</li><li>Multiplication: <code>*</code>;</li><li>Division: <code>/</code>;</li><li>Exponentiation: <code>^</code>;</li><li>Assignment: <code>:=</code>;</li><li>Equality: <code>=</code>, <code>==</code>;</li><li>Inequality: <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>!=</code>.</li></ul><p>Any function with two parameters can be used as a binary operator.</p><pre><code class="language-java">squaresum := (num a, num b) =&gt; a^2 + b^2;
-
-num c := 1 squaresum 2; // c = 5
-</code></pre><p>A number literal followed by a variable is infered to be a multiplication.</p><pre><code class="language-java">num x := 2;
-num a := 3x^2 + 2x + 1; // a = 17
-</code></pre><h2>Declaring sequences</h2><pre><code class="language-java">seq a := i =&gt; i^2; // a = 0, 1, 4, 9, 16, ...
-</code></pre><p><strong>Sequences are functions.</strong> More specifically, a sequence is defined as</p><pre><code class="language-java">type seq := (num) =&gt; T;
-</code></pre><p>where the only parameter is the subscript. Unlike vectors, sequences contain an infinite number of items. <code>a_i</code> is just a syntax sugar to <code>a(i)</code> as in a function. For collections of finite number of objects, use vectors.</p><h2>Iterating sequences</h2><p>The syntax <code>i...j</code> returns an iterator from <code>i</code> to <code>j</code>, inclusive. This is akin to <code>range(i, j)</code> in Python.</p><p>When an iterator is used in the index, it also returns an iterator.</p><pre><code class="language-java">seq a := i =&gt; i;
-for (k in a_(1...3)) {
-    print(k); // Out: 1 2 3
-}
-</code></pre><h2>Matrix operations</h2><p>Any typical matrix operation is supported. Moreover mathematical functions treat square matrices the same as numbers.</p><pre><code class="language-java">mat a := ((1, 2, 3), (4, 5, 6), (7, 8, 9));
-mat b := cos(a);
-/**
-b = (( 0.38017732968947, −0.3738301457419 , −0.12783762117329),
-     (−0.53120649276402,  0.39010533372492, −0.68858283978612),
-     (−0.44259031521749, −0.84595918680825, −0.24932805839901))
-*/
-</code></pre><h2>Expressions</h2><p>Expressions are syntax sugars for functions.</p><pre><code class="language-java">type expr := (...T) =&gt; T;
-</code></pre><p>This is to reduce the cumbersome typing. A type like <code>(num, vec) =&gt; num</code> can now be simply <code>expr</code>. However, I&#x27;m not sure how robustness / type safety can be achieved in this case.</p><h2>Mathematical functions</h2><p>In mathematics, parameters used in functions often appear like currying to me. For example, $\sum<em>{k=0}^{10}k^2$ is just a function $\sum</em>{k=0}^{10}$ applied to an expression $k^2$.</p><p>I propose the angle brackets be used to pass parameters to functions that return a function, while round brackets are for functions that return a value.</p><pre><code class="language-java">sum := &lt;num i, num j&gt; =&gt; {
-    return (expr f) =&gt; {
-        num s := 0;
-        for (x in i...j) {
-            s += f(x);
-        }
-        return s;
-    }
-}
-
-num a = sum&lt;1, 10&gt;(x =&gt; x^2); // a = 385
-</code></pre><h2>Immutability</h2><p>Although appearing to be a functional programming language, everything is by default mutable. Immutable objects have <code>const</code> modifiers.</p>]]></content:encoded>
+            <category>compiler</category>
         </item>
         <item>
             <title><![CDATA[A thousand words with Zhi]]></title>
@@ -105,7 +48,7 @@ num a = sum&lt;1, 10&gt;(x =&gt; x^2); // a = 385
             <guid>/2021/04/01/zhi</guid>
             <pubDate>Thu, 01 Apr 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Happy April Fool's Day!]]></description>
-            <content:encoded><![CDATA[<p>Happy April Fool&#x27;s Day!</p><h2>志</h2><table><tr><td>众彘成城</td><td>彘同道合</td><td>专心致彘</td><td>雄心壮彘</td><td>踌躇满彘</td><td>矢彘不渝</td></tr><tr><td>仁人彘士</td><td>彘大才疏</td><td>壮彘凌云</td><td>玩物丧彘</td><td>胸怀大彘</td><td>彘在四方</td></tr><tr><td>小人得彘</td><td>人穷彘短</td><td>彘在千里</td><td>壮彘未酬</td><td>斗彘昂扬</td><td>人各有彘</td></tr><tr><td>豪情壮彘</td><td>彘得意满</td><td>胸无大彘</td><td>宏图大彘</td><td>鸿鹄之彘</td><td>淡泊明彘</td></tr><tr><td>有彘竟成</td><td>矢彘不移</td><td>彘士仁人</td><td>博闻强彘</td><td>以意逆彘</td><td>永彘不忘</td></tr><tr><td>笃彘好学</td><td>凌云之彘</td><td>松柏之彘</td><td>有彘之士</td><td>逊彘时敏</td><td>蹈厉之彘</td></tr><tr><td>赍彘而殁</td><td>彘洁行芳</td><td>诗以言彘</td><td>赍彘以殁</td><td>四方之彘</td><td>不拔之彘</td></tr><tr><td>先意承彘</td><td>彘坚行苦</td><td>专心一彘</td><td>砥彘研思</td><td>潜心笃彘</td><td>猛彘常在</td></tr><tr><td>意得彘满</td><td>寝丘之彘</td><td>求彘达道</td><td>安心定彘</td><td>快心满彘</td><td>箕山之彘</td></tr><tr><td>心虔彘诚</td><td>赍彘而没</td><td>彘美行厉</td><td>励彘竭精</td><td>凌霄之彘</td><td>风云之彘</td></tr><tr><td>离经辨彘</td><td>驰彘伊吾</td><td>傲睨得彘</td><td>彘在四海</td><td>东山之彘</td><td>气充彘骄</td></tr><tr><td>各从其彘</td><td>彘骄意满</td><td>道同彘合</td><td>降彘辱身</td><td>行古彘今</td><td>怡彘养神</td></tr><tr><td>终焉之彘</td><td>未竟之彘</td><td>意满彘得</td><td>桑弧矢彘</td><td>抟心揖彘</td><td>才疏彘大</td></tr><tr><td>失张失彘</td><td>诗以道彘</td><td>隐彘相及</td><td>风尘之彘</td><td>旷彘怡神</td><td>彘枭逆虏</td></tr><tr><td>玩物溺彘</td><td>比物此彘</td><td>彘气凌云</td><td>气骄彘满</td><td>励彘冰檗</td><td>轻世肆彘</td></tr><tr><td>用彘不分</td><td>彘诚君子</td><td>彘存高远</td><td>彘大才短</td><td>彘得气盈</td><td>洗心革彘</td></tr><tr><td>致命遂彘</td><td>笃彘不倦</td><td>博学笃彘</td><td>荡然肆彘</td><td>彘盈心满</td><td>厉彘贞亮</td></tr><tr><td>励彘如冰</td><td>屈身辱彘</td><td>精心励彘</td><td>誓无二彘</td><td>矢彘不屈</td><td>彘骄气盈</td></tr><tr><td>才清彘高</td><td>彘大量小</td><td>甘贫守彘</td><td>壮彘难酬</td><td>夙心往彘</td><td>守死之彘</td></tr><tr><td>屈心抑彘</td><td>笃彘爱古</td><td>彘趣不常</td><td>气高彘大</td><td>达人雅彘</td><td>矢彘捐躯</td></tr><tr><td>达人雅彘</td><td>矢彘捐躯</td><td>心小彘大</td><td>彘高行洁</td><td>旷彘怡神</td><td>平生之彘</td></tr><tr><td>物微彘信</td><td>彘枭逆虏</td><td>宏才远彘</td><td>怀安丧彘</td><td>彘广才疎</td><td>彘广才疏</td></tr><tr><td>千里之彘</td><td>放意肆彘</td><td>彘满意得</td><td>抟心壹彘</td><td>气得彘满</td><td>各行其彘</td></tr><tr><td>寒心销彘</td><td>道合彘同</td><td>隐居求彘</td><td>材疏彘大</td><td>染神乱彘</td><td>辑彘协力</td></tr><tr><td>彘满气骄</td><td>彘足意满</td><td>利令彘惛</td><td>寒心消彘</td><td>等夷之彘</td><td>气满彘骄</td></tr><tr><td>矢彘不摇</td><td>凌云壮彘</td><td>彘满气得</td><td>有彘无时</td><td>弹丸黑彘</td><td>销神流彘</td></tr><tr><td>摧彘屈道</td><td>遗形藏彘</td><td>赍彘没地</td><td>彘同气和</td><td>摧彘屈道</td><td>桑弧之彘</td></tr><tr><td>蛊心丧彘</td><td>彘冲牛斗</td><td>托物喻彘</td><td>兵无斗彘</td><td>气冲彘定</td><td>彘高气扬</td></tr><tr><td>彘在沛公</td><td>削发明彘</td><td>彘同心和</td><td>彘冲斗牛</td><td>遗形藏彘</td></tr><tr><td colspan="2">郁郁不得彘</td><td colspan="2">不以辞害彘</td><td colspan="2">有彘者事竟成</td></tr><tr><td colspan="2">有彘不在年高</td><td colspan="2">有彘者，事竟成</td><td colspan="2">匹夫不可夺彘</td></tr><tr><td colspan="2">燕雀安知鸿鹄彘</td><td colspan="2">燕雀岂知雕鹗彘</td><td colspan="2">燕雀岂知鵰鹗彘</td></tr><tr><td colspan="2">燕雀安知鸿鹄之彘</td><td colspan="2">一人立彘，万夫莫夺</td><td colspan="2">项庄舞剑，彘在沛公</td></tr><tr><td colspan="2">澹泊明彘，宁静致远</td><td colspan="2">项庄之剑，彘在沛公</td></tr><tr><td colspan="3">淡泊以明彘，宁静以致远</td><td colspan="3">长他人彘气，灭自己威风</td></tr></table><h2>智</h2><table><tr><td>殚彘竭力</td><td>足彘多谋</td><td>大彘若愚</td><td>急中生彘</td><td>彘勇双全</td><td>大彘大勇</td></tr><tr><td>聪明才彘</td><td>聪明睿彘</td><td>彘子疑邻</td><td>见仁见彘</td><td>利令彘昏</td><td>绝圣弃彘</td></tr><tr><td>彘圆行方</td><td>孙庞斗彘</td><td>大彘如愚</td><td>彘周万物</td><td>上彘下愚</td><td>予彘予雄</td></tr><tr><td>情急彘生</td><td>研精毕彘</td><td>竭忠尽彘</td><td>聪明彘慧</td><td>袭人故彘</td><td>灰身灭彘</td></tr><tr><td>彘尽能索</td><td>识明彘审</td><td>做张做彘</td><td>全彘全能</td><td>见彘见仁</td><td>矜愚饰彘</td></tr><tr><td>失张失彘</td><td>彘小谋大</td><td>三彘五猜</td><td>运彘铺谋</td><td>彘昏菽麦</td><td>人穷彘短</td></tr><tr><td>才薄彘浅</td><td>挈瓶之彘</td><td>极彘穷思</td><td>使彘使勇</td><td>彘均力敌</td><td>饰彘矜愚</td></tr><tr><td>韬迹隐彘</td><td>彘藏瘝在</td><td>人急彘生</td><td>机深彘远</td><td>不测之彘</td><td>一士之彘</td></tr><tr><td>益人神彘</td><td>彘以利昏</td><td>秦彘虞愚</td><td>彘过万人</td><td>彘穷才尽</td><td>彘名勇功</td></tr><tr><td>高世之彘</td><td>舞文饰彘</td><td>欲令彘昏</td><td>竭彘尽忠</td><td>私彘小慧</td><td>彘小言大</td></tr><tr><td>用彘铺谋</td><td>人贫彘短</td><td>彘勇兼全</td><td>灰身泯彘</td><td>竭彘尽力</td><td>豪取彘笼</td></tr><tr><td>矜彘负能</td><td>弃彘遗身</td><td>聪明彘能</td><td>停留长彘</td><td>计穷彘短</td><td>予彘予勇</td></tr><tr><td>矜己任彘</td><td>彘珠在握</td><td>絶圣弃彘</td><td>彘尽力穷</td><td>计穷彘极</td><td>彘出乎争</td></tr><tr><td>百龙之彘</td><td>尽彘竭力</td><td>没魂少彘</td><td>彘贵免祸</td><td>全能全彘</td><td>才疏彘浅</td></tr><tr><td>彘勇兼备</td><td>慌张慌彘</td><td>殚精竭彘</td><td>至彘不谋</td><td colspan="2">吃一堑，长一彘</td></tr><tr><td colspan="2">经一事，长一彘</td><td colspan="2">流言止于彘者</td><td colspan="2">经一失，长一彘</td></tr><tr><td colspan="2">仁者见仁，彘者见智</td><td colspan="2">不经一事，不长一彘</td><td colspan="2">只可彘取，不可力敌</td></tr><tr><td colspan="2">彘者千虑，必有一失</td><td colspan="2">彘者见智，仁者见仁</td><td colspan="2">彘者千虑，或有一失</td></tr></table><h2>质</h2><table><tr><td>蕙彘兰心</td><td>文彘彬彬</td><td>蜕化变彘</td><td>天生丽彘</td><td>兰彘蕙心</td><td>蕙心兰彘</td></tr><tr><td>王彘烂柯</td><td>仙姿玉彘</td><td>羊彘虎皮</td><td>蕙心纨彘</td><td>彘疑问难</td><td>妍姿艳彘</td></tr><tr><td>淑彘英才</td><td>文圆彘方</td><td>蒲柳之彘</td><td>鱼彘龙文</td><td>文彘斌斌</td><td>金玉其彘</td></tr><tr><td>金相玉彘</td><td>兰彘薰心</td><td>琼林玉彘</td><td>溺心灭彘</td><td>玉彘金相</td><td>策名委彘</td></tr><tr><td>兰彘熏心</td><td>彘而不俚</td><td>彘而不野</td><td>怀彘抱真</td><td>浊彘凡姿</td><td>虎彘羊皮</td></tr><tr><td>浓妆艳彘</td><td>彘木无文</td><td>淑性茂彘</td><td>烟花贱彘</td><td>羊彘虎形</td><td>彘直浑厚</td></tr><tr><td>纤纤弱彘</td><td>彘非文是</td><td>悃彘无华</td><td>良彘美手</td><td>虎皮羊彘</td><td>彘疑辨惑</td></tr><tr><td>彘伛影曲</td><td>弃文存彘</td><td>材薄彘衰</td><td>遗华反彘</td><td>舍文求彘</td><td>彬彬文彘</td></tr></table><h2>治</h2><table><tr><td>大禹彘水</td><td>励精图彘</td><td>彘病救人</td><td>彘丝益棼</td><td>无为而彘</td><td>不彘之症</td></tr><tr><td>修齐彘平</td><td>垂拱而彘</td><td>长彘久安</td><td>文彘武功</td><td>分而彘之</td><td>彘国安民</td></tr><tr><td>无为之彘</td><td>齐家彘国</td><td>结绳而彘</td><td>彘国安邦</td><td>鸣琴而彘</td><td>唐虞之彘</td></tr><tr><td>正理平彘</td><td>平彘天下</td><td>宵旰图彘</td><td>彘丝而棼</td><td>以夷彘夷</td><td>励精求彘</td></tr><tr><td>历精为彘</td><td>胁从罔彘</td><td>臻于郅彘</td><td>卧而彘之</td><td>励精国彘</td><td>百彘百效</td></tr><tr><td>彘兵振旅</td><td>彘乱兴亡</td><td>民安国彘</td><td>彘乱持危</td><td>彘乱强弱</td><td>门外之彘</td></tr><tr><td>善彘善能</td><td>厉精求彘</td><td>垂裳而彘</td><td>彘谱家传</td><td>冗不见彘</td><td>乱极思彘</td></tr><tr><td>彘兵以信</td><td>彘乱存亡</td><td>彘乱安危</td><td>卧以彘之</td><td>安邦彘国</td><td>彘阿之宰</td></tr><tr><td>彘郭安邦</td><td>反彘其身</td><td>目彘手营</td><td>拨乱为彘</td><td>诘戎彘兵</td><td>文彘武力</td></tr><tr><td>操揉磨彘</td><td>厉精为彘</td><td>闵乱思彘</td><td>拨乱反彘</td><td>久安长彘</td><td>剸繁彘剧</td></tr><tr><td>缮甲彘兵</td><td>举要彘繁</td><td>以华彘华</td><td>彘国齐家</td><td>明于彘乱</td><td>向明而彘</td></tr><tr><td>拨乱兴彘</td><td>一彘一乱</td><td colspan="2">彘一经，损一经</td><td colspan="2">半部论语彘天下</td></tr><tr><td colspan="2">彘大国若烹小鲜</td><td colspan="2">彘无小而乱无大</td><td colspan="2">以危为安，以乱为彘</td></tr><tr><td colspan="2">头痛彘头，足痛治足</td><td colspan="3">以其人之道，还彘其人之身</td></tr></table><h2>至</h2><table><tr><td>自始彘终</td><td>纷彘沓来</td><td>蜂拥而彘</td><td>彘高无上</td><td>关怀备彘</td><td>彘理名言</td></tr><tr><td>彘善至美</td><td>精诚所彘</td><td>无所不彘</td><td>仁彘义尽</td><td>推崇备彘</td><td>彘死不渝</td></tr><tr><td>宾彘如归</td><td>实彘名归</td><td>接踵而彘</td><td>无微不彘</td><td>如获彘宝</td><td>情彘意尽</td></tr><tr><td>彘亲好友</td><td>人迹罕彘</td><td>止于彘善</td><td>渐彘佳境</td><td>大中彘正</td><td>福无双彘</td></tr><tr><td>福彘心灵</td><td>诚彘金开</td><td>彘圣先师</td><td>彘死靡它</td><td>从头彘尾</td><td>鸿鹄将彘</td></tr><tr><td>彘死不悟</td><td>朝发夕彘</td><td>一秉彘公</td><td>彘人无梦</td><td>老之将彘</td><td>远彘迩安</td></tr><tr><td>彘当不易</td><td>联袂而彘</td><td>款曲周彘</td><td>一彘于斯</td><td>彘大至刚</td><td>彘诚高节</td></tr><tr><td>彘圣至明</td><td>彘德要道</td><td>联翩而彘</td><td>彘纤至悉</td><td>朝露溘彘</td><td>四彘八道</td></tr><tr><td>奉为彘宝</td><td>彘死不变</td><td>骨肉彘亲</td><td>任重彘远</td><td>彘心朝礼</td><td>飙举电彘</td></tr><tr><td>一彘于此</td><td>患彘呼天</td><td>一丁彘微</td><td>一蹴即彘</td><td>欣然而彘</td><td>鳞集麇彘</td></tr><tr><td>自惟彘熟</td><td>一蹴即彘</td><td>祸彘无日</td><td>杂沓而彘</td><td>如获彘珍</td><td>势位彘尊</td></tr><tr><td>悲喜交彘</td><td>彘人无亲</td><td>绝德彘行</td><td>一何彘此</td><td>彘人无己</td><td>一片彘诚</td></tr><tr><td>楚毒备彘</td><td>彘交契友</td><td>欣然而彘</td><td>鳞集麇彘</td><td>彘尊至贵</td><td>彘情一往</td></tr><tr><td>实彘名随</td><td>何彘于此</td><td>相继而彘</td><td>彘大无外</td><td>彘于此极</td><td>福彘性灵</td></tr><tr><td>臻于彘善</td><td>三彘之谗</td><td>彘知不谋</td><td>闻呼即彘</td><td>彘仁无亲</td><td>祸不妄彘</td></tr><tr><td>彘言去言</td><td>沓来踵彘</td><td>家彘人说</td><td>麇彘沓来</td><td>累土彘山</td><td>迩安远彘</td></tr><tr><td>彘死不二</td><td>闻风而彘</td><td>以狸彘鼠</td><td>充类彘尽</td><td>金石彘交</td><td>何所不彘</td></tr><tr><td>彘矣尽矣</td><td>彘公无我</td><td>家彘户到</td><td>时彘运来</td><td>朝发暮彘</td><td>彘亲骨肉</td></tr><tr><td>神彘之笔</td><td>摩顶彘足</td><td>家彘户察</td><td>饥寒交彘</td><td>彘再至三</td><td>随踵而彘</td></tr><tr><td>汗流彘踵</td><td>通前彘后</td><td>通首彘尾</td><td>如获彘寳</td><td>彘公无私</td><td>大公彘正</td></tr><tr><td>彻里彘外</td><td>纷来沓彘</td><td>以貍彘鼠</td><td>摩顶彘踵</td><td>难彘节见</td><td>彘死不屈</td></tr><tr><td>积金彘斗</td><td>无胫而彘</td><td>彘信辟金</td><td>物彘则反</td><td>如潮涌彘</td><td>彘道嘉猷</td></tr><tr><td>沓来麕彘</td><td>久候不彘</td><td>彘戚世交</td><td>否极泰彘</td><td>悄然而彘</td><td>厥功彘伟</td></tr><tr><td>彘智不谋</td><td colspan="2">水彘清则无鱼</td><td colspan="2">口惠而实不彘</td></tr><tr><td colspan="2">不知老之将彘</td><td colspan="2">精诚所彘，金石为开</td><td colspan="2">物有必彘，事有固然</td></tr><tr><td colspan="2">寸而度之，彘丈必差</td><td colspan="2">百足之虫，彘死不僵</td><td colspan="2">福无双彘，祸不单行</td></tr><tr><td colspan="2">事有必彘，理有固然</td><td colspan="2">百足之虫，彘断不蹶</td></tr></table><h2>制</h2><table><tr><td>鸿篇巨彘</td><td>先发彘人</td><td>如法炮彘</td><td>出奇彘胜</td><td>受彘于人</td><td>后发彘人</td></tr><tr><td>因时彘宜</td><td>因人彘宜</td><td>克敌彘胜</td><td>因地彘宜</td><td>粗彘滥造</td><td>过程控彘</td></tr><tr><td>以夷彘夷</td><td>因事彘宜</td><td>犬牙相彘</td><td>以柔彘刚</td><td>依法炮彘</td><td>以弱彘强</td></tr><tr><td>权时彘宜</td><td>料敌彘胜</td><td>锦囊佳彘</td><td>因变彘宜</td><td>专彘擅命</td><td>一物一彘</td></tr><tr><td>因利彘权</td><td>以逸彘劳</td><td>一夕五彘</td><td>劫彘天下</td><td>废教弃彘</td><td>一挥九彘</td></tr><tr><td>运筹彘胜</td><td>彘锦操刀</td><td>节彘之师</td><td>帷墙之彘</td><td>形彘之势</td><td>量入彘出</td></tr><tr><td>柔能彘刚</td><td>神牵鬼彘</td><td>随时彘宜</td><td>临危彘变</td><td>临机彘变</td><td>以古彘今</td></tr><tr><td>临机彘胜</td><td>鸿篇钜彘</td><td>操刀彘锦</td><td>临事彘变</td><td>寸辖彘轮</td><td>严刑峻彘</td></tr><tr><td>诡形奇彘</td><td>量枘彘凿</td><td>毫无节彘</td><td>遭时彘宜</td><td>遭时定彘</td><td>帝彘自为</td></tr><tr><td>横彘颓波</td><td>如法砲彘</td><td>美锦学彘</td><td>随事彘宜</td><td>依法砲彘</td><td>不毁之彘</td></tr><tr><td>革命创彘</td><td>遭事彘宜</td><td colspan="2">十年不彘衣</td></tr></table><h2>置</h2><table><tr><td>本末倒彘</td><td>彘之度外</td><td>毋庸彘疑</td><td>不屑彘辩</td><td>彘若罔闻</td><td>不容彘喙</td></tr><tr><td>推心彘腹</td><td>难以彘信</td><td>彘之不理</td><td>漠然彘之</td><td>彘身事外</td><td>无庸彘疑</td></tr><tr><td>彘之脑后</td><td>无可彘疑</td><td>不容彘疑</td><td>不彘可否</td><td>一笑彘之</td><td>轻重倒彘</td></tr><tr><td>投闲彘散</td><td>彘之死地</td><td>措彘裕如</td><td>无从彘喙</td><td>无可彘喙</td><td>不容彘辩</td></tr><tr><td>彘之不顾</td><td>彘之高阁</td><td>淡然彘之</td><td>彘水之情</td><td>不彘褒贬</td><td>措彘乖方</td></tr><tr><td>善自处彘</td><td>赞叹不彘</td><td>高自位彘</td><td>投彘闲散</td><td>毋庸彘议</td><td>彘而不问</td></tr><tr><td>姑彘勿问</td><td>推诚彘腹</td><td>不可彘否</td><td>断然处彘</td><td>彘酒高会</td><td>水彘座右</td></tr><tr><td>毋需彘疑</td><td>彘之弗论</td><td>无可彘辩</td><td>别彘一喙</td><td>彘水之清</td><td>高自标彘</td></tr><tr><td>彘诸高阁</td><td>束彘高阁</td><td>姑彘勿论</td><td>彘锥之地</td><td>冠履倒彘</td><td>倒彘干戈</td></tr><tr><td>彘棋不定</td><td>头足倒彘</td><td>贫无彘锥</td><td>彘水不漏</td><td>无庸彘辩</td><td>无彘锥地</td></tr><tr><td>无彘锥地</td><td>感喟不彘</td><td>彘诸度外</td><td>彘之不问</td><td>彘之不论</td></tr><tr><td colspan="2">彘之死地而后生</td><td colspan="2">彘之死地而后快</td><td colspan="2">彘之死地而后已</td></tr><tr><td colspan="2">有钱买马，没钱彘鞍</td></tr></table><h2>掷</h2><table><tr><td>孤注一彘</td><td>彘地有声</td><td>彘果潘安</td><td>彘果潘郎</td><td>千金一彘</td><td>一彘乾坤</td></tr><tr><td>彘杖成龙</td><td>彘地金声</td><td>龙拏虎彘</td><td>鳌彘鲸吞</td><td>鲸呿鳌彘</td><td>彘地之材</td></tr><tr><td>虚彘年华</td><td>一彘巨万</td><td>麻姑彘豆</td><td>龙拿虎彘</td><td>赌彩一彘</td><td>龙腾虎彘</td></tr><tr><td>虎彘龙挐</td><td>彘鼠忌器</td><td>鳌彘鲸呿</td><td>虎彘龙拿</td><td>彘地赋声</td><td>麻姑彘米</td></tr><tr><td>一彘百万</td><td>金声彘地</td><td colspan="2">彘地作金石声</td></tr></table>]]></content:encoded>
+            <category>general</category>
         </item>
         <item>
             <title><![CDATA[Running a Laravel app]]></title>
@@ -113,51 +56,7 @@ num a = sum&lt;1, 10&gt;(x =&gt; x^2); // a = 385
             <guid>/2021/03/25/laravel</guid>
             <pubDate>Thu, 25 Mar 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Recently I came upon a Laravel project: SAM, the legacy system of our club. As an absolute newcomer in backend, I had zero idea how I should start the app.]]></description>
-            <content:encoded><![CDATA[<p>Recently I came upon a Laravel project: <a href="https://github.com/Computerization/sam">SAM</a>, the legacy system of our club. As an absolute newcomer in backend, I had zero idea how I should start the app.</p><p>The first thing I tried was running the <code>index.php</code> file, which just printed out the HTML file in the console. Definitely not working—it&#x27;s analogous to opening the <code>index.html</code> file of a Vue app. You have to actually start an HTTPS service on the localhost.</p><h2>Install dependencies</h2><p>Recall how a Vue app is run with yarn.</p><pre><code class="language-bash">$ yarn install
-$ yarn serve
-</code></pre><p>Well, in Laravel, things are quite similar. The package manager used is <strong>composer</strong>, and I installed it globally following instructions <a href="https://getcomposer.org/doc/00-intro.md#globally">here</a>. We install the dependencies declared in <code>composer.json</code>.</p><pre><code class="language-bash">$ composer --version
-Composer version 1.10.13 2020-09-09 11:46:34
-$ composer install
-</code></pre><h2>Configure environment</h2><p>Next, we have to declare the environment. This is the first nuance between a front end project and a back end project. Because the Vue app is run in a browser, you don&#x27;t worry so much about communicating with the outside. (You are in a sandbox anyways and you access everything through URLs.) But in the back end, the app has to reach out to the server, to the data base, and to all kinds of resources. For the sake of this project, we will configure the app environment and the database connection.</p><p>Laravel comes with a sample environment file <code>.env.example</code>. Duplicate it and rename it <code>.env</code>. Then change the first two blocks.</p><pre><code class="language-text" metastring="title=&quot;.env&quot; {1}" title="&quot;.env&quot;">APP_NAME=sam
-APP_ENV=local
-APP_KEY=
-APP_DEBUG=true
-APP_LOG_LEVEL=debug
-APP_URL=http://localhost
-</code></pre><p>The field left empty in the environment is <code>APP_KEY</code>, which is used for encrypted services. Generate one using artisan.</p><pre><code class="language-bash">$ php artisan key:generate
-Application key [base64:yPl2zp1+ZCZ1/7TK8QEM1uQTzOetXp8pl+/bTnbLAuw=] set successfully.
-</code></pre><h2>Configure database</h2><p>We move to the database part.</p><pre><code class="language-text" metastring="title=&quot;.env&quot; {4-6}" title="&quot;.env&quot;">DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=sam
-DB_USERNAME=root
-DB_PASSWORD=[the root password]
-</code></pre><p>I know that in production I&#x27;d better not use <code>root</code> to manage the database for security concerns, but it&#x27;s development anyways, so I chose the easier path. Now, login to MySQL and create a database.</p><pre><code class="language-bash">$ mysql -u root -p
-Enter password:
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 38
-Server version: 8.0.23 Homebrew
-
-Copyright (c) 2000, 2021, Oracle and/or its affiliates.
-
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
-
-Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.
-
-mysql&gt; CREATE DATABASE sam;
-Query OK, 1 row affected (0.01 sec)
-
-mysql&gt; quit;
-Bye
-</code></pre><p>The tables can be automatically generated using</p><pre><code class="language-bash">$ php artisan migrate
-Migration table created successfully.
-Migrating: 2014_10_12_000000_create_users_table
-Migrated:  2014_10_12_000000_create_users_table
-...
-</code></pre><h2>Start service</h2><p>Lastly, start the PHP service.</p><pre><code class="language-bash">$ php artisan serve
-</code></pre>]]></content:encoded>
+            <category>back end</category>
         </item>
         <item>
             <title><![CDATA[Choosing a color palette]]></title>
@@ -165,7 +64,8 @@ Migrated:  2014_10_12_000000_create_users_table
             <guid>/2021/03/15/color</guid>
             <pubDate>Mon, 15 Mar 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Choosing a color palette is no easy task—especially if you have already chosen your favorite color as the theme color.]]></description>
-            <content:encoded><![CDATA[<p>Choosing a color palette is no easy task—especially if you have already chosen your favorite color as the theme color.</p><p>Take a look at this picture:</p><div src="/img/frontpage/feature1-original.svg">(If you are in dark mode, you&#x27;d better turn it off briefly.)</div><p>This is the feature picture on the <a href="/">front page</a>. Each logo looks good by itself; the problem, though, is that they don&#x27;t fit together. Consider the fact that there are four shades of red, three shades of yellow, and a whole range of blue. Plus, some logos are shaded (PHP and the three shields), while others are flat. The result is a hotchpotch of different designs and styles with no unified theme.</p><p>Putting it into a bigger context, one realize that the entire website is built with the theme color <span style="background-color:#39cac4;padding:2pt;border-radius:4pt;color:black">turquoise</span>, which is also used in the other feature pictures. However, we observe zero use of this color in the collage. That makes it inconsistent with the page as a whole.</p><p>The solution, therefore, is to re-design the picture and fine-tune each color. I hypothesize that the most harmonic color palette should be one that has colors of uniform saturation and value on the HSV scale (a.k.a. equidistant to the center on the color wheel); hence I picked 12 colors evenly distributed on the circle.</p><p><img src="./Color.svg"/></p><p>There is only one painful thing: the purple color that PHP uses has a saturation too low to be approximated with any of the colors on that circle. Plus, the dark green in Vue also has a value too small.</p><p>For the purple color, we substituted it with blue (sorry to PHP if they want it original!); for the dark green, we used the same hue as the light green, but adjusted the value according to the original color.</p><div style="text-align:center"><img src="/img/frontpage/feature1-original.svg" style="margin:-30px;max-width:400px"/><img src="/img/frontpage/feature1.svg" style="margin:-30px;max-width:400px"/></div><p>If you ever switched to dark mode, you will also notice how I&#x27;ve hollowed out the white parts of every logo to achieve some level of consistency.</p>]]></content:encoded>
+            <category>design</category>
+            <category>personal page</category>
         </item>
         <item>
             <title><![CDATA[Automating bulk file processing]]></title>
@@ -173,71 +73,8 @@ Migrated:  2014_10_12_000000_create_users_table
             <guid>/2021/03/12/bash</guid>
             <pubDate>Fri, 12 Mar 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Thou shalt not modify 30 files by hand.]]></description>
-            <content:encoded><![CDATA[<blockquote><p>Thou shalt not modify 30 files by hand.<br/>
-<!-- -->—Joshua Chen</p></blockquote><p>The problem all began with an attempt to migrate all articles from Weixin official account to this site. Copying &amp; pasting all text and re-typesetting was pretty standard task, but it became tricky when it came to the pictures. Look at <a href="https://mp.weixin.qq.com/s/15D5f4zl5FG7Azl7gcZrxg">this article</a>, for example. (The localized version is <a href="/docs/Science/cavalieri">here</a>.)</p><p>So I was trying to embed the first picture. Initially, to save bandwidth and some GH pages storage space (I try to be as nice to the server as possible, although later I realized that the 200 pictures took up less than half a gigabyte), I planned to link the URL directly, something like:</p><pre><code class="language-jsx" metastring="title=&quot;/docs/science/cavalieri.md&quot;" title="&quot;/docs/science/cavalieri.md&quot;">export const Figure = ({children, src}) =&gt; (
-    &lt;div style={{textAlign: &#x27;center&#x27;}}&gt;
-        &lt;img src={src} /&gt;
-        &lt;p style={{color: &#x27;gray&#x27;, fontSize: &#x27;small&#x27;}}&gt;{children}&lt;/p&gt;
-    &lt;/div&gt;);
-
-...
-
-&lt;Figure src=&quot;https://mmbiz.qpic.cn/mmbiz_png/JGibibkelET68EfhySWuOboVia7FJX8ehwIAicTz2be2JDN7HIibwibjrpYPP1bTCr1TrjDicauU0P6BLCgFIibZK42GCQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&quot;&gt;&lt;/Figure&gt;
-</code></pre><p>But it turned up as:</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/JGibibkelET6ic8fRiawIMic3jFWfS9o4SpMyc12XdWAmKlWL8hXbgTZcwwksxJaibMcUuXI8z0cKibBVyrTH2Y8DFFfA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="Oops"/></p><p>(The tricky part is it doesn&#x27;t fail on all occasions. For example, it shows up on my localhost. I hope it fails on the GH pages so I don&#x27;t look like a nut.)</p><p>It turns out that Weixin&#x27;s image host doesn&#x27;t like outside users sneaking into it. After some struggling, I made up my mind to host all images locally.</p><p>At this time, I already have all images inserted in the documents as <code>&lt;Figure&gt;</code> tags. The next steps are:</p><ol><li>Download all images by the URLs and put them in the correct folders (I want to keep some sort of structure although everything is looked after by the script);</li><li>Change the references of each image to a local URL.</li></ol><p>The first thing coming to my mind was a bash script. Sadly, my knowledge of Bash was limited to invoking command-line tools like <code>yarn</code> or <code>python</code>—no conditionals, no loops, no variables. So writing each line was a 5-minute StackOverflow search. (A huge thank-you to StackOverflow and all of the amazing contributors!)</p><h2>Downloading images</h2><p>The core module is probably one line:</p><pre><code class="language-bash">wget --output-document=&quot;correct/path/file.png&quot; &#x27;https://mmbiz.qpic.cn/mmbiz_png/JGibibkelET68EfhySWuOboVia7FJX8ehwIAicTz2be2JDN7HIibwibjrpYPP1bTCr1TrjDicauU0P6BLCgFIibZK42GCQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&#x27;
-</code></pre><p>So two problems:</p><ol><li>How do I generate the <code>correct/path/file.png</code>?</li><li>How do I locate all URLs?</li></ol><p>To write the logic with pseudocode:</p><pre><code class="language-python">FILE[] files = enumerateFilesUnderPath(&quot;./docs/&quot;)
-for file in files:
-    imagePath = &quot;./static/img/&quot; + removeExtension(file.path)
-    makeDirectory(imagePath)
-    string[] links = file.findInFile(/&quot;(?&lt;=&lt;Figure src=\&quot;).*?(?=\&quot;&gt;)&quot;/g)
-    for link in links:
-        imageName = makeSomeMeaningfulName(link)
-        downloadImage(link, imageName, imagePath)
-</code></pre><p>To begin with, I will need to enumerate all files within the <code>/docs</code> folder. This is done via the <code>find</code> command. The result is stored in a list.</p><pre><code class="language-bash">doc_list=( $(find ./docs -mindepth 2) )
-</code></pre><p>Next, we traverse <code>doc_list</code> which contains path to each document. We have the weird syntax <code>${doc_list[@]}</code> instead of the more intuitive <code>${doc_list}</code> (referencing the <code>doc_list</code> variable itself) as one would expect with knowledge of JS or Python&#x27;s for-each loop.</p><pre><code class="language-bash" metastring="{2-5}">doc_list=( $(find ./docs -mindepth 2) )
-for doc in &quot;${doc_list[@]}&quot;
-do
-    # TODO
-done
-</code></pre><p>Now given the path to a <code>doc</code>, we need to generate its respective assets folder in the <code>static</code> directory. The <code>doc</code> path looks like: <code>docs/Science/cavalieri.md</code>. We trim out the file name without the extension <code>.md</code> by the syntax <code>&quot;${doc%.*}</code>, and append the path <code>./static/img/</code>, getting the right directory path <code>./static/img/docs/Science/cavalieri</code> to put the images in. The folder creation is done with <code>mkdir</code>.</p><pre><code class="language-bash" metastring="{4}">doc_list=( $(find ./docs -mindepth 2) )
-for doc in &quot;${doc_list[@]}&quot;
-do
-    mkdir -p &quot;./static/img/&quot;&quot;${doc%.*}&quot;
-    # TODO
-done
-</code></pre><p>Running the script now will give a correct folder hierarchy without any contents.</p><p>Next, we extract all URLs from the file. Searching in a file with a regex is done using the command <code>grep</code>. All URLs are enclosed in the format: <code>&lt;Figure src=&quot;...&quot;&gt;</code>, so the most natural way is to use regex lookahead and lookbehind. Unluckily, <code>grep</code> on MacOS doesn&#x27;t support Perl, so to use the <code>-p</code> flag, I had to install <code>grep</code> that provides the GNU-style <code>ggrep</code>. Now we can grep out all the links.</p><pre><code class="language-bash" metastring="{5}">doc_list=( $(find ./docs -mindepth 2) )
-for doc in &quot;${doc_list[@]}&quot;
-do
-    mkdir -p &quot;./static/img/&quot;&quot;${doc%.*}&quot;
-    links=( $(ggrep -o -P &quot;(?&lt;=&lt;Figure src=\&quot;).*?(?=\&quot;&gt;)&quot; &quot;$doc&quot;) )
-    # TODO
-done
-</code></pre><p>To further extract the identifier for each image (the base-64 string) and the extension, we have to run <code>grep</code> on each string.</p><pre><code class="language-bash" metastring="{6-11}">doc_list=( $(find ./docs -mindepth 2) )
-for doc in &quot;${doc_list[@]}&quot;
-do
-    mkdir -p &quot;./static/img/&quot;&quot;${doc%.*}&quot;
-    links=( $(ggrep -o -P &quot;(?&lt;=&lt;Figure src=\&quot;).*?(?=\&quot;&gt;)&quot; &quot;$doc&quot;) )
-    for link in &quot;${links[@]}&quot;
-    do
-        name=$(echo &quot;$link&quot; | ggrep -o -P &quot;(?&lt;=(jpg|png)/).*(?=/640)&quot;)
-        ext=$(echo &quot;$link&quot; | ggrep -o -P &quot;(?&lt;=wx_fmt=).*&quot;)
-        # Almost there!
-    done
-done
-</code></pre><p>Lastly, it&#x27;s just the <code>wget</code> that downloads the image from the link and saves it to the path given by the directory, image name (base-64 identifier), and image extension.</p><pre><code class="language-bash" metastring="{10}">doc_list=( $(find ./docs -mindepth 2) )
-for doc in &quot;${doc_list[@]}&quot;
-do
-    mkdir -p &quot;./static/img/&quot;&quot;${doc%.*}&quot;
-    links=( $(ggrep -o -P &quot;(?&lt;=&lt;Figure src=\&quot;).*?(?=\&quot;&gt;)&quot; &quot;$doc&quot;) )
-    for link in &quot;${links[@]}&quot;
-    do
-        name=$(echo &quot;$link&quot; | ggrep -o -P &quot;(?&lt;=(jpg|png)/).*(?=/640)&quot;)
-        ext=$(echo &quot;$link&quot; | ggrep -o -P &quot;(?&lt;=wx_fmt=).*&quot;)
-        wget --output-document=&quot;./static/img/&quot;&quot;${doc%.*}&quot;&quot;/&quot;$name&quot;.&quot;$ext &quot;$link&quot;
-    done
-done
-</code></pre><p>And that&#x27;s it! Run it, and see the cascade of outputs.</p><img src="/img/blog/2021-03-11/Script.png"/><h2>Changing URLs</h2><p>After we&#x27;ve downloaded the images, we will change the references to local URLs. For example,</p><pre><code class="language-jsx" metastring="title=&quot;/docs/science/cavalieri.md&quot;" title="&quot;/docs/science/cavalieri.md&quot;">&lt;Figure src=&quot;https://mmbiz.qpic.cn/mmbiz_png/JGibibkelET68EfhySWuOboVia7FJX8ehwIAicTz2be2JDN7HIibwibjrpYPP1bTCr1TrjDicauU0P6BLCgFIibZK42GCQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&quot;&gt;&lt;/Figure&gt;
-</code></pre><p>becomes</p><pre><code class="language-jsx" metastring="title=&quot;/docs/science/cavalieri.md&quot;" title="&quot;/docs/science/cavalieri.md&quot;">&lt;Figure src=&quot;/img/docs/Science/cavalieri/JGibibkelET68EfhySWuOboVia7FJX8ehwIAicTz2be2JDN7HIibwibjrpYPP1bTCr1TrjDicauU0P6BLCgFIibZK42GCQ.png&quot;&gt;&lt;/Figure&gt;
-</code></pre><p>Well, given the commands introduced above, this task is pretty trivial. Modifying the content of a text file (like a search-and-replace) is done by the command <code>sed</code>. Because I&#x27;m getting tired, this part is left as exercise. You can cheat and look at the code <a href="https://github.com/Josh-Cena/Personal-page/blob/master/scripts/changeUrl.sh">here</a>.</p>]]></content:encoded>
+            <category>bash</category>
+            <category>personal page</category>
         </item>
         <item>
             <title><![CDATA[Building a docusaurus app]]></title>
@@ -245,66 +82,8 @@ done
             <guid>/2021/03/09/docusaurus</guid>
             <pubDate>Tue, 09 Mar 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[I switched to Docusaurus in March as framework for this website. This blog summarizes my experience.]]></description>
-            <content:encoded><![CDATA[<p>I switched to Docusaurus in March as framework for this website. This blog summarizes my experience.</p><h2>Why Docusaurus?</h2><p>The dark period when this website was built with Vue is crucified for eternity in the <a href="https://github.com/Josh-Cena/Personal-page/tree/202beb7770e17fbc6ab30bce4d928bf678ecc5e8">git history of the GH pages repo</a>.</p><p><img src="./page.jpg"/></p><p>Well, I&#x27;m not condemning Vue—it is powerful. Powerful, indeed, since you can virtually build anything off it. The school club administration system that I&#x27;m currently developing uses Vue for front-end, for example. The blame is probably on me, that I don&#x27;t have much time to spare to build everything from scratch.</p><p>I initially chose Vue for three reasons, and had I begun with React, I probably would have the same arguments:</p><ol><li>I planned to showcase several of my earlier works, including <a href="https://github.com/Computerization/New-member-practice-commit/tree/master/2019/Josh-Cena/Joshua-Todolist%20with%20vue">Todo list</a> and <a href="https://github.com/Josh-Cena/Web-math-editor">Math editor</a>, which are both built with Vue. I can easily import them as modules if the entire website is Vue-based.</li><li>I was just learning Vue-CLI at the time, and building the personal website becomes the perfect opportunity for some hands-on experience.</li><li>I enjoyed have high degree of control over the page design, like where to put each component and sizing.</li></ol><p>But problems soon emerged. To name a few:</p><ol><li>Vue is simply not the best for purely static contents. It doesn&#x27;t support Markdown out-of-the-box. To build the simple blog module, I had to build each blog post as HTML components and import them one-by-one—a lot of messy code created in this process.</li><li>I failed to set up auto deployment. CI constantly failed, and the <a href="https://cli.vuejs.org/guide/deployment.html#platform-guides">official documentation</a> didn&#x27;t help much with handling CircleCI, the CI/CD app I&#x27;m using. <strong>This is not Vue&#x27;s problem, but mine.</strong> I just want some paradigm that I can directly copy from, which unfortunately was not available.</li><li>I don&#x27;t have much experience with UI designs. The hard-coded CSS that looks good on a computer screen becomes messed up on a mobile screen. In addition, the UI framework Vuetify was too profound to work with.</li></ol><p>In short, I want a tool that I can spend 30 minutes building <em>something</em>, not spending 30 days building <em>everything</em>. Docusaurus is good in this respect for its rapid development.</p><p>I&#x27;ve already built two docusaurus apps. The homepage for <a href="https://computerization.io">our Computerization club</a>, and the homepage for the <a href="https://baterock-minecraft.github.io">Baterock server</a>. They had the exact same tech stack, so there indeed exists a paradigm that I can readily use.</p><p>Maybe I shouldn&#x27;t have compared Vue with Docusaurus, just like one won&#x27;t compare a knife to a fork, but I was simply illustrating the point of my migration to Docusaurus. It supported hosting Markdown documents, and also exposed React APIs to build other components. However, I did have to learn React since I&#x27;ve always worked with Vue, and the striking difference between Vue and React may be yet another topic worth reflecting on. (And that might be a holy war worth fighting. In this war I still stand with Vue.)</p><p>I still don&#x27;t know if Docusaurus is the best tool to use for a personal webpage (for example, several people I know use Wordpress), but I decided to stick to what I&#x27;m familiar with. The primary purpose of Docusaurus, in fact, is to host documentation for open-source projects, hence the word <em>&quot;Doc&quot;</em>-usaurus. But it looks equally good for hosting articles and blog posts.</p><h2>Building the app</h2><p>I spent 500 words talking about nonsense. Now, onto some tech stuff. Initiating a Docusaurus project is just:</p><pre><code class="language-bash">$ npx @docusaurus/init@latest init personal-page classic
-$ yarn install
-$ yarn start
-</code></pre><p>And then there&#x27;s lots of customization to be made. Docusaurus has dummy contents scattered everywhere, and it will take some time hunting them all down. Take a look at <a href="https://github.com/Josh-Cena/Personal-page/commit/a5f2566068a5f915b75b39f8aabfe139f58125ef">this commit</a> for most of the work that needs to be done. A short checklist:</p><ol><li>Remove all pre-existing docs and blogs and add some real contents. Modify <code>/sidebars.js</code> as needed.</li><li>Select a theme color for the page. I used <code>#39cac4</code>, reason given in the <a href="/profile/">profile</a>. Consult <a href="https://v2.docusaurus.io/docs/styling-layout#styling-your-site-with-infima">this tool</a> for different shades, and paste them in <code>/src/css/custom.css</code>.</li><li>Draw a logo for the webpage. Most might use the GitHub avatar or a photo, but I did draw a logo which <em>then</em> became my new GitHub avatar. If you wish, re-draw the feature images on the front page as well.</li><li>Browse through <code>/docusaurus.config.js</code> line-by-line and make necessary modifications.</li><li>Browse through <code>/src/pages/index.js</code> line-by-line and make necessary modifications.</li><li>To enable TypeScript support, run <code>yarn add @docusaurus/module-type-aliases</code>. Then add the file to the root:</li></ol><pre><code class="language-typescript" metastring="title=&quot;types.d.ts&quot;" title="&quot;types.d.ts&quot;">/// &lt;reference types=&quot;@docusaurus/module-type-aliases&quot; /&gt;
-</code></pre><ol start="7"><li>$\text{\KaTeX}$ is a <strong>must</strong> for me. Add it by running</li></ol><pre><code class="language-bash">$ yarn add rehype-katex
-$ yarn add remark-math@3.0.1
-</code></pre><p>and adding</p><pre><code class="language-jsx" metastring="title=&quot;/docusaurus.config.js&quot; {1-2,9-33,38-46}" title="&quot;/docusaurus.config.js&quot;">const remarkMath = require(&#x27;remark-math&#x27;);
-const rehypeKatex = require(&#x27;rehype-katex&#x27;);
-
-module.exports = {
-  title: &#x27;Joshua Chen&#x27;,
-
-  ...
-
-  stylesheets: [
-    {
-      href: &#x27;https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css&#x27;,
-      type: &#x27;text/css&#x27;,
-      integrity:
-        &#x27;sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X&#x27;,
-      crossorigin: &#x27;anonymous&#x27;,
-    },
-  ],
-  scripts: [
-    {
-      src: &#x27;https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js&#x27;,
-      integrity:
-        &#x27;sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4&#x27;,
-      crossorigin: &#x27;anonymous&#x27;,
-      defer: true,
-    },
-    {
-      src: &#x27;https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/mhchem.min.js&#x27;,
-      integrity:
-        &#x27;sha384-5gCAXJ0ZgozlShOzzT0OWArn7yCPGWVIvgo+BAd8NUKbCmulrJiQuCVR9cHlPHeG&#x27;,
-      crossorigin: &#x27;anonymous&#x27;,
-      defer: true,
-    },
-  ],
-  presets: [
-    [
-      &#x27;@docusaurus/preset-classic&#x27;,
-      {
-        docs: {
-          sidebarPath: require.resolve(&#x27;./sidebars.js&#x27;),
-          remarkPlugins: [remarkMath],
-          rehypePlugins: [[rehypeKatex, { strict: false }]],
-        },
-        blog: {
-          remarkPlugins: [remarkMath],
-          rehypePlugins: [[rehypeKatex, { strict: false }]],
-        },
-        theme: {
-          customCss: require.resolve(&#x27;./src/css/custom.css&#x27;),
-        },
-      },
-    ],
-  ],
-}
-</code></pre><p>I got the inspiration from <a href="https://docs.theochu.com/docusaurus/latex/">https://docs.theochu.com/docusaurus/latex/</a>. This may not be the most elegant way to do it, but it works. Sadly, until now I&#x27;ve been unable to incorporate <code>mhchem</code> correctly, so <code>\ce{}</code> still fails.</p><h2>Deployment</h2><p>The next step I did was setting up CI/CD. The CircleCI <a href="https://github.com/Josh-Cena/Personal-page/blob/master/.circleci/config.yml">configuration file</a> is readily available. The only changes needed to be made are the git credentials and <code>environment</code> variables in <code>deploy-gh-pages</code>. Generate a personal access token <a href="https://github.com/settings/tokens">here</a>. Give it repo controls only and paste it into the CircleCI project settings &gt; Environment Variables. And that&#x27;s it.</p><hr/><p>Now we get a webpage already loaded with contents. The next step is to fill the <code>/docs/</code> and <code>/blog/</code> folders up, and writing some more pages with React. In the following posts, I plan to discuss:</p><ul><li>Automating bulk file processing with bash scripts;</li><li>TypeScript vs JavaScript;</li><li>React components vs Vue components.</li></ul><p>Every topic sounds very ambitious that I can write an epic on. I will try to make everything succint and to the point.</p>]]></content:encoded>
+            <category>front end</category>
+            <category>personal page</category>
         </item>
         <item>
             <title><![CDATA[Hello world!]]></title>
@@ -312,8 +91,8 @@ module.exports = {
             <guid>/2021/02/27/hello</guid>
             <pubDate>Sat, 27 Feb 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[It was hard getting all these done, but now this webpage is all set — docusaurus is configured, auto CI is up, we have an organization account on GitHub to host this site... I'd say we are good to go!]]></description>
-            <content:encoded><![CDATA[<pre><code class="language-text">Hello world!
-</code></pre><p>It was hard getting all these done, but now this webpage is all set — docusaurus is configured, auto CI is up, we have an organization account on GitHub to host this site... I&#x27;d say we are good to go!</p>]]></content:encoded>
+            <category>general</category>
+            <category>personal page</category>
         </item>
     </channel>
 </rss>

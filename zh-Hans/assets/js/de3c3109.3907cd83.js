@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkpersonal_page=self.webpackChunkpersonal_page||[]).push([[909],{2819:function(e){e.exports=JSON.parse('{"permalink":"/zh-Hans/blog/tags/\u7efc\u5408","page":1,"postsPerPage":4,"totalPages":1,"totalCount":4,"previousPage":null,"nextPage":null,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
