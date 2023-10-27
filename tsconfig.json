@@ -1,17 +1,16 @@
 {
   "extends": "tsconfig-jc",
   "compilerOptions": {
-    "target": "es2020",
+    "target": "esnext",
     "lib": [
       "esnext",
       "dom"
     ],
-    "rootDir": "./src",
-    "jsx": "react"
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ],
   "exclude": [
     "node_modules"
   ]
