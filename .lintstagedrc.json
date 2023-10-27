@@ -1,0 +1,7 @@
+{
+  "*.{js,ts,jsx,tsx}": ["eslint --fix"],
+  "*": [
+    "prettier --ignore-unknown --write",
+    "cspell --no-must-find-files --no-progress"
+  ]
+}
