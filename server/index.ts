@@ -76,7 +76,7 @@ export async function createServer(
         return res.redirect(301, String(context.url));
       }
 
-      const html = template.replace(`<!--app-html-->`, appHtml);
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
 
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {

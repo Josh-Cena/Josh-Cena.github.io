@@ -1,0 +1,51 @@
+* {
+  font-family: CharisSILW, Georgia, "Times New Roman", Times, serif;
+}
+
+@font-face {
+  font-family: CharisSILW;
+  src: url(assets/CharisSIL-Regular.woff2);
+}
+
+@font-face {
+  font-family: CharisSILW;
+  font-style: italic;
+  src: url(assets/CharisSIL-Italic.woff2);
+}
+
+@font-face {
+  font-family: CharisSILW;
+  font-weight: bold;
+  src: url(assets/CharisSIL-Bold.woff2);
+}
+
+@font-face {
+  font-family: CharisSILW;
+  font-weight: bold;
+  font-style: italic;
+  src: url(assets/CharisSIL-BoldItalic.woff2);
+}
+
+#app {
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 0 1rem;
+}
+
+h1::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  transform: scaleX(0);
+  transform-origin: top left;
+  transition: transform 0.3s ease;
+}
+
+h1:hover::before {
+  transform: scaleX(1);
+}

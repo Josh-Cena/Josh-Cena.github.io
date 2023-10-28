@@ -1,0 +1,12 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+}
+
+.navbarLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  margin: 0;
+}
