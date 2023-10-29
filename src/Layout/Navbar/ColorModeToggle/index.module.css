@@ -13,8 +13,7 @@
 }
 
 .icon {
-  height: 2rem;
-  width: 2rem;
+  padding: 0.2rem;
   color: var(--color-text);
   fill: var(--color-text);
 }

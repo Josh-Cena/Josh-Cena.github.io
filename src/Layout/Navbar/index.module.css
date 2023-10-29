@@ -1,18 +1,24 @@
 .navbar {
+  overflow: visible;
   position: sticky;
   top: 0;
+  height: var(--height-navbar);
+  border-bottom: 2px solid var(--color-text);
+  background-color: var(--color-background);
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  z-index: 1000;
+}
+
+.content {
   display: flex;
   flex-direction: row;
-  padding: 0.6rem 2rem;
-  border-bottom: 1.5px solid var(--color-text);
-  background-color: var(--color-background);
+  margin: 0.6rem var(--margin-main-h);
   align-items: center;
-  transition: background-color 0.2s ease-out, color 0.2s ease-out;
 }
 
 .logo {
-  height: 3rem;
-  width: 3rem;
+  height: calc(var(--height-navbar) - 1.2rem);
+  width: calc(var(--height-navbar) - 1.2rem);
 }
 
 .links {
@@ -21,10 +27,6 @@
   flex-direction: row;
   gap: 1rem;
   margin: 0;
-}
-
-.links a {
-  color: var(--color-text);
 }
 
 .arrowDown {
@@ -48,6 +50,7 @@
   padding: 0.5rem 1rem;
   border: 1px solid var(--color-text);
   transition: visibility 0.1s ease-out, opacity 0.1s ease-out;
+  z-index: 10000;
 }
 
 li:is(:hover, :focus-within, :has([aria-expanded="true"])) > .subLinks {
@@ -62,8 +65,8 @@ li:is(:hover, :focus-within, :has([aria-expanded="true"])) > .subLinks {
 .colorModeToggle {
   margin-left: auto;
   border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
+  height: calc(var(--height-navbar) - 1.2rem);
+  width: calc(var(--height-navbar) - 1.2rem);
 }
 
 .colorModeToggle:hover {

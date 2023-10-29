@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { ColorModeProvider } from "../context/ColorMode";
-import styles from "./styles.module.css";
+import styles from "./index.module.css";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

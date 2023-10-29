@@ -14,6 +14,9 @@
   --color-primary-lighter: #099591;
   --color-primary-lightest: #0aa9a4;
   --color-shadow: #00000020;
+  --height-navbar: 4rem;
+  --margin-main-h: 2rem;
+  --margin-main-v: 0;
 
   line-height: 1.5;
   background-color: var(--color-background);
@@ -61,4 +64,17 @@
 #app {
   margin: 0 auto;
   max-width: var(--max-page-width);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--color-text);
+}
+
+a:hover {
+  color: var(--color-primary);
 }

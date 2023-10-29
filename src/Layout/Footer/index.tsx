@@ -1,4 +1,4 @@
-import styles from "./styles.module.css";
+import styles from "./index.module.css";
 import GitHub from "assets/github-logo.svg?react";
 import LinkedIn from "assets/linkedin-logo.svg?react";
 import Twitter from "assets/twitter-logo.svg?react";

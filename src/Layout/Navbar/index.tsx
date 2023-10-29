@@ -4,7 +4,7 @@ import { useColorMode } from "../../context/ColorMode";
 import ColorModeToggle from "./ColorModeToggle";
 import LogoLight from "assets/logo.svg?react";
 import LogoDark from "assets/logo-dark.svg?react";
-import styles from "./styles.module.css";
+import styles from "./index.module.css";
 
 type LinkConfig = { name: string; path: string; children?: LinkConfig[] };
 
@@ -60,16 +60,18 @@ export default function Navbar() {
   const Logo = colorMode === "light" ? LogoLight : LogoDark;
   return (
     <nav className={styles.navbar}>
-      <Link to="/">
-        <Logo className={styles.logo} />
-      </Link>
-      <ul className={styles.links}>
-        {links.map((link) => (
-          <NavbarLink key={link.name} {...link} />
-        ))}
-      </ul>
-      <div className={styles.colorModeToggle}>
-        <ColorModeToggle />
+      <div className={styles.content}>
+        <Link className={styles.logo} to="/">
+          <Logo />
+        </Link>
+        <ul className={styles.links}>
+          {links.map((link) => (
+            <NavbarLink key={link.name} {...link} />
+          ))}
+        </ul>
+        <div className={styles.colorModeToggle}>
+          <ColorModeToggle />
+        </div>
       </div>
     </nav>
   );

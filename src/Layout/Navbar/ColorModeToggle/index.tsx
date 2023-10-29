@@ -1,7 +1,7 @@
 import { useColorMode } from "../../../context/ColorMode";
 import SunIcon from "assets/sun-icon.svg?react";
 import MoonIcon from "assets/moon-icon.svg?react";
-import styles from "./styles.module.css";
+import styles from "./index.module.css";
 
 export default function ColorModeToggle() {
   const { colorMode, setColorMode } = useColorMode();
