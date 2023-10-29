@@ -2,6 +2,38 @@
   font-family: CharisSILW, Georgia, "Times New Roman", Times, serif;
 }
 
+:root {
+  --max-page-width: 1000px;
+  --color-background: white;
+  --color-text: black;
+  --color-primary: #08827e;
+  --color-primary-dark: #077571;
+  --color-primary-darker: #076f6b;
+  --color-primary-darkest: #065b58;
+  --color-primary-light: #098f8b;
+  --color-primary-lighter: #099591;
+  --color-primary-lightest: #0aa9a4;
+  --color-shadow: #00000020;
+
+  line-height: 1.5;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+:root[data-color-mode="dark"] {
+  --color-background: #18191a;
+  --color-text: white;
+  --color-primary: #39cac4;
+  --color-primary-dark: #31b8b2;
+  --color-primary-darker: #2eaea8;
+  --color-primary-darkest: #268f8b;
+  --color-primary-light: #4dcfca;
+  --color-primary-lighter: #58d2cd;
+  --color-primary-lightest: #76dad6;
+  --color-shadow: #ffffff20;
+}
+
 @font-face {
   font-family: CharisSILW;
   src: url(assets/CharisSIL-Regular.woff2);
@@ -28,24 +60,5 @@
 
 #app {
   margin: 0 auto;
-  max-width: 1000px;
-  padding: 0 1rem;
-}
-
-h1::before {
-  content: "";
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #000;
-  transform: scaleX(0);
-  transform-origin: top left;
-  transition: transform 0.3s ease;
-}
-
-h1:hover::before {
-  transform: scaleX(1);
+  max-width: var(--max-page-width);
 }

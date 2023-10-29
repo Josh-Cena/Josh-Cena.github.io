@@ -1,24 +1,34 @@
 .footer {
-  border-top: 1.5px solid black;
-  margin: 3em;
-  padding: 2em 1em;
+  border-top: 1.5px solid var(--color-text);
+  margin: 3rem 2rem 0 2rem;
+  padding: 1rem 0;
 }
 
 .logos {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5em;
-  margin: 1.5em 0;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
 }
 
 .logoLink {
-  width: 1.7em;
-  height: 1.7em;
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+/* This can be overridden by path attributes */
+.logoLink:is(:hover, :focus-visible) {
+  color: var(--color-text);
+  fill: var(--color-text);
+}
+
+/* This overrides path attributes */
+.logoLink:not(:hover, :focus-visible) path {
   color: dimgray;
   fill: dimgray;
 }
 
-.logoLink:hover {
-  color: black;
-  fill: black;
+[data-color-mode="dark"] .logoLink:not(:hover, :focus-visible) path {
+  color: darkgray;
+  fill: darkgray;
 }

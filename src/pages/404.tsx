@@ -1,0 +1,14 @@
+import { useSSRContext } from "../context/SSRContext";
+
+export default function NotFound() {
+  const context = useSSRContext();
+  if (context) {
+    context.status = 404;
+  }
+  return (
+    <>
+      <h1>404</h1>
+      <p>Page not found.</p>
+    </>
+  );
+}

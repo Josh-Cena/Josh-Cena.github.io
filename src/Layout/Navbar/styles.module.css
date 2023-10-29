@@ -1,12 +1,71 @@
 .navbar {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: row;
+  padding: 0.6rem 2rem;
+  border-bottom: 1.5px solid var(--color-text);
+  background-color: var(--color-background);
+  align-items: center;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
 }
 
-.navbarLinks {
+.logo {
+  height: 3rem;
+  width: 3rem;
+}
+
+.links {
   list-style: none;
   display: flex;
   flex-direction: row;
-  gap: 1em;
+  gap: 1rem;
   margin: 0;
+}
+
+.links a {
+  color: var(--color-text);
+}
+
+.arrowDown {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--color-text);
+  margin-left: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.subLinks {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  list-style: none;
+  background-color: var(--color-background);
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-text);
+  transition: visibility 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+li:is(:hover, :focus-within, :has([aria-expanded="true"])) > .subLinks {
+  opacity: 1;
+  visibility: visible;
+}
+
+.subLinks li {
+  padding: 0.3rem 0;
+}
+
+.colorModeToggle {
+  margin-left: auto;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.colorModeToggle:hover {
+  background-color: var(--color-shadow);
 }
