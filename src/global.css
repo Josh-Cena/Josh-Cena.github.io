@@ -24,7 +24,7 @@
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
 }
 
-:root[data-color-mode="dark"] {
+[data-color-mode="dark"] {
   --color-background: #18191a;
   --color-text: white;
   --color-primary: #39cac4;

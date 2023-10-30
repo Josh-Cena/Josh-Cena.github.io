@@ -3,6 +3,7 @@
   position: sticky;
   top: 0;
   height: var(--height-navbar);
+  padding: 0.6rem var(--margin-main-h);
   border-bottom: 2px solid var(--color-text);
   background-color: var(--color-background);
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
@@ -12,7 +13,6 @@
 .content {
   display: flex;
   flex-direction: row;
-  margin: 0.6rem var(--margin-main-h);
   align-items: center;
 }
 
