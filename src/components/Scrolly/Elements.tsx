@@ -27,23 +27,23 @@ function ScrollyElements(
     borderProgress,
     borderShiftY,
   }: {
-    superTall: boolean;
-    gScale: number;
-    gShift: { x: number; y: number };
-    jCenter: { x: number; y: number };
-    jSize: { w: number; h: number };
-    jColor: number;
-    cCenter: { x: number; y: number };
-    cSize: { w: number; h: number };
-    text1: string;
-    text2: string;
-    text1Pos: { x: number; y: number };
-    text2Pos: { x: number; y: number };
-    textSize: number;
-    text1Opacity: number;
-    text2Opacity: number;
-    borderProgress: number;
-    borderShiftY: number;
+    readonly superTall: boolean;
+    readonly gScale: number;
+    readonly gShift: { x: number; y: number };
+    readonly jCenter: { x: number; y: number };
+    readonly jSize: { w: number; h: number };
+    readonly jColor: number;
+    readonly cCenter: { x: number; y: number };
+    readonly cSize: { w: number; h: number };
+    readonly text1: string;
+    readonly text2: string;
+    readonly text1Pos: { x: number; y: number };
+    readonly text2Pos: { x: number; y: number };
+    readonly textSize: number;
+    readonly text1Opacity: number;
+    readonly text2Opacity: number;
+    readonly borderProgress: number;
+    readonly borderShiftY: number;
   },
   ref: React.Ref<SVGSVGElement>,
 ) {

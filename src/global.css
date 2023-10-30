@@ -21,7 +21,9 @@
   line-height: 1.5;
   background-color: var(--color-background);
   color: var(--color-text);
-  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
 }
 
 [data-color-mode="dark"] {

@@ -1,6 +1,7 @@
 {
-  "extends": [
-    "jc"
-  ],
-  "root": true
+  "extends": ["jc"],
+  "root": true,
+  "parserOptions": {
+    "project": true
+  }
 }

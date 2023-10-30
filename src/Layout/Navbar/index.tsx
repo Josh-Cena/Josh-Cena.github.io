@@ -6,7 +6,11 @@ import LogoLight from "assets/logo.svg?react";
 import LogoDark from "assets/logo-dark.svg?react";
 import styles from "./index.module.css";
 
-type LinkConfig = { name: string; path: string; children?: LinkConfig[] };
+type LinkConfig = {
+  readonly name: string;
+  readonly path: string;
+  readonly children?: LinkConfig[];
+};
 
 const links: LinkConfig[] = [
   { name: "About", path: "/about" },
@@ -39,15 +43,21 @@ function NavbarLink({ name, path, children }: LinkConfig) {
     );
   }
   return (
+    // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
     <li onMouseOver={show} onMouseOut={hide}>
       <Link to={path} aria-expanded={expanded} onFocus={show}>
         {name}
       </Link>
       <span className={styles.arrowDown} />
       <ul className={styles.subLinks}>
+        {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
         {children.map(({ name, path }, i) => (
           <li key={name}>
-            <Link to={path} onBlur={i === children.length - 1 ? hide : undefined}>{name}</Link>
+            <Link
+              to={path}
+              onBlur={i === children.length - 1 ? hide : undefined}>
+              {name}
+            </Link>
           </li>
         ))}
       </ul>
@@ -55,7 +65,7 @@ function NavbarLink({ name, path, children }: LinkConfig) {
   );
 }
 
-export default function Navbar() {
+export default function Navbar(): JSX.Element {
   const { colorMode } = useColorMode();
   const Logo = colorMode === "light" ? LogoLight : LogoDark;
   return (

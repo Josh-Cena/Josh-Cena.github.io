@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-export default function Tools() {
+export default function Tools(): JSX.Element {
   return (
     <ul>
       <li>

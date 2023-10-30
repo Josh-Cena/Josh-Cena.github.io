@@ -84,10 +84,12 @@ function ScrollyClient() {
         setPercentage(1);
         setVerticalDistance(frameRef.current!.getBoundingClientRect().height);
       }
-    }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll);
     return () => {
+      // Observer ref never changes
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       observer.current.disconnect();
       window.removeEventListener("scroll", onScroll);
     };
@@ -176,8 +178,7 @@ function ScrollyServer() {
   );
 }
 
-export default function Scrolly() {
-  // return <ScrollyServer />;
+export default function Scrolly(): JSX.Element {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);

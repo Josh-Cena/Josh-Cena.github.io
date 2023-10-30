@@ -1,11 +1,23 @@
-import React, { type ReactNode } from "react";
+import React from "react";
 import { renderToPipeableStream } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { Writable } from "node:stream";
 import App from "./App";
 import { SSRContextProvider } from "./context/SSRContext";
 
-async function renderStaticApp(app: ReactNode): Promise<string> {
+export function render(
+  url: string,
+  context: Record<string, unknown>,
+): Promise<string> {
+  const app = (
+    <React.StrictMode>
+      <SSRContextProvider context={context}>
+        <StaticRouter location={url}>
+          <App />
+        </StaticRouter>
+      </SSRContextProvider>
+    </React.StrictMode>
+  );
   // Inspired from
   // https://react.dev/reference/react-dom/server/renderToPipeableStream#waiting-for-all-content-to-load-for-crawlers-and-static-generation
   // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js
@@ -52,11 +64,8 @@ class WritableAsPromise extends Writable {
   }
 
   override _destroy(error: Error | null, next: (error?: Error | null) => void) {
-    if (error instanceof Error) {
-      this.#deferred.reject(error);
-    } else {
-      next();
-    }
+    if (error instanceof Error) this.#deferred.reject(error);
+    else next();
   }
 
   override end() {
@@ -67,16 +76,4 @@ class WritableAsPromise extends Writable {
   getPromise(): Promise<string> {
     return this.#deferred.promise!;
   }
-}
-
-export function render(url: string, context: Record<string, unknown>) {
-  return renderStaticApp(
-    <React.StrictMode>
-      <SSRContextProvider context={context}>
-        <StaticRouter location={url}>
-          <App />
-        </StaticRouter>
-      </SSRContextProvider>
-    </React.StrictMode>,
-  );
 }

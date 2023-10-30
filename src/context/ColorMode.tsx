@@ -1,15 +1,25 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useMemo,
+} from "react";
 
 type ColorMode = "light" | "dark";
 
 type ColorModeContext = {
   colorMode: ColorMode;
   setColorMode: (newValue: ColorMode) => void;
-}
+};
 
-const ColorModeContext = React.createContext<ColorModeContext | null>(null);
+const Context = React.createContext<ColorModeContext | null>(null);
 
-export function ColorModeProvider({ children }: { children: React.ReactNode }) {
+export function ColorModeProvider({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}): JSX.Element {
   const [colorMode, rawSetColorMode] = useState<ColorMode>("light");
 
   useEffect(() => {
@@ -26,18 +36,18 @@ export function ColorModeProvider({ children }: { children: React.ReactNode }) {
     root.dataset.colorMode = newValue;
   }, []);
 
-  return (
-    <ColorModeContext.Provider value={{ colorMode, setColorMode }}>
-      {children}
-    </ColorModeContext.Provider>
+  const contextVal = useMemo(
+    () => ({ colorMode, setColorMode }),
+    [colorMode, setColorMode],
   );
+
+  return <Context.Provider value={contextVal}>{children}</Context.Provider>;
 }
 
-export function useColorMode() {
-  const context = useContext(ColorModeContext);
-  if (!context) {
+export function useColorMode(): ColorModeContext {
+  const context = useContext(Context);
+  if (!context)
     throw new Error("useColorMode must be used within a ColorModeProvider");
-  }
 
   return context;
 }

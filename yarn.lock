@@ -3003,19 +3003,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-jc@npm:^2.3.3":
-  version: 2.3.3
-  resolution: "eslint-config-jc@npm:2.3.3"
+"eslint-config-jc@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "eslint-config-jc@npm:3.0.0"
   dependencies:
-    eslint-config-prettier: "npm:^8.5.0"
+    eslint-config-prettier: "npm:^8.6.0"
   peerDependencies:
-    "@typescript-eslint/eslint-plugin": ^5.32.0
-    "@typescript-eslint/parser": ^5.32.0
-    eslint: ^8.21.0
+    "@typescript-eslint/eslint-plugin": ^6.9.1
+    "@typescript-eslint/parser": ^6.9.1
+    eslint: ^8.52.0
     eslint-plugin-header: ^3.1.1
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-jsx-a11y: ^6.6.1
-    eslint-plugin-react: ^7.30.1
+    eslint-plugin-import: ^2.29.0
+    eslint-plugin-jsx-a11y: ^6.7.1
+    eslint-plugin-react: ^7.33.2
     eslint-plugin-react-hooks: ^4.6.0
   peerDependenciesMeta:
     eslint-plugin-header:
@@ -3026,11 +3026,11 @@ __metadata:
       optional: true
     eslint-plugin-react-hooks:
       optional: true
-  checksum: 611be5fdb8d641583e5994f9cdbde8c3c76ad479f5be1adca979a11082d91bb84a66907a12c72bbceac5457a173e27a57371e0d1dcdf92fa9b887714297b4e57
+  checksum: f87d827dba679b1828f007d67cdc530c2eee7f8526c9bdd87d06583a079d942aca1d8318851c440b39eef118177538ccdcdfccb60dc75daf983483017ddb028a
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.5.0":
+"eslint-config-prettier@npm:^8.6.0":
   version: 8.10.0
   resolution: "eslint-config-prettier@npm:8.10.0"
   peerDependencies:
@@ -5384,7 +5384,7 @@ __metadata:
     clsx: "npm:^2.0.0"
     cspell: "npm:^7.3.8"
     eslint: "npm:^8.52.0"
-    eslint-config-jc: "npm:^2.3.3"
+    eslint-config-jc: "npm:^3.0.0"
     eslint-plugin-header: "npm:^3.1.1"
     eslint-plugin-import: "npm:^2.29.0"
     eslint-plugin-jsx-a11y: "npm:^6.7.1"

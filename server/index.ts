@@ -8,7 +8,10 @@ const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 
 const toAbsolute = (p: string) => Path.resolve(__dirname, p);
 
-export async function createServer(root = process.cwd(), hmrPort?: number) {
+export async function createServer(
+  root = process.cwd(),
+  hmrPort?: number,
+): Promise<{ app: express.Express }> {
   const app = express();
 
   const viteServer = await Vite.createServer({

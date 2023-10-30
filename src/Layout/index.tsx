@@ -3,7 +3,11 @@ import Footer from "./Footer";
 import { ColorModeProvider } from "../context/ColorMode";
 import styles from "./index.module.css";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}): JSX.Element {
   return (
     <ColorModeProvider>
       <Navbar />

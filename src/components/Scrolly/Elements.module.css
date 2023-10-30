@@ -4,7 +4,10 @@
 
 .elements {
   position: absolute;
-  top: calc(var(--frame-height) / 2 - min(calc(var(--frame-width) / 2), var(--frame-height)) / 2);
+  top: calc(
+    var(--frame-height) / 2 -
+      min(calc(var(--frame-width) / 2), var(--frame-height)) / 2
+  );
   left: 0;
   width: min(var(--frame-width), calc(var(--frame-height) * 2));
   height: min(calc(var(--frame-width) / 2), var(--frame-height));

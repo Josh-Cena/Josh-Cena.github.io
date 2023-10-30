@@ -18,7 +18,9 @@ const render = (await import("../dist/server/server-entry.js")).render as (
 // e.g. ["/", "/about", "/404"]
 const routesToPrerender = (await glob(toAbsolute("../src/pages/**/*.tsx"))).map(
   (file) => {
-    const name = Path.relative(toAbsolute("../src/pages"), file).replace(/(?:\/?index)?\.tsx$/, "").toLowerCase();
+    const name = Path.relative(toAbsolute("../src/pages"), file)
+      .replace(/(?:\/?index)?\.tsx$/, "")
+      .toLowerCase();
     return `/${name}`;
   },
 );
@@ -45,9 +47,7 @@ const promises = routesToPrerender.map(async (url) => {
     console.log("pre-rendered", filePath);
   } catch (e) {
     console.log("pre-render error", e, "on path", url);
-    if (!(e instanceof Error)) {
-      throw e;
-    }
+    if (!(e instanceof Error)) throw e;
     console.log(e);
   }
 });

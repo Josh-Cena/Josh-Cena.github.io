@@ -10,7 +10,7 @@ const pages = import.meta.glob("./pages/**/*.tsx");
 
 const routes = Object.entries(pages)
   .map(([path, module]) => {
-    const name = path.match(/\.\/pages\/(.*)\.tsx$/)![1]!;
+    const name = path.match(/\.\/pages\/(?<name>.*)\.tsx$/)!.groups!.name!;
     return {
       path:
         name === "404" ? "*" : `/${name.toLowerCase()}`.replace(/index$/, ""),
@@ -21,7 +21,7 @@ const routes = Object.entries(pages)
   })
   .sort((a, b) => (a.path === "*" ? 1 : b.path === "*" ? -1 : 0));
 
-export default function App() {
+export default function App(): JSX.Element {
   return (
     <Layout>
       <Routes>

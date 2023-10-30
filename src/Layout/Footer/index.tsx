@@ -15,7 +15,7 @@ const links = [
   { Logo: Mail, path: "mailto:sidachen2003@gmail.com" },
 ];
 
-export default function Footer() {
+export default function Footer(): JSX.Element {
   return (
     <footer className={styles.footer}>
       <div>
@@ -23,7 +23,12 @@ export default function Footer() {
       </div>
       <div className={styles.logos}>
         {links.map(({ Logo, path }) => (
-          <a key={path} className={styles.logoLink} href={path} target="_blank" rel="noreferrer noopener">
+          <a
+            key={path}
+            className={styles.logoLink}
+            href={path}
+            target="_blank"
+            rel="noreferrer noopener">
             <Logo />
           </a>
         ))}
