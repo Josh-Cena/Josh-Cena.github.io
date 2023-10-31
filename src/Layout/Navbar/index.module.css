@@ -1,8 +1,9 @@
 .navbar {
+  --height-navbar-inner: calc(var(--height-navbar) - 1.2rem);
   overflow: visible;
   position: sticky;
   top: 0;
-  height: var(--height-navbar);
+  height: var(--height-navbar-inner);
   padding: 0.6rem var(--margin-main-h);
   border-bottom: 2px solid var(--color-text);
   background-color: var(--color-background);
@@ -19,8 +20,8 @@
 }
 
 .logo {
-  height: calc(var(--height-navbar) - 1.2rem);
-  width: calc(var(--height-navbar) - 1.2rem);
+  height: var(--height-navbar-inner);
+  width: var(--height-navbar-inner);
 }
 
 .links {
@@ -69,8 +70,8 @@ li:is(:hover, :focus-within, :has([aria-expanded="true"])) > .subLinks {
 .colorModeToggle {
   margin-left: auto;
   border-radius: 50%;
-  height: calc(var(--height-navbar) - 1.2rem);
-  width: calc(var(--height-navbar) - 1.2rem);
+  height: var(--height-navbar-inner);
+  width: var(--height-navbar-inner);
 }
 
 .colorModeToggle:hover {

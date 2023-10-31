@@ -3,13 +3,67 @@
 }
 
 .elements {
+  --height: min(calc(var(--frame-width) / 2), var(--frame-height));
   position: absolute;
-  top: calc(
-    var(--frame-height) / 2 -
-      min(calc(var(--frame-width) / 2), var(--frame-height)) / 2
-  );
+  top: calc(var(--frame-height) / 2 - var(--height) / 2);
   left: 0;
-  width: min(var(--frame-width), calc(var(--frame-height) * 2));
-  height: min(calc(var(--frame-width) / 2), var(--frame-height));
+  width: calc(var(--height) * 2);
+  height: var(--height);
   overflow: visible;
+}
+
+@keyframes rolling {
+  from {
+    translate: 0;
+    animation-timing-function: ease-in-out;
+  }
+
+  7% {
+    translate: 20px;
+  }
+
+  50% {
+    translate: 20px;
+    animation-timing-function: ease-in-out;
+  }
+
+  57% {
+    translate: 0;
+  }
+
+  to {
+    translate: 0;
+  }
+}
+
+@keyframes raising {
+  from {
+    translate: 0;
+  }
+
+  57% {
+    translate: 0;
+    animation-timing-function: ease-in;
+  }
+
+  59% {
+    translate: 0 -2px;
+    animation-timing-function: ease-out;
+  }
+
+  61% {
+    translate: 0;
+  }
+
+  to {
+    translate: 0;
+  }
+}
+
+.eye {
+  animation: rolling 20s infinite;
+}
+
+.eyebrow {
+  animation: raising 20s infinite;
 }
