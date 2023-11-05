@@ -1,0 +1,319 @@
+import { useState, type ReactNode } from "react";
+import Color from "color";
+import copy from "copy-text-to-clipboard";
+import styles from "./index.module.css";
+
+function Tabs({ children }: { readonly children: JSX.Element[] }) {
+  const [selected, setSelected] = useState(0);
+  return (
+    <div className={styles.colorInputs}>
+      {children.map((tab, i) => (
+        <button
+          className={i === selected ? styles.selected : ""}
+          key={tab.props.label}
+          onClick={() => setSelected(i)}
+          type="button">
+          {tab.props.label}
+        </button>
+      ))}
+      {children[selected]}
+    </div>
+  );
+}
+
+function TabItem({
+  children,
+}: {
+  readonly children: ReactNode;
+  readonly label: string;
+}) {
+  return <>{children}</>;
+}
+
+const r = (strings: TemplateStringsArray, ...args: unknown[]) =>
+  String.raw(
+    { raw: strings },
+    ...args.map((a) => (typeof a === "number" ? Math.round(a * 100) / 100 : a)),
+  );
+function ColorInput({
+  c,
+  color,
+  method,
+  min = 0,
+  max,
+  setColor,
+}: {
+  readonly c: string;
+  readonly color: Color;
+  readonly method:
+    | "red"
+    | "blue"
+    | "green"
+    | "hue"
+    | "saturationl"
+    | "lightness"
+    | "white"
+    | "black"
+    | "cyan"
+    | "magenta"
+    | "yellow"
+    | "l"
+    | "a"
+    | "b"
+    | "chroma";
+  readonly min?: number;
+  readonly max: number;
+  readonly setColor: (color: Color) => void;
+}) {
+  return (
+    <label key={c}>
+      {c}
+      <input
+        type="range"
+        style={{
+          ...Object.fromEntries(
+            Array.from({ length: 11 }, (_, i) => [
+              `--color-${i}`,
+              (color[method]((max / 10) * i) as Color).rgb().toString(),
+            ]),
+          ),
+          // @ts-expect-error: custom CSS variables
+          "--color-current": color.negate().toString(),
+        }}
+        value={color[method]()}
+        min={min}
+        max={max}
+        onInput={(e) => {
+          setColor(color[method](Number(e.currentTarget.value)) as Color);
+        }}
+      />
+    </label>
+  );
+}
+
+function CopiableColor({ colorString }: { readonly colorString: string }) {
+  return (
+    <button
+      className={styles.cleanButton}
+      onClick={() => copy(colorString)}
+      type="button">
+      <code>{colorString}</code>
+    </button>
+  );
+}
+
+export default function ColorConverter(): JSX.Element {
+  const [color, setColor] = useState<Color>(new Color("#39cac4"));
+  return (
+    <>
+      <h1>Color converter</h1>
+      <div className={styles.container}>
+        <input
+          className={styles.colorTextBox}
+          onInput={(e) => {
+            try {
+              setColor(new Color(e.currentTarget.value));
+              e.currentTarget.setCustomValidity("");
+            } catch (err) {
+              e.currentTarget.setCustomValidity("Invalid color");
+              e.currentTarget.reportValidity();
+            }
+          }}
+          defaultValue={color.hex().toString()}
+        />
+        <div className={styles.colorData}>
+          <div
+            className={styles.colorPreview}
+            style={{ backgroundColor: color.rgb().toString() }}
+          />
+          <div className={styles.colorDataText}>
+            <span>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/hex-color">
+                HEX
+              </a>
+              : <CopiableColor colorString={color.hex()} />
+            </span>
+            <span>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb">
+                RGB
+              </a>
+              :{" "}
+              <CopiableColor
+                colorString={r`rgb(${color.red()} ${color.green()} ${color.blue()})`}
+              />
+            </span>
+            <span>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl">
+                HSL
+              </a>
+              :{" "}
+              <CopiableColor
+                colorString={r`hsl(${color.hue()} ${color.saturationl()}% ${color.lightness()}%)`}
+              />
+            </span>
+            <span>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hwb">
+                HWB
+              </a>
+              :{" "}
+              <CopiableColor
+                colorString={r`hwb(${color.hue()} ${color.white()}% ${color.black()}%)`}
+              />
+            </span>
+            <span>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/device-cmyk">
+                CMYK
+              </a>
+              :{" "}
+              <CopiableColor
+                colorString={r`device-cmyk(${color.cyan()}% ${color.magenta()}% ${color.yellow()}% ${color.black()}%)`}
+              />
+            </span>
+            <span>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/lab">
+                LAB
+              </a>
+              :{" "}
+              <CopiableColor
+                colorString={r`lab(${color.l()}% ${color.a()}% ${color.b()}%)`}
+              />
+            </span>
+            <span>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/lch">
+                LCH
+              </a>
+              :{" "}
+              <CopiableColor
+                colorString={r`lch(${color.l()}% ${color.chroma()}% ${color.hue()})`}
+              />
+            </span>
+          </div>
+        </div>
+        <Tabs>
+          <TabItem label="RGB">
+            {(["R", "G", "B"] as const).map((c) => (
+              <ColorInput
+                key={c}
+                c={c}
+                color={color}
+                method={
+                  (
+                    {
+                      R: "red",
+                      G: "green",
+                      B: "blue",
+                    } as const
+                  )[c]
+                }
+                max={255}
+                setColor={setColor}
+              />
+            ))}
+          </TabItem>
+          <TabItem label="HSL">
+            {(["H", "S", "L"] as const).map((c) => (
+              <ColorInput
+                key={c}
+                c={c}
+                color={color}
+                method={
+                  (
+                    {
+                      H: "hue",
+                      S: "saturationl",
+                      L: "lightness",
+                    } as const
+                  )[c]
+                }
+                max={c === "H" ? 359 : 100}
+                setColor={setColor}
+              />
+            ))}
+          </TabItem>
+          <TabItem label="HWB">
+            {(["H", "W", "B"] as const).map((c) => (
+              <ColorInput
+                key={c}
+                c={c}
+                color={color}
+                method={
+                  (
+                    {
+                      H: "hue",
+                      W: "white",
+                      B: "black",
+                    } as const
+                  )[c]
+                }
+                max={c === "H" ? 359 : 100}
+                setColor={setColor}
+              />
+            ))}
+          </TabItem>
+          <TabItem label="CMYK">
+            {(["C", "M", "Y", "K"] as const).map((c) => (
+              <ColorInput
+                key={c}
+                c={c}
+                color={color}
+                method={
+                  (
+                    {
+                      C: "cyan",
+                      M: "magenta",
+                      Y: "yellow",
+                      K: "black",
+                    } as const
+                  )[c]
+                }
+                max={100}
+                setColor={setColor}
+              />
+            ))}
+          </TabItem>
+          <TabItem label="LAB">
+            {(["L", "A", "B"] as const).map((c) => (
+              <ColorInput
+                key={c}
+                c={c}
+                color={color}
+                method={
+                  (
+                    {
+                      L: "l",
+                      A: "a",
+                      B: "b",
+                    } as const
+                  )[c]
+                }
+                min={c === "L" ? 0 : -100}
+                max={100}
+                setColor={setColor}
+              />
+            ))}
+          </TabItem>
+          <TabItem label="LCH">
+            {(["L", "C", "H"] as const).map((c) => (
+              <ColorInput
+                key={c}
+                c={c}
+                color={color}
+                method={
+                  (
+                    {
+                      L: "l",
+                      C: "chroma",
+                      H: "hue",
+                    } as const
+                  )[c]
+                }
+                max={c === "H" ? 360 : 100}
+                setColor={setColor}
+              />
+            ))}
+          </TabItem>
+        </Tabs>
+      </div>
+    </>
+  );
+}

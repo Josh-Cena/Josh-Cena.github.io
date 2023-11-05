@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import ScrollyElements from "./Elements";
-import styles from "./styles.module.css";
+import styles from "./index.module.css";
 
 const bgOpacities = [0, 1] as const;
 

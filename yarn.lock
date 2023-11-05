@@ -1315,6 +1315,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/color-convert@npm:*":
+  version: 2.0.2
+  resolution: "@types/color-convert@npm:2.0.2"
+  dependencies:
+    "@types/color-name": "npm:*"
+  checksum: 1387d529a43bcc22f8523b017e547eb2b6c90e667d2e1f906fc38809e27302d8aac011b4558866e4cdd18545b2f981cbfd786f011eb6df0d17a821a0f1e9415f
+  languageName: node
+  linkType: hard
+
+"@types/color-name@npm:*":
+  version: 1.1.2
+  resolution: "@types/color-name@npm:1.1.2"
+  checksum: 1a113c2944812fe893febabb795d7e24b809729fe3235085562711c86c513674d7a03131839f427cf9cc8446f477b02c3ee0285b4218c2b294b96ffa46eb12ad
+  languageName: node
+  linkType: hard
+
+"@types/color@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "@types/color@npm:3.0.5"
+  dependencies:
+    "@types/color-convert": "npm:*"
+  checksum: f647e634c5078a717a397f9a83d0310a4a7cdfa2d1ceefdca2733af7b77cc3be47ffa132c5f372d96a394ef7ba3ca746f85c8a6b14959e60d0ffe9726b9a4411
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:*":
   version: 3.4.37
   resolution: "@types/connect@npm:3.4.37"
@@ -2231,10 +2256,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:~1.1.4":
+"color-name@npm:^1.0.0, color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: a1a3f914156960902f46f7f56bc62effc6c94e84b2cae157a526b1c1f74b677a47ec602bf68a61abfa2b42d15b7c5651c6dbe72a43af720bc588dff885b10f95
+  languageName: node
+  linkType: hard
+
+"color-string@npm:^1.9.0":
+  version: 1.9.1
+  resolution: "color-string@npm:1.9.1"
+  dependencies:
+    color-name: "npm:^1.0.0"
+    simple-swizzle: "npm:^0.2.2"
+  checksum: b0bfd74c03b1f837f543898b512f5ea353f71630ccdd0d66f83028d1f0924a7d4272deb278b9aef376cacf1289b522ac3fb175e99895283645a2dc3a33af2404
   languageName: node
   linkType: hard
 
@@ -2244,6 +2279,16 @@ __metadata:
   bin:
     color-support: bin.js
   checksum: 8ffeaa270a784dc382f62d9be0a98581db43e11eee301af14734a6d089bd456478b1a8b3e7db7ca7dc5b18a75f828f775c44074020b51c05fc00e6d0992b1cc6
+  languageName: node
+  linkType: hard
+
+"color@npm:^4.2.3":
+  version: 4.2.3
+  resolution: "color@npm:4.2.3"
+  dependencies:
+    color-convert: "npm:^2.0.1"
+    color-string: "npm:^1.9.0"
+  checksum: 7fbe7cfb811054c808349de19fb380252e5e34e61d7d168ec3353e9e9aacb1802674bddc657682e4e9730c2786592a4de6f8283e7e0d3870b829bb0b7b2f6118
   languageName: node
   linkType: hard
 
@@ -2344,6 +2389,13 @@ __metadata:
   dependencies:
     is-what: "npm:^3.14.1"
   checksum: 2702998a8cc015f9917385b7f16b0d85f1f6e5e2fd34d99f14df584838f492f49aa0c390d973684c687e895c5c58d08b308a0400ac3e1e3d6fa1e5884a5402ad
+  languageName: node
+  linkType: hard
+
+"copy-text-to-clipboard@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "copy-text-to-clipboard@npm:3.2.0"
+  checksum: d60fdadc59d526e19d56ad23cec2b292d33c771a5091621bd322d138804edd3c10eb2367d46ec71b39f5f7f7116a2910b332281aeb36a5b679199d746a8a5381
   languageName: node
   linkType: hard
 
@@ -4084,6 +4136,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-arrayish@npm:^0.3.1":
+  version: 0.3.2
+  resolution: "is-arrayish@npm:0.3.2"
+  checksum: f59b43dc1d129edb6f0e282595e56477f98c40278a2acdc8b0a5c57097c9eff8fe55470493df5775478cf32a4dc8eaf6d3a749f07ceee5bc263a78b2434f6a54
+  languageName: node
+  linkType: hard
+
 "is-async-function@npm:^2.0.0":
   version: 2.0.0
   resolution: "is-async-function@npm:2.0.0"
@@ -5374,6 +5433,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "personal-page@workspace:."
   dependencies:
+    "@types/color": "npm:^3.0.5"
     "@types/express": "npm:^4"
     "@types/node": "npm:^20.8.9"
     "@types/react": "npm:^18"
@@ -5382,6 +5442,8 @@ __metadata:
     "@typescript-eslint/parser": "npm:^6.9.0"
     "@vitejs/plugin-react": "npm:^4.1.0"
     clsx: "npm:^2.0.0"
+    color: "npm:^4.2.3"
+    copy-text-to-clipboard: "npm:^3.2.0"
     cspell: "npm:^7.3.8"
     eslint: "npm:^8.52.0"
     eslint-config-jc: "npm:^3.0.0"
@@ -6086,6 +6148,15 @@ __metadata:
   version: 4.1.0
   resolution: "signal-exit@npm:4.1.0"
   checksum: 41602dce540e46d599edba9d9860193398d135f7ff72cab629db5171516cfae628d21e7bfccde1bbfdf11c48726bc2a6d1a8fb8701125852fbfda7cf19c6aa83
+  languageName: node
+  linkType: hard
+
+"simple-swizzle@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "simple-swizzle@npm:0.2.2"
+  dependencies:
+    is-arrayish: "npm:^0.3.1"
+  checksum: df5e4662a8c750bdba69af4e8263c5d96fe4cd0f9fe4bdfa3cbdeb45d2e869dff640beaaeb1ef0e99db4d8d2ec92f85508c269f50c972174851bc1ae5bd64308
   languageName: node
   linkType: hard
 

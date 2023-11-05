@@ -86,6 +86,7 @@ function ScrollyElements(
           y={getVal(text1Ys)}
           fontSize={textSize}
           fill="white">
+          {/* cSpell:ignore oshua */}
           {getVal([0, 1]) > 0.5 ? "oshua" : ""}
         </text>
         <text

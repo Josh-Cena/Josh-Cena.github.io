@@ -2,7 +2,7 @@
   "version": "0.2",
   "gitignoreRoot": ".",
   "useGitignore": true,
-  "dictionaries": ["typescript", "project-words"],
+  "dictionaries": ["typescript", "project-words", "lorem-ipsum"],
   "dictionaryDefinitions": [
     {
       "name": "project-words",
@@ -10,5 +10,5 @@
       "noSuggest": true
     }
   ],
-  "ignorePaths": ["package.json", "yarn.lock", "project-words.txt"]
+  "ignorePaths": ["package.json", "yarn.lock", "project-words.txt", "assets"]
 }

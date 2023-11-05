@@ -19,6 +19,7 @@
   },
   "packageManager": "yarn@4.0.0",
   "devDependencies": {
+    "@types/color": "^3.0.5",
     "@types/express": "^4",
     "@types/node": "^20.8.9",
     "@types/react": "^18",
@@ -49,6 +50,8 @@
   },
   "dependencies": {
     "clsx": "^2.0.0",
+    "color": "^4.2.3",
+    "copy-text-to-clipboard": "^3.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0"
