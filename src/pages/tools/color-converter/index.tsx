@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useState, useRef, useEffect, type ReactNode } from "react";
 import Color from "color";
 import copy from "copy-text-to-clipboard";
 import styles from "./index.module.css";
@@ -33,7 +33,12 @@ function TabItem({
 const r = (strings: TemplateStringsArray, ...args: unknown[]) =>
   String.raw(
     { raw: strings },
-    ...args.map((a) => (typeof a === "number" ? Math.round(a * 100) / 100 : a)),
+    ...args.map((a) =>
+      typeof a === "number"
+        ? Math.round(a * (strings[0] === "rgb(" ? 1 : 100)) /
+          (strings[0] === "rgb(" ? 1 : 100)
+        : a,
+    ),
   );
 function ColorInput({
   c,
@@ -92,12 +97,58 @@ function ColorInput({
 }
 
 function CopiableColor({ colorString }: { readonly colorString: string }) {
+  const [copied, setCopied] = useState(false);
+  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (timeout.current) clearTimeout(timeout.current);
+    },
+    [],
+  );
   return (
     <button
-      className={styles.cleanButton}
-      onClick={() => copy(colorString)}
+      className={styles.copyButton}
+      onClick={() => {
+        copy(colorString);
+        setCopied(true);
+        timeout.current = setTimeout(() => {
+          setCopied(false);
+        }, 1000);
+      }}
       type="button">
       <code>{colorString}</code>
+      {copied ? (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={styles.copyIcon}>
+          <path
+            d="M4.89163 13.2687L9.16582 17.5427L18.7085 8"
+            stroke="var(--color-green)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ) : (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={styles.copyIcon}>
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M21 8C21 6.34315 19.6569 5 18 5H10C8.34315 5 7 6.34315 7 8V20C7 21.6569 8.34315 23 10 23H18C19.6569 23 21 21.6569 21 20V8ZM19 8C19 7.44772 18.5523 7 18 7H10C9.44772 7 9 7.44772 9 8V20C9 20.5523 9.44772 21 10 21H18C18.5523 21 19 20.5523 19 20V8Z"
+            fill="#0F0F0F"
+          />
+          <path
+            d="M6 3H16C16.5523 3 17 2.55228 17 2C17 1.44772 16.5523 1 16 1H6C4.34315 1 3 2.34315 3 4V18C3 18.5523 3.44772 19 4 19C4.55228 19 5 18.5523 5 18V4C5 3.44772 5.44772 3 6 3Z"
+            fill="#0F0F0F"
+          />
+        </svg>
+      )}
     </button>
   );
 }

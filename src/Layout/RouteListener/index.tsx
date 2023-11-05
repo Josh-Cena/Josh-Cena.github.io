@@ -7,9 +7,15 @@ export default function RouteListener(): null {
   useEffect(() => {
     if (prevLocation.current?.pathname === location.pathname) return;
     prevLocation.current = location;
-    if (location.hash)
-      document.getElementById(location.hash.replace("#", ""))?.scrollIntoView();
-    else window.scrollTo(0, 0);
+    if (location.hash) {
+      setTimeout(() => {
+        document
+          .getElementById(decodeURIComponent(location.hash.substring(1)))
+          ?.scrollIntoView();
+      }, 0);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, [location]);
   return null;
 }

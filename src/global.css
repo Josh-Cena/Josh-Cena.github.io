@@ -15,6 +15,7 @@
   --color-primary-lightest: #0aa9a4;
   --color-shadow: #00000020;
   --color-red: #ca393e;
+  --color-green: #3eca39;
   --height-navbar: 4rem;
   --margin-main-h: 2rem;
   --margin-main-v: 0;
@@ -46,6 +47,7 @@ code {
   background-color: var(--color-shadow);
   padding: 4px;
   border-radius: 4px;
+  color: var(--color-text);
 }
 
 @font-face {

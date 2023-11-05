@@ -1,5 +1,8 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import clsx from "clsx";
+import { Tooltip } from "react-tooltip";
+import Heading from "../../components/Heading";
+import profile from "assets/thumbnail.jpg";
 import styles from "./index.module.css";
 
 const formatter = new Intl.DateTimeFormat("en-US", {
@@ -45,7 +48,12 @@ Timeline.Item = ({
     : undefined;
   return (
     <li className={clsx(styles.timelineItem, className)}>
-      <a href={href} target="_blank" rel="noreferrer" aria-label={organization}>
+      <a
+        tabIndex={-1}
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={organization}>
         <span className={styles.thumbnail} />
       </a>
       <time dateTime={startDate}>{formatter.format(startTimeStamp)}</time>
@@ -66,6 +74,7 @@ Timeline.Item = ({
 };
 
 export default function About(): JSX.Element {
+  const nameId = useId();
   return (
     <>
       <a
@@ -83,6 +92,47 @@ export default function About(): JSX.Element {
         </svg>
       </a>
       <h1>About</h1>
+      <div className={styles.profileRow}>
+        <img src={profile} alt="" className={styles.profile} />
+        <div>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a
+            href="#"
+            className={styles.zhName}
+            lang="zh-Hans-CN"
+            data-tooltip-id={nameId}>
+            <ruby>
+              陈 <rp>(</rp>
+              {/* cSpell:ignore chén */}
+              <rt>chén</rt>
+              <rp>)</rp> 思 <rp>(</rp>
+              <rt>sī</rt>
+              <rp>)</rp> 达 <rp>(</rp>
+              <rt>dá</rt>
+              <rp>)</rp>
+            </ruby>
+          </a>
+          <br />
+          Joshua Chen
+        </div>
+        <Tooltip
+          id={nameId}
+          className={styles.tooltip}
+          disableStyleInjection
+          clickable>
+          <p>
+            For those of you who are more familiar with IPA than pinyin, here's
+            its IPA transcription in my pronunciation:
+          </p>
+          {/* cSpell:ignore tʃɛ̌n sᵻdɐ̌ */}
+          <p style={{ textAlign: "center" }}>[tʃɛ̌n sᵻdɐ̌]</p>
+          <p>
+            Granted, everyone seems to have a different theory about what vowels
+            Mandarin has, and I'm far from being a phonetician, so take it with
+            a grain of salt.
+          </p>
+        </Tooltip>
+      </div>
       <p>
         Specialist in JavaScript and related technologies. Maintainer of the MDN
         JavaScript documentation. Contributor to impactful JavaScript
@@ -95,7 +145,7 @@ export default function About(): JSX.Element {
         science, with a curriculum focused on statistics, data science, and the
         syntax and semantics of natural languages.
       </p>
-      <h2>Education</h2>
+      <Heading level={2}>Education</Heading>
       <Timeline>
         <Timeline.Item
           className={styles.yale}
@@ -135,7 +185,7 @@ export default function About(): JSX.Element {
           position="Middle school"
         />
       </Timeline>
-      <h2>Experiences</h2>
+      <Heading level={2}>Experiences</Heading>
       <Timeline>
         <Timeline.Item
           className={styles.tseslint}
@@ -222,7 +272,7 @@ export default function About(): JSX.Element {
           </ul>
         </Timeline.Item>
       </Timeline>
-      <h2>Skills</h2>
+      <Heading level={2}>Skills</Heading>
       <ul>
         <li>
           Languages:{" "}

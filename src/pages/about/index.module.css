@@ -12,6 +12,39 @@
   color: var(--color-primary);
 }
 
+.profileRow {
+  display: flex;
+  flex-direction: row;
+  gap: var(--margin-main-h);
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--margin-main-v);
+  font-weight: bold;
+}
+
+.profile {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+  object-fit: cover;
+  object-position: top;
+}
+
+.zhName {
+  font-size: x-large;
+}
+
+.tooltip {
+  --rt-opacity: 1;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  max-width: 22em;
+  margin-top: 1em;
+  padding: 0 1em;
+  font-weight: normal;
+}
+
 .timeline {
   --left-spacing: 4em;
   --timeline-width: 4px;

@@ -1,0 +1,18 @@
+.anchor {
+  color: var(--color-text);
+  margin-left: -1em;
+}
+
+.anchor::before {
+  content: "#";
+  display: inline-block;
+  color: var(--color-primary);
+  padding-right: 0.5em;
+  width: 0.5em;
+  overflow: visible;
+  visibility: hidden;
+}
+
+.anchor:is(:hover, :focus-visible)::before {
+  visibility: visible;
+}
