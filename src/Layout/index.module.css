@@ -1,3 +1,4 @@
 .mainBody {
   margin: var(--margin-main-v) var(--margin-main-h);
+  position: relative;
 }

@@ -18,7 +18,7 @@
     animation-timing-function: ease-in-out;
   }
 
-  7% {
+  14% {
     translate: 20px;
   }
 
@@ -27,7 +27,7 @@
     animation-timing-function: ease-in-out;
   }
 
-  57% {
+  64% {
     translate: 0;
   }
 
@@ -41,17 +41,17 @@
     translate: 0;
   }
 
-  57% {
+  64% {
     translate: 0;
     animation-timing-function: ease-in;
   }
 
-  59% {
+  68% {
     translate: 0 -2px;
     animation-timing-function: ease-out;
   }
 
-  61% {
+  72% {
     translate: 0;
   }
 
@@ -61,9 +61,9 @@
 }
 
 .eye {
-  animation: rolling 20s infinite;
+  animation: rolling 10s infinite;
 }
 
 .eyebrow {
-  animation: raising 20s infinite;
+  animation: raising 10s infinite;
 }

@@ -1,0 +1,147 @@
+.pdf {
+  position: absolute;
+  top: 0;
+  right: var(--margin-main-h);
+  display: block;
+  width: 3em;
+  height: 3em;
+}
+
+.pdf svg path {
+  fill: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.timeline {
+  --left-spacing: 4em;
+  --timeline-width: 4px;
+
+  --color-yale: #00356b;
+  --color-wfla: #fa803d;
+  --color-huayu: #ec6101;
+  --color-tseslint: #2656c7;
+  --color-mdn: black;
+  --color-coursetable: #468ff2;
+  --color-coursetable-dark: #61adff;
+  --color-docusaurus: #2e8555;
+  --color-docusaurus-dark: #25c2a0;
+
+  list-style: none;
+  position: relative;
+  margin-left: var(--left-spacing);
+  padding-inline-start: var(--left-spacing);
+}
+
+.timelineItem {
+  position: relative;
+  padding: 1em 0;
+}
+
+.timelineItem::before {
+  content: "";
+  position: absolute;
+  display: block;
+  left: calc(-1 * var(--left-spacing) - 0.5 * var(--timeline-width));
+  width: var(--timeline-width);
+  height: 100%;
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-current),
+    var(--color-current) 50%,
+    var(--color-next) 100%
+  );
+}
+
+.thumbnail {
+  --width-circle: var(--left-spacing);
+  content: "";
+  position: absolute;
+  display: block;
+  left: calc(
+    -1 * var(--left-spacing) - 0.5 * var(--width-circle) - var(--timeline-width)
+  );
+  width: var(--width-circle);
+  height: var(--width-circle);
+  border-radius: 50%;
+  background: var(--color-background);
+  background-image: var(--src-background-image);
+  background-size: cover;
+  border: var(--timeline-width) solid var(--color-current);
+}
+
+.timelineItem time {
+  font-style: italic;
+}
+
+.yale {
+  --color-current: var(--color-yale);
+  --color-next: var(--color-wfla);
+  --src-background-image: url(assets/yale-logo.png);
+}
+
+.wfla {
+  --color-current: var(--color-wfla);
+  --color-next: var(--color-huayu);
+  --src-background-image: url(assets/wfla-logo.png);
+}
+
+.huayu {
+  --color-current: var(--color-huayu);
+  --color-next: var(--color-background);
+  --src-background-image: url(assets/huayu-logo.png);
+}
+
+.tseslint {
+  --color-current: var(--color-tseslint);
+  --color-next: var(--color-coursetable);
+  --src-background-image: url(https://github.com/typescript-eslint.png);
+}
+
+[data-color-mode="dark"] .tseslint {
+  --color-next: var(--color-coursetable-dark);
+}
+
+.coursetable {
+  --color-current: var(--color-coursetable);
+  --color-next: var(--color-mdn);
+  --src-background-image: url(https://github.com/coursetable.png);
+}
+
+[data-color-mode="dark"] .coursetable {
+  --color-current: var(--color-coursetable-dark);
+}
+
+.mdn {
+  --color-current: var(--color-mdn);
+  --color-next: var(--color-docusaurus);
+  --src-background-image: url(https://github.com/mdn.png);
+}
+
+[data-color-mode="dark"] .mdn {
+  --color-next: var(--color-docusaurus-dark);
+}
+
+.mdn::before {
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-current),
+    var(--color-current) 20%,
+    var(--color-next) 100%
+  );
+}
+
+.docusaurus {
+  --color-current: var(--color-docusaurus);
+  --color-next: var(--color-background);
+  --src-background-image: url(https://docusaurus.io/img/docusaurus_keytar.svg);
+}
+
+[data-color-mode="dark"] .docusaurus {
+  --color-current: var(--color-docusaurus-dark);
+}
+
+.docusaurus .thumbnail {
+  background-size: calc(var(--width-circle) - 12px);
+  background-position: center;
+  background-repeat: no-repeat;
+}

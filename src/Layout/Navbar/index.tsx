@@ -45,7 +45,7 @@ function NavbarLink({ name, path, children }: LinkConfig) {
   return (
     // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
     <li onMouseOver={show} onMouseOut={hide}>
-      <Link to={path} aria-expanded={expanded} onFocus={show}>
+      <Link to={path} aria-expanded={expanded} onFocus={show} onBlur={hide}>
         {name}
       </Link>
       <span className={styles.arrowDown} />
