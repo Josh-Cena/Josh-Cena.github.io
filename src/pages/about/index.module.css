@@ -102,10 +102,6 @@
   border: var(--timeline-width) solid var(--color-current);
 }
 
-.timelineItem time {
-  font-style: italic;
-}
-
 .yale {
   --color-current: var(--color-yale);
   --color-next: var(--color-wfla);

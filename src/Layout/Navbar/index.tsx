@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { useColorMode } from "../../context/ColorMode";
+import Link from "@/components/Link";
+import { useColorMode } from "@/context/ColorMode";
 import ColorModeToggle from "./ColorModeToggle";
 import LogoLight from "assets/logo.svg?react";
 import LogoDark from "assets/logo-dark.svg?react";
@@ -22,6 +22,7 @@ const links: LinkConfig[] = [
       { name: "Todo list", path: "/tools/todo-list" },
     ],
   },
+  { name: "Blog", path: "/blog" },
 ];
 
 function NavbarLink({ name, path, children }: LinkConfig) {
@@ -43,14 +44,14 @@ function NavbarLink({ name, path, children }: LinkConfig) {
   if (!children) {
     return (
       <li>
-        <Link to={path}>{name}</Link>
+        <Link href={path}>{name}</Link>
       </li>
     );
   }
   return (
     // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
     <li onMouseOver={show} onMouseOut={hide}>
-      <Link to={path} aria-expanded={expanded} onFocus={show} onBlur={hide}>
+      <Link href={path} aria-expanded={expanded} onFocus={show} onBlur={hide}>
         {name}
       </Link>
       <span className={styles.arrowDown} />
@@ -59,7 +60,7 @@ function NavbarLink({ name, path, children }: LinkConfig) {
         {children.map(({ name, path }, i) => (
           <li key={name}>
             <Link
-              to={path}
+              href={path}
               onBlur={i === children.length - 1 ? hide : undefined}>
               {name}
             </Link>
@@ -76,7 +77,7 @@ export default function Navbar(): JSX.Element {
   return (
     <nav className={styles.navbar}>
       <div className={styles.content}>
-        <Link className={styles.logo} to="/">
+        <Link className={styles.logo} href="/">
           <Logo />
         </Link>
         <ul className={styles.links}>

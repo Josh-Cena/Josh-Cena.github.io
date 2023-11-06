@@ -91,3 +91,7 @@ a {
 a:hover {
   color: var(--color-primary);
 }
+
+time {
+  font-style: italic;
+}

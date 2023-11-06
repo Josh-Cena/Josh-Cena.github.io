@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { useColorMode } from "../../context/ColorMode";
+import { useColorMode } from "@/context/ColorMode";
 import styles from "./Elements.module.css";
 
 const jCenterOrig = { x: 95.534, y: 105.729 };

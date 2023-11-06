@@ -1,4 +1,4 @@
-import { useSSRContext } from "../context/SSRContext";
+import { useSSRContext } from "@/context/SSRContext";
 
 export default function NotFound(): JSX.Element {
   const context = useSSRContext();

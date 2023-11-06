@@ -1,0 +1,43 @@
+---
+description: An overview of what comes, what stays, and what goes.
+date: 2023-11-05
+---
+
+# Welcome to my new website!
+
+Welcome!
+
+You may have seen my old website, which is now archived at [https://joshcena.com/old-website/](https://joshcena.com/old-website/). That website was developed when I was a high school junior, not knowing what I was doing. I just used the static site generator I was most familiar with, [Docusaurus](https://docusaurus.io/). (A few months after the website's inception, I joined the Docusaurus team.)
+
+The old website had a multitude of problems:
+
+- **Vendor lock-in** was the biggest of them. Docusaurus is quite opinionated, and while the default options are great, I have no choice but to fight with Webpack, MDX, etc., etc., and the layers of abstraction means I often have to use hacks to implement what I want.
+- **Design lock-in**. Again, the design had nothing bad in it, but because Docusaurus's classic theme already ships with a design language, everything I add has to agree with that—border shadows, border radii, font sizes, etc.
+- **Hacks**. This was mostly my fault. I was young and naïve and didn't know much about React or Remark. I just Googled and used whatever that seemed to work. In the end the website contained lots of glitches.
+- **Bundle size**. This is again my fault. I used way too many libraries, including moment, material UI, etc., because I didn't know how to implement things myself. Problems ensue, such as increased bundle size, no progressive enhancement (because material UI is client-side), and an overall increase in complexity.
+
+So, most importantly, it's so bad that **I don't want to update it** anymore. The front page's carousel is outdated, but I don't want to add new slides because it doesn't even work on mobile. The profile page could theoretically be updated, but just the sight of it makes me sad. Eventually, it's time for a new website.
+
+## What comes?
+
+- **New design**. Every element has been re-implemented from scratch and entrenched with my own design philosophy. Minimal round corners, minimal shadows, mostly flat and minimalistic design.
+- **Vite**. The site is now built with Vite, which is a lot faster than Webpack.
+- **A new font**. [Charis SIL](https://software.sil.org/charis/), developed by SIL Language Technology, is both beautiful and linguistics-friendly by default. It supports IPA and many scripts.
+
+## What stays?
+
+- **MDX**. The new website still supports MDX because I'm fluent writing plugins for it. This also means I can theoretically port over my old writings, although I hesitate to do so.
+- **React**. Still React 18 and react-router 6, but now I control everything—from routing to root providers to a layout that _never unmounts_.
+- **TypeScript**. The website is now _100% TypeScript-covered_ and by that I mean it. The development server, the config files—everything is TypeScript!
+- **CSS modules**. I don't know much about CSS and I prefer something simple and closer to the metal. I have no desire for CSS-in-JS, Tailwind, or SCSS, etc.
+- **Attention to accessibility**. The website remains accessible by default and I continue to apply new accessibility techniques I learn. Because I now control everything, I can also implement some good practices such as underlined links.
+- **Progressive enhancement**. The website is still server-rendered. I also make sure most functionality is available without JavaScript.
+- **The old structure**. The [about page](/about), [blog](/blog), and [tools](/tools) are still here, although I don't play to keep maintaining a "docs" section.
+
+## What goes?
+
+- **Everything else**! From the poorly designed [todo list](https://joshcena.com/old-website/todo/) to the never-finished old [color converter](https://joshcena.com/old-website/colorconvert/), to my old home page and profile—everything has been rebuilt.
+
+---
+
+I hesitated about creating a "blog" because I know very well that I won't write more than three posts here, but I have to write this particular one anyway, so, here we are. I hope you enjoy the new website!

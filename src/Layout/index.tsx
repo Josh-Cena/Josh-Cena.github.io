@@ -1,8 +1,9 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import RouteListener from "./RouteListener";
-import { ColorModeProvider } from "../context/ColorMode";
-import { SluggerProvider } from "../components/Heading";
+import { ColorModeProvider } from "@/context/ColorMode";
+import { SluggerProvider } from "@/components/Heading";
+import MDXComponents from "@/context/MDXComponents";
 import styles from "./index.module.css";
 
 export default function Layout({
@@ -15,7 +16,9 @@ export default function Layout({
       <RouteListener />
       <Navbar />
       <SluggerProvider>
-        <main className={styles.mainBody}>{children}</main>
+        <MDXComponents>
+          <main className={styles.mainBody}>{children}</main>
+        </MDXComponents>
       </SluggerProvider>
       <Footer />
     </ColorModeProvider>

@@ -1,4 +1,4 @@
-import { useColorMode } from "../../../context/ColorMode";
+import { useColorMode } from "@/context/ColorMode";
 import SunIcon from "assets/sun-icon.svg?react";
 import MoonIcon from "assets/moon-icon.svg?react";
 import styles from "./index.module.css";

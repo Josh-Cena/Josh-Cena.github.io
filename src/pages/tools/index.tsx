@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
+import Link from "@/components/Link";
 
 export default function Tools(): JSX.Element {
   return (
     <ul>
       <li>
-        <Link to="/tools/color-converter">Color converter</Link>
+        <Link href="/tools/color-converter">Color converter</Link>
       </li>
       <li>
-        <Link to="/tools/todo-list">Todo list</Link>
+        <Link href="/tools/todo-list">Todo list</Link>
       </li>
     </ul>
   );

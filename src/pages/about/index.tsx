@@ -1,7 +1,7 @@
 import { useId, type ReactNode } from "react";
 import clsx from "clsx";
 import { Tooltip } from "react-tooltip";
-import Heading from "../../components/Heading";
+import Heading from "@/components/Heading";
 import profile from "assets/thumbnail.jpg";
 import styles from "./index.module.css";
 

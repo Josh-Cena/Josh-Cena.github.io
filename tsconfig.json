@@ -8,7 +8,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "assets/*": ["./assets/*"]
+      "assets/*": ["./assets/*"],
+      "@/*": ["./src/*"]
     },
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },

@@ -32,7 +32,7 @@ export default function Heading({
   anchor,
 }: {
   readonly level: 2 | 3 | 4 | 5 | 6;
-  readonly children: React.ReactNode;
+  readonly children?: React.ReactNode;
   readonly anchor?: string;
 }): JSX.Element {
   const HeadingTag = `h${level}` as const;

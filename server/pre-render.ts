@@ -8,7 +8,6 @@ const toAbsolute = (p: string) => Path.resolve(__dirname, p);
 const distPath = (...ps: string[]) => Path.join(__dirname, "../dist", ...ps);
 
 const template = await FS.readFile(distPath("static/index.html"), "utf-8");
-// @ts-expect-error: no declaration
 const render = (await import("../dist/server/server-entry.js")).render as (
   url: string,
   context: Record<string, unknown>,
@@ -16,14 +15,14 @@ const render = (await import("../dist/server/server-entry.js")).render as (
 
 // Has leading slash; no trailing slash
 // e.g. ["/", "/about", "/404"]
-const routesToPrerender = (await glob(toAbsolute("../src/pages/**/*.tsx"))).map(
-  (file) => {
-    const name = Path.relative(toAbsolute("../src/pages"), file)
-      .replace(/(?:\/?index)?\.tsx$/, "")
-      .toLowerCase();
-    return `/${name}`;
-  },
-);
+const routesToPrerender = (
+  await glob(toAbsolute("../src/pages/**/*.{tsx,mdx}"))
+).map((file) => {
+  const name = Path.relative(toAbsolute("../src/pages"), file)
+    .replace(/(?:\/?index)?\.(?:tsx|mdx)$/, "")
+    .toLowerCase();
+  return `/${name}`;
+});
 
 console.log("routes to prerender", routesToPrerender);
 

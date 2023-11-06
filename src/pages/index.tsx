@@ -1,4 +1,4 @@
-import Scrolly from "../components/Scrolly";
+import Scrolly from "@/components/Scrolly";
 
 export default function Home(): JSX.Element {
   return (
