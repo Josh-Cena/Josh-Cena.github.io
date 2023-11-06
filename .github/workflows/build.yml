@@ -20,7 +20,9 @@ jobs:
           cache: yarn
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn set version latest
+          yarn install
       - name: Build website
         run: yarn build
 

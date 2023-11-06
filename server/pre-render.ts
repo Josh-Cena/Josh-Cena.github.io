@@ -8,6 +8,7 @@ const toAbsolute = (p: string) => Path.resolve(__dirname, p);
 const distPath = (...ps: string[]) => Path.join(__dirname, "../dist", ...ps);
 
 const template = await FS.readFile(distPath("static/index.html"), "utf-8");
+// @ts-expect-error: no declaration
 const render = (await import("../dist/server/server-entry.js")).render as (
   url: string,
   context: Record<string, unknown>,
