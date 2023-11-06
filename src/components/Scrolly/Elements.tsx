@@ -48,7 +48,7 @@ function ScrollyElements(
   const cSizeH = getVal(cSizeHs);
   const textSize = getVal(textSizes);
   const { colorMode } = useColorMode();
-  const jColors = colorMode === "dark" ? [1, 1] : [0, 1];
+  const jColors = colorMode === "dark" ? [255, 255] : [0, 255];
   return (
     <svg
       ref={ref}
@@ -67,8 +67,9 @@ function ScrollyElements(
           }, ${getVal(jCenterXs) - (jCenterOrig.x * jSizeW) / jSizeOrig.w}, ${
             getVal(jCenterYs) - (jCenterOrig.y * jSizeH) / jSizeOrig.h
           })`}
-          fill="var(--color-text)"
-          filter={`brightness(${getVal(jColors)})`}
+          fill={`rgb(${getVal(jColors)}, ${getVal(jColors)}, ${getVal(
+            jColors,
+          )})`}
           d="m 25.000024,33.983972 c 0,6.666603 0,13.333209 0,19.999811 21.206457,0 42.412914,0 63.619371,0 C 76.268383,84.308203 63.917371,114.63262 51.56636,144.95704 43.949254,138.6582 36.332149,132.35936 28.715044,126.06052 c -4.215592,5.09771 -8.431183,10.19542 -12.646774,15.29312 14.560523,12.04027 29.121047,24.08053 43.68157,36.1208 16.765902,-41.16356 33.531802,-82.327105 50.2977,-123.490657 21.65088,0 43.30175,0 64.95263,0 0,-6.666602 0,-13.333208 0,-19.999811 -50.00005,0 -100.000099,0 -150.000146,0 z"
         />
         <path
@@ -85,7 +86,7 @@ function ScrollyElements(
           x={getVal(text1Xs)}
           y={getVal(text1Ys)}
           fontSize={textSize}
-          fill="white">
+          fill="var(--color-text)">
           {/* cSpell:ignore oshua */}
           {getVal([0, 1]) > 0.5 ? "oshua" : ""}
         </text>

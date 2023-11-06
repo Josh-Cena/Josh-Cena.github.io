@@ -66,4 +66,5 @@
 
 .eyebrow {
   animation: raising 10s infinite;
+  fill: var(--color-text);
 }
