@@ -1,0 +1,30 @@
+.quote {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.quote::before,
+.quote::after {
+  quotes: "「" "」";
+  margin-block-start: var(--margin-paragraph);
+  margin-block-end: var(--margin-paragraph);
+  font-size: 4em;
+  line-height: 1;
+  color: var(--color-pink);
+}
+
+.quote::before {
+  margin-right: 0.5em;
+  content: open-quote;
+}
+
+.quote::after {
+  margin-left: 0.5em;
+  content: close-quote;
+}
+
+.quote p {
+  display: inline-block;
+  font-size: 2em;
+}

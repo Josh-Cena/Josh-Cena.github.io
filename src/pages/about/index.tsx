@@ -111,7 +111,7 @@ export default function About(): JSX.Element {
         </div>
         <Tooltip
           id={nameId}
-          className={styles.tooltip}
+          className="tooltip"
           disableStyleInjection
           clickable>
           <p>

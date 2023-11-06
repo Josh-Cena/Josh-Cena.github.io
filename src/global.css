@@ -16,9 +16,11 @@
   --color-shadow: #00000020;
   --color-red: #ca393e;
   --color-green: #3eca39;
+  --color-pink: #ca3986;
   --height-navbar: 4rem;
   --margin-main-h: 2rem;
   --margin-main-v: 0;
+  --margin-paragraph: 1rem;
 
   line-height: 1.5;
   background-color: var(--color-background);
@@ -100,4 +102,20 @@ time {
 hr {
   margin-left: var(--margin-main-h);
   margin-right: var(--margin-main-h);
+}
+
+p {
+  margin-block-start: var(--margin-paragraph);
+  margin-block-end: var(--margin-paragraph);
+}
+
+.tooltip {
+  --rt-opacity: 1;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  max-width: 22em;
+  margin-top: 1em;
+  padding: 0 1em;
+  font-weight: normal;
 }

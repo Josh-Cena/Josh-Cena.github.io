@@ -58,7 +58,8 @@ function NavbarLink({ name, path, children }: LinkConfig) {
           <li key={name}>
             <Link
               href={path}
-              onBlur={i === children.length - 1 ? hide : undefined}>
+              onBlur={i === children.length - 1 ? hide : undefined}
+              onClick={hide}>
               {name}
             </Link>
           </li>
