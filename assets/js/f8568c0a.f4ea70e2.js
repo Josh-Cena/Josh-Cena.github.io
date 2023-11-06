@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkpersonal_page=self.webpackChunkpersonal_page||[]).push([[7152],{5219:e=>{e.exports=JSON.parse('{"allTagsPath":"/old-website/blog/tags","slug":"/old-website/blog/tags/back-end","name":"back end","count":1,"permalink":"/old-website/blog/tags/back-end"}')}}]);

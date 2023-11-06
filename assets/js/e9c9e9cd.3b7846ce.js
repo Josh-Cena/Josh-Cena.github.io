@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkpersonal_page=self.webpackChunkpersonal_page||[]).push([[5091],{9148:e=>{e.exports=JSON.parse('{"allTagsPath":"/old-website/blog/tags","slug":"/old-website/blog/tags/recreation","name":"recreation","count":1,"permalink":"/old-website/blog/tags/recreation"}')}}]);

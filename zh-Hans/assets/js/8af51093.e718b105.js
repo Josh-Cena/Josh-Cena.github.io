@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkpersonal_page=self.webpackChunkpersonal_page||[]).push([[3686],{8476:s=>{s.exports=JSON.parse('{"allTagsPath":"/old-website/zh-Hans/blog/tags","slug":"/old-website/zh-Hans/blog/tags/\u7f16\u8bd1\u5668","name":"\u7f16\u8bd1\u5668","count":1,"permalink":"/old-website/zh-Hans/blog/tags/\u7f16\u8bd1\u5668"}')}}]);
