@@ -10,7 +10,12 @@ export default function Home(): JSX.Element {
       <Scrolly />
       <blockquote className={styles.quote}>
         <p>
-          I care about <dfn data-tooltip-id={id}>languages</dfn>!
+          I care about{" "}
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+          <span tabIndex={0} data-tooltip-id={id} className="term">
+            languages
+          </span>
+          !
         </p>
       </blockquote>
       <Tooltip id={id} className="tooltip" disableStyleInjection clickable>

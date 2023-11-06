@@ -89,10 +89,10 @@ export default function About(): JSX.Element {
       <div className={styles.profileRow}>
         <img src={profile} alt="" className={styles.profile} />
         <div>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a
-            href="#"
-            className={styles.zhName}
+          <span
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={0}
+            className={clsx(styles.zhName, "term")}
             lang="zh-Hans-CN"
             data-tooltip-id={nameId}>
             <ruby>
@@ -105,7 +105,7 @@ export default function About(): JSX.Element {
               <rt>dá</rt>
               <rp>)</rp>
             </ruby>
-          </a>
+          </span>
           <br />
           Joshua Chen
         </div>

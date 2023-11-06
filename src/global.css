@@ -119,3 +119,11 @@ p {
   padding: 0 1em;
   font-weight: normal;
 }
+
+.term {
+  font-style: normal;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.2em;
+  cursor: help;
+}
