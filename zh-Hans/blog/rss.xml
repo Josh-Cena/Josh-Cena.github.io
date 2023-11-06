@@ -2,14 +2,14 @@
 <rss version="2.0">
     <channel>
         <title>Joshua Chen Blog</title>
-        <link>https://josh-cena.github.io/zh-Hans/blog</link>
+        <link>https://josh-cena.github.io/old-website/zh-Hans/blog</link>
         <description>Joshua Chen Blog</description>
         <lastBuildDate>Wed, 09 Jun 2021 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
             <title><![CDATA[Caroline: 一种书法字体]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/06/09/font</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/06/09/font</link>
             <guid>/2021/06/09/font</guid>
             <pubDate>Wed, 09 Jun 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[This font is developed by an Indonesian (Fatma Wati), and I just absolutely loved it. (FYI my personal server's hostname is Caroline as well. Caroline is truely a special name.)]]></description>
@@ -18,7 +18,7 @@
         </item>
         <item>
             <title><![CDATA[可交互代码框！]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/05/06/codeblock</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/05/06/codeblock</link>
             <guid>/2021/05/06/codeblock</guid>
             <pubDate>Thu, 06 May 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Hey!]]></description>
@@ -27,7 +27,7 @@
         </item>
         <item>
             <title><![CDATA[到达冠军联赛了！]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/04/26/champion</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/04/26/champion</link>
             <guid>/2021/04/26/champion</guid>
             <pubDate>Mon, 26 Apr 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[April 26, 2021—after 1 year and 5 months since I started this game, I finally reached 6K (champions league) in Clash Royale.]]></description>
@@ -36,7 +36,7 @@
         </item>
         <item>
             <title><![CDATA[关于设计一门新编程语言的一点想法]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/04/25/lang</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/04/25/lang</link>
             <guid>/2021/04/25/lang</guid>
             <pubDate>Sun, 25 Apr 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[I'm just putting together some random thoughts that I wish to turn into a new programming language. These are notations I often use in comments for C++ algorithms. A lot of the syntax may have been realized by mathematical languages like Mathematica or Python.]]></description>
@@ -44,7 +44,7 @@
         </item>
         <item>
             <title><![CDATA[千彘文]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/04/01/zhi</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/04/01/zhi</link>
             <guid>/2021/04/01/zhi</guid>
             <pubDate>Thu, 01 Apr 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[愚人节快乐！]]></description>
@@ -52,7 +52,7 @@
         </item>
         <item>
             <title><![CDATA[运行 Laravel 应用]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/03/25/laravel</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/03/25/laravel</link>
             <guid>/2021/03/25/laravel</guid>
             <pubDate>Thu, 25 Mar 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[最近我遇到了一个 Laravel 项目：SAM，它是我们社团的历史项目。作为后端的纯新手，我对如何启动应用完全没有想法。]]></description>
@@ -60,7 +60,7 @@
         </item>
         <item>
             <title><![CDATA[选择配色方案]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/03/15/color</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/03/15/color</link>
             <guid>/2021/03/15/color</guid>
             <pubDate>Mon, 15 Mar 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[选择配色方案可不简单——尤其是你已经把你最喜欢的颜色设成主题色时。]]></description>
@@ -69,7 +69,7 @@
         </item>
         <item>
             <title><![CDATA[自动化文件处理]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/03/12/bash</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/03/12/bash</link>
             <guid>/2021/03/12/bash</guid>
             <pubDate>Fri, 12 Mar 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[汝毋手动修改 30 个文件。]]></description>
@@ -78,7 +78,7 @@
         </item>
         <item>
             <title><![CDATA[搭建 Docusaurus 应用]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/03/09/docusaurus</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/03/09/docusaurus</link>
             <guid>/2021/03/09/docusaurus</guid>
             <pubDate>Tue, 09 Mar 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[我在三月把这个网页迁移到了 Docusaurus。这篇博文总结了我的经历。]]></description>
@@ -87,7 +87,7 @@
         </item>
         <item>
             <title><![CDATA[Hello world!]]></title>
-            <link>https://josh-cena.github.io/zh-Hans/blog/2021/02/27/hello</link>
+            <link>https://josh-cena.github.io/old-website/zh-Hans/blog/2021/02/27/hello</link>
             <guid>/2021/02/27/hello</guid>
             <pubDate>Sat, 27 Feb 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[把这些都搞定还是很难的，但现在，网站已经准备就绪了——Docusaurus 已经配置完毕，自动集成已经到位，网站已经部署在 GitHub pages 上……我们可以继续前进了！]]></description>

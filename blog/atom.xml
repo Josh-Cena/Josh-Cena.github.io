@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://josh-cena.github.io/blog</id>
+    <id>https://josh-cena.github.io/old-website/blog</id>
     <title>Joshua Chen Blog</title>
     <updated>2021-06-09T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://josh-cena.github.io/blog"/>
+    <link rel="alternate" href="https://josh-cena.github.io/old-website/blog"/>
     <subtitle>Joshua Chen Blog</subtitle>
-    <icon>https://josh-cena.github.io/img/favicon/favicon.ico</icon>
+    <icon>https://josh-cena.github.io/old-website/img/favicon/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[Caroline: a script font]]></title>
         <id>/2021/06/09/font</id>
-        <link href="https://josh-cena.github.io/blog/2021/06/09/font"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/06/09/font"/>
         <updated>2021-06-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[This font is developed by an Indonesian (Fatma Wati), and I just absolutely loved it. (FYI my personal server's hostname is Caroline as well. Caroline is truely a special name.)]]></summary>
         <author>
@@ -23,7 +23,7 @@
     <entry>
         <title type="html"><![CDATA[Interactive code block!]]></title>
         <id>/2021/05/06/codeblock</id>
-        <link href="https://josh-cena.github.io/blog/2021/05/06/codeblock"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/05/06/codeblock"/>
         <updated>2021-05-06T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Hey!]]></summary>
         <author>
@@ -36,7 +36,7 @@
     <entry>
         <title type="html"><![CDATA[Champions league reached!]]></title>
         <id>/2021/04/26/champion</id>
-        <link href="https://josh-cena.github.io/blog/2021/04/26/champion"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/04/26/champion"/>
         <updated>2021-04-26T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[April 26, 2021—after 1 year and 5 months since I started this game, I finally reached 6K (champions league) in Clash Royale.]]></summary>
         <author>
@@ -49,7 +49,7 @@
     <entry>
         <title type="html"><![CDATA[Random thoughts on a new programming language]]></title>
         <id>/2021/04/25/lang</id>
-        <link href="https://josh-cena.github.io/blog/2021/04/25/lang"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/04/25/lang"/>
         <updated>2021-04-25T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[I'm just putting together some random thoughts that I wish to turn into a new programming language. These are notations I often use in comments for C++ algorithms. A lot of the syntax may have been realized by mathematical languages like Mathematica or Python.]]></summary>
         <author>
@@ -61,7 +61,7 @@
     <entry>
         <title type="html"><![CDATA[A thousand words with Zhi]]></title>
         <id>/2021/04/01/zhi</id>
-        <link href="https://josh-cena.github.io/blog/2021/04/01/zhi"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/04/01/zhi"/>
         <updated>2021-04-01T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Happy April Fool's Day!]]></summary>
         <author>
@@ -73,7 +73,7 @@
     <entry>
         <title type="html"><![CDATA[Running a Laravel app]]></title>
         <id>/2021/03/25/laravel</id>
-        <link href="https://josh-cena.github.io/blog/2021/03/25/laravel"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/03/25/laravel"/>
         <updated>2021-03-25T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Recently I came upon a Laravel project: SAM, the legacy system of our club. As an absolute newcomer in backend, I had zero idea how I should start the app.]]></summary>
         <author>
@@ -85,7 +85,7 @@
     <entry>
         <title type="html"><![CDATA[Choosing a color palette]]></title>
         <id>/2021/03/15/color</id>
-        <link href="https://josh-cena.github.io/blog/2021/03/15/color"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/03/15/color"/>
         <updated>2021-03-15T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Choosing a color palette is no easy task—especially if you have already chosen your favorite color as the theme color.]]></summary>
         <author>
@@ -98,7 +98,7 @@
     <entry>
         <title type="html"><![CDATA[Automating bulk file processing]]></title>
         <id>/2021/03/12/bash</id>
-        <link href="https://josh-cena.github.io/blog/2021/03/12/bash"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/03/12/bash"/>
         <updated>2021-03-12T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Thou shalt not modify 30 files by hand.]]></summary>
         <author>
@@ -111,7 +111,7 @@
     <entry>
         <title type="html"><![CDATA[Building a docusaurus app]]></title>
         <id>/2021/03/09/docusaurus</id>
-        <link href="https://josh-cena.github.io/blog/2021/03/09/docusaurus"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/03/09/docusaurus"/>
         <updated>2021-03-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[I switched to Docusaurus in March as framework for this website. This blog summarizes my experience.]]></summary>
         <author>
@@ -124,7 +124,7 @@
     <entry>
         <title type="html"><![CDATA[Hello world!]]></title>
         <id>/2021/02/27/hello</id>
-        <link href="https://josh-cena.github.io/blog/2021/02/27/hello"/>
+        <link href="https://josh-cena.github.io/old-website/blog/2021/02/27/hello"/>
         <updated>2021-02-27T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[It was hard getting all these done, but now this webpage is all set — docusaurus is configured, auto CI is up, we have an organization account on GitHub to host this site... I'd say we are good to go!]]></summary>
         <author>
