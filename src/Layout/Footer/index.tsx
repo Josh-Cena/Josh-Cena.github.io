@@ -1,10 +1,11 @@
-import styles from "./index.module.css";
+import Link from "@/components/Link";
 import GitHub from "assets/github-logo.svg?react";
 import LinkedIn from "assets/linkedin-logo.svg?react";
 import Twitter from "assets/twitter-logo.svg?react";
 import Discord from "assets/discord-logo.svg?react";
 import Mail from "assets/mail-logo.svg?react";
 import Zhihu from "assets/zhihu-logo.svg?react";
+import styles from "./index.module.css";
 
 const links = [
   { Logo: GitHub, path: "https://github.com/Josh-Cena" },
@@ -23,14 +24,9 @@ export default function Footer(): JSX.Element {
       </div>
       <div className={styles.logos}>
         {links.map(({ Logo, path }) => (
-          <a
-            key={path}
-            className={styles.logoLink}
-            href={path}
-            target="_blank"
-            rel="noreferrer noopener">
+          <Link key={path} className={styles.logoLink} href={path}>
             <Logo />
-          </a>
+          </Link>
         ))}
       </div>
     </footer>

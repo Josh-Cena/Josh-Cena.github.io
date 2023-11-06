@@ -17,10 +17,7 @@ const links: LinkConfig[] = [
   {
     name: "Tools",
     path: "/tools",
-    children: [
-      { name: "Color converter", path: "/tools/color-converter" },
-      { name: "Todo list", path: "/tools/todo-list" },
-    ],
+    children: [{ name: "Color converter", path: "/tools/color-converter" }],
   },
   { name: "Blog", path: "/blog" },
 ];

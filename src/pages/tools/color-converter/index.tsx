@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, type ReactNode } from "react";
 import Color from "color";
 import copy from "copy-text-to-clipboard";
+import Link from "@/components/Link";
 import styles from "./index.module.css";
 
 function Tabs({ children }: { readonly children: JSX.Element[] }) {
@@ -179,60 +180,60 @@ export default function ColorConverter(): JSX.Element {
           />
           <div className={styles.colorDataText}>
             <span>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/hex-color">
+              <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/hex-color">
                 HEX
-              </a>
+              </Link>
               : <CopiableColor colorString={color.hex()} />
             </span>
             <span>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb">
+              <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb">
                 RGB
-              </a>
+              </Link>
               :{" "}
               <CopiableColor
                 colorString={r`rgb(${color.red()} ${color.green()} ${color.blue()})`}
               />
             </span>
             <span>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl">
+              <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl">
                 HSL
-              </a>
+              </Link>
               :{" "}
               <CopiableColor
                 colorString={r`hsl(${color.hue()} ${color.saturationl()}% ${color.lightness()}%)`}
               />
             </span>
             <span>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hwb">
+              <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hwb">
                 HWB
-              </a>
+              </Link>
               :{" "}
               <CopiableColor
                 colorString={r`hwb(${color.hue()} ${color.white()}% ${color.black()}%)`}
               />
             </span>
             <span>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/device-cmyk">
+              <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/device-cmyk">
                 CMYK
-              </a>
+              </Link>
               :{" "}
               <CopiableColor
                 colorString={r`device-cmyk(${color.cyan()}% ${color.magenta()}% ${color.yellow()}% ${color.black()}%)`}
               />
             </span>
             <span>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/lab">
+              <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/lab">
                 LAB
-              </a>
+              </Link>
               :{" "}
               <CopiableColor
                 colorString={r`lab(${color.l()}% ${color.a()}% ${color.b()}%)`}
               />
             </span>
             <span>
-              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/lch">
+              <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/lch">
                 LCH
-              </a>
+              </Link>
               :{" "}
               <CopiableColor
                 colorString={r`lch(${color.l()}% ${color.chroma()}% ${color.hue()})`}
