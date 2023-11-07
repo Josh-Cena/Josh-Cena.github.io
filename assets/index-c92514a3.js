@@ -1,1 +1,0 @@
-import{j as r,L as o}from"./index-59f9b029.js";function l(){return r.jsx("ul",{children:r.jsx("li",{children:r.jsx(o,{href:"/tools/color-converter",children:"Color converter"})})})}export{l as default};
