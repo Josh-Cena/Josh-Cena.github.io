@@ -1,4 +1,4 @@
-import{j as e}from"./index-a3659131.js";import{P as i}from"./index-fa6e9a54.js";const o={description:"An overview of what comes, what stays, and what goes.",date:"2023-11-05",title:"Welcome to my new website!"};function n(s){const t={a:"a",em:"em",h1:"h1",h2:"h2",hr:"hr",li:"li",p:"p",strong:"strong",ul:"ul",...s.components};return e.jsxs(e.Fragment,{children:[e.jsx(t.h1,{children:"Welcome to my new website!"}),`
+import{j as e}from"./index-98b3ed54.js";import{P as i}from"./index-6222b210.js";const o={description:"An overview of what comes, what stays, and what goes.",date:"2023-11-05",title:"Welcome to my new website!"};function n(s){const t={a:"a",em:"em",h1:"h1",h2:"h2",hr:"hr",li:"li",p:"p",strong:"strong",ul:"ul",...s.components};return e.jsxs(e.Fragment,{children:[e.jsx(t.h1,{children:"Welcome to my new website!"}),`
 `,`
 `,e.jsx(i,{frontMatter:o}),`
 `,e.jsx(t.p,{children:"Welcome!"}),`
