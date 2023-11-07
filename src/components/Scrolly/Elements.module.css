@@ -2,16 +2,6 @@
   filter: drop-shadow(0 0 2px white);
 }
 
-.elements {
-  --height: min(calc(var(--frame-width) / 2), var(--frame-height));
-  position: absolute;
-  top: calc(var(--frame-height) / 2 - var(--height) / 2);
-  left: 0;
-  width: calc(var(--height) * 2);
-  height: var(--height);
-  overflow: visible;
-}
-
 @keyframes rolling {
   from {
     translate: 0;

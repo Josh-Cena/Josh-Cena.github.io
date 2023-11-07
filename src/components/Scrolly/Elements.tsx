@@ -1,5 +1,3 @@
-import React from "react";
-import clsx from "clsx";
 import { useColorMode } from "@/context/ColorMode";
 import styles from "./Elements.module.css";
 
@@ -28,39 +26,36 @@ const textSizes = [64, 64 * 0.8] as const;
 const text1Opacities = [0, 0, 1] as const;
 const text2Opacities = [0, 0, 1] as const;
 const borderOpacities = [0, 1] as const;
+const eyeOpacities = [1, 0, 0] as const;
+const eyeScales = [1, 0, 0] as const;
 
-function ScrollyElements(
-  {
-    getVal,
-    superTall,
-    globalYShift,
-  }: {
-    readonly getVal: (keyframes: readonly number[]) => number;
-    readonly superTall: boolean;
-    readonly globalYShift: number;
-  },
-  ref: React.Ref<SVGSVGElement>,
-) {
+export default function ScrollyElements({
+  className,
+  getVal,
+}: {
+  readonly className?: string;
+  readonly getVal: (keyframes: readonly number[]) => number;
+}): JSX.Element {
   const gScale = getVal(gScales);
   const jSizeW = getVal(jSizeWs);
   const jSizeH = getVal(jSizeHs);
   const cSizeW = getVal(cSizeWs);
   const cSizeH = getVal(cSizeHs);
   const textSize = getVal(textSizes);
+  const eyeScale = getVal(eyeScales);
   const { colorMode } = useColorMode();
   const jColors = colorMode === "dark" ? [255, 255] : [0, 255];
   return (
     <svg
-      ref={ref}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={`-100 0 400 ${superTall ? 1000 : 200}`}
-      className={clsx(styles.elements)}
+      viewBox="-100 0 400 200"
+      className={className}
       preserveAspectRatio="xMinYMin slice">
       <g
         data-color-mode="dark"
-        transform={`matrix(${gScale}, 0, 0, ${gScale}, ${getVal(gShiftXs)}, ${
-          getVal(gShiftYs) + globalYShift
-        })`}>
+        transform={`matrix(${gScale}, 0, 0, ${gScale}, ${getVal(
+          gShiftXs,
+        )}, ${getVal(gShiftYs)})`}>
         <path
           transform={`matrix(${jSizeW / jSizeOrig.w}, 0, 0, ${
             jSizeH / jSizeOrig.h
@@ -99,7 +94,11 @@ function ScrollyElements(
           {getVal([0, 1]) > 0.5 ? "hen" : ""}
         </text>
       </g>
-      <g transform="matrix(1.2, 0, 0, 1.2, -23, -30)">
+      <g
+        transform={`matrix(${eyeScale * 1.2}, 0, 0, ${eyeScale * 1.2}, ${
+          -23 + (1 - eyeScale) * 100
+        }, ${-30 + (1 - eyeScale) * 70})`}
+        opacity={getVal(eyeOpacities)}>
         <path
           className={styles.eyebrow}
           d="m 130.03906,35.265625 c -6.57096,0.37252 -13.07243,3.355468 -17.28515,8.46875 0.88932,0.650391 1.77865,1.300781 2.66797,1.951172 4.43368,-5.340543 11.71756,-7.687776 18.51336,-7.130448 7.67453,0.605406 14.78248,4.099282 21.12921,8.26912 0.60807,-0.91862 1.21615,-1.83724 1.82422,-2.75586 -7.38373,-4.862754 -15.85747,-8.764558 -24.84934,-8.859205 -0.66714,-0.004 -1.33444,0.01439 -2.00027,0.05647 z"
@@ -144,9 +143,7 @@ function ScrollyElements(
           style={{ strokeWidth: 1.33 }}
         />
       </g>
-      <g
-        opacity={getVal(borderOpacities)}
-        transform={`matrix(1, 0, 0, 1, 0, ${globalYShift})`}>
+      <g opacity={getVal(borderOpacities)}>
         <path
           stroke="var(--color-background)"
           strokeWidth={5}
@@ -170,5 +167,3 @@ function ScrollyElements(
     </svg>
   );
 }
-
-export default React.forwardRef(ScrollyElements);

@@ -18,28 +18,21 @@ function linearInterpolate(x: number) {
 }
 
 function ScrollyClient() {
-  const [verticalDistance, setVerticalDistance] = useState(0);
   const frameRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
   const [percentage, setPercentage] = useState(0);
-  const getSVGRatio = () =>
-    (svgRef.current?.getBoundingClientRect().width ?? 400) / 400;
   const getVal = linearInterpolate(percentage);
 
   const observer = useRef(
     new IntersectionObserver(
       (entries) => {
         const p = entries[0]!.intersectionRatio;
-        const d = entries[0]!.intersectionRect.height;
         if (
           p >= 0 &&
           p <= 1 &&
           p !== percentage &&
           entries[0]!.intersectionRect.top !== entries[0]!.rootBounds!.top
-        ) {
+        )
           setPercentage(p);
-          setVerticalDistance(d);
-        }
       },
       { threshold: Array.from({ length: 1000 }, (_, i) => i / 1000) },
     ),
@@ -50,13 +43,8 @@ function ScrollyClient() {
       // Intersection observer doesn't reliably fire for the boundaries, so we
       // add another handler (but IO still has better performance). It's also
       // useful for the initial render
-      if (window.scrollY < 20) {
-        setPercentage(0);
-        setVerticalDistance(0);
-      } else if (window.scrollY > frameRef.current!.offsetTop) {
-        setPercentage(1);
-        setVerticalDistance(frameRef.current!.getBoundingClientRect().height);
-      }
+      if (window.scrollY < 20) setPercentage(0);
+      else if (window.scrollY > frameRef.current!.offsetTop) setPercentage(1);
     };
     onScroll();
     window.addEventListener("scroll", onScroll);
@@ -69,29 +57,14 @@ function ScrollyClient() {
   }, []);
   return (
     <div className={styles.container}>
-      {[0, 1].map((i) => (
-        <div
-          className={clsx(styles.frame)}
-          key={i}
-          ref={i === 1 ? frameRef : undefined}
-        />
-      ))}
       <div
-        style={{
-          transform: `translateY(${verticalDistance}px)`,
-          opacity: getVal(bgOpacities),
-          position: "absolute",
-          top: 0,
-          left: 0,
-        }}
-        className={clsx(styles.frame, styles.pictureFrame)}
-      />
-      <ScrollyElements
-        getVal={getVal}
-        superTall
-        ref={svgRef}
-        globalYShift={verticalDistance / getSVGRatio()}
-      />
+        className={clsx(styles.frame, styles.scrollable, styles.pictureFrame)}
+        // @ts-expect-error: custom CSS variables
+        style={{ "--opacity-bg": getVal(bgOpacities) }}>
+        <ScrollyElements className={styles.scrolly} getVal={getVal} />
+      </div>
+      <div className={clsx(styles.frame, styles.firstFrame)} />
+      <div className={clsx(styles.frame)} ref={frameRef} />
     </div>
   );
 }
@@ -99,19 +72,15 @@ function ScrollyClient() {
 function ScrollyServer() {
   return (
     <div className={styles.container}>
-      {([0, 1] as const).map((i) => (
-        <div
-          className={clsx(styles.frame, i === 1 && styles.pictureFrame)}
-          key={i}>
-          <div className={styles.frameContent}>
-            <ScrollyElements
-              getVal={linearInterpolate(i)}
-              superTall={false}
-              globalYShift={0}
-            />
-          </div>
-        </div>
-      ))}
+      <div className={styles.frame}>
+        <ScrollyElements getVal={linearInterpolate(0)} />
+      </div>
+      <div
+        className={clsx(styles.frame, styles.pictureFrame)}
+        // @ts-expect-error: custom CSS variables
+        style={{ "--opacity-bg": 1 }}>
+        <ScrollyElements getVal={linearInterpolate(1)} />
+      </div>
     </div>
   );
 }
