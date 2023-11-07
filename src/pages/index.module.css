@@ -22,6 +22,8 @@
 .quote::after {
   margin-left: 0.5em;
   content: close-quote;
+  vertical-align: bottom;
+  align-self: flex-end;
 }
 
 .quote p {

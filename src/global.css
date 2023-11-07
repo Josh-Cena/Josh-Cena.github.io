@@ -22,7 +22,7 @@
   --margin-main-v: 0;
   --margin-paragraph: 1rem;
 
-  line-height: 1.5;
+  scroll-padding-top: var(--height-navbar);
   background-color: var(--color-background);
   color: var(--color-text);
   transition:

@@ -35,8 +35,9 @@
 }
 
 .timeline {
-  --left-spacing: 4em;
-  --timeline-width: 4px;
+  --radius-circle: 2em;
+  --sep-text: calc(var(--radius-circle) + 1em);
+  --width-timeline: 4px;
 
   --color-yale: #00356b;
   --color-wfla: #fa803d;
@@ -50,8 +51,8 @@
 
   list-style: none;
   position: relative;
-  margin-left: var(--left-spacing);
-  padding-inline-start: var(--left-spacing);
+  margin-left: var(--radius-circle);
+  padding-inline-start: var(--sep-text);
 }
 
 .timelineItem {
@@ -63,32 +64,31 @@
   content: "";
   position: absolute;
   display: block;
-  left: calc(-1 * var(--left-spacing) - 0.5 * var(--timeline-width));
-  width: var(--timeline-width);
+  left: calc(-1 * var(--sep-text) - 0.5 * var(--width-timeline));
+  width: var(--width-timeline);
   height: 100%;
   background-image: linear-gradient(
     to bottom,
     var(--color-current),
-    var(--color-current) 50%,
+    var(--color-current) calc(2 * var(--radius-circle)),
     var(--color-next) 100%
   );
 }
 
 .thumbnail {
-  --width-circle: var(--left-spacing);
   content: "";
   position: absolute;
   display: block;
   left: calc(
-    -1 * var(--left-spacing) - 0.5 * var(--width-circle) - var(--timeline-width)
+    -1 * var(--sep-text) - var(--radius-circle) - var(--width-timeline)
   );
-  width: var(--width-circle);
-  height: var(--width-circle);
+  width: calc(2 * var(--radius-circle));
+  height: calc(2 * var(--radius-circle));
   border-radius: 50%;
   background: var(--color-background);
   background-image: var(--src-background-image);
   background-size: cover;
-  border: var(--timeline-width) solid var(--color-current);
+  border: var(--width-timeline) solid var(--color-current);
 }
 
 .yale {
@@ -143,7 +143,8 @@
   background-image: linear-gradient(
     to bottom,
     var(--color-current),
-    var(--color-current) 20%,
+    var(--color-current) calc(2 * var(--radius-circle)),
+    var(--color-next) 70%,
     var(--color-next) 100%
   );
 }
@@ -159,7 +160,7 @@
 }
 
 .docusaurus .thumbnail {
-  background-size: calc(var(--width-circle) - 12px);
+  background-size: calc(2 * var(--radius-circle) - 0.75em);
   background-position: center;
   background-repeat: no-repeat;
 }
