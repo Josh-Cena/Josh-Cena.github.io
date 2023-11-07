@@ -1,6 +1,6 @@
-import{j as e}from"./index-98b3ed54.js";import{P as i}from"./index-6222b210.js";const o={description:"An overview of what comes, what stays, and what goes.",date:"2023-11-05",title:"Welcome to my new website!"};function n(s){const t={a:"a",em:"em",h1:"h1",h2:"h2",hr:"hr",li:"li",p:"p",strong:"strong",ul:"ul",...s.components};return e.jsxs(e.Fragment,{children:[e.jsx(t.h1,{children:"Welcome to my new website!"}),`
+import{u as i,j as e}from"./index-d372d3bd.js";import{P as o}from"./index-231dfd46.js";const a={description:"An overview of what comes, what stays, and what goes.",date:"2023-11-05",title:"Welcome to my new website!"};function n(s){const t={a:"a",em:"em",h1:"h1",h2:"h2",hr:"hr",li:"li",p:"p",strong:"strong",ul:"ul",...i(),...s.components};return e.jsxs(e.Fragment,{children:[e.jsx(t.h1,{children:"Welcome to my new website!"}),`
 `,`
-`,e.jsx(i,{frontMatter:o}),`
+`,e.jsx(o,{frontMatter:a}),`
 `,e.jsx(t.p,{children:"Welcome!"}),`
 `,e.jsxs(t.p,{children:["You may have seen my old website, which is now archived at ",e.jsx(t.a,{href:"https://joshcena.com/old-website/",children:"https://joshcena.com/old-website/"}),". That website was developed when I was a high school junior, not knowing what I was doing. I just used the static site generator I was most familiar with, ",e.jsx(t.a,{href:"https://docusaurus.io/",children:"Docusaurus"}),". (A few months after the website's inception, I joined the Docusaurus team.)"]}),`
 `,e.jsx(t.p,{children:"The old website had a multitude of problems:"}),`
@@ -32,4 +32,4 @@ import{j as e}from"./index-98b3ed54.js";import{P as i}from"./index-6222b210.js";
 `,e.jsxs(t.li,{children:[e.jsx(t.strong,{children:"Everything else"}),"! From the poorly designed ",e.jsx(t.a,{href:"https://joshcena.com/old-website/todo/",children:"todo list"})," to the never-finished old ",e.jsx(t.a,{href:"https://joshcena.com/old-website/colorconvert/",children:"color converter"}),", to my old home page and profile—everything has been rebuilt."]}),`
 `]}),`
 `,e.jsx(t.hr,{}),`
-`,e.jsx(t.p,{children:`I hesitated about creating a "blog" because I know very well that I won't write more than three posts here, but I have to write this particular one anyway, so, here we are. I hope you enjoy the new website!`})]})}function h(s={}){const{wrapper:t}=s.components||{};return t?e.jsx(t,{...s,children:e.jsx(n,{...s})}):n(s)}export{h as default,o as frontMatter};
+`,e.jsx(t.p,{children:`I hesitated about creating a "blog" because I know very well that I won't write more than three posts here, but I have to write this particular one anyway, so, here we are. I hope you enjoy the new website!`})]})}function l(s={}){const{wrapper:t}={...i(),...s.components};return t?e.jsx(t,{...s,children:e.jsx(n,{...s})}):n(s)}export{l as default,a as frontMatter};
