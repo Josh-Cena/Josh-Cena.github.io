@@ -8,11 +8,10 @@ export default function Link({
   // eslint-disable-next-line jsx-a11y/anchor-has-content
   if (!href) return <a {...props} />;
   const isInternal =
-    new URL(href, "https://joshcena.com").origin === "joshcena.com";
-
+    new URL(href, "https://joshcena.com").origin === "https://joshcena.com";
   const isAnchorLink = href.startsWith("#");
 
-  return isAnchorLink || isInternal ? (
+  return isAnchorLink || !isInternal ? (
     // eslint-disable-next-line jsx-a11y/anchor-has-content
     <a
       href={href}

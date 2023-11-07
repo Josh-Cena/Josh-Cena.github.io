@@ -19,6 +19,7 @@ export default defineConfig({
           transformMarkdown,
           [remarkMDXFrontmatter, { name: "frontMatter" }],
         ],
+        providerImportSource: "@mdx-js/react",
       }),
     },
     react(),
