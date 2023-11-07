@@ -1,1 +1,0 @@
-import{R as e,r as o,j as t}from"./index-9338a746.js";const s=e.createContext(null);function r(){return o.useContext(s)}function x(){const n=r();return n&&(n.status=404),t.jsxs(t.Fragment,{children:[t.jsx("h1",{children:"404"}),t.jsx("p",{children:"Page not found."})]})}export{x as default};
