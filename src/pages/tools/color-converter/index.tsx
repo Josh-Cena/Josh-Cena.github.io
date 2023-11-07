@@ -99,7 +99,7 @@ function ColorInput({
 
 function CopiableColor({ colorString }: { readonly colorString: string }) {
   const [copied, setCopied] = useState(false);
-  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeout = useRef<number | null>(null);
   useEffect(
     () => () => {
       if (timeout.current) clearTimeout(timeout.current);
@@ -112,7 +112,7 @@ function CopiableColor({ colorString }: { readonly colorString: string }) {
       onClick={() => {
         copy(colorString);
         setCopied(true);
-        timeout.current = setTimeout(() => {
+        timeout.current = window.setTimeout(() => {
           setCopied(false);
         }, 1000);
       }}

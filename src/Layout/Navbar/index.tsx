@@ -24,13 +24,13 @@ const links: LinkConfig[] = [
 
 function NavbarLink({ name, path, children }: LinkConfig) {
   const [expanded, setExpanded] = useState(false);
-  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timeout = useRef<number | null>(null);
   const show = useCallback(() => {
     if (timeout.current) clearTimeout(timeout.current);
     setExpanded(true);
   }, []);
   const hide = useCallback(() => {
-    timeout.current = setTimeout(() => setExpanded(false), 200);
+    timeout.current = window.setTimeout(() => setExpanded(false), 200);
   }, []);
   useEffect(
     () => () => {

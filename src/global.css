@@ -1,7 +1,3 @@
-* {
-  font-family: CharisSILW, Georgia, "Times New Roman", Times, serif;
-}
-
 :root {
   --max-page-width: 1000px;
   --color-background: white;
@@ -17,11 +13,16 @@
   --color-red: #ca393e;
   --color-green: #3eca39;
   --color-pink: #ca3986;
+  --color-blue: #3986ca;
+  --color-dark-blue: #393eca;
   --height-navbar: 4rem;
   --margin-main-h: 2rem;
   --margin-main-v: 0;
   --margin-paragraph: 1rem;
+  --font-main: "CharisSILW", Georgia, "Times New Roman", Times, serif;
+  --font-code: Menlo, Consolas, Monaco, monospace;
 
+  font-family: var(--font-main);
   scroll-padding-top: var(--height-navbar);
   background-color: var(--color-background);
   color: var(--color-text);
@@ -44,12 +45,17 @@
 }
 
 code {
-  font-family: Menlo, Consolas, Monaco, monospace;
+  font-family: var(--font-code);
   font-size: small;
   background-color: var(--color-shadow);
   padding: 4px;
   border-radius: 4px;
   color: var(--color-text);
+}
+
+pre {
+  font-family: var(--font-code);
+  font-size: 1em;
 }
 
 @font-face {
@@ -107,6 +113,12 @@ hr {
 p {
   margin-block-start: var(--margin-paragraph);
   margin-block-end: var(--margin-paragraph);
+}
+
+input,
+button {
+  font-family: var(--font-main);
+  font-size: 1em;
 }
 
 .tooltip {

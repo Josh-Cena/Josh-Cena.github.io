@@ -25,7 +25,13 @@ export default defineConfig({
     react(),
     svgr(),
   ],
+  define: {
+    "process.env": {
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+    },
+  },
   resolve: {
+    mainFields: ["main"],
     alias: {
       assets: fileURLToPath(new URL("./assets", import.meta.url)),
       "@": fileURLToPath(new URL("./src", import.meta.url)),

@@ -54,7 +54,7 @@
   margin: 0;
   cursor: pointer;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .copyIcon {
