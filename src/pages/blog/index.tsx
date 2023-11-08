@@ -46,3 +46,8 @@ export default function Blog(): JSX.Element {
     </>
   );
 }
+
+export const meta = {
+  title: "Blog",
+  description: "The blog of Josh-Cena where I write my random thoughts",
+};

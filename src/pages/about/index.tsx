@@ -341,3 +341,8 @@ export default function About(): JSX.Element {
     </>
   );
 }
+
+export const meta = {
+  title: "About",
+  description: "Who am I, what I do, etc.",
+};

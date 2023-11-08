@@ -10,3 +10,8 @@ export default function NotFound(): JSX.Element {
     </>
   );
 }
+
+export const meta = {
+  title: "Not found",
+  description: "Page not found",
+};

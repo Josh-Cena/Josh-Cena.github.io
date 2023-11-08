@@ -46,7 +46,11 @@ export async function createServer(
       const context: Record<string, unknown> = {};
       const appHtml = await render(url, context);
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+      const html = template
+        .replace("<!--body-->", appHtml.body)
+        .replace("<!--metaTags-->", appHtml.metaTags)
+        .replace(/(?<=<head[^>]+)(?=>)/, ` ${appHtml.htmlAttributes}`)
+        .replace(/(?<=<body[^>]+)(?=>)/, ` ${appHtml.bodyAttributes}`);
 
       res
         .status(Number(context.status ?? 200))

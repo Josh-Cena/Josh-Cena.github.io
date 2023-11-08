@@ -9,3 +9,8 @@ export default function Tools(): JSX.Element {
     </ul>
   );
 }
+
+export const meta = {
+  title: "Tools",
+  description: "Tools developed by Josh-Cena",
+};

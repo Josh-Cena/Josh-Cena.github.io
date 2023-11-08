@@ -27,3 +27,8 @@ export default function Home(): JSX.Element {
     </>
   );
 }
+
+export const meta = {
+  title: "",
+  description: "Welcome to Josh-Cena’s personal website!",
+};

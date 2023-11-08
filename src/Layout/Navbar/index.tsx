@@ -75,7 +75,7 @@ export default function Navbar(): JSX.Element {
   return (
     <nav className={styles.navbar}>
       <div className={styles.content}>
-        <Link className={styles.logo} href="/">
+        <Link className={styles.logo} href="/" aria-label="Home">
           <Logo />
         </Link>
         <ul className={styles.links}>

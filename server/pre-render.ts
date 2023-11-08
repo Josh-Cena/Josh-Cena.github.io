@@ -8,11 +8,12 @@ const toAbsolute = (p: string) => Path.resolve(__dirname, p);
 const distPath = (...ps: string[]) => Path.join(__dirname, "../dist", ...ps);
 
 const template = await FS.readFile(distPath("static/index.html"), "utf-8");
-// @ts-expect-error: no declaration
-const render = (await import("../dist/server/server-entry.js")).render as (
-  url: string,
-  context: Record<string, unknown>,
-) => Promise<string>;
+const render = (
+  (await import(
+    // @ts-expect-error: no declaration
+    "../dist/server/server-entry.js"
+  )) as typeof import("../src/server-entry")
+).render;
 
 // Has leading slash; no trailing slash
 // e.g. ["/", "/about", "/404"]
@@ -32,7 +33,11 @@ const promises = routesToPrerender.map(async (url) => {
     const context = {};
     const appHtml = await render(url, context);
 
-    const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+    const html = template
+      .replace("<!--body-->", appHtml.body)
+      .replace("<!--metaTags-->", appHtml.metaTags)
+      .replace(/(?<=<head[^>]+)(?=>)/, ` ${appHtml.htmlAttributes}`)
+      .replace(/(?<=<body[^>]+)(?=>)/, ` ${appHtml.bodyAttributes}`);
 
     const filePath = distPath(
       "static",

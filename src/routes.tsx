@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 
 // Auto generates routes from files under ./pages
 // https://vitejs.dev/guide/features.html#glob-import
@@ -17,7 +18,27 @@ export const routes = Object.entries(pages)
         name === "404" ? "*" : `/${name.toLowerCase()}`.replace(/index$/, ""),
       RouteComp: React.lazy(async () => {
         const { default: Comp, ...rest } = await module();
-        return { default: () => <Comp {...rest} /> };
+        const metadata = (
+          path.endsWith(".mdx") ? rest.frontMatter : rest.meta
+        ) as {
+          title: string;
+          description: string;
+        };
+        return {
+          default: () => (
+            <>
+              <Helmet>
+                <title>
+                  {metadata.title
+                    ? `${metadata.title} | Joshua Chen`
+                    : "Joshua Chen"}
+                </title>
+                <meta name="description" content={metadata.description} />
+              </Helmet>
+              <Comp {...rest} />
+            </>
+          ),
+        };
       }),
     };
   })

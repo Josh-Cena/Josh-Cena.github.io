@@ -2,18 +2,27 @@ import React from "react";
 import { renderToPipeableStream } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { Writable } from "node:stream";
+import { HelmetProvider, type FilledContext } from "react-helmet-async";
 import App from "./App";
 import { SSRContextProvider } from "./context/SSRContext";
 
-export function render(
+export async function render(
   url: string,
   context: Record<string, unknown>,
-): Promise<string> {
+): Promise<{
+  body: string;
+  htmlAttributes: string;
+  bodyAttributes: string;
+  metaTags: string;
+}> {
+  const helmetContext = {};
   const app = (
     <React.StrictMode>
       <SSRContextProvider context={context}>
         <StaticRouter location={url}>
-          <App />
+          <HelmetProvider context={helmetContext}>
+            <App />
+          </HelmetProvider>
         </StaticRouter>
       </SSRContextProvider>
     </React.StrictMode>
@@ -32,7 +41,19 @@ export function render(
     },
   });
 
-  return writableStream.getPromise();
+  const body = await writableStream.getPromise();
+  const { helmet } = helmetContext as FilledContext;
+
+  const htmlAttributes = helmet.htmlAttributes.toString();
+  const bodyAttributes = helmet.bodyAttributes.toString();
+  const metaStrings = [
+    helmet.title.toString(),
+    helmet.meta.toString(),
+    helmet.link.toString(),
+    helmet.script.toString(),
+  ];
+  const metaTags = metaStrings.filter(Boolean).join("\n");
+  return { body, htmlAttributes, bodyAttributes, metaTags };
 }
 
 // Inspired by https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/server-utils/writable-as-promise.js
