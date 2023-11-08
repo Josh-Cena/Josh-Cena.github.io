@@ -1,0 +1,48 @@
+diff --git a/src/modes/posix/built-grammar.js b/src/modes/posix/built-grammar.js
+index bb784a0b1a7f8accf8ca0ab9353d5c449d85d94a..46c8b7fa03f2e0e200fa5164b063de4747ea8cba 100644
+--- a/src/modes/posix/built-grammar.js
++++ b/src/modes/posix/built-grammar.js
+@@ -432,19 +432,6 @@ return new Parser;
+ })();
+ 
+ 
+-if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
+ exports.parser = parser;
+ exports.Parser = parser.Parser;
+ exports.parse = function () { return parser.parse.apply(parser, arguments); };
+-exports.main = function commonjsMain(args) {
+-    if (!args[1]) {
+-        console.log('Usage: '+args[0]+' FILE');
+-        process.exit(1);
+-    }
+-    var source = require('fs').readFileSync(require('path').normalize(args[1]), "utf8");
+-    return exports.parser.parse(source);
+-};
+-if (typeof module !== 'undefined' && require.main === module) {
+-  exports.main(process.argv.slice(1));
+-}
+-}
+\ No newline at end of file
+diff --git a/src/modes/posix/index.js b/src/modes/posix/index.js
+index 7eba777d149f11359782067c8060b653bb32bad6..14f733a82f66baef9511577a0ff901e14e30a143 100644
+--- a/src/modes/posix/index.js
++++ b/src/modes/posix/index.js
+@@ -5,6 +5,7 @@ const tokenizer = require('./tokenizer');
+ const phaseCatalog = require('./rules');
+ const grammarSource = require('./grammar');
+ const enums = require('./enums');
++const grammar = require('./built-grammar');
+ 
+ const lexerPhases = () => [
+ 	phaseCatalog.newLineList,
+@@ -39,10 +40,6 @@ const lexerPhases = () => [
+ module.exports = {
+ 	inherits: null,
+ 	init: (posixMode, utils) => {
+-		let grammar = null;
+-		try {
+-			grammar = require('./built-grammar');
+-		} catch (err) {}
+ 		return {
+ 			enums,
+ 			phaseCatalog,

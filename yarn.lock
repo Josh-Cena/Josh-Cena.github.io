@@ -2210,7 +2210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bash-parser@npm:^0.5.0":
+"bash-parser@npm:0.5.0":
   version: 0.5.0
   resolution: "bash-parser@npm:0.5.0"
   dependencies:
@@ -2236,6 +2236,35 @@ __metadata:
     transform-spread-iterable: "npm:^1.1.0"
     unescape-js: "npm:^1.0.5"
   checksum: b05979cafeca5fa7cd28ccfb5e0037677b4d3ced4dcb53adfb4ac36c2224ebe2888b7efc5d5d208206c551b12e2b388f2fb580cf7f12f05bd6600346c64b8ee1
+  languageName: node
+  linkType: hard
+
+"bash-parser@patch:bash-parser@npm%3A0.5.0#~/.yarn/patches/bash-parser-npm-0.5.0-911330943d.patch":
+  version: 0.5.0
+  resolution: "bash-parser@patch:bash-parser@npm%3A0.5.0#~/.yarn/patches/bash-parser-npm-0.5.0-911330943d.patch::version=0.5.0&hash=b1cb46"
+  dependencies:
+    array-last: "npm:^1.1.1"
+    babylon: "npm:^6.9.1"
+    compose-function: "npm:^3.0.3"
+    curry: "npm:^1.2.0"
+    deep-freeze: "npm:0.0.1"
+    filter-iterator: "npm:0.0.1"
+    filter-obj: "npm:^1.1.0"
+    has-own-property: "npm:^0.1.0"
+    identity-function: "npm:^1.0.0"
+    iterable-lookahead: "npm:^1.0.0"
+    iterable-transform-replace: "npm:^1.1.1"
+    magic-string: "npm:^0.16.0"
+    map-iterable: "npm:^1.0.1"
+    map-obj: "npm:^2.0.0"
+    object-pairs: "npm:^0.1.0"
+    object-values: "npm:^1.0.0"
+    reverse-arguments: "npm:^1.0.0"
+    shell-quote-word: "npm:^1.0.1"
+    to-pascal-case: "npm:^1.0.0"
+    transform-spread-iterable: "npm:^1.1.0"
+    unescape-js: "npm:^1.0.5"
+  checksum: 841d102c2a8784072fb320a99df54d9c7e90b0ad41932d024feb102cc6324aead53369c95c365b89e6feb0497ac0ef0857ee701c76b7b7f68387509ff67e2998
   languageName: node
   linkType: hard
 
@@ -6843,7 +6872,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6.9.0"
     "@typescript-eslint/parser": "npm:^6.9.0"
     "@vitejs/plugin-react": "npm:^4.1.0"
-    bash-parser: "npm:^0.5.0"
+    bash-parser: "patch:bash-parser@npm%3A0.5.0#~/.yarn/patches/bash-parser-npm-0.5.0-911330943d.patch"
     clsx: "npm:^2.0.0"
     color: "npm:^4.2.3"
     copy-text-to-clipboard: "npm:^3.2.0"
