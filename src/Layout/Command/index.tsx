@@ -78,7 +78,9 @@ export default function Command(): JSX.Element {
   const timeoutRef = useRef<number | null>(null);
   const [env, setEnv] = useState<Record<string, string>>({
     __proto__: null as never,
-    PWD: cd(location.pathname, "https://joshcena.com")!,
+    // If current location is not found
+    PWD:
+      cd(location.pathname, "https://joshcena.com") ?? "https://joshcena.com",
   });
   const [lastExit, setLastExit] = useState(0);
   const [children, setChildren] = useState<(readonly [number, ReactNode])[]>(
@@ -89,7 +91,7 @@ export default function Command(): JSX.Element {
     setEnv((e) => ({
       __proto__: null as never,
       ...e,
-      PWD: cd(location.pathname, e.PWD!)!,
+      PWD: cd(location.pathname, e.PWD!) ?? e.PWD!,
     }));
   }, [location]);
   useEffect(() => {

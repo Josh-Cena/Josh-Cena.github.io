@@ -3,13 +3,18 @@ import parseBash from "bash-parser";
 import { paths } from "@/routes";
 
 export function cd(url: string, pwd: string): string | null {
-  const newPath = new URL(url.endsWith("/") ? url : `${url}/`, pwd);
-  let pwdTree = pathTree;
-  for (const part of newPath.pathname.split("/").filter(Boolean)) {
-    if (!(part in pwdTree)) return null;
-    pwdTree = pwdTree[part]!;
+  try {
+    const newPath = new URL(url.endsWith("/") ? url : `${url}/`, pwd);
+    let pwdTree = pathTree;
+    for (const part of newPath.pathname.split("/").filter(Boolean)) {
+      if (!(part in pwdTree)) return null;
+      pwdTree = pwdTree[part]!;
+    }
+    return String(newPath);
+  } catch (e) {
+    console.error(`Cannot cd to ${url} from ${pwd}`);
+    return null;
   }
-  return String(newPath);
 }
 
 function ls(relative: string, pwd: string): [number, string] {

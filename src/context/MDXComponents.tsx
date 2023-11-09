@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { MDXProvider } from "@mdx-js/react";
 import Link from "@/components/Link";
 import Heading from "@/components/Heading";
+import CodeBlock from "@/components/CodeBlock";
 
 export default function MDXComponents({
   children,
@@ -17,6 +18,7 @@ export default function MDXComponents({
         h4: (props) => <Heading level={4} {...props} />,
         h5: (props) => <Heading level={5} {...props} />,
         h6: (props) => <Heading level={6} {...props} />,
+        pre: CodeBlock,
       }}>
       {children}
     </MDXProvider>

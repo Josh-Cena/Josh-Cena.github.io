@@ -46,29 +46,6 @@
   border-radius: 16px;
 }
 
-.copyButton {
-  background-color: #0000;
-  border: none;
-  padding: 0;
-  padding-right: 24px;
-  margin: 0;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: visible;
-}
-
-.copyIcon {
-  height: 1.2em;
-  position: relative;
-  top: 4px;
-  left: 8px;
-  display: none;
-}
-
-.copyButton:is(:hover, :focus-visible) .copyIcon {
-  display: inline;
-}
-
 .colorDataText {
   display: flex;
   flex-direction: column;

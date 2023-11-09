@@ -4,9 +4,11 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import mdx from "@mdx-js/rollup";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 import remarkFrontmatter from "remark-frontmatter";
 import transformMarkdown from "./markdown/remark-plugin-transform-markdown.js";
 import remarkMDXFrontmatter from "remark-mdx-frontmatter";
+import rehypeKatex from "rehype-katex";
 
 export default defineConfig({
   plugins: [
@@ -15,10 +17,12 @@ export default defineConfig({
       ...mdx({
         remarkPlugins: [
           remarkGfm,
+          remarkMath,
           remarkFrontmatter,
           transformMarkdown,
           [remarkMDXFrontmatter, { name: "frontMatter" }],
         ],
+        rehypePlugins: [rehypeKatex],
         providerImportSource: "@mdx-js/react",
       }),
     },

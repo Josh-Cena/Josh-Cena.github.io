@@ -2,6 +2,7 @@
   --max-page-width: 1000px;
   --color-background: white;
   --color-text: black;
+  --color-text-subdued: #888;
   --color-primary: #08827e;
   --color-primary-dark: #077571;
   --color-primary-darker: #076f6b;
@@ -34,6 +35,7 @@
 [data-color-mode="dark"] {
   --color-background: #18191a;
   --color-text: white;
+  --color-text-subdued: #aaa;
   --color-primary: #39cac4;
   --color-primary-dark: #31b8b2;
   --color-primary-darker: #2eaea8;
@@ -56,6 +58,13 @@ code {
 pre {
   font-family: var(--font-code);
   font-size: 1em;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  color: unset;
 }
 
 @font-face {

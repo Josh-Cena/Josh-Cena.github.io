@@ -1,0 +1,59 @@
+---
+description: A quick calculation of the time complexity of quicksort
+---
+
+# Quicksort time complexity
+
+The pseudocode of quicksort[^1]:
+
+```js
+function quicksort(arr) {
+  if (arr.length < 2) return arr;
+  const [pivot, ...rest] = arr;
+  const [less, greater] = partition(rest, pivot);
+  return [...quicksort(less), pivot, ...quicksort(greater)];
+}
+```
+
+Let the time taken by `quicksort()` be $T(n)$ where $n$ = `arr.length`.
+
+- Selection of `pivot` takes $\mathcal{O}(1)$ time.
+- `partition()` takes $c\cdot n + \mathcal{O}(1)$ time ($c$ is a constant).
+- Let $k$ = `less.length`. Then `quicksort(less)` takes $T(k)$ time, and `quicksort(greater)` takes $T(n-k-1)$ time.
+- The total time taken given $k$ is $T(n) = c\cdot n + T(k) + T(n-k-1)$ (the $\mathcal{O}(1)$ terms can be elided).
+
+$$
+\begin{aligned}
+T(n) &= c\cdot n + \sum_{k = 0}^{n - 1}\left(P(K = k)\cdot (T(k) + T(n-k-1))\right)\\
+&= c\cdot n + \frac{1}{n}\sum_{k = 0}^{n - 1}\left(T(k) + T(n-k-1)\right)\\
+&= c\cdot n + \frac{2}{n}\sum_{k = 0}^{n - 1}T(k)\\
+\end{aligned}
+$$
+
+Substitute $n = n - 1$.
+
+$$
+\begin{aligned}
+T(n - 1) &= c\cdot (n - 1) + \frac{2}{n - 1}\sum_{k = 0}^{n - 2}T(k)\\
+\frac{n - 1}{n}\cdot T(n - 1) &= c\cdot\frac{(n - 1)^2}{n} + \frac{2}{n}\sum_{k = 0}^{n - 2}T(k)\\
+T(n) - \frac{n - 1}{n}\cdot T(n - 1) &= c\cdot \frac{2n - 1}{n} + \frac{2}{n}\sum_{k = 0}^{n - 1}T(k) - \frac{2}{n}\sum_{k = 0}^{n - 2}T(k)\\
+\end{aligned}
+$$
+
+Now we solve for the upper bound.
+
+$$
+\begin{aligned}
+T(n) &= \frac{n - 1}{n}\cdot T(n - 1) + \frac{2}{n}\cdot T(n - 1) + c\cdot \frac{2n - 1}{n}\\
+&\leq \frac{n + 1}{n}\cdot (T(n - 1) + 2c)\\
+&= \frac{n + 1}{n}\cdot T(n - 1) + c\cdot\frac{2n + 2}{n}\\
+&\leq \frac{n + 1}{n}\cdot \frac{n}{n - 1}\cdot (T(n - 2) + 2c) + c\cdot\frac{2n + 2}{n}\\
+&= \frac{n + 1}{n - 1}\cdot T(n - 2) + c\cdot\left(\frac{2n + 2}{n - 1} + \frac{2n + 2}{n}\right)\\
+&\leq \dots\\
+&\leq (n + 1)\cdot T(0) + c\cdot (2n + 2)\sum_{i = 1}^n\frac{1}{i}\\
+&\xrightarrow{n\to\infty} (n + 1)\cdot \mathcal{O}(1) + c\cdot (2n + 2)\ln n\\
+&= \boxed{\mathcal{O}(n\ln n)}
+\end{aligned}
+$$
+
+[^1]: It's pseudocode because you don't implement quicksort like this. Real quicksort is in-place because copying like `...rest` is actually $\mathcal{O}(n)$. Still, this is a correct (and $\mathcal{O}(n\ln n)$) implementation.

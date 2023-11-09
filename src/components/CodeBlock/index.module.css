@@ -1,0 +1,33 @@
+.codeBlockContainer:hover .language {
+  display: none;
+}
+
+.codeBlockTitle {
+}
+
+.codeBlockContent {
+  position: relative;
+  line-height: 1.5;
+}
+
+.codeBlock {
+  padding: 1em;
+}
+
+.copyButton {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+}
+
+.language {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  font-size: small;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--color-text-subdued);
+  padding: 0.2em 0.5em;
+  border-radius: 0.2em;
+}
