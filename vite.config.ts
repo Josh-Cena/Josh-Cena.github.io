@@ -34,6 +34,9 @@ export default defineConfig({
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     },
   },
+  build: {
+    cssCodeSplit: false,
+  },
   resolve: {
     mainFields: ["main"],
     alias: {
