@@ -1,0 +1,165 @@
+---
+description: A collection of all Markdown syntaxes — for testing
+---
+
+# Kitchensink
+
+import text from "./kitchensink.mdx?raw";
+import CodeBlock from "@/components/CodeBlock";
+
+<details>
+  <summary>Markdown source</summary>
+  <CodeBlock language="md">{text}</CodeBlock>
+</details>
+
+## Basic Markdown
+
+### H3
+
+#### H4
+
+##### H5
+
+###### H6
+
+- _Italic_
+- **Bold**
+- **_Bold and italic_**
+- ~~Strikethrough~~
+- `Inline code`
+- [Link](https://www.example.com)
+- [Link with title](https://www.example.com "Example")
+
+A normal paragraph:
+
+> Blockquote
+>
+> > Nested blockquote
+>
+> Yes
+
+Another normal paragraph:
+
+1. `ol`
+   - `ol > ul`
+     - `ol > ul > ul`
+     - ...
+   - ...
+2. ...
+   1. `ol > ol`
+   2. ...
+
+- [x] Task list
+- [ ] Task
+- [ ] Task
+  - [ ] Nested
+  - [ ] Nested
+
+![Local image](assets/yale-logo.png)
+
+This is a rule:
+
+---
+
+Footnote[^1]
+
+Named footnote[^named]
+
+[^named]: This is a named footnote.
+[^1]: This is a footnote.
+
+## Math
+
+Inline: $x^2 + y^2 = z^2$
+
+Block:
+
+$$
+\begin{aligned}
+  x^2 + y^2 &= z^2 \\
+  x^2 &= z^2 - y^2 \\
+  x &= \sqrt{z^2 - y^2}
+\end{aligned}
+$$
+
+## Code snippets
+
+```plain
+  ___________________________
+< I'm an expert in my field. >
+  ---------------------------
+         \   ^__^
+          \  (oo)\_______
+             (__)\       )\/\
+                 ||----w |
+                 ||     ||
+```
+
+```html
+<pre></pre>
+```
+
+```js
+const f = () => {
+  return Math.random();
+};
+```
+
+```css
+:root {
+  --first-color: #488cff;
+  --second-color: #ffff8c;
+}
+
+#firstParagraph {
+  background-color: var(--first-color);
+  color: var(--second-color);
+}
+```
+
+```rust
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
+}
+```
+
+```python
+from wordcloud import WordCloud
+import pandas as pd
+import numpy as np
+
+color1 = np.array([69, 61, 59])
+color2 = np.array([38, 90, 77])
+
+name = 'song'
+df = pd.read_csv(f'{name}_count.csv', names=['name', 'count'])
+freq = dict(zip(df['name'], df['count']))
+
+def color_func(word, font_size, position, orientation, random_state=None, **kwargs):
+    randcolor = color1 + np.floor((color2 - color1) * np.random.random())
+    return("rgb(%d, %d, %d)" % tuple(randcolor))
+```
+
+## Tables
+
+### Markdown table
+
+| Tables        |      Are      |   Cool |
+| ------------- | :-----------: | -----: |
+| col 3 is      | right-aligned | \$1600 |
+| col 2 is      |   centered    |   \$12 |
+| zebra stripes |   are neat    |    \$1 |
+
+## HTML
+
+<dl>
+  <dt>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>_Works_! **HTML** <em>works</em> too.</dd>
+</dl>

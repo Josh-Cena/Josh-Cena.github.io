@@ -71,7 +71,7 @@ export default function CodeBlock({
                         <span
                           // eslint-disable-next-line react/no-array-index-key
                           key={j}
-                          {...getTokenProps({ token, key: j })}
+                          {...getTokenProps({ token })}
                         />
                       ))}
                       <br />

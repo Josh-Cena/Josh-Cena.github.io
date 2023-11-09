@@ -44,13 +44,14 @@ export async function createServer(
       )) as typeof import("../src/server-entry");
 
       const context: Record<string, unknown> = {};
-      const appHtml = await render(url, context);
+      const appHTML = await render(url, context);
 
       const html = template
-        .replace("<!--body-->", appHtml.body)
-        .replace("<!--metaTags-->", appHtml.metaTags)
-        .replace(/(?<=<head[^>]+)(?=>)/, ` ${appHtml.htmlAttributes}`)
-        .replace(/(?<=<body[^>]+)(?=>)/, ` ${appHtml.bodyAttributes}`);
+        // The HTML may contain dollar signs, which should not be special!
+        .replace("<!--body-->", () => appHTML.body)
+        .replace("<!--metaTags-->", () => appHTML.metaTags)
+        .replace(/(?<=<head[^>]+)(?=>)/, () => ` ${appHTML.htmlAttributes}`)
+        .replace(/(?<=<body[^>]+)(?=>)/, () => ` ${appHTML.bodyAttributes}`);
 
       res
         .status(Number(context.status ?? 200))
@@ -63,7 +64,7 @@ export async function createServer(
         throw e;
       }
       viteServer.ssrFixStacktrace(e);
-      console.log(e.stack);
+      console.log(e);
       res.status(500).end(e.stack);
     }
   });

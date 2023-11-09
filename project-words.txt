@@ -8,6 +8,8 @@ huayu
 infty
 joshcena
 katex
+kitchensink
+kwargs
 luo
 mathcal
 mdast
@@ -15,9 +17,11 @@ mdxjs
 metastring
 noninteractive
 noreply
+numpy
 peaceiris
 pipeable
 posix
+randcolor
 rehype
 saturationl
 scrolly
@@ -27,4 +31,5 @@ svgr
 triaging
 tseslint
 wfla
+wordcloud
 zhihu
