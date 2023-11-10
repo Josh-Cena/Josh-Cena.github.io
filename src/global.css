@@ -111,7 +111,7 @@ button {
 
 code {
   font-family: var(--font-code);
-  font-size: small;
+  font-size: smaller;
   background-color: var(--color-shadow);
   padding: 4px;
   border-radius: 4px;
@@ -139,6 +139,16 @@ blockquote {
   margin-inline-start: 0;
   margin-inline-end: 0;
   margin-left: var(--margin-paragraph);
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.5em 1em;
+  border: 1px solid var(--color-text);
 }
 
 .tooltip {

@@ -1,6 +1,7 @@
 cena
 charis
 cmyk
+conlang
 copiable
 coursetable
 estree
@@ -15,6 +16,7 @@ mathcal
 mdast
 mdxjs
 metastring
+naclo
 noninteractive
 noreply
 numpy
