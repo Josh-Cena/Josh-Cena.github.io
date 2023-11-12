@@ -1,3 +1,6 @@
+import "core-js/proposals/set-methods-v2";
+import "core-js/proposals/iterator-helpers";
+
 import React from "react";
 import { routes } from "./routes";
 import { Route, Routes } from "react-router-dom";

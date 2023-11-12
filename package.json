@@ -55,6 +55,7 @@
     "clsx": "^2.0.0",
     "color": "^4.2.3",
     "copy-text-to-clipboard": "^3.2.0",
+    "core-js": "^3.33.2",
     "github-slugger": "^2.0.0",
     "hast-util-to-text": "^4.0.0",
     "prism-react-renderer": "^2.1.0",

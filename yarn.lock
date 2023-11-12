@@ -2772,6 +2772,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:^3.33.2":
+  version: 3.33.2
+  resolution: "core-js@npm:3.33.2"
+  checksum: d6a56ad3e134846c805ce936788dd58cb51e861f173ed1f830979735d7865ea6f6a5a437076c36c8d8b842ba0384d052998f160774a8da7712f0f51df60167fe
+  languageName: node
+  linkType: hard
+
 "core-util-is@npm:^1.0.3":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -7049,6 +7056,7 @@ __metadata:
     clsx: "npm:^2.0.0"
     color: "npm:^4.2.3"
     copy-text-to-clipboard: "npm:^3.2.0"
+    core-js: "npm:^3.33.2"
     cspell: "npm:^7.3.8"
     eslint: "npm:^8.52.0"
     eslint-config-jc: "npm:^3.0.0"

@@ -18,7 +18,7 @@ const render = (
 // Has leading slash; no trailing slash
 // e.g. ["/", "/about", "/404"]
 const routesToPrerender = (
-  await glob(toAbsolute("../src/pages/**/*.{tsx,mdx}"))
+  await glob(toAbsolute("../src/pages/**/[!_]*.{tsx,mdx}"))
 ).map((file) => {
   const name = Path.relative(toAbsolute("../src/pages"), file)
     .replace(/(?:\/?index)?\.(?:tsx|mdx)$/, "")

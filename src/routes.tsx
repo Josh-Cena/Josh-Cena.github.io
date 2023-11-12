@@ -7,7 +7,7 @@ const pages = import.meta.glob<
   boolean,
   string,
   { default: React.ComponentType; [key: string]: unknown }
->("./pages/**/*.{tsx,mdx}");
+>("./pages/**/[!_]*.{tsx,mdx}");
 
 export const routes = Object.entries(pages)
   .map(([path, module]) => {

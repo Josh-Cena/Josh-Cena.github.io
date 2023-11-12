@@ -1,0 +1,15 @@
+.charSet {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.char {
+  min-width: 7em;
+}
+
+:global(.assertion-failed) {
+  color: red;
+  font-weight: bold;
+}

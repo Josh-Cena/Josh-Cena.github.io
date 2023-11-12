@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useContext } from "react";
+import React, { useEffect, useMemo, useContext, type ReactNode } from "react";
 import GithubSlugger, { slug } from "github-slugger";
 import styles from "./index.module.css";
 
@@ -26,6 +26,14 @@ function useSlugger(): GithubSlugger {
   return slugger;
 }
 
+function getText(children: ReactNode): string {
+  if (typeof children === "string") return children;
+  if (Array.isArray(children))
+    return children.map(getText).filter(Boolean).join(" ");
+  if (React.isValidElement(children)) return getText(children.props.children);
+  return "";
+}
+
 export default function Heading({
   level,
   children,
@@ -42,7 +50,7 @@ export default function Heading({
   //   () => slugger.slug(children as string),
   //   [slugger, children],
   // );
-  const id = anchor ?? slug(children as string);
+  const id = anchor ?? slug(getText(children));
   return (
     <HeadingTag id={id}>
       <a href={`#${id}`} className={styles.anchor}>
