@@ -38,7 +38,6 @@
 .scrollable {
   position: sticky;
   top: var(--height-navbar);
-  overflow: visible;
 }
 
 .scrolly {

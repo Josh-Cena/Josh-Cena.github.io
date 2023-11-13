@@ -109,24 +109,20 @@ export default function About(): JSX.Element {
           <br />
           Joshua Chen
         </div>
-        <Tooltip
-          id={nameId}
-          className="tooltip"
-          disableStyleInjection
-          clickable>
-          <p>
-            For those of you who are more familiar with IPA than pinyin, here's
-            its IPA transcription in my pronunciation:
-          </p>
-          {/* cSpell:ignore tʃɛ̌n sᵻdɐ̌ */}
-          <p style={{ textAlign: "center" }}>[tʃɛ̌n sᵻdɐ̌]</p>
-          <p>
-            Granted, everyone seems to have a different theory about what vowels
-            Mandarin has, and I'm far from being a phonetician, so take it with
-            a grain of salt.
-          </p>
-        </Tooltip>
       </div>
+      <Tooltip id={nameId} className="tooltip" disableStyleInjection clickable>
+        <p>
+          For those of you who are more familiar with IPA than pinyin, here's
+          its IPA transcription in my pronunciation:
+        </p>
+        {/* cSpell:ignore tʃɛ̌n sᵻdɐ̌ */}
+        <p style={{ textAlign: "center" }}>[tʃɛ̌n sᵻdɐ̌]</p>
+        <p>
+          Granted, everyone seems to have a different theory about what vowels
+          Mandarin has, and I'm far from being a phonetician, so take it with a
+          grain of salt.
+        </p>
+      </Tooltip>
       <p>
         Specialist in JavaScript and related technologies. Maintainer of the MDN
         JavaScript documentation. Contributor to impactful JavaScript

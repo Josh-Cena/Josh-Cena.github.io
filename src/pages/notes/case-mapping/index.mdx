@@ -446,9 +446,23 @@ Therefore, ignoring these nodes, the graph is inherently bipartite:
 - Each uppercase invariant node points to a lowercase invariant node with an $l$-edge and points to itself with a $u$-edge. It has zero or more in $u$-edges and no in $l$-edge.
 - Each lowercase invariant node points to an uppercase invariant node with a $u$-edge and points to itself with an $l$-edge. It has zero or more in $l$-edges and no in $u$-edge.
 
+### Connected subgraphs
+
+A _connected subgraph_, called a _cluster_, formed by $c$ is recursively defined:
+
+1. $c$ is in the cluster.
+2. If $c'$ is in the cluster, then all nodes that point to $c'$ and those that $c'$ points to are all in the cluster.
+
+Nodes that are in the cluster formed by $c\in N_L'\cup N_U'$ do not always form cycles through some series of `toUpperCase`/`toLowerCase` transformations, because they eventually map to a node in $N_L'\cup N_U'$, which has no out $l$-edge or no out $u$-edge.
+
+<CharSet
+  set={nClusters}
+  display={(v) => [...v].map((v) => charCode(v.char)).join(", ")}
+/>
+
 ### Simple mapping pairs
 
-Define a _mapping pair_ as a pair of nodes $(c_u, c_l)$ ($c_u\neq c_l$) such that:
+Define a _mapping pair_ as a cluster of size 2. A mapping pair $(c_u, c_l)$ ($c_u\neq c_l$) satisfies:
 
 1. $(c_u, c_l)\in E_l$ (the $l$-edge of $c_u$ points to $c_l$)
 2. $(c_l, c_u)\in E_u$ (the $u$-edge of $c_l$ points to $c_u$)
@@ -475,20 +489,6 @@ There are {simplePairs.size} such pairs. Of these, {simplePairs.values().reduce(
 />
 
 Which are roman numerals $(Ro_U, Ro_L)$, circled letters $(Ci_U, Ci_L)$, and $(M_L', M_L)$, $(M_U, M_U')$.
-
-### Connected subgraphs
-
-A _connected subgraph_, called a _cluster_, formed by $c$ is recursively defined:
-
-1. $c$ is in the cluster.
-2. If $c'$ is in the cluster, then all nodes that point to $c'$ and those that $c'$ points to are all in the cluster.
-
-Nodes that are in the cluster formed by $c\in N_L'\cup N_U'$ do not always form cycles through some series of `toUpperCase`/`toLowerCase` transformations, because they eventually map to a node in $N_L'\cup N_U'$, which has no out $l$-edge or no out $u$-edge.
-
-<CharSet
-  set={nClusters}
-  display={(v) => [...v].map((v) => charCode(v.char)).join(", ")}
-/>
 
 Now, the remaining nodes are the complex cycles that neither have dead ends nor are simple mapping pairs. They are:
 
