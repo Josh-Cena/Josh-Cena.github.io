@@ -1,4 +1,4 @@
-import{u as a,j as s,C as i}from"./index-d77fd748.js";const t=`---
+import{u as a,j as s,C as i}from"./index-c5fa6a69.js";const t=`---
 description: A collection of all Markdown syntaxes — for testing
 ---
 

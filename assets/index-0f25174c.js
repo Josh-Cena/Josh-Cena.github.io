@@ -1,1 +1,0 @@
-import{j as o,L as e}from"./index-d77fd748.js";function s(){return o.jsx("ul",{children:o.jsx("li",{children:o.jsx(e,{href:"/tools/color-converter",children:"Color converter"})})})}const t={title:"Tools",description:"Tools developed by Josh-Cena"};export{s as default,t as meta};
