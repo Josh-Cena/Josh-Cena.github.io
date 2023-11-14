@@ -7,6 +7,10 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
 
 import "./global.css";
+import { Prism } from "prism-react-renderer";
+
+globalThis.Prism = Prism;
+await import("prismjs/components/prism-python");
 
 export default function App(): JSX.Element {
   return (

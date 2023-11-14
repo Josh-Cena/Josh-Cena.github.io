@@ -3,6 +3,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 declare module "bash-parser";
+declare module "prismjs/components/prism-*";
 
 declare interface Set<T> {
   difference(otherSet: Set<T>): Set<T>;
