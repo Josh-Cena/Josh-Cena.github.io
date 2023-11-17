@@ -5,7 +5,7 @@
   background: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-code);
-  border-radius: 6px;
+  border-radius: var(--border-radius-small);
   border: 2px solid var(--color-text);
   min-height: 3em;
   max-height: 24ch;
@@ -20,12 +20,9 @@
 }
 
 .cleanButton {
-  background: none;
-  border: none;
   outline: none;
   font-family: var(--font-code);
   color: var(--color-text);
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;

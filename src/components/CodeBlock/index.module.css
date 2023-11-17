@@ -29,5 +29,5 @@
   text-transform: uppercase;
   color: var(--color-text-subdued);
   padding: 0.2em 0.5em;
-  border-radius: 0.2em;
+  border-radius: var(--border-radius-small);
 }

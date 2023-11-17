@@ -59,10 +59,7 @@ Timeline.Item = ({
       )}
       <br />
       <span style={{ fontWeight: "bold" }}>
-        {position},{" "}
-        <a href={href} target="_blank" rel="noreferrer">
-          {organization}
-        </a>
+        {position}, <Link href={href}>{organization}</Link>
       </span>
       {children}
     </li>

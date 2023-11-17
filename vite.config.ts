@@ -36,6 +36,7 @@ export default defineConfig({
   },
   build: {
     cssCodeSplit: false,
+    target: "es2022",
   },
   resolve: {
     mainFields: ["main"],

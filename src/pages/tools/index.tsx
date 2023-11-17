@@ -6,6 +6,9 @@ export default function Tools(): JSX.Element {
       <li>
         <Link href="/tools/color-converter">Color converter</Link>
       </li>
+      <li>
+        <Link href="/tools/keyboard-visualizer">Keyboard visualizer</Link>
+      </li>
     </ul>
   );
 }

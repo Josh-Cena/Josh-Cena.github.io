@@ -1,0 +1,116 @@
+.mapManager {
+  height: 2.5em;
+  overflow: visible;
+  margin-bottom: 1em;
+}
+
+.mapButton {
+  width: 13em;
+  height: 2.5em;
+  border: 2px solid var(--color-text-subdued);
+  border-radius: var(--border-radius-small);
+}
+
+.mapButton:focus + .mapListContainer,
+.mapListContainer:is(:hover, :focus-within) {
+  display: block;
+}
+
+.mapListContainer {
+  display: none;
+  border: 1px solid var(--color-text);
+  background: var(--color-background);
+  z-index: 10;
+  position: absolute;
+  max-height: 20em;
+  width: 20em;
+  overflow: scroll;
+}
+
+.mapListContainer input {
+  width: calc(100% - 2em);
+  margin: 0.5em;
+}
+
+.mapList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mapItem {
+  display: flex;
+}
+
+.mapItem:is(:hover, :focus-within) {
+  background-color: var(--color-shadow);
+}
+
+.mapItemButton {
+  width: calc(100% - 2em);
+  height: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.mapItemDeleteButton {
+  display: none;
+  color: var(--color-red);
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  justify-content: center;
+  align-items: center;
+}
+
+.mapItemDeleteButton:hover {
+  background-color: var(--color-shadow);
+}
+
+.mapItem:is(:hover, :focus-within) .mapItemDeleteButton {
+  display: flex;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.keyRow {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+
+.key {
+  border: 2px solid var(--color-text);
+  border-radius: var(--border-radius-small);
+  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.keyUnknown {
+  background-color: var(--color-red);
+}
+
+.keyDead {
+  background-color: var(--color-blue);
+}
+
+.squareKey {
+  width: 2.4em;
+  height: 2.4em;
+}
+
+.longKey {
+  width: auto;
+  flex-grow: 1;
+}
+
+.keyPressed {
+  box-shadow: 0 0 4px 4px var(--color-shadow) inset;
+}

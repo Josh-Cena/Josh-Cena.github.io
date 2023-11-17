@@ -22,6 +22,7 @@
   --margin-paragraph: 1rem;
   --font-main: "CharisSILW", Georgia, "Times New Roman", Times, serif;
   --font-code: Menlo, Consolas, Monaco, monospace;
+  --border-radius-small: 0.25em;
 
   font-family: var(--font-main);
   scroll-padding-top: var(--height-navbar);
@@ -114,7 +115,7 @@ code {
   font-size: smaller;
   background-color: var(--color-shadow);
   padding: 4px;
-  border-radius: 4px;
+  border-radius: var(--border-radius-small);
   color: var(--color-text);
 }
 
@@ -153,6 +154,21 @@ td {
 
 summary {
   cursor: pointer;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+kbd {
+  font-family: var(--font-code);
+  font-size: smaller;
+  padding: 0.25em 0.5em;
+  border-radius: var(--border-radius-small);
+  color: var(--color-text);
+  border: 1px solid var(--color-text-subdued);
 }
 
 .tooltip {
