@@ -1,4 +1,6 @@
+allowtransparency
 backquote
+buendía
 casedness
 cena
 charis
@@ -7,11 +9,15 @@ cmyk
 codomain
 conlang
 copiable
+counterplay
 coursetable
 dialytika
 dotless
+emboard
 estree
+fianchetto
 flattenable
+garcía
 huayu
 infty
 injectivity
@@ -22,6 +28,7 @@ kwargs
 letterlike
 lext
 luo
+márquez's
 mathbb
 mathcal
 mathtt
@@ -38,6 +45,7 @@ pipeable
 posix
 prismjs
 prosgegrammeni
+queenside
 randcolor
 rehype
 saturationl

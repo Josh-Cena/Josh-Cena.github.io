@@ -54,7 +54,7 @@
 
 .promptPath {
   font-weight: bold;
-  color: var(--color-dark-blue);
+  color: var(--color-indigo);
 }
 
 [data-color-mode="dark"] .promptPath {

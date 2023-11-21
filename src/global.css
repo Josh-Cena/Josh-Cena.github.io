@@ -12,10 +12,16 @@
   --color-primary-lightest: #0aa9a4;
   --color-shadow: #00000020;
   --color-red: #ca393e;
-  --color-green: #3eca39;
   --color-pink: #ca3986;
+  --color-violet: #c539ca;
+  --color-purple: #7d39ca;
+  --color-indigo: #393eca;
   --color-blue: #3986ca;
-  --color-dark-blue: #393eca;
+  --color-seagreen: #39ca7d;
+  --color-green: #3eca39;
+  --color-yellowgreen: #86ca39;
+  --color-yellow: #cac539;
+  --color-orange: #ca7d39;
   --height-navbar: 4rem;
   --margin-main-h: 2rem;
   --margin-main-v: 0;
@@ -23,6 +29,8 @@
   --font-main: "CharisSILW", Georgia, "Times New Roman", Times, serif;
   --font-code: Menlo, Consolas, Monaco, monospace;
   --border-radius-small: 0.25em;
+  --border-radius-medium: 0.5em;
+  --border-radius-large: 1em;
 
   font-family: var(--font-main);
   scroll-padding-top: var(--height-navbar);
@@ -181,6 +189,7 @@ kbd {
   margin-top: 1em;
   padding: 0 1em;
   font-weight: normal;
+  z-index: 100;
 }
 
 .term {

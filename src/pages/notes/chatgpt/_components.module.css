@@ -1,0 +1,55 @@
+.chatBox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1em;
+  overflow-y: auto;
+}
+
+.chatBox:nth-of-type(2n) {
+  background-color: #0001;
+}
+
+[data-color-mode="dark"] .chatBox:nth-of-type(2n) {
+  background-color: #fff1;
+}
+
+.profileRow {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.avatar {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+}
+
+.avatar[alt="JC"] {
+  background-color: white;
+}
+
+.avatar[alt="ChatGPT"] {
+  background-color: rgb(25, 195, 125);
+}
+
+.name {
+  font-weight: bold;
+}
+
+.commentButton {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  width: 1.5em;
+  height: 1.5em;
+  cursor: help;
+}
+
+.commentButton img {
+  width: 100%;
+  height: 100%;
+}

@@ -326,5 +326,5 @@ export default function ColorConverter(): JSX.Element {
 export const meta = {
   title: "Color converter",
   description:
-    "A tool that readily converts colors between different formats allowing visualized adjustments",
+    "Readily convert colors to different formats and adjust its components with visualizations",
 };

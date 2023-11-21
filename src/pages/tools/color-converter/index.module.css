@@ -43,7 +43,7 @@
 .colorPreview {
   width: 8em;
   height: 8em;
-  border-radius: 16px;
+  border-radius: var(--border-radius-large);
 }
 
 .colorDataText {
