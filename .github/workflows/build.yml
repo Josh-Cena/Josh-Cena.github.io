@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+env:
+  # https://github.com/actions/setup-node/issues/899
+  SKIP_YARN_COREPACK_CHECK: 1
+
 jobs:
   deploy:
     name: Deploy to GitHub Pages

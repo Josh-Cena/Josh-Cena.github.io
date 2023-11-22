@@ -9,6 +9,7 @@ cmyk
 codomain
 conlang
 copiable
+corepack
 counterplay
 coursetable
 dialytika
