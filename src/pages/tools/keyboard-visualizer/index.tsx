@@ -20,7 +20,13 @@ function MapManager({
 }): JSX.Element {
   return (
     <div className={styles.mapManager}>
-      <button className={styles.mapButton} type="button">
+      <button
+        className={styles.mapButton}
+        type="button"
+        onClick={(e) => {
+          // Safari does not focus buttons on click
+          (e.target as HTMLElement).focus();
+        }}>
         {currentMap ?? "Select a map..."}
       </button>
       <div className={styles.mapListContainer}>
