@@ -16,7 +16,6 @@
   border-radius: var(--border-radius-small);
   border: var(--color-primary) solid 1px;
   background-color: transparent;
-  color: var(--color-text);
   padding: 0 1em;
 }
 

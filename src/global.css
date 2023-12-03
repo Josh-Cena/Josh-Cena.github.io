@@ -114,8 +114,10 @@ p {
 
 input,
 button {
+  background-color: var(--color-background);
   font-family: var(--font-main);
   font-size: 1em;
+  color: var(--color-text);
 }
 
 code {

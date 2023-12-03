@@ -22,7 +22,6 @@
 .cleanButton {
   outline: none;
   font-family: var(--font-code);
-  color: var(--color-text);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +46,6 @@
   border: none;
   outline: none;
   font-family: var(--font-code);
-  color: var(--color-text);
   width: 100%;
   min-width: 0;
 }
