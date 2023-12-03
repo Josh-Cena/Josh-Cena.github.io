@@ -1,5 +1,6 @@
 import type { Plugin } from "unified";
 import type { Root, Heading, Literal } from "mdast";
+import type { Nodes } from "hast";
 import { toText } from "hast-util-to-text";
 
 const transformMarkdown: Plugin = () => (ast, vFile) => {
@@ -10,7 +11,7 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
   );
   if (!firstHeading) return;
   const title = children[firstHeading];
-  const titleText = title ? toText(title) : "";
+  const titleText = title ? toText(title as Nodes) : "";
   const frontMatter = children.find((node) => node.type === "yaml");
   if (!frontMatter) {
     children.unshift({

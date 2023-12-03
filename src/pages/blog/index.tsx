@@ -20,9 +20,9 @@ const posts = Object.entries(modules).map(
           <section>
             <Link
               href={path
-                .match(/\.\/(?<name>.*)\.mdx$/)!
+                .match(/\.\/(?<name>.*)\.mdx$/u)!
                 .groups!.name!.toLowerCase()
-                .replace(/index$/, "")}>
+                .replace(/index$/u, "")}>
               <h2>{frontMatter.title}</h2>
             </Link>
             <PostData frontMatter={frontMatter} />

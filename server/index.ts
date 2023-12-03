@@ -3,6 +3,7 @@ import Path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
 import * as Vite from "vite";
+import type { SSRContextValue } from "@/context/SSRContext";
 
 const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 
@@ -43,15 +44,15 @@ export async function createServer(
         "/src/server-entry.tsx",
       )) as typeof import("../src/server-entry");
 
-      const context: Record<string, unknown> = {};
+      const context: SSRContextValue = {};
       const appHTML = await render(url, context);
 
       const html = template
         // The HTML may contain dollar signs, which should not be special!
         .replace("<!--body-->", () => appHTML.body)
         .replace("<!--metaTags-->", () => appHTML.metaTags)
-        .replace(/(?<=<head[^>]+)(?=>)/, () => ` ${appHTML.htmlAttributes}`)
-        .replace(/(?<=<body[^>]+)(?=>)/, () => ` ${appHTML.bodyAttributes}`);
+        .replace(/<head[^>]+/u, () => `$& ${appHTML.htmlAttributes}`)
+        .replace(/<body[^>]+/u, () => `$& ${appHTML.bodyAttributes}`);
 
       res
         .status(Number(context.status ?? 200))

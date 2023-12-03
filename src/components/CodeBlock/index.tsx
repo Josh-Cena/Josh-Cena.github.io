@@ -18,7 +18,8 @@ export default function CodeBlock({
   readonly className?: string | undefined;
 }): JSX.Element {
   const language =
-    languageProp ?? classNameProp?.match(/language-(?<lang>[^ ]+)/)?.[1];
+    languageProp ??
+    classNameProp?.match(/language-(?<lang>[^ ]+)/u)?.groups?.lang;
   const childrenArray = Children.toArray(children);
   const { colorMode } = useColorMode();
   const theme = colorMode === "dark" ? themes.vsDark : themes.github;

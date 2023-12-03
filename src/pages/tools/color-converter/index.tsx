@@ -42,14 +42,14 @@ const r = (strings: TemplateStringsArray, ...args: unknown[]) =>
     ),
   );
 function ColorInput({
-  c,
+  name,
   color,
   method,
   min = 0,
   max,
   setColor,
 }: {
-  readonly c: string;
+  readonly name: string;
   readonly color: Color;
   readonly method:
     | "red"
@@ -69,11 +69,11 @@ function ColorInput({
     | "chroma";
   readonly min?: number;
   readonly max: number;
-  readonly setColor: (color: Color) => void;
+  readonly setColor: (c: Color) => void;
 }) {
   return (
-    <label key={c}>
-      {c}
+    <label>
+      {name}
       <input
         type="range"
         style={{
@@ -119,7 +119,7 @@ export default function ColorConverter(): JSX.Element {
             try {
               setColor(new Color(e.currentTarget.value));
               e.currentTarget.setCustomValidity("");
-            } catch (err) {
+            } catch {
               e.currentTarget.setCustomValidity("Invalid color");
               e.currentTarget.reportValidity();
             }
@@ -199,7 +199,7 @@ export default function ColorConverter(): JSX.Element {
             {(["R", "G", "B"] as const).map((c) => (
               <ColorInput
                 key={c}
-                c={c}
+                name={c}
                 color={color}
                 method={
                   (
@@ -219,7 +219,7 @@ export default function ColorConverter(): JSX.Element {
             {(["H", "S", "L"] as const).map((c) => (
               <ColorInput
                 key={c}
-                c={c}
+                name={c}
                 color={color}
                 method={
                   (
@@ -239,7 +239,7 @@ export default function ColorConverter(): JSX.Element {
             {(["H", "W", "B"] as const).map((c) => (
               <ColorInput
                 key={c}
-                c={c}
+                name={c}
                 color={color}
                 method={
                   (
@@ -259,7 +259,7 @@ export default function ColorConverter(): JSX.Element {
             {(["C", "M", "Y", "K"] as const).map((c) => (
               <ColorInput
                 key={c}
-                c={c}
+                name={c}
                 color={color}
                 method={
                   (
@@ -280,7 +280,7 @@ export default function ColorConverter(): JSX.Element {
             {(["L", "A", "B"] as const).map((c) => (
               <ColorInput
                 key={c}
-                c={c}
+                name={c}
                 color={color}
                 method={
                   (
@@ -301,7 +301,7 @@ export default function ColorConverter(): JSX.Element {
             {(["L", "C", "H"] as const).map((c) => (
               <ColorInput
                 key={c}
-                c={c}
+                name={c}
                 color={color}
                 method={
                   (

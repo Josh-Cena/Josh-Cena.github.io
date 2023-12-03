@@ -11,11 +11,11 @@ const pages = import.meta.glob<
 
 export const routes = Object.entries(pages)
   .map(([path, module]) => {
-    const name = path.match(/\.\/pages\/(?<name>.*)\.(?:tsx|mdx)$/)!.groups!
+    const name = path.match(/\.\/pages\/(?<name>.*)\.(?:tsx|mdx)$/u)!.groups!
       .name!;
     return {
       path:
-        name === "404" ? "*" : `/${name.toLowerCase()}`.replace(/index$/, ""),
+        name === "404" ? "*" : `/${name.toLowerCase()}`.replace(/index$/u, ""),
       RouteComp: React.lazy(async () => {
         const { default: Comp, ...rest } = await module();
         const metadata = (

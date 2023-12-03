@@ -4,11 +4,54 @@ import { StaticRouter } from "react-router-dom/server";
 import { Writable } from "node:stream";
 import { HelmetProvider, type FilledContext } from "react-helmet-async";
 import App from "./App";
-import { SSRContextProvider } from "./context/SSRContext";
+import { SSRContextProvider, type SSRContextValue } from "./context/SSRContext";
+
+// Inspired by https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/server-utils/writable-as-promise.js
+class WritableAsPromise extends Writable {
+  #output: string;
+  #deferred: {
+    promise: Promise<string> | null;
+    resolve: (value: string) => void;
+    reject: (reason: Error) => void;
+  };
+
+  constructor() {
+    super();
+    this.#output = ``;
+    this.#deferred = {
+      promise: null,
+      resolve: () => null,
+      reject: () => null,
+    };
+    this.#deferred.promise = new Promise((resolve, reject) => {
+      this.#deferred.resolve = resolve;
+      this.#deferred.reject = reject;
+    });
+  }
+
+  override _write(chunk: unknown, enc: unknown, next: () => void) {
+    this.#output += String(chunk);
+    next();
+  }
+
+  override _destroy(error: Error | null, next: (error?: Error | null) => void) {
+    if (error instanceof Error) this.#deferred.reject(error);
+    else next();
+  }
+
+  override end() {
+    this.#deferred.resolve(this.#output);
+    return this.destroy();
+  }
+
+  getPromise(): Promise<string> {
+    return this.#deferred.promise!;
+  }
+}
 
 export async function render(
   url: string,
-  context: Record<string, unknown>,
+  context: SSRContextValue,
 ): Promise<{
   body: string;
   htmlAttributes: string;
@@ -54,47 +97,4 @@ export async function render(
   ];
   const metaTags = metaStrings.filter(Boolean).join("\n");
   return { body, htmlAttributes, bodyAttributes, metaTags };
-}
-
-// Inspired by https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/server-utils/writable-as-promise.js
-class WritableAsPromise extends Writable {
-  #output: string;
-  #deferred: {
-    promise: Promise<string> | null;
-    resolve: (value: string) => void;
-    reject: (reason: Error) => void;
-  };
-
-  constructor() {
-    super();
-    this.#output = ``;
-    this.#deferred = {
-      promise: null,
-      resolve: () => null,
-      reject: () => null,
-    };
-    this.#deferred.promise = new Promise((resolve, reject) => {
-      this.#deferred.resolve = resolve;
-      this.#deferred.reject = reject;
-    });
-  }
-
-  override _write(chunk: unknown, enc: unknown, next: () => void) {
-    this.#output += String(chunk);
-    next();
-  }
-
-  override _destroy(error: Error | null, next: (error?: Error | null) => void) {
-    if (error instanceof Error) this.#deferred.reject(error);
-    else next();
-  }
-
-  override end() {
-    this.#deferred.resolve(this.#output);
-    return this.destroy();
-  }
-
-  getPromise(): Promise<string> {
-    return this.#deferred.promise!;
-  }
 }

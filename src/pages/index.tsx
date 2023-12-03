@@ -15,7 +15,7 @@ export default function Home(): JSX.Element {
           <span tabIndex={0} data-tooltip-id={id} className="term">
             languages
           </span>
-          !
+          {/* No space */}!
         </p>
       </blockquote>
       <Tooltip id={id} className="tooltip" disableStyleInjection clickable>

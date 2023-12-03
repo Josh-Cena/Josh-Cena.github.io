@@ -2,16 +2,24 @@ import type { Dispatch, SetStateAction } from "react";
 import parseBash from "bash-parser";
 import { paths } from "@/routes";
 
+type PathTree = {
+  [key: string]: PathTree | null;
+};
+
+const pathTree: PathTree = {};
+
+export type Env = { [key: string]: string };
+
 export function cd(url: string, pwd: string): string | null {
   try {
     const newPath = new URL(url.endsWith("/") ? url : `${url}/`, pwd);
     let pwdTree = pathTree;
     for (const part of newPath.pathname.split("/").filter(Boolean)) {
-      if (!(part in pwdTree)) return null;
+      if (!Object.hasOwn(pwdTree, part)) return null;
       pwdTree = pwdTree[part]!;
     }
     return String(newPath);
-  } catch (e) {
+  } catch {
     console.error(`Cannot cd to ${url} from ${pwd}`);
     return null;
   }
@@ -22,26 +30,21 @@ function ls(relative: string, pwd: string): [number, string] {
   for (const part of new URL(relative, pwd).pathname
     .split("/")
     .filter(Boolean)) {
-    if (!(part in pwdTree)) return [1, `ls: invalid PWD? ${part} not found`];
+    if (!Object.hasOwn(pwdTree, part))
+      return [1, `ls: invalid PWD? ${part} not found`];
     pwdTree = pwdTree[part]!;
   }
   return [0, Object.keys(pwdTree).join("\n")];
 }
 
-type PathTree = {
-  [key: string]: PathTree | null;
-};
-
-const pathTree: PathTree = {};
-
 for (const path of paths) {
   const parts = path.split("/").filter(Boolean);
   // Root path
   if (!parts.length) continue;
-  let node = pathTree;
+  let pwdTree = pathTree;
   for (const part of parts) {
-    if (!(part in node)) node[part] = { __proto__: null };
-    node = node[part]!;
+    if (!Object.hasOwn(pwdTree, part)) pwdTree[part] = { __proto__: null };
+    pwdTree = pwdTree[part]!;
   }
 }
 
@@ -53,27 +56,27 @@ export function handleCommand(
     lastExit,
     navigate,
   }: {
-    env: Record<string, string>;
-    setEnv: Dispatch<SetStateAction<Record<string, string>>>;
+    env: Env;
+    setEnv: Dispatch<SetStateAction<Env>>;
     lastExit: number;
     navigate: (url: string) => void;
   },
 ): [number, string] {
   try {
     const ast = parseBash(command, {
-      resolveAlias: (s: string) => {
+      resolveAlias(s: string) {
         console.log("Resolving alias", s);
         return s;
       },
-      resolveHomeUser: (s: string) => {
+      resolveHomeUser(s: string) {
         console.log("Resolving home user", s);
         return "/";
       },
-      resolveEnv: (s: string) => {
+      resolveEnv(s: string) {
         console.log("Resolving env", s);
         return env[s] ?? "";
       },
-      resolveParameter: (ast: any) => {
+      resolveParameter(ast: any) {
         console.log("Resolving parameter", ast);
         if (ast.kind === "last-exit-status") return String(lastExit);
         else if (ast.parameter in env) return env[ast.parameter];
@@ -106,10 +109,9 @@ export function handleCommand(
           ...env,
           ...Object.fromEntries(
             args.map((a) =>
-              (a.text.match(/(?<key>.*?)=(?<value>.*)/) ?? [a.text, ""]).slice(
-                1,
-                3,
-              ),
+              (
+                a.text.match(/(?<key>[^=\s]+)=(?<value>.*)/u) ?? [a.text, ""]
+              ).slice(1, 3),
             ),
           ),
         });

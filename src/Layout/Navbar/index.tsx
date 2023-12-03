@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "@/components/Link";
 import { useColorMode } from "@/context/ColorMode";
-import ColorModeToggle from "./ColorModeToggle";
 import LogoLight from "assets/logo.svg?react";
 import LogoDark from "assets/logo-dark.svg?react";
+import ColorModeToggle from "./ColorModeToggle";
 import styles from "./index.module.css";
 
 type LinkConfig = {

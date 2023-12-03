@@ -1,9 +1,12 @@
 import React, { type ReactNode, useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import clsx from "clsx";
-import { handleCommand, cd } from "./commandHandler";
+import { handleCommand, cd, type Env } from "./commandHandler";
 import CommandButton from "./CommandButton";
 import styles from "./index.module.css";
+
+const cmdHistory: string[] = [];
+let cmdHistoryIndex = 0;
 
 function CommandInput(
   {
@@ -26,7 +29,7 @@ function CommandInput(
       <span className={styles.promptPath}>
         {new URL(pwd).pathname.split("/").findLast(Boolean) || "/"}
       </span>
-      $&nbsp;
+      {/* No space */}$&nbsp;
     </span>
   );
   return (
@@ -66,9 +69,6 @@ function CommandInput(
 
 const CommandInputWithRef = React.forwardRef(CommandInput);
 
-const cmdHistory: string[] = [];
-let cmdHistoryIndex = 0;
-
 export default function Command(): JSX.Element {
   const [expanded, setExpanded] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -76,7 +76,7 @@ export default function Command(): JSX.Element {
   const [mouseInBox, setMouseInBox] = useState(false);
   const location = useLocation();
   const timeoutRef = useRef<number | null>(null);
-  const [env, setEnv] = useState<Record<string, string>>({
+  const [env, setEnv] = useState<Env>({
     __proto__: null as never,
     // If current location is not found
     PWD:
@@ -110,7 +110,9 @@ export default function Command(): JSX.Element {
   return (
     <div
       className={clsx(styles.inputBox, expanded && styles.inputBoxExpanded)}
+      // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
       onMouseEnter={() => setMouseInBox(true)}
+      // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
       onMouseLeave={() => setMouseInBox(false)}>
       {expanded ? (
         <div className={styles.inputContent}>

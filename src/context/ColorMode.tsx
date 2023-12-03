@@ -20,25 +20,25 @@ export function ColorModeProvider({
 }: {
   readonly children: React.ReactNode;
 }): JSX.Element {
-  const [colorMode, rawSetColorMode] = useState<ColorMode>("light");
+  const [colorMode, setColorMode] = useState<ColorMode>("light");
 
   useEffect(() => {
     const root = window.document.documentElement;
     const initialColorValue = root.dataset.colorMode as ColorMode;
     // TODO read from localStorage and system theme
-    rawSetColorMode(initialColorValue);
+    setColorMode(initialColorValue);
   }, []);
 
-  const setColorMode = useCallback((newValue: ColorMode) => {
+  const syncedSetColorMode = useCallback((newValue: ColorMode) => {
     const root = window.document.documentElement;
     localStorage.setItem("color-mode", newValue);
-    rawSetColorMode(newValue);
+    setColorMode(newValue);
     root.dataset.colorMode = newValue;
   }, []);
 
   const contextVal = useMemo(
-    () => ({ colorMode, setColorMode }),
-    [colorMode, setColorMode],
+    () => ({ colorMode, setColorMode: syncedSetColorMode }),
+    [colorMode, syncedSetColorMode],
   );
 
   return <Context.Provider value={contextVal}>{children}</Context.Provider>;

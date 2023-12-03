@@ -1,7 +1,10 @@
 {
-  "extends": ["jc"],
+  "extends": ["jc", "jc/node"],
   "root": true,
   "parserOptions": {
     "project": true
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": "off"
   }
 }

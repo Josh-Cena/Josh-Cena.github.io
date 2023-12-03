@@ -83,24 +83,24 @@ function Keys({
   readonly keyboardMap: KeyboardMap | undefined;
   readonly index: 0 | 1 | 2 | 3;
 }) {
-  return keys.map((s) => (
-    <span
-      key={s}
-      title={s}
-      className={clsx(
-        styles.key,
-        styles.squareKey,
-        keysPressed.includes(s) && styles.keyPressed,
-        (keyboardMap?.[s]?.[index] == null ||
-          keyboardMap?.[s]?.[index] === "Unidentified") &&
-          styles.keyUnknown,
-        keyboardMap?.[s]?.[index] === "Dead" && styles.keyDead,
-      )}>
-      {["Dead", "Unidentified"].includes(keyboardMap?.[s]?.[index] as string)
-        ? null
-        : keyboardMap?.[s]?.[index]}
-    </span>
-  ));
+  return keys.map((s) => {
+    const key = keyboardMap?.[s]?.[index];
+    return (
+      <span
+        key={s}
+        title={s}
+        className={clsx(
+          styles.key,
+          styles.squareKey,
+          keysPressed.includes(s) && styles.keyPressed,
+          (key === null || key === undefined || key === "Unidentified") &&
+            styles.keyUnknown,
+          key === "Dead" && styles.keyDead,
+        )}>
+        {["Dead", "Unidentified"].includes(key as string) ? null : key}
+      </span>
+    );
+  });
 }
 
 function KeyboardMapTable({
@@ -139,8 +139,8 @@ function KeyboardMapTable({
                   s === "Dead"
                     ? styles.keyDead
                     : s === "Unidentified" || !s
-                    ? styles.keyUnknown
-                    : undefined
+                      ? styles.keyUnknown
+                      : undefined
                 }>
                 {s ?? "?"}
               </td>
@@ -161,6 +161,8 @@ function LetterToKey({ keyboardMap }: { readonly keyboardMap: KeyboardMap }) {
     if (keys[1] && !["Unidentified", "Dead"].includes(keys[1])) {
       letterToKey.push([
         keys[1],
+        // These are not to be rendered as a list
+        // eslint-disable-next-line react/jsx-key
         <>
           <kbd>Shift</kbd> + <kbd>{code}</kbd>
         </>,
@@ -169,6 +171,7 @@ function LetterToKey({ keyboardMap }: { readonly keyboardMap: KeyboardMap }) {
     if (keys[2] && !["Unidentified", "Dead"].includes(keys[2])) {
       letterToKey.push([
         keys[2],
+        // eslint-disable-next-line react/jsx-key
         <>
           <kbd>Alt</kbd> + <kbd>{code}</kbd>
         </>,
@@ -177,6 +180,7 @@ function LetterToKey({ keyboardMap }: { readonly keyboardMap: KeyboardMap }) {
     if (keys[3] && !["Unidentified", "Dead"].includes(keys[3])) {
       letterToKey.push([
         keys[3],
+        // eslint-disable-next-line react/jsx-key
         <>
           <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>{code}</kbd>
         </>,
@@ -234,15 +238,13 @@ export default function Keyboard(): JSX.Element {
             setError("No map selected");
             return k;
           }
-          if (!(currentMap in k)) {
+          if (!Object.hasOwn(k, currentMap)) {
             setError("Unexpected: modifying an unknown key map");
             return k;
           }
           const i = (e.shiftKey ? 1 : 0) + (e.altKey ? 2 : 0);
-          if (
-            k[currentMap]![e.code]?.[i] != null &&
-            k[currentMap]![e.code]![i] !== e.key
-          ) {
+          const key = k[currentMap]![e.code]?.[i];
+          if (key !== null && key !== undefined && key !== e.key) {
             setError(
               "You are modifying a key that is already mapped. Consider creating a new map.",
             );
@@ -274,7 +276,7 @@ export default function Keyboard(): JSX.Element {
   const addMap = useCallback(
     (s: string) => {
       setKeyboardMaps((k) => {
-        if (s in k) {
+        if (Object.hasOwn(k, s)) {
           setError("Map already exists");
           return k;
         }
@@ -290,12 +292,12 @@ export default function Keyboard(): JSX.Element {
       setCurrentMap((c) => {
         console.log(c, s);
         if (c !== s) return c;
-        const first = Object.keys(keyboardMaps)[0];
-        if (first === c) return Object.keys(keyboardMaps)[1];
-        return first;
+        const [firstMap, secondMap] = Object.keys(keyboardMaps);
+        if (firstMap === c) return secondMap;
+        return firstMap;
       });
       setKeyboardMaps((k) => {
-        if (!(s && s in k)) {
+        if (!(s && Object.hasOwn(k, s))) {
           setError("Unexpected: deleting an unknown key map");
           return k;
         }

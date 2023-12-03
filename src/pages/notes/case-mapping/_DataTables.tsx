@@ -39,11 +39,11 @@ export function CharSet<T>({
   return (
     <details>
       <summary>
-        Character set (
+        Character set ({/* No space */}
         <span className={clsx(assertionFailed && "assertion-failed")}>
           {values.length}
         </span>
-        )
+        {/* No space */})
       </summary>
       {display ? (
         <ul>

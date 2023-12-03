@@ -1,18 +1,20 @@
 import React, { useContext } from "react";
 
-const SSRContext = React.createContext<Record<string, unknown> | null>(null);
+export type SSRContextValue = { [key: string]: unknown };
+
+const SSRContext = React.createContext<SSRContextValue | null>(null);
 
 export function SSRContextProvider({
   children,
   context,
 }: {
   readonly children: React.ReactNode;
-  readonly context: Record<string, unknown>;
+  readonly context: SSRContextValue;
 }): JSX.Element {
   return <SSRContext.Provider value={context}>{children}</SSRContext.Provider>;
 }
 
-export function useSSRContext(): Record<string, unknown> | null {
+export function useSSRContext(): SSRContextValue | null {
   const context = useContext(SSRContext);
   return context;
 }

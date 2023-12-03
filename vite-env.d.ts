@@ -24,5 +24,5 @@ declare interface IteratorConstructor {
 
 type IterableFlattenable<T> = Iterable<T> | Iterator<T>;
 
-// eslint-disable-next-line no-var
+// eslint-disable-next-line no-var, vars-on-top
 declare var Iterator: IteratorConstructor;

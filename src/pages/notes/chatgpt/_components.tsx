@@ -1,9 +1,9 @@
 import { useId } from "react";
 import { Tooltip } from "react-tooltip";
-import styles from "./_components.module.css";
 import CommentIcon from "assets/comment-icon.svg?react";
 import avatar from "assets/avatar.svg";
 import chatGPT from "assets/chatgpt-logo.svg";
+import styles from "./_components.module.css";
 
 const formatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
