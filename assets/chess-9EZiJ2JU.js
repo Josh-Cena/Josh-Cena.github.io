@@ -1,4 +1,4 @@
-import{u as r,j as e,r as l}from"./index-28f14c52.js";import{T as h,C as t}from"./_components-7bcf07c2.js";import"./react-tooltip.min-da010a7a.js";const p={description:"Chat history about a game of chess with ChatGPT",title:"Chess game with ChatGPT"};function s(i){const n={a:"a",h1:"h1",li:"li",ol:"ol",p:"p",strong:"strong",...r(),...i.components};return e.jsxs(e.Fragment,{children:[e.jsx(n.h1,{children:"Chess game with ChatGPT"}),`
+import{u as r,j as e,r as l}from"./index-1MvePpJZ.js";import{T as h,C as t}from"./_components-aOJqYAlx.js";import"./react-tooltip.min-qjTFaZPZ.js";const p={description:"Chat history about a game of chess with ChatGPT",title:"Chess game with ChatGPT"};function s(i){const n={a:"a",h1:"h1",li:"li",ol:"ol",p:"p",strong:"strong",...r(),...i.components};return e.jsxs(e.Fragment,{children:[e.jsx(n.h1,{children:"Chess game with ChatGPT"}),`
 `,`
 `,e.jsx(h,{dateTime:"2023-11-18"}),`
 `,e.jsx(n.p,{children:"The purpose of this test is to test ChatGPT's working memory as well as abstract thinking derived from language-based memory."}),`
