@@ -1,4 +1,4 @@
-import{u as n,j as e}from"./index-7KFMo8z5.js";const l={description:"Problems used for NACLO coaching sessions in 2023.",title:"NACLO 2023"};function d(r){const s={a:"a",h1:"h1",h2:"h2",li:"li",ol:"ol",p:"p",section:"section",sup:"sup",table:"table",tbody:"tbody",td:"td",th:"th",thead:"thead",tr:"tr",ul:"ul",...n(),...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(s.h1,{children:"NACLO 2023"}),`
+import{u as n,j as e}from"./index-8NkGY__L.js";const l={description:"Problems used for NACLO coaching sessions in 2023.",title:"NACLO 2023"};function d(r){const s={a:"a",h1:"h1",h2:"h2",li:"li",ol:"ol",p:"p",section:"section",sup:"sup",table:"table",tbody:"tbody",td:"td",th:"th",thead:"thead",tr:"tr",ul:"ul",...n(),...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(s.h1,{children:"NACLO 2023"}),`
 `,`
 `,e.jsx(s.p,{children:"By year, we completed the following problems:"}),`
 `,e.jsxs(s.ul,{children:[`

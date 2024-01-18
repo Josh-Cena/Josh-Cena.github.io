@@ -1,0 +1,7 @@
+import{j as e,R as r,L as i,_ as a}from"./index-8NkGY__L.js";import{P as c}from"./index-zRgmsVCP.js";const l="_description_121ql_1",d={description:l},m=Object.assign({"./welcome.mdx":()=>a(()=>import("./welcome-DkarrcpN.js"),__vite__mapDeps([0,1,2]))}),p=Object.entries(m).map(([s,n])=>[s,r.lazy(async()=>{const{frontMatter:t}=await n();if(!t)return{default:()=>e.jsx("div",{})};const o=e.jsxs("section",{children:[e.jsx(i,{href:s.match(/\.\/(?<name>.*)\.mdx$/u).groups.name.toLowerCase().replace(/index$/u,""),children:e.jsx("h2",{children:t.title})}),e.jsx(c,{frontMatter:t}),e.jsx("p",{className:d.description,children:t.description})]});return{default:()=>o}})]);function j(){return e.jsxs(e.Fragment,{children:[e.jsx("h1",{children:"Josh-Cena’s (secret) blog"}),p.map(([s,n])=>e.jsx(r.Suspense,{fallback:e.jsx(e.Fragment,{children:"Loading..."}),children:e.jsx(n,{})},s))]})}const u={title:"Blog",description:"The blog of Josh-Cena where I write my random thoughts"};export{j as default,u as meta};
+function __vite__mapDeps(indexes) {
+  if (!__vite__mapDeps.viteFileDeps) {
+    __vite__mapDeps.viteFileDeps = ["assets/welcome-DkarrcpN.js","assets/index-8NkGY__L.js","assets/index-zRgmsVCP.js"]
+  }
+  return indexes.map((i) => __vite__mapDeps.viteFileDeps[i])
+}
