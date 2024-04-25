@@ -1,4 +1,4 @@
-import{u as s,j as e}from"./index-J_fCn325.js";import{T as r,C as t}from"./_components-sXZm2PV0.js";import"./react-tooltip.min-3GQuKTDa.js";const d={description:"Chat history about testing whether ChatGPT can tell English literature from math.",title:"Chess game with ChatGPT"};function i(a){const n={h1:"h1",p:"p",...s(),...a.components};return e.jsxs(e.Fragment,{children:[e.jsx(n.h1,{children:"Chess game with ChatGPT"}),`
+import{u as s,j as e}from"./index-DbwhWtYf.js";import{T as r,C as t}from"./_components-58qLi5n2.js";import"./react-tooltip.min-Dx6Xd3_X.js";const d={description:"Chat history about testing whether ChatGPT can tell English literature from math.",title:"Chess game with ChatGPT"};function i(a){const n={h1:"h1",p:"p",...s(),...a.components};return e.jsxs(e.Fragment,{children:[e.jsx(n.h1,{children:"Chess game with ChatGPT"}),`
 `,`
 `,e.jsx(r,{dateTime:"2023-09-10"}),`
 `,e.jsx(n.p,{children:"The purpose of this test is to test ChatGPT's ability to distinguish between creative (literary) and logical thinking."}),`
