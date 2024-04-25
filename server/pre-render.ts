@@ -56,4 +56,4 @@ const promises = routesToPrerender.map(async (url) => {
     console.log(e);
   }
 });
-Promise.all(promises);
+void Promise.all(promises);

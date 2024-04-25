@@ -19,8 +19,8 @@ const posts = Object.entries(modules).map(
         const preview = (
           <section>
             <Link
-              href={path
-                .match(/\.\/(?<name>.*)\.mdx$/u)!
+              href={/\.\/(?<name>.*)\.mdx$/u
+                .exec(path)!
                 .groups!.name!.toLowerCase()
                 .replace(/index$/u, "")}>
               <h2>{frontMatter.title}</h2>

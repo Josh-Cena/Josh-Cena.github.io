@@ -12,7 +12,7 @@ export function SluggerProvider({
   const slugger = useMemo(() => new GithubSlugger(), []);
   useEffect(
     () => () => {
-      slugger?.reset();
+      slugger.reset();
     },
     [slugger],
   );
@@ -30,7 +30,8 @@ function getText(children: ReactNode): string {
   if (typeof children === "string") return children;
   if (Array.isArray(children))
     return children.map(getText).filter(Boolean).join(" ");
-  if (React.isValidElement(children)) return getText(children.props.children);
+  if (React.isValidElement(children))
+    return getText((children.props as { children?: ReactNode }).children);
   return "";
 }
 

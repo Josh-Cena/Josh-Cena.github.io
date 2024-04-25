@@ -1,5 +1,7 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
+import x from "react-helmet-async";
+
+const { Helmet } = x;
 
 // Auto generates routes from files under ./pages
 // https://vitejs.dev/guide/features.html#glob-import
@@ -11,7 +13,7 @@ const pages = import.meta.glob<
 
 export const routes = Object.entries(pages)
   .map(([path, module]) => {
-    const name = path.match(/\.\/pages\/(?<name>.*)\.(?:tsx|mdx)$/u)!.groups!
+    const name = /\.\/pages\/(?<name>.*)\.(?:tsx|mdx)$/u.exec(path)!.groups!
       .name!;
     return {
       path:

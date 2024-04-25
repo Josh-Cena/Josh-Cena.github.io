@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return */
 import type { Dispatch, SetStateAction } from "react";
 import parseBash from "bash-parser";
 import { paths } from "@/routes";
@@ -85,8 +86,8 @@ export function handleCommand(
     });
     if (ast.commands.length !== 1 || ast.commands[0].type !== "Command")
       return [1, "The shell only supports single commands at the moment"];
-    const args = ((ast.commands[0].suffix as any[]) ?? []).filter(
-      (s: any) => s.type === "Word",
+    const args = ((ast.commands[0].suffix as any[] | undefined) ?? []).filter(
+      (s) => s.type === "Word",
     );
     switch (ast.commands[0].name.text) {
       case "cd": {
@@ -102,7 +103,7 @@ export function handleCommand(
         return [0, ""];
       }
       case "echo":
-        return [0, args.map((a: any) => a.text).join(" ")];
+        return [0, args.map((a) => a.text).join(" ")];
       case "export":
         setEnv({
           __proto__: null as never,
@@ -125,19 +126,19 @@ export function handleCommand(
           const originalConsoleWarn = console.warn;
           const originalConsoleError = console.error;
           const originalConsoleInfo = console.info;
-          window.console.log = (...values: any[]) => {
+          window.console.log = (...values) => {
             output += `${values.join(" ")}\n`;
           };
-          window.console.warn = (...values: any[]) => {
+          window.console.warn = (...values) => {
             output += `${values.join(" ")}\n`;
           };
-          window.console.error = (...values: any[]) => {
+          window.console.error = (...values) => {
             output += `${values.join(" ")}\n`;
           };
-          window.console.info = (...values: any[]) => {
+          window.console.info = (...values) => {
             output += `${values.join(" ")}\n`;
           };
-          // eslint-disable-next-line no-eval
+          // eslint-disable-next-line no-eval, @typescript-eslint/no-unnecessary-condition
           const res = eval?.(args[0]?.text ?? "");
           window.console.log = originalConsoleLog;
           window.console.warn = originalConsoleWarn;
@@ -175,7 +176,7 @@ export function handleCommand(
         return ls(args[0]?.text ?? ".", env.PWD!);
       case "open":
         if (args.length > 1) return [1, "open: too many arguments"];
-        navigate(new URL(args[0]?.text ?? ".", env.PWD!).pathname);
+        navigate(new URL(args[0]?.text ?? ".", env.PWD).pathname);
         return [0, ""];
       case "pwd":
         return [0, env.PWD!];

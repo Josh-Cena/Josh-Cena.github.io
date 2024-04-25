@@ -97,7 +97,7 @@ function Keys({
             styles.keyUnknown,
           key === "Dead" && styles.keyDead,
         )}>
-        {["Dead", "Unidentified"].includes(key as string) ? null : key}
+        {["Dead", "Unidentified"].includes(key!) ? null : key}
       </span>
     );
   });

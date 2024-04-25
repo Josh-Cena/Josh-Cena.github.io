@@ -123,7 +123,7 @@ export default function RandomColor(): JSX.Element {
         const p = nextPixel.value;
         const [r, g, b] = Object.values(nextRGB.value).map((x) =>
           Math.floor(x * 255),
-        );
+        ) as [number, number, number];
         ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
         ctx.fillRect(p.x * scale, p.y * scale, scale, scale);
       }

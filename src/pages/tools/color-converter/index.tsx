@@ -1,10 +1,14 @@
-import { useState, type ReactNode } from "react";
+import { useState, type ReactNode, type ReactElement } from "react";
 import Color from "color";
 import Link from "@/components/Link";
 import CopyButton from "@/components/CopyButton";
 import styles from "./index.module.css";
 
-function Tabs({ children }: { readonly children: JSX.Element[] }) {
+function Tabs({
+  children,
+}: {
+  readonly children: ReactElement<{ label: string }>[];
+}) {
   const [selected, setSelected] = useState(0);
   return (
     <div className={styles.colorInputs}>
@@ -80,7 +84,9 @@ function ColorInput({
           ...Object.fromEntries(
             Array.from({ length: 11 }, (_, i) => [
               `--color-${i}`,
-              (color[method]((max / 10) * i) as Color).rgb().toString(),
+              color[method]((max / 10) * i)
+                .rgb()
+                .toString(),
             ]),
           ),
           // @ts-expect-error: custom CSS variables
@@ -90,7 +96,7 @@ function ColorInput({
         min={min}
         max={max}
         onInput={(e) => {
-          setColor(color[method](Number(e.currentTarget.value)) as Color);
+          setColor(color[method](Number(e.currentTarget.value)));
         }}
       />
     </label>

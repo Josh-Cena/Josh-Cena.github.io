@@ -1,6 +1,6 @@
 import React, { Children, type ReactNode } from "react";
 import clsx from "clsx";
-import { Highlight, themes, type Language } from "prism-react-renderer";
+import { Highlight, themes } from "prism-react-renderer";
 import { useColorMode } from "@/context/ColorMode";
 import CopyButton from "@/components/CopyButton";
 import styles from "./index.module.css";
@@ -47,10 +47,7 @@ export default function CodeBlock({
       )}>
       {title && <div className={styles.codeBlockTitle}>{title}</div>}
       <div className={styles.codeBlockContent}>
-        <Highlight
-          theme={theme}
-          code={code}
-          language={(language ?? "text") as Language}>
+        <Highlight theme={theme} code={code} language={language ?? "text"}>
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <pre
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex

@@ -1,4 +1,4 @@
-import FS from "node:fs";
+import FS from "node:fs/promises";
 import Path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
@@ -34,11 +34,12 @@ export async function createServer(
   });
   app.use(viteServer.middlewares);
 
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl;
 
-      let template = FS.readFileSync(toAbsolute("../index.html"), "utf-8");
+      let template = await FS.readFile(toAbsolute("../index.html"), "utf-8");
       template = await viteServer.transformIndexHtml(url, template);
       const { render } = (await viteServer.ssrLoadModule(
         "/src/server-entry.tsx",
@@ -73,7 +74,7 @@ export async function createServer(
   return { app };
 }
 
-createServer().then(({ app }) =>
+void createServer().then(({ app }) =>
   app.listen(5173, () => {
     console.log("Dev server started on http://localhost:5173");
   }),
