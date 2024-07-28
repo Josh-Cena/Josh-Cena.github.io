@@ -1,0 +1,26 @@
+---
+description: A JavaScript snippet to make a function that can only be called once, without using any mutable variables.
+---
+
+# Functions that can only be called once — for immutable lovers
+
+```js
+function createOnceFunction(f) {
+  return new (class extends class {} {
+    constructor() {
+      return (...args) => {
+        super();
+        return f(...args);
+      };
+    }
+  })();
+}
+```
+
+Usage:
+
+```js
+const f = createOnceFunction(() => console.log("Hello"));
+f(); // Hello
+f();
+```
