@@ -1,4 +1,4 @@
-import{u as t,j as n}from"./index-GTKRcoii.js";const l={description:"A JavaScript snippet to implement overloaded functions using type predicates.",title:"Overloaded functions"};function r(o){const e={code:"code",h1:"h1",p:"p",pre:"pre",...t(),...o.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h1,{children:"Overloaded functions"}),`
+import{u as t,j as n}from"./index-BUhntuk7.js";const l={description:"A JavaScript snippet to implement overloaded functions using type predicates.",title:"Overloaded functions"};function r(o){const e={code:"code",h1:"h1",p:"p",pre:"pre",...t(),...o.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h1,{children:"Overloaded functions"}),`
 `,n.jsx(e.pre,{children:n.jsx(e.code,{className:"language-ts",children:`declare class OverloadedFunction extends Function {
   constructor(overloads: Iterable<OverloadSignature>);
   [Symbol.iterator](): IterableIterator<Function>;
