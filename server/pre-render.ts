@@ -2,6 +2,7 @@ import FS from "node:fs/promises";
 import Path from "node:path";
 import { fileURLToPath } from "node:url";
 import { glob } from "glob";
+import { SitemapStream, streamToPromise } from "sitemap";
 import type { SSRContextValue } from "@/context/SSRContext";
 
 const __dirname = Path.dirname(fileURLToPath(import.meta.url));
@@ -26,6 +27,17 @@ const routesToPrerender = (
 });
 
 console.log("routes to prerender", routesToPrerender);
+
+async function renderSitemap(routes: string[]) {
+  const sitemapStream = new SitemapStream({ hostname: "https://joshcena.com" });
+  routes.forEach((url) => {
+    if (url === "/404") return;
+    sitemapStream.write({ url, changefreq: "daily", priority: 0.7 });
+  });
+  sitemapStream.end();
+  const sitemap = await streamToPromise(sitemapStream);
+  await FS.writeFile(distPath("static/sitemap.xml"), sitemap.toString());
+}
 
 const promises = routesToPrerender.map(async (url) => {
   try {
@@ -56,4 +68,7 @@ const promises = routesToPrerender.map(async (url) => {
     console.log(e);
   }
 });
+
+promises.push(renderSitemap(routesToPrerender));
+
 void Promise.all(promises);

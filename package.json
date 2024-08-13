@@ -6,8 +6,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --loader=ts-node/esm --no-warnings=ExperimentalWarning server/index.ts",
-    "build": "vite build --outDir dist/static && vite build --ssr src/server-entry.tsx --outDir dist/server && node --loader=ts-node/esm --no-warnings=ExperimentalWarning server/pre-render.ts",
+    "dev": "tsx server/index.ts",
+    "build": "vite build --outDir dist/static && vite build --ssr src/server-entry.tsx --outDir dist/server && tsx server/pre-render.ts",
     "preview": "vite preview",
     "format": "prettier -w .",
     "lint": "eslint .",
@@ -41,8 +41,8 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "prettier-config-jc": "^2.3.0",
-    "ts-node": "^10.9.2",
     "tsconfig-jc": "^2.3.1",
+    "tsx": "^4.11.0",
     "typescript": "~5.4.5",
     "typescript-eslint": "^7.7.1",
     "typescript-plugin-css-modules": "^5.1.0"
@@ -62,7 +62,7 @@
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-helmet-async": "^2.0.4",
+    "react-helmet-async": "^2.0.5",
     "react-router-dom": "^6.23.0",
     "react-tooltip": "^5.26.3",
     "rehype-katex": "^7.0.0",
@@ -70,6 +70,7 @@
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
     "remark-mdx-frontmatter": "^4.0.0",
+    "sitemap": "^8.0.0",
     "use-local-storage-state": "^19.2.0",
     "vite": "^5.2.10",
     "vite-plugin-svgr": "^4.2.0"

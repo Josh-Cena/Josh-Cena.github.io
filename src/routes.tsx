@@ -1,7 +1,5 @@
 import React from "react";
-import x from "react-helmet-async";
-
-const { Helmet } = x;
+import * as H from "react-helmet-async";
 
 // Auto generates routes from files under ./pages
 // https://vitejs.dev/guide/features.html#glob-import
@@ -29,14 +27,14 @@ export const routes = Object.entries(pages)
         return {
           default: () => (
             <>
-              <Helmet>
+              <H.Helmet>
                 <title>
                   {metadata.title
                     ? `${metadata.title} | Joshua Chen`
                     : "Joshua Chen"}
                 </title>
                 <meta name="description" content={metadata.description} />
-              </Helmet>
+              </H.Helmet>
               <Comp {...rest} />
             </>
           ),

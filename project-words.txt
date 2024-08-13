@@ -3,6 +3,7 @@ backquote
 buendía
 casedness
 cena
+changefreq
 charis
 closedness
 cmyk
