@@ -2,9 +2,11 @@ import React from "react";
 import { renderToPipeableStream } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { Writable } from "node:stream";
-import { HelmetProvider, type HelmetServerState } from "react-helmet-async";
+import * as H from "react-helmet-async";
 import App from "./App";
 import { SSRContextProvider, type SSRContextValue } from "./context/SSRContext";
+
+const { HelmetProvider } = (H as unknown as { default: typeof H }).default;
 
 // Inspired by https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/server-utils/writable-as-promise.js
 class WritableAsPromise extends Writable {
@@ -86,7 +88,7 @@ export async function render(
 
   const body = await writableStream.getPromise();
   const { helmet } = helmetContext as {
-    helmet: HelmetServerState;
+    helmet: H.HelmetServerState;
   };
 
   const htmlAttributes = helmet.htmlAttributes.toString();

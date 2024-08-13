@@ -1,6 +1,8 @@
 import React from "react";
 import * as H from "react-helmet-async";
 
+const { Helmet } = (H as unknown as { default: typeof H }).default;
+
 // Auto generates routes from files under ./pages
 // https://vitejs.dev/guide/features.html#glob-import
 const pages = import.meta.glob<
@@ -27,14 +29,14 @@ export const routes = Object.entries(pages)
         return {
           default: () => (
             <>
-              <H.Helmet>
+              <Helmet>
                 <title>
                   {metadata.title
                     ? `${metadata.title} | Joshua Chen`
                     : "Joshua Chen"}
                 </title>
                 <meta name="description" content={metadata.description} />
-              </H.Helmet>
+              </Helmet>
               <Comp {...rest} />
             </>
           ),
