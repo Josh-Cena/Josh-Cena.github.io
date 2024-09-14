@@ -2,36 +2,12 @@
   filter: drop-shadow(0 0 2px white);
 }
 
-@keyframes rolling {
-  from {
-    translate: 0;
-    animation-timing-function: ease-in-out;
-  }
-
-  14% {
-    translate: 20px;
-  }
-
-  50% {
-    translate: 20px;
-    animation-timing-function: ease-in-out;
-  }
-
-  64% {
-    translate: 0;
-  }
-
-  to {
-    translate: 0;
-  }
-}
-
 @keyframes raising {
   from {
     translate: 0;
   }
 
-  64% {
+  60% {
     translate: 0;
     animation-timing-function: ease-in;
   }
@@ -41,7 +17,7 @@
     animation-timing-function: ease-out;
   }
 
-  72% {
+  76% {
     translate: 0;
   }
 
@@ -50,11 +26,7 @@
   }
 }
 
-.eye {
-  animation: rolling 10s infinite;
-}
-
 .eyebrow {
-  animation: raising 10s infinite;
+  animation: raising 5s infinite;
   fill: var(--color-text);
 }

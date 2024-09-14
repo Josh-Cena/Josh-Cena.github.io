@@ -4,7 +4,9 @@ import { BrowserRouter } from "react-router-dom";
 import * as H from "react-helmet-async";
 import App from "./App";
 
-const { HelmetProvider } = (H as unknown as { default: typeof H }).default;
+// The types are extremely messed up
+const { HelmetProvider } =
+  (H as unknown as { default?: typeof H }).default ?? H;
 
 ReactDOM.hydrateRoot(
   document.getElementById("app")!,

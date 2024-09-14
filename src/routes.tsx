@@ -1,7 +1,8 @@
 import React from "react";
 import * as H from "react-helmet-async";
 
-const { Helmet } = (H as unknown as { default: typeof H }).default;
+// The types are extremely messed up
+const { Helmet } = (H as unknown as { default?: typeof H }).default ?? H;
 
 // Auto generates routes from files under ./pages
 // https://vitejs.dev/guide/features.html#glob-import

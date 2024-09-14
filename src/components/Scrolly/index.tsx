@@ -22,38 +22,16 @@ function ScrollyClient() {
   const [percentage, setPercentage] = useState(0);
   const getVal = linearInterpolate(percentage);
 
-  const observer = useRef(
-    new IntersectionObserver(
-      (entries) => {
-        const p = entries[0]!.intersectionRatio;
-        if (
-          p >= 0 &&
-          p <= 1 &&
-          p !== percentage &&
-          entries[0]!.intersectionRect.top !== entries[0]!.rootBounds!.top
-        )
-          setPercentage(p);
-      },
-      { threshold: Array.from({ length: 1000 }, (_, i) => i / 1000) },
-    ),
-  );
   useEffect(() => {
-    observer.current.observe(frameRef.current!);
-    const onScroll = () => {
-      // Intersection observer doesn't reliably fire for the boundaries, so we
-      // add another handler (but IO still has better performance). It's also
-      // useful for the initial render
-      if (window.scrollY < 20) setPercentage(0);
-      else if (window.scrollY > frameRef.current!.offsetTop) setPercentage(1);
-    };
-    onScroll();
+    function onScroll() {
+      if (!frameRef.current) return;
+      const { top, height } = frameRef.current.getBoundingClientRect();
+      const newPercentage = Math.min(1, Math.max(0, (height - top) / height));
+      console.log(newPercentage);
+      setPercentage(newPercentage);
+    }
     window.addEventListener("scroll", onScroll);
-    return () => {
-      // Observer ref never changes
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      observer.current.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
   return (
     <div className={styles.container}>

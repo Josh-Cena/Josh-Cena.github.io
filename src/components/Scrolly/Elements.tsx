@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import { useColorMode } from "@/context/ColorMode";
 import styles from "./Elements.module.css";
 
@@ -29,6 +30,39 @@ const borderOpacities = [0, 1] as const;
 const eyeOpacities = [1, 0, 0] as const;
 const eyeScales = [1, 0, 0] as const;
 
+function getEyeOffset(
+  mousePos: { x: number; y: number } | undefined,
+  leftEyeBox: DOMRect | undefined,
+  rightEyeBox: DOMRect | undefined,
+  svgBox: DOMRect | undefined,
+): { x: number; y: number } {
+  if (!mousePos || !leftEyeBox || !rightEyeBox || !svgBox)
+    return { x: 0, y: 0 };
+  // Assume the eyes are nicely symmetrical
+  const center = {
+    x: (leftEyeBox.right + rightEyeBox.left) / 2,
+    y: leftEyeBox.top + leftEyeBox.height / 2,
+  };
+  // Let cx = half-width of the eye * 0.9, cy = half-height of the eye * 0.9
+  // (ex, ey) = lookDir.
+  // We want the pupil to move on the ellipse
+  // (x / cx)^2 + (y / cy)^2 = 1 (w.r.t. the eye's center)
+  // substitute y = k * x where k = ey / ex, then
+  // ((1 / cx^2) + (k^2 / cy^2)) * x^2 = 1
+  // Solve for x.
+  const cx = (leftEyeBox.width / 2) * 0.9;
+  const cy = (leftEyeBox.height / 2) * 0.9;
+  const k = (mousePos.y - center.y) / (mousePos.x - center.x);
+  const x =
+    Math.sqrt(1 / (1 / cx ** 2 + k ** 2 / cy ** 2)) *
+    (mousePos.x < center.x ? -1 : 1);
+  const y = k * x;
+  const svgScale = Math.max(400 / svgBox.width, 200 / svgBox.height);
+  // The leftmost point has zero offset;
+  // Also restore the coordinate system to the SVG's
+  return { x: (x + cx) * svgScale, y: y * svgScale };
+}
+
 export default function ScrollyElements({
   className,
   getVal,
@@ -36,6 +70,12 @@ export default function ScrollyElements({
   readonly className?: string;
   readonly getVal: (keyframes: readonly number[]) => number;
 }): JSX.Element {
+  const [mousePos, setMousePos] = useState<
+    { x: number; y: number } | undefined
+  >(undefined);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const leftEyeRef = useRef<SVGPathElement>(null);
+  const rightEyeRef = useRef<SVGPathElement>(null);
   const gScale = getVal(gScales);
   const jSizeW = getVal(jSizeWs);
   const jSizeH = getVal(jSizeHs);
@@ -45,11 +85,25 @@ export default function ScrollyElements({
   const eyeScale = getVal(eyeScales);
   const { colorMode } = useColorMode();
   const jColors = colorMode === "dark" ? [255, 255] : [0, 255];
+  useEffect(() => {
+    function onMouseMove(event: MouseEvent) {
+      setMousePos({ x: event.clientX, y: event.clientY });
+    }
+    window.addEventListener("mousemove", onMouseMove);
+    return () => window.removeEventListener("mousemove", onMouseMove);
+  }, []);
+  const eyeOffset = getEyeOffset(
+    mousePos,
+    leftEyeRef.current?.getBoundingClientRect(),
+    rightEyeRef.current?.getBoundingClientRect(),
+    svgRef.current?.getBoundingClientRect(),
+  );
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="-100 0 400 200"
       className={className}
+      ref={svgRef}
       preserveAspectRatio="xMinYMin slice">
       <g
         data-color-mode="dark"
@@ -104,6 +158,7 @@ export default function ScrollyElements({
           d="m 130.03906,35.265625 c -6.57096,0.37252 -13.07243,3.355468 -17.28515,8.46875 0.88932,0.650391 1.77865,1.300781 2.66797,1.951172 4.43368,-5.340543 11.71756,-7.687776 18.51336,-7.130448 7.67453,0.605406 14.78248,4.099282 21.12921,8.26912 0.60807,-0.91862 1.21615,-1.83724 1.82422,-2.75586 -7.38373,-4.862754 -15.85747,-8.764558 -24.84934,-8.859205 -0.66714,-0.004 -1.33444,0.01439 -2.00027,0.05647 z"
         />
         <path
+          ref={leftEyeRef}
           style={{
             fill: "white",
             stroke: "black",
@@ -116,7 +171,9 @@ export default function ScrollyElements({
           d="m 153.86903,55.368874 c -0.10519,2.366721 -2.40555,3.806331 -4.30783,4.756214 -5.76944,2.601433 -12.276,3.051559 -18.52206,2.704715 -4.72103,-0.402854 -9.66795,-1.168747 -13.69218,-3.840952 -1.57182,-1.014048 -3.00432,-3.044071 -2.06513,-4.940148 1.38193,-2.600204 4.39224,-3.709345 7.0221,-4.603408 7.07564,-2.055388 14.68311,-2.140198 21.87419,-0.631329 3.21502,0.807417 6.74549,1.805406 8.93804,4.466841 0.44661,0.601486 0.75658,1.329592 0.75287,2.088067 z"
         />
         <path
-          className={styles.eye}
+          style={{
+            transform: `translate(${eyeOffset.x / eyeScale / 2}px, ${eyeOffset.y / eyeScale / 2}px)`,
+          }}
           fill="black"
           d="m 127.75874,54.998494 c 0.0205,1.2573 -1.00865,2.3469 -2.15068,2.4722 -1.20933,0.2018 -2.54385,-0.659 -2.79539,-1.9736 -0.26724,-1.1948 0.49672,-2.4748 1.57136,-2.8371 1.20571,-0.4801 2.74703,0.1524 3.2175,1.4672 0.10312,0.2763 0.15748,0.5737 0.15721,0.8713 z"
         />
@@ -125,6 +182,7 @@ export default function ScrollyElements({
           d="m 67.189453,34.892578 c -6.570618,0.37531 -13.07235,3.357143 -17.285156,8.470703 0.889323,0.650391 1.778646,1.300781 2.667969,1.951172 4.433686,-5.34054 11.717567,-7.687777 18.513365,-7.130448 7.674528,0.605406 14.782484,4.099283 21.129213,8.26912 0.608073,-0.91862 1.216145,-1.837239 1.824218,-2.755859 -7.383909,-4.862683 -15.857256,-8.765788 -24.849343,-8.861111 -0.667137,-0.004 -1.334436,0.01434 -2.000266,0.05642 z"
         />
         <path
+          ref={rightEyeRef}
           style={{
             fill: "white",
             stroke: "black",
@@ -137,10 +195,11 @@ export default function ScrollyElements({
           d="m 91.019508,54.997169 c -0.105185,2.366722 -2.405551,3.806332 -4.307834,4.756215 -5.769431,2.601433 -12.275998,3.051559 -18.52205,2.704715 -4.721032,-0.402854 -9.66795,-1.168747 -13.692187,-3.840952 -1.571817,-1.014048 -3.004316,-3.044071 -2.065128,-4.940148 1.381929,-2.600204 4.392238,-3.709345 7.022107,-4.603408 7.075633,-2.055388 14.6831,-2.140198 21.874179,-0.631329 3.215024,0.807417 6.745497,1.805406 8.938038,4.466841 0.446612,0.601486 0.756586,1.329591 0.752875,2.088066 z"
         />
         <path
-          className={styles.eye}
+          style={{
+            transform: `translate(${eyeOffset.x / eyeScale / 2}px, ${eyeOffset.y / eyeScale / 2}px)`,
+          }}
           fill="black"
           d="m 64.199753,54.998493 c 0.01817,1.240801 -0.970846,2.309985 -2.094058,2.463637 -1.211091,0.228208 -2.55671,-0.595823 -2.839702,-1.909945 -0.289738,-1.167921 0.407551,-2.434405 1.446127,-2.845906 1.189665,-0.542318 2.744057,0.01649 3.283233,1.303159 0.133651,0.308771 0.204696,0.648627 0.2044,0.989055 z"
-          style={{ strokeWidth: 1.33 }}
         />
       </g>
       <g opacity={getVal(borderOpacities)}>

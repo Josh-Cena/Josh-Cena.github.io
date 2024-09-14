@@ -6,7 +6,9 @@ import * as H from "react-helmet-async";
 import App from "./App";
 import { SSRContextProvider, type SSRContextValue } from "./context/SSRContext";
 
-const { HelmetProvider } = (H as unknown as { default: typeof H }).default;
+// The types are extremely messed up
+const { HelmetProvider } =
+  (H as unknown as { default?: typeof H }).default ?? H;
 
 // Inspired by https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/server-utils/writable-as-promise.js
 class WritableAsPromise extends Writable {
