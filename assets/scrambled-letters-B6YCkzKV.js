@@ -1,4 +1,4 @@
-import{u as r,j as n}from"./index-BUhntuk7.js";import{T as i,C as e}from"./_components-DMq-GeJA.js";import"./react-tooltip.min-BUrrBZKs.js";const c={description:"Chat history about speaking in scrambled letters with ChatGPT.",title:"Speaking with ChatGPT in scrambled letters"};function d(t){const a={br:"br",code:"code",h1:"h1",p:"p",pre:"pre",...r(),...t.components};return n.jsxs(n.Fragment,{children:[n.jsx(a.h1,{children:"Speaking with ChatGPT in scrambled letters"}),`
+import{u as r,j as n}from"./index-B925izlK.js";import{T as i,C as e}from"./_components-Ld8yLP8p.js";import"./react-tooltip.min-CWc36-aL.js";const c={description:"Chat history about speaking in scrambled letters with ChatGPT.",title:"Speaking with ChatGPT in scrambled letters"};function d(t){const a={br:"br",code:"code",h1:"h1",p:"p",pre:"pre",...r(),...t.components};return n.jsxs(n.Fragment,{children:[n.jsx(a.h1,{children:"Speaking with ChatGPT in scrambled letters"}),`
 `,`
 `,`
 `,n.jsx(i,{dateTime:"2023-07-10"}),`
