@@ -71,7 +71,7 @@ export default function About(): JSX.Element {
   return (
     <>
       <Link
-        href="https://drive.google.com/file/d/1ODWzhl-oeyWT5F31echT0mv6UkUBe27X/view?usp=sharing"
+        href="https://drive.google.com/file/d/19g4G8wwEIcQnrUyk4OHibbB4PTcWKqUn/view?usp=sharing"
         className={styles.pdf}
         aria-label="Open as PDF"
         title="Open as PDF">
@@ -142,10 +142,6 @@ export default function About(): JSX.Element {
           position="Bachelor's of Science">
           <ul>
             <li>BS in Statistics & Data Science, BA in Linguistics</li>
-            <li>
-              Relevant Coursework: Data structures, Linear algebra, Probability
-              theory, Syntax (linguistics), Phonology
-            </li>
           </ul>
         </Timeline.Item>
         <Timeline.Item
@@ -259,75 +255,6 @@ export default function About(): JSX.Element {
           </ul>
         </Timeline.Item>
       </Timeline>
-      <Heading level={2}>Skills</Heading>
-      <ul>
-        <li>
-          Languages:{" "}
-          <img
-            alt="JavaScript"
-            src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"
-          />{" "}
-          <img
-            alt="TypeScript"
-            src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white"
-          />{" "}
-          <img
-            alt="Python"
-            src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54"
-          />{" "}
-          <img
-            alt="R"
-            src="https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white"
-          />{" "}
-          <img
-            alt="C++"
-            src="https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white"
-          />{" "}
-          <img
-            alt="Haskell"
-            src="https://img.shields.io/badge/Haskell-5e5086?style=for-the-badge&logo=haskell&logoColor=white"
-          />
-        </li>
-        <li>
-          Tools:{" "}
-          <img
-            alt="ESLint"
-            src="https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white"
-          />{" "}
-          <img
-            alt="React"
-            src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"
-          />{" "}
-          <img
-            alt="Webpack"
-            src="https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black"
-          />{" "}
-          <img
-            alt="Node.js"
-            src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white"
-          />{" "}
-          <img
-            alt="NumPy"
-            src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white"
-          />{" "}
-          <img
-            alt="PyTorch"
-            src="https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white"
-          />{" "}
-          <img
-            alt="LaTeX"
-            src="https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white"
-          />{" "}
-          <img
-            alt="Git"
-            src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white"
-          />
-        </li>
-        <li>
-          Skills: Static analysis, Front-end development, Deep learning,
-          Computer vision, Technical writing
-        </li>
-      </ul>
       <aside style={{ textAlign: "right", fontStyle: "italic" }}>
         Design ideas from: Nina Liu
       </aside>
