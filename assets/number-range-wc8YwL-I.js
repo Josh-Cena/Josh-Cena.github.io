@@ -1,4 +1,4 @@
-import{u as s,j as n}from"./index-B925izlK.js";const i={description:"A JavaScript snippet to use index access for number ranges.",title:"Number range syntax"};function r(t){const e={code:"code",h1:"h1",p:"p",pre:"pre",...s(),...t.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h1,{children:"Number range syntax"}),`
+import{u as s,j as n}from"./index-CioxpDsS.js";const i={description:"A JavaScript snippet to use index access for number ranges.",title:"Number range syntax"};function r(t){const e={code:"code",h1:"h1",p:"p",pre:"pre",...s(),...t.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h1,{children:"Number range syntax"}),`
 `,n.jsx(e.pre,{children:n.jsx(e.code,{className:"language-js",children:`class RangeIterator extends Iterator {
   #cur;
   #end;
