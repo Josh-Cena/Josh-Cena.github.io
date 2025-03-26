@@ -19,7 +19,7 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
       value: `title: ${titleText}`,
     });
   } else {
-    (frontMatter as Literal).value += `\ntitle: ${titleText}`;
+    (frontMatter as Literal).value += `\ntitle: "${titleText}"`;
   }
   if (vFile.dirname?.includes("blog")) {
     children.splice(

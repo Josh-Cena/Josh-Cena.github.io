@@ -18,7 +18,11 @@ export const routes = Object.entries(pages)
       .name!;
     return {
       path:
-        name === "404" ? "*" : `/${name.toLowerCase()}`.replace(/index$/u, ""),
+        name === "404"
+          ? "*"
+          : `/${name.toLowerCase()}`
+              .replace(/\d{4}-\d{2}-\d{2}-/u, "")
+              .replace(/index$/u, ""),
       RouteComp: React.lazy(async () => {
         const { default: Comp, ...rest } = await module();
         const metadata = (

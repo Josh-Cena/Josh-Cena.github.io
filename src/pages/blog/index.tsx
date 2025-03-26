@@ -9,30 +9,39 @@ const modules = import.meta.glob<
   { default: React.ComponentType; frontMatter?: FrontMatter }
 >("./**/*.mdx");
 
-const posts = Object.entries(modules).map(
-  ([path, module]) =>
-    [
-      path,
-      React.lazy(async () => {
-        const { frontMatter } = await module();
-        if (!frontMatter) return { default: () => <div /> };
-        const preview = (
-          <section>
-            <Link
-              href={/\.\/(?<name>.*)\.mdx$/u
-                .exec(path)!
-                .groups!.name!.toLowerCase()
-                .replace(/index$/u, "")}>
-              <h2>{frontMatter.title}</h2>
-            </Link>
-            <PostData frontMatter={frontMatter} />
-            <p className={styles.description}>{frontMatter.description}</p>
-          </section>
-        );
-        return { default: () => preview };
-      }),
-    ] as const,
-);
+function extractDate(path: string): string {
+  return /\d{4}-\d{2}-\d{2}/u.exec(path)![0];
+}
+
+const posts = Object.entries(modules)
+  .sort(([pathA], [pathB]) =>
+    extractDate(pathB).localeCompare(extractDate(pathA)),
+  )
+  .map(
+    ([path, module]) =>
+      [
+        path,
+        React.lazy(async () => {
+          const { frontMatter } = await module();
+          if (!frontMatter) return { default: () => <div /> };
+          const preview = (
+            <section>
+              <Link
+                href={/\.\/(?<name>.*)\.mdx$/u
+                  .exec(path)!
+                  .groups!.name!.toLowerCase()
+                  .replace(/\d{4}-\d{2}-\d{2}-/u, "")
+                  .replace(/index$/u, "")}>
+                <h2>{frontMatter.title}</h2>
+              </Link>
+              <PostData frontMatter={frontMatter} />
+              <p className={styles.description}>{frontMatter.description}</p>
+            </section>
+          );
+          return { default: () => preview };
+        }),
+      ] as const,
+  );
 
 export default function Blog(): JSX.Element {
   return (
