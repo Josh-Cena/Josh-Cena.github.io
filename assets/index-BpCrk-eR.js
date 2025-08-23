@@ -1,0 +1,1 @@
+import{j as n}from"./index-Cphx7irh.js";const m=new Intl.DateTimeFormat("en-US",{year:"numeric",month:"long",day:"numeric"});function i({frontMatter:e}){const t=new Date(e.date),a=t.valueOf()+t.getTimezoneOffset()*60*1e3;return n.jsx("div",{children:n.jsx("time",{dateTime:e.date,children:m.format(new Date(a))})})}export{i as P};
