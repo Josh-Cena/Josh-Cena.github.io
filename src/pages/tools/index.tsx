@@ -9,6 +9,9 @@ export default function Tools(): JSX.Element {
       <li>
         <Link href="/tools/keyboard-visualizer">Keyboard visualizer</Link>
       </li>
+      <li>
+        <Link href="/tools/starrail-damage">Star Rail damage calculator</Link>
+      </li>
     </ul>
   );
 }

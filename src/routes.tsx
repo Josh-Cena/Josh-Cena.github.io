@@ -27,10 +27,21 @@ export const routes = Object.entries(pages)
         const { default: Comp, ...rest } = await module();
         const metadata = (
           path.endsWith(".mdx") ? rest.frontMatter : rest.meta
-        ) as {
-          title: string;
-          description: string;
-        };
+        ) as
+          | {
+              title: string;
+              description: string;
+            }
+          | undefined;
+        if (!metadata) {
+          return {
+            default: () => (
+              <h1>
+                You must provide the <code>meta</code> export
+              </h1>
+            ),
+          };
+        }
         return {
           default: () => (
             <>

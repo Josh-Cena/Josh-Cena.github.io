@@ -20,6 +20,7 @@ const links: LinkConfig[] = [
     children: [
       { name: "Color converter", path: "/tools/color-converter" },
       { name: "Keyboard visualizer", path: "/tools/keyboard-visualizer" },
+      { name: "Star Rail damage calculator", path: "/tools/starrail-damage" },
     ],
   },
   { name: "Blog", path: "/blog" },

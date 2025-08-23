@@ -29,10 +29,10 @@ for (const char of chars) {
     type: !isChar(char)
       ? "multi"
       : isUpperCase(char)
-      ? "upper"
-      : isLowerCase(char)
-      ? "lower"
-      : "none",
+        ? "upper"
+        : isLowerCase(char)
+          ? "lower"
+          : "none",
     lEdgesIn: new Set(),
     uEdgesIn: new Set(),
     lEdgeOut: null,

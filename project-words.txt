@@ -20,6 +20,7 @@ estree
 fianchetto
 flattenable
 garcía
+Honkai
 huayu
 infty
 injectivity
@@ -54,6 +55,7 @@ saturationl
 scrolly
 sida
 silw
+starrail
 surjectivity
 svgr
 tonos
