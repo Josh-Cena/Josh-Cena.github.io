@@ -1,1 +1,0 @@
-import{R as e,r as o,j as t}from"./index-B0pQIAzq.js";const s=e.createContext(null);function r(){return o.useContext(s)}function u(){const n=r();return n&&(n.status=404),t.jsxs(t.Fragment,{children:[t.jsx("h1",{children:"404"}),t.jsx("p",{children:"Page not found."})]})}const x={title:"Not found",description:"Page not found"};export{u as default,x as meta};
