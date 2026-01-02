@@ -16,6 +16,7 @@ coursetable
 dialytika
 dotless
 emboard
+eslintcache
 estree
 fianchetto
 flattenable

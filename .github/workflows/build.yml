@@ -8,27 +8,18 @@ on:
 permissions:
   contents: write
 
-env:
-  # https://github.com/actions/setup-node/issues/899
-  SKIP_YARN_COREPACK_CHECK: 1
-
 jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: yarn
+      - uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: |
-          yarn set version stable
-          yarn install
+        run: bun install
       - name: Build website
-        run: yarn build
+        run: bun run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

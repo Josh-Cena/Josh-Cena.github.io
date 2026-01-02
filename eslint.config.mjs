@@ -10,7 +10,7 @@ export default tseslint.config(
     typescriptTypeCheck: true,
   }),
   {
-    ignores: ["node_modules", ".yarn", "dist", "build"],
+    ignores: ["node_modules", "dist", "build"],
   },
   {
     languageOptions: {

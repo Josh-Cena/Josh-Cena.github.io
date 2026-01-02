@@ -10,5 +10,5 @@
       "noSuggest": true
     }
   ],
-  "ignorePaths": ["package.json", "yarn.lock", "project-words.txt", "assets"]
+  "ignorePaths": ["package.json", "project-words.txt", "assets"]
 }
