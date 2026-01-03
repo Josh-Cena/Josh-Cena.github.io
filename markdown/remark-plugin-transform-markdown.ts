@@ -1,7 +1,79 @@
 import type { Plugin } from "unified";
-import type { Root, Heading, Literal } from "mdast";
+import type { Root, Heading, Literal, Image, RootContent } from "mdast";
 import type { Nodes } from "hast";
 import { toText } from "hast-util-to-text";
+import { visit } from "unist-util-visit";
+
+function createImportDeclaration(
+  localName: string,
+  sourceValue: string,
+): RootContent {
+  return {
+    type: "mdxjsEsm",
+    value: `import ${localName} from "${sourceValue}";`,
+    data: {
+      estree: {
+        type: "Program",
+        body: [
+          {
+            type: "ImportDeclaration",
+            specifiers: [
+              {
+                type: "ImportDefaultSpecifier",
+                local: {
+                  type: "Identifier",
+                  name: localName,
+                },
+              },
+            ],
+            source: {
+              type: "Literal",
+              value: sourceValue,
+              raw: `"${sourceValue}"`,
+            },
+          },
+        ],
+        sourceType: "module",
+        comments: [],
+      },
+    },
+  };
+}
+
+function createJSXElement(
+  name: string,
+  attributes: { name: string; value: string }[],
+): RootContent {
+  return {
+    type: "mdxJsxFlowElement",
+    name,
+    attributes: attributes.map((attr) => ({
+      type: "mdxJsxAttribute",
+      name: attr.name,
+      value: {
+        type: "mdxJsxAttributeValueExpression",
+        value: attr.value,
+        data: {
+          estree: {
+            type: "Program",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: {
+                  type: "Identifier",
+                  name: attr.value,
+                },
+              },
+            ],
+            sourceType: "module",
+            comments: [],
+          },
+        },
+      },
+    })),
+    children: [],
+  };
+}
 
 const transformMarkdown: Plugin = () => (ast, vFile) => {
   const { children } = ast as Root;
@@ -21,71 +93,37 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
   } else {
     (frontMatter as Literal).value += `\ntitle: "${titleText}"`;
   }
+  const images: string[] = [];
+  visit(ast, "image", (node: Image) => {
+    if (/^https?:\/\//u.test(node.url)) return;
+    if (images.includes(node.url)) return;
+    images.push(node.url);
+  });
+  children.unshift(
+    ...images.map((url, index) =>
+      createImportDeclaration(`Image${index}`, url),
+    ),
+  );
+  visit(ast, "image", (node: Image) => {
+    const imageIndex = images.indexOf(node.url);
+    if (imageIndex === -1) return;
+    Object.assign(
+      node,
+      createJSXElement("img", [
+        { name: "src", value: `Image${imageIndex}` },
+        // TODO: the ESTree node type should not be Identifier
+        { name: "alt", value: `"${node.alt ?? ""}"` },
+      ]),
+    );
+  });
   if (vFile.dirname?.includes("blog")) {
     children.splice(
       firstHeading + 1,
       0,
-      {
-        type: "mdxjsEsm",
-        value: 'import PostData from "@/components/PostData";',
-        data: {
-          estree: {
-            type: "Program",
-            body: [
-              {
-                type: "ImportDeclaration",
-                specifiers: [
-                  {
-                    type: "ImportDefaultSpecifier",
-                    local: {
-                      type: "Identifier",
-                      name: "PostData",
-                    },
-                  },
-                ],
-                source: {
-                  type: "Literal",
-                  value: "@/components/PostData",
-                  raw: '"@/components/PostData"',
-                },
-              },
-            ],
-            sourceType: "module",
-            comments: [],
-          },
-        },
-      },
-      {
-        type: "mdxJsxFlowElement",
-        name: "PostData",
-        attributes: [
-          {
-            type: "mdxJsxAttribute",
-            name: "frontMatter",
-            value: {
-              type: "mdxJsxAttributeValueExpression",
-              value: "frontMatter",
-              data: {
-                estree: {
-                  type: "Program",
-                  body: [
-                    {
-                      type: "ExpressionStatement",
-                      expression: {
-                        type: "Identifier",
-                        name: "frontMatter",
-                      },
-                    },
-                  ],
-                  sourceType: "module",
-                  comments: [],
-                },
-              },
-            },
-          },
-        ],
-        children: [],
-      },
+      createImportDeclaration("PostData", "@/components/PostData"),
+      createJSXElement("PostData", [
+        { name: "frontMatter", value: "frontMatter" },
+      ]),
     );
   }
 };

@@ -1,0 +1,234 @@
+---
+description: "A registry of the technologies I use and how to update each one."
+---
+
+# My tech registry
+
+This registry lists every single technology I have installed globally, so I can easily reproduce my environment and keep everything up to date.
+
+Anything that's installed by `brew` doesn't need detailed instructions, just run `brew update && brew upgrade && brew cleanup`.
+
+## Browsers
+
+[![Firefox](https://img.shields.io/badge/Firefox-FF7139?style=for-the-badge&logo=Firefox-Browser&logoColor=white)](https://www.firefox.com/en-US/) [![Google Chrome](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=GoogleChrome&logoColor=white)](https://www.google.com/chrome/) [![Safari](https://img.shields.io/badge/Safari-000000?style=for-the-badge&logo=Safari&logoColor=white)](https://www.apple.com/safari/)
+
+## Development tools
+
+[![Homebrew](https://img.shields.io/badge/homebrew-%23FBB040.svg?style=for-the-badge&logo=homebrew&logoColor=black)](https://brew.sh/) `/opt/homebrew/bin/brew`
+
+- [Installation](https://brew.sh/): `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+- Environment config: `eval "$(/opt/homebrew/bin/brew shellenv)"`
+
+[![Bash Script](https://img.shields.io/badge/bash_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/) `/opt/homebrew/bin/bash`
+
+- Shell config: Change shell with `chsh -s /opt/homebrew/bin/bash`
+
+[![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/) `/opt/homebrew/bin/git`
+
+[![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)](https://code.visualstudio.com/)
+
+- [Installation](https://code.visualstudio.com/Download): .zip install
+- Commands: `~/.local/bin/code` (custom-created symlink to `/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code`)
+
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
+[**GPG**](https://www.gnupg.org/) `/usr/local/bin/gpg` (symlink to `/usr/local/MacGPG2/bin/gpg`)
+
+- [Installation](https://gpgtools.org/): .dmg install
+
+## Language tools
+
+![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white) ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
+
+Thanks to Apple, my C/C++ setup is very complex.
+
+- `/usr/bin/{clang,clang++,cc,c++,gcc,g++}`: Apple-provided Clang
+- `/opt/homebrew/{gcc,g++}-<version>`: Homebrew-installed GCC
+
+[**Dafny**](https://dafny.org/) `/opt/homebrew/bin/dafny`
+
+[![Haskell](https://img.shields.io/badge/Haskell-5e5086?style=for-the-badge&logo=haskell&logoColor=white)](https://www.haskell.org/)
+
+- [**GHCup**](https://www.haskell.org/ghcup/) `~/.ghcup/bin/ghcup`
+  - [Installation](https://www.haskell.org/ghcup/install/): `curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh`
+  - Update: `ghcup upgrade`
+- [**GHC**](https://www.haskell.org/ghc/)/[**Stack**](https://docs.haskellstack.org/en/stable/)/[**HLS**](https://haskell-language-server.readthedocs.io/en/latest/)/... `~/.ghcup/bin/*`
+  - Installation: `ghcup install <tool> <version>`, `ghcup set <tool> <version>`
+  - List installed tooling versions: `ghcup list`
+  - _Note_: Prefer `stack` over `cabal`.
+- Haskell executables: `~/.stack/bin/*`
+  - Installation/Update: `stack install <package>`
+  - Configuration: `~/.stack/config.yaml`
+  - [**Alex**](http://www.haskell.org/alex/) `alex`
+  - [**Happy**](http://www.haskell.org/happy/) `happy`
+  - [**HLint**](https://github.com/ndmitchell/hlint) `hlint`
+  - [**Ormolu**](https://github.com/tweag/ormolu) `ormolu`
+
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
+- [**NVM**](https://github.com/nvm-sh/nvm):
+  - [Installation](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating): `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash`
+  - [Environment config](https://github.com/nvm-sh/nvm?tab=readme-ov-file#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file)
+- [![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/) [![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/) `~/.nvm/versions/node/v<version>/bin/node`
+  - [Installation](https://github.com/nvm-sh/nvm?tab=readme-ov-file#usage): `nvm install <version>`; `nvm use <version>`
+- [![Deno JS](https://img.shields.io/badge/deno%20js-000000?style=for-the-badge&logo=deno&logoColor=white)](https://deno.com/) `/opt/homebrew/bin/deno`
+  - [Installation](https://docs.deno.com/runtime/getting_started/installation/): `curl -fsSL https://deno.land/install.sh | sh`
+  - Environment config: `. "$HOME/.deno/env"`
+  - Update: `deno upgrade`
+- [![Bun](https://img.shields.io/badge/Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white)](https://bun.com/) `~/.bun/bin/bun`
+  - [Installation](https://bun.com/get): `curl -fsSL https://bun.sh/install | bash`
+  - Update: `bun upgrade`
+  - _Note_: Prefer `bun` over `npm`/`yarn`/`pnpm` where possible. Prefer `pnpm` over `npm`/`yarn` for Node projects.
+- npm executables: `~/.bun/bin/*`
+  - List installed: `bun pm ls -g`
+  - [**eshost-cli**](https://github.com/bterlson/eshost-cli) `eshost`
+  - [**esvu**](https://github.com/devsnek/esvu) `esvu`
+  - [**Mermaid CLI**](https://github.com/mermaid-js/mermaid-cli) `mmdc`
+  - [![PNPM](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220)](https://pnpm.io/) `pnpm`
+  - [![Prettier](https://img.shields.io/badge/prettier-%23192a32?style=for-the-badge&logo=prettier&logoColor=dc524a)](https://prettier.io/) `prettier`
+  - [**Pyright**](https://microsoft.github.io/pyright/#/) `pyright`
+  - [**serve**](https://github.com/vercel/serve) `serve`
+  - [![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)](https://yarnpkg.com/) `yarn`
+
+[![Julia](https://img.shields.io/badge/-Julia-9558B2?style=for-the-badge&logo=julia&logoColor=white)](https://julialang.org/)
+
+- [**juliaup**](https://github.com/JuliaLang/juliaup) `~/.juliaup/bin/juliaup`
+  - [Installation](https://docs.julialang.org/en/v1/manual/installation/): `curl -fsSL https://install.julialang.org | sh`
+  - Update: `juliaup self update`
+- **Julia** `~/.juliaup/bin/julia`
+  - Installation: `juliaup add <version>`; `juliaup default <version>`
+
+![LaTeX](https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white)
+
+- [**TeX Live**](https://www.tug.org/texlive/) `/usr/local/texlive/2025/bin/universal-darwin/*`
+  - [Installation](https://www.tug.org/texlive/acquire-netinstall.html): follow instructions
+  - Update: reinstall
+
+[**Lean**](https://lean-lang.org/)
+
+- **elan** `~/.elan/bin/elan`
+  - [Installation](https://lean-lang.org/install/manual/): `curl https://elan.lean-lang.org/elan-init.sh -sSf | sh`
+  - Update: `elan self update`
+- **Lean** `~/.elan/bin/lean*`
+  - Installation: `elan install <version>`; `elan default <version>`
+
+[![Racket](https://img.shields.io/badge/Racket-%239F1D20.svg?style=for-the-badge&logo=racket&logoColor=white)](https://racket-lang.org/)
+
+- [Installation](https://download.racket-lang.org/): .dmg install
+- Commands: `/Applications/Racket v<version>/bin/racket`
+- Update: Download latest version and install over existing installation. Update PATH as well.
+
+[![OCaml](https://img.shields.io/badge/OCaml-%23E98407.svg?style=for-the-badge&logo=ocaml&logoColor=white)](https://ocaml.org/)
+
+- [**OPAM**](https://opam.ocaml.org/): `/opt/homebrew/bin/opam`
+- **OCaml**: `~/.opam/<version>/bin/ocaml*`
+  - [Installation](https://ocaml.org/docs/installing-ocaml): `opam switch create <version>`
+  - Environment config: `eval $(opam env)`
+  - Update: `opam update && opam upgrade`
+  - List installed versions: `opam list`
+- OPAM executables: `~/.opam/<version>/bin/*`
+  - [**Rocq**](https://rocq-prover.org/) `rocq`
+  - `vsrocq-language-server`
+
+[![Perl](https://img.shields.io/badge/perl-%2339457E.svg?style=for-the-badge&logo=perl&logoColor=white)](https://www.perl.org/)
+
+- [**perlbrew**](https://perlbrew.pl/) `~/perl5/perlbrew/bin/perlbrew`
+  - [Installation](https://perlbrew.pl/): `curl -L https://install.perlbrew.pl | bash`
+  - Update: `perlbrew self-upgrade`
+- **Perl** `~/perl5/perlbrew/perls/<version>/bin/*`
+  - [Installation](https://perlbrew.pl/): `perlbrew install <version>`; `perlbrew switch <version>`
+  - Environment config: `. "$HOME/perl5/perlbrew/etc/bashrc"`
+
+[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://www.python.org/)
+
+- [![uv](https://img.shields.io/badge/uv-%23DE5FE9.svg?style=for-the-badge&logo=uv&logoColor=white)](https://docs.astral.sh/uv/) `/opt/homebrew/bin/uv`
+- **Python** `~/.venv/bin/python`, `~/.local/bin/python<version>`
+  - Installation: First run `uv python install <version>`; then use `uv venv .venv` at user root
+  - Update: `uv python update <version>`; then recreate venv with `uv venv .venv --force`
+  - _Note_: The venv uses the Python version used to create it. You can also create other environments with other Python versions, probably in project directories, by installing additional Python versions.
+- Python executables: `~/.venv/bin/*`
+  - Installation: `uv pip install <package>`
+  - [![Black](https://img.shields.io/badge/black-%23000000.svg?style=for-the-badge&logo=black&logoColor=white)](https://black.readthedocs.io/en/stable/) `black`
+  - [![Jupyter Notebook](https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white)](https://jupyter.org/) `jupyterlab`
+  - You are free to install any package used by casual scripts, but the following should be the baseline installations:
+  - [![Matplotlib](https://img.shields.io/badge/Matplotlib-%23ffffff.svg?style=for-the-badge&logo=Matplotlib&logoColor=black)](https://matplotlib.org/) `matplotlib` (library)
+  - [**NetworkX**](https://networkx.org/) `networkx` (library)
+  - [![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/) `numpy` (library)
+  - [![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/) `pandas` (library)
+  - [![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/stable/) `scikit-learn` (library)
+  - [![SciPy](https://img.shields.io/badge/SciPy-%230C55A5.svg?style=for-the-badge&logo=scipy&logoColor=%white)](https://scipy.org/) `scipy` (library)
+  - [**Seaborn**](https://seaborn.pydata.org/) `seaborn` (library)
+  - [**statsmodels**](https://www.statsmodels.org/stable/index.html) `statsmodels` (library)
+  - [**tqdm**](https://tqdm.github.io/) `tqdm` (library)
+- [![Anaconda](https://img.shields.io/badge/Anaconda-%2344A833.svg?style=for-the-badge&logo=anaconda&logoColor=white)](https://www.anaconda.com/) `/opt/homebrew/bin/conda`
+  - _Note_: I don't use Anaconda. But there's one particular package, [Montreal Forced Aligner](https://montreal-forced-aligner.readthedocs.io/en/latest/), that to this day doesn't have a functional PyPI build. I installed `miniconda` for it, and a little shell setup:
+
+  ```bash
+  conda_init() {
+  if [[ $(which python) == *".venv"* ]]; then
+      deactivate
+  fi
+
+  # >>> conda initialize >>>
+  # ...
+  # <<< conda initialize <<<
+
+  }
+  ```
+
+  Now I can run `conda_init` in any shell to set up conda for that session, and then run MFA from there.
+
+[![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)](https://www.r-project.org/)
+
+- [Installation](https://cran.r-project.org/mirrors.html): .pkg install to `/Applications/R.app`, `/Library/Frameworks/R.framework/Resources/bin`
+- Commands: `/usr/local/bin/R`, `/usr/local/bin/Rscript` (symlinks to `/Library/Frameworks/R.framework/Resources/bin`)
+- Update: Download latest version and install over existing installation.
+
+[![Ruby](https://img.shields.io/badge/ruby-%23CC342D.svg?style=for-the-badge&logo=ruby&logoColor=white)](https://www.ruby-lang.org/)
+
+- [**rbenv**](https://github.com/rbenv/rbenv) `/opt/homebrew/bin/rbenv`
+- **Ruby** `~/.rbenv/shims/ruby`
+  - [Installation](https://www.ruby-lang.org/en/documentation/installation/#rbenv): `rbenv install <version>`; `rbenv global <version>`
+  - Environment config: `eval "$(rbenv init - bash)"`
+- Ruby executables: `~/.rbenv/shims/*`
+  - Installation: `gem install <package>`
+  - Update: `gem update <package>`
+  - [**Linguist**](https://github.com/github-linguist/linguist) `github-linguist`
+
+[![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://rust-lang.org/)
+
+- [**rustup**](https://rust-lang.org/tools/install) `~/.cargo/bin/rustup`
+  - [Installation](https://rust-lang.org/tools/install): `curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh`
+  - Update: `rustup self update`
+- [**rustc**](https://doc.rust-lang.org/rustc/)/[**Cargo**](https://doc.rust-lang.org/cargo/): `~/.cargo/bin/*`
+  - [Installation](https://rustup.rs/): `rustup install <version>`; `rustup default <version>`
+  - Update: `rustup update`
+
+[**Wolfram**](https://www.wolfram.com/)
+
+- [**Wolfram Engine**](https://www.wolfram.com/engine/) `/Applications/Wolfram Engine.app`
+  - [Installation](https://www.wolfram.com/engine/): .dmg install
+- [**WolframScript**](https://www.wolfram.com/language/): `/Applications/WolframScript.app`
+  - [Installation](https://reference.wolfram.com/language/workflow/InstallWolframScript.html): .dmg install
+  - Commands: `/usr/local/bin/wolframscript` (symlink to `/Applications/WolframScript.app/Contents/MacOS/wolframscript`)
+
+## Other command line tools
+
+- `bench`
+- `coreutils` (GNU versions of commands, prefixed with `g`; e.g., `gls`, `gcp`)
+- `cowsay`
+- `curl`
+- `dopplerhq/cli/doppler`
+- `ffmpeg`
+- `gh`
+- `gnupg`
+- `jq`
+- `neofetch`
+- `pandoc`
+- `tree`
+- `wget`
+
+Other libraries:
+
+- `graphviz` (used by `networkx`, `DiagrammeR`, and others)
+- `z3` (for theorem proving)
