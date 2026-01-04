@@ -31,6 +31,7 @@ function createImportDeclaration(
               value: sourceValue,
               raw: `"${sourceValue}"`,
             },
+            attributes: [],
           },
         ],
         sourceType: "module",

@@ -37,7 +37,7 @@ export default function CodeBlock({
       return "";
     })
     .join("")
-    .trim();
+    .trimEnd();
   return (
     <div
       className={clsx(

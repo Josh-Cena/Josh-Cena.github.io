@@ -1,0 +1,81 @@
+---
+description: "Advent of Code 2019 - Day 5: Sunny with a Chance of Asteroids. Written in C++."
+tags:
+  - Intcode
+year: 2019
+day: 5
+---
+
+# AoC 2019 D5: Sunny with a Chance of Asteroids
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+The Intcode itself is relatively straightforward, but I spent some time ironing out the infrastructure for code sharing, especially since it's a bit tricky in C++.
+
+At this point, my code is still functional. My `intcode.hpp` file contains two functions:
+
+```cpp
+std::vector<int> parse_prog(const std::string &line);
+std::vector<int> run_prog(std::vector<int> &codes, std::vector<int> inputs);
+```
+
+It modifies the `codes` vector in place, and returns a vector of outputs. The inputs are provided as a vector as well, and consumed in order.
+
+## Parts 1 & 2
+
+- Input and output instructions are straightforward to implement. One reads from the input vector, and the other appends to the output vector.
+- Parameter modes require changing `codes[op1]` to `eval_param(codes, inst.params[0])` (ah yes, I also have a `struct Inst` that holds the opcode and parameters, each with mode/value, and a function to extract this information). `eval_param` just checks the mode and either returns the value at that position or the immediate value.
+- The main `for` loop doesn't increment by a fixed amount anymore; instead, each instruction in the `switch` statement specifies the new `i` value at the end.
+- The jump instructions just set `i` instead of incrementing it.
+
+The new main loop looks like this:
+
+```cpp
+int input_idx = 0;
+std::vector<int> outputs;
+for (int ip = 0; codes[ip] != 99;) {
+    Inst inst = parse_inst(codes, ip);
+    switch (inst.opcode) {
+        case 1:
+        case 2:
+        case 7:
+        case 8: {
+            int val1 = eval_param(codes, inst.params[0]);
+            int val2 = eval_param(codes, inst.params[1]);
+            // int res = ...;
+            write_to(codes, inst.params[2], res);
+            ip += num_params_for_opcode(inst.opcode) + 1;
+            break;
+        }
+        case 3: {
+            write_to(codes, inst.params[0], inputs[input_idx]);
+            input_idx++;
+            ip += num_params_for_opcode(inst.opcode) + 1;
+            break;
+        }
+        case 4: {
+            int val = eval_param(codes, inst.params[0]);
+            outputs.push_back(val);
+            ip += num_params_for_opcode(inst.opcode) + 1;
+            break;
+        }
+        case 5:
+        case 6: {
+            int val = eval_param(codes, inst.params[0]);
+            bool should_jump = inst.opcode == 5 ? (val != 0) : (val == 0);
+            if (should_jump) {
+                ip = eval_param(codes, inst.params[1]);
+            } else {
+                ip += num_params_for_opcode(inst.opcode) + 1;
+            }
+            break;
+        }
+        default:
+            throw std::invalid_argument("Unknown opcode");
+    }
+}
+```
+
+<Footer frontMatter={frontMatter} />

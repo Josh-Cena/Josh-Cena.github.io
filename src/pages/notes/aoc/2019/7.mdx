@@ -1,0 +1,81 @@
+---
+description: "Advent of Code 2019 - Day 7: Amplification Circuit. Written in C++."
+tags:
+  - Intcode
+  - Brute force
+year: 2019
+day: 7
+---
+
+# AoC 2019 D7: Amplification Circuit
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+This time we are introducing stateful programs, where each one needs to be paused and resumed (especially for part 2). So instead of my functional `run_prog` from [day 5](/notes/aoc/2019/5), I wrapped it into a class:
+
+```cpp
+class Program {
+    int ip;
+    std::queue<int> inputs;
+    std::queue<int> outputs;
+public:
+    std::vector<int> codes;
+    bool halted;
+    Program(const std::string &prog_line);
+    void send_input(int value);
+    int pop_output();
+    void run_until_output();
+    void run();
+};
+```
+
+Now the execution state (instruction pointer, input/output queues, halted flag) is stored in the object. The program can be paused when an output is produced (`run_until_output()`), or run to completion (`run()`). When paused, the outputs can be popped and inputs can be sent in. I have to expose the memory (`codes`) because the caller sometimes needs to read from it (e.g., [day 2](/notes/aoc/2019/2) when there was no output) or modify it (e.g., setting flags).
+
+## Part 1
+
+Conveniently, C++ has [`std::next_permutation`](https://en.cppreference.com/w/cpp/algorithm/next_permutation.html) to generate all permutations of the phase settings. So the main loop looks like:
+
+```cpp
+std::vector<int> phase_settings = {0, 1, 2, 3, 4};
+int max_output = 0;
+do {
+    // Run programs
+    max_output = std::max(max_output, final_output);
+} while (std::next_permutation(phase_settings.begin(), phase_settings.end()));
+```
+
+For each permutation, we just construct 5 `Program` instances one by one, send in the phase setting and previous output, run to completion, and read the final output. It looks like this:
+
+```cpp
+int input_signal = 0;
+for (auto &prog : progs) {
+    prog.send_input(input_signal);
+    prog.run();
+    input_signal = prog.pop_output();
+}
+```
+
+## Part 2
+
+We need to run the programs in a loop until they all halt. It looks like this:
+
+```cpp
+int input_signal = 0;
+bool all_halted = false;
+while (!all_halted) {
+    all_halted = true;
+    for (auto &prog : progs) {
+        prog.send_input(input_signal);
+        prog.run_until_output();
+        if (prog.halted) break;
+        all_halted = false;
+        input_signal = prog.pop_output();
+    }
+}
+```
+
+Note, technically this may terminate in the middle of a cycle if one program halts, but it looks like the correct output is produced regardless.
+
+<Footer frontMatter={frontMatter} />

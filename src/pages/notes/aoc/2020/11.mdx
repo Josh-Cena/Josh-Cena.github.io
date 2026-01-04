@@ -1,0 +1,69 @@
+---
+description: "Advent of Code 2020 - Day 11: Seating System. Written in Python."
+tags:
+  - Cellular automata
+year: 2020
+day: 11
+---
+
+# AoC 2020 D11: Seating System
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I've said it before: [never represent cellular automata grids as physical 2D arrays](/notes/aoc/2019/24). Always use a map from coordinates to cell states. Well in this problem, doing so allows us to completely ignore the floor cells. We can also precompute all neighbor cells for each seat, since it's going to be non-trivial in part 2.
+
+```python
+def evolve(grid: list[list[str]]):
+    h = len(grid)
+    w = len(grid[0])
+    points = [(r, c) for r in range(h) for c in range(w) if grid[r][c] != "."]
+    point_neighbors = {(r, c): neighbors2d(r, c, grid, allowed) for (r, c) in points}
+    has_changed = True
+    while has_changed:
+        has_changed = False
+        new_grid = [row.copy() for row in grid]
+        for r, c in points:
+            neighbors = [grid[nr][nc] for (nr, nc) in point_neighbors[(r, c)]]
+            if "#" not in neighbors and grid[r][c] == "L":
+                new_grid[r][c] = "#"
+                has_changed = True
+            elif neighbors.count("#") >= 4 and grid[r][c] == "#":
+                new_grid[r][c] = "L"
+                has_changed = True
+        grid = new_grid
+    return grid
+```
+
+## Part 2
+
+The only difference in part 2 is the `neighbors2d` function, which now has to look in each of the 8 directions until it finds a seat or hits the edge of the grid. Again, because whether a cell is a seat or floor is static, we can precompute the neighbors instead of recomputing during each evolution step.
+
+```python
+def neighbors2d(
+    r: int, c: int, grid: list[list[str]], allowed: Union[list[str], None]
+) -> list[tuple[int, int]]:
+    res: list[tuple[int, int]] = []
+    for dr in range(-1, 2):
+        for dc in range(-1, 2):
+            if dr == 0 and dc == 0:
+                continue
+            d = 1
+            nr = r + dr * d
+            nc = c + dc * d
+            # In part 1, this loop would just be res.append((nr, nc))
+            while 0 <= nr < len(grid) and 0 <= nc < len(grid[0]):
+                if not allowed or grid[nr][nc] in allowed:
+                    if grid[nr][nc] != ".":
+                        res.append((nr, nc))
+                    break
+                d += 1
+                nr = r + dr * d
+                nc = c + dc * d
+    return res
+```
+
+<Footer frontMatter={frontMatter} />

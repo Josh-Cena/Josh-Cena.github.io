@@ -1,0 +1,46 @@
+---
+description: "Advent of Code 2019 - Day 2: 1202 Program Alarm. Written in C++."
+tags:
+  - Intcode
+  - Brute force
+year: 2019
+day: 2
+---
+
+# AoC 2019 D2: 1202 Program Alarm
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+This begins a very interesting series of Intcode problems. This is just like normal Assembly, with the only quirk being that the instruction memory can be modified at runtime. I iteratively modified my setup, and I will describe the version produced by each day.
+
+## Part 1
+
+In Day 2, I didn't realize that I would be using this Intcode VM for the rest of the year, so the VM still lives in the solution file. It's a single function called `int run_prog(vector<int> codes, int noun, int verb)`, which is just:
+
+```cpp
+for (int i = 0; i + 3 < codes.size() && codes[i] != 99; i += 4) {
+    int opcode = codes[i];
+    int op1 = codes[i + 1];
+    int op2 = codes[i + 2];
+    int dest = codes[i + 3];
+    if (opcode == 1) {
+        codes[dest] = codes[op1] + codes[op2];
+    } else if (opcode == 2) {
+        codes[dest] = codes[op1] * codes[op2];
+    } else {
+        throw "Invalid opcode";
+    }
+}
+```
+
+## Part 2
+
+I originally thought I had to analyze the program to figure out what noun and verb would produce the desired output, but because the program is self-modifying, this is actually tricky. I missed the line where it says:
+
+> Each of the two input values will be between `0` and `99`, inclusive.
+
+Once I see that, it's easy enough to just brute force all 10000 combinations of noun and verb.
+
+<Footer frontMatter={frontMatter} />

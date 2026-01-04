@@ -1,0 +1,49 @@
+---
+description: "Advent of Code 2020 - Day 13: Shuttle Search. Written in Python."
+tags:
+  - Modular arithmetic
+  - Mathematics
+year: 2020
+day: 13
+---
+
+# AoC 2020 D13: Shuttle Search
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Once we have the list of bus IDs, we can compute the next time each bus arrives, which is the smallest multiple of the bus ID that is greater than or equal to the earliest timestamp: `np.ceil(time / buses) * buses`. We then find the bus with the smallest arrival time with `np.argmin`.
+
+## Part 2
+
+If `buses[i]` departs at timestamp `t + i`, that means `t + i` is a multiple of `buses[i]`, or $t + i\equiv 0 \pmod{\mathit{buses}_i}$. If we denote each $(i, \mathit{buses}_i)$ pair as $(a_i, b_i)$, then we just need to solve the system of congruences $t \equiv -a_i \pmod{b_i}$ for the lowest positive $t$. A nice observation is that all bus IDs $b_i$ are prime numbers, which means that by the [Chinese Remainder Theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem), there exists a unique solution for $t$ modulo $N = \prod b_i$.
+
+To find the solution, we iteratively satisfy each congruence while holding all previous ones true. Start with $t = 0$, $N = 1$, which denotes $t \equiv 0 \pmod{1}$. For each congruence $t \equiv -a_i \pmod{b_i}$, we increment $t$ by some multiple of $N$ to satisfy it, and then update $N$ to $N \cdot b_i$. Because each time, $N$ is a multiple of all previous bus IDs, all previous congruences remain satisfied when $t$ is incremented by $N$. To find $k$ in $t + k\cdot N \equiv -a_i \pmod{b_i}$, we want $k \equiv (-a_i - t) \cdot N^{-1} \pmod{b_i}$, where $N^{-1}$ is the modular inverse of $N$ modulo $b_i$. [Last time](/notes/aoc/2019/22), it was a lot of trouble because C++ doesn't have either modular exponentiation or big integers built in, but Python has both. So the final code looks like this:
+
+```python
+buses = [
+    (int(x), -i) for (i, x) in enumerate(data[1].split(",")) if x != "x"
+]
+t, m = 0, 1
+for a, b in buses:
+    k = ((b - t) * pow(m, -1, a)) % a
+    t += m * k
+    m *= a
+```
+
+By the way, a trivia: in Python, `%` is modulo, not remainder, unlike C or its derivatives like JavaScript. This means that the result of `x % y` takes the sign of `y` instead of `x`. This is handy for us since our moduli (bus IDs) are positive.
+
+```bash
+$ python
+>>> -10 % 3
+2
+
+$ node
+> -10 % 3
+-1
+```
+
+<Footer frontMatter={frontMatter} />

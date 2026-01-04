@@ -1,0 +1,176 @@
+---
+description: "Advent of Code 2019 - Day 22: Slam Shuffle. Written in C++."
+tags:
+  - Mathematics
+  - Fast exponentiation
+  - Modular arithmetic
+year: 2019
+day: 22
+---
+
+# AoC 2019 D22: Slam Shuffle
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+This part can be simulated directly, which looks like:
+
+```cpp
+for (const auto& line : data) {
+    if (line == "deal into new stack") {
+        for (int i = 0; i < num_cards; i++) {
+            new_deck[num_cards - 1 - i] = deck[i];
+        }
+    } else if (line.substr(0, 4) == "cut ") {
+        long long n = std::stoll(line.substr(4));
+        for (int i = 0; i < num_cards; i++) {
+            new_deck[(i - n + num_cards) % num_cards] = deck[i];
+        }
+    } else if (line.substr(0, 20) == "deal with increment ") {
+        long long n = std::stoll(line.substr(20));
+        for (int i = 0; i < num_cards; i++) {
+            new_deck[(i * n) % num_cards] = deck[i];
+        }
+    }
+}
+```
+
+## Part 2
+
+The scale of the problem is screaming "don't simulate me". Heck, we can't even simulate one shuffle, because the deck is $10^{14}$ cards large. Instead, we need to model the shuffles mathematically.
+
+For a given card at position $i$, each shuffle operation can be represented as a linear function:
+
+- Deal into new stack: $f(i) = -i - 1 \mod{N}$
+- Cut $n$ cards: $f(i) = i - n \mod{N}$
+- Deal with increment $n$: $f(i) = n \cdot i \mod{N}$
+
+Note that modular arithmetic is closed under addition and multiplication, so composing these functions works just like normal function composition, even with an additional $\mod{N}$. Namely:
+
+$$
+f(g(i)) = k_f \cdot (k_g \cdot i + b_g) + b_f = (k_f \cdot k_g) \cdot i + (k_f \cdot b_g + b_f) \mod{N}
+$$
+
+I wrote a class to store and compose these linear functions:
+
+```cpp
+class LinearFunction {
+    long long mod_mul(long long a, long long b) const {
+        return ((__int128_t)a * b) % mod;
+    }
+
+    long long mod_add(long long a, long long b) const {
+        return (a + b) % mod;
+    }
+public:
+    long long k;
+    long long b;
+    long long mod;
+    LinearFunction compose(const LinearFunction &g) const {
+        long long new_k = mod_mul(k, g.k);
+        long long new_b = mod_add(mod_mul(k, g.b), b);
+        return {new_k, new_b, mod};
+    }
+};
+```
+
+Note that instead of normal `+` and `*`, we use modular addition and multiplication. Because `a * b` itself may overflow `long long` even when both are less than `mod`, I used `__int128_t` to perform the multiplication safely. This is not portable, but works on Clang/macOS. I read up on [modular multiplication techniques](https://usaco.guide/gold/modular) but decided this was simpler.
+
+Now we can represent one shuffle sequence as a single linear function:
+
+```cpp
+LinearFunction total_function = {1, 0, mod};
+for (const auto& line : data) {
+    if (line == "deal into new stack") {
+        LinearFunction inst = {-1, -1, mod};
+        total_function = inst.compose(total_function);
+    } else if (line.substr(0, 4) == "cut ") {
+        long long n = std::stoll(line.substr(4));
+        LinearFunction inst = {1, -n, mod};
+        total_function = inst.compose(total_function);
+    } else if (line.substr(0, 20) == "deal with increment ") {
+        long long n = std::stoll(line.substr(20));
+        LinearFunction inst = {n, 0, mod};
+        total_function = inst.compose(total_function);
+    }
+}
+```
+
+I refactored part 1 to use this composed function, and verified that it produced the same result.
+
+Shuffling the deck `m` times is equivalent to applying the linear function `m` times. Because `m` is also on the order of $10^{14}$, we need to do this better than $\mathcal{O}(m)$ time. We can use fast exponentiation, which cuts `m` in half each time, reducing the time complexity to $\mathcal{O}(\log m)$.
+
+$$
+f(f(\ldots f(i) \ldots)) = f^m(i) = \begin{cases}
+i & \text{if } m = 0 \\
+f^{m/2}(f^{m/2}(i)) & \text{if } m \text{ is even} \\
+f(f^{m-1}(i)) & \text{if } m \text{ is odd}
+\end{cases}
+$$
+
+```cpp
+LinearFunction LinearFunction::pow(long long exponent) const {
+    if (exponent == 0) {
+        return {1, 0, mod};
+    } else if (exponent == 1) {
+        return *this;
+    } else if (exponent % 2 == 0) {
+        LinearFunction half = this->pow(exponent / 2);
+        return half.compose(half);
+    } else {
+        LinearFunction half = this->pow(exponent / 2);
+        return this->compose(half.compose(half));
+    }
+}
+```
+
+Now we have the overall shuffle function, $f^m$. Applying it to any number gives us that card's position after the whole shuffle operation. To find the card at final position $2020$, we need to solve $f^m(x) = 2020$ for $x$:
+
+$$
+f^m(x) = k_m \cdot x + b_m \mod{N} = 2020 \\
+k_m \cdot x = 2020 - b_m \mod{N} \\
+x = k_m^{-1} \cdot (2020 - b_m) \mod{N}
+$$
+
+There's an easy way out. We can print out $k_m$ and $b_m$, and type this into [Wolfram Alpha](https://www.wolframalpha.com/):
+
+```wolfram
+Solve[Mod[-38980039427340 x - 71055936241900, 119315717514047] == 2020, x]
+```
+
+And take the lowest positive solution.
+
+If we want to actually implement this, we just need to compute $k_m^{-1} \mod{N}$, which is the modular multiplicative inverse of $k_m$ modulo $N$. Since $N$ is prime, we can use Fermat's little theorem:
+
+$$
+k_m^{N-1} \equiv 1 \mod{N} \\
+k_m^{N-2} \equiv k_m^{-1} \mod{N}
+$$
+
+```cpp
+long long LinearFunction::mod_inv(long long n) const {
+    if (n < 0) n = (n % mod + mod) % mod;
+    return mod_pow(n, mod - 2);
+}
+```
+
+And `mod_pow` is [binary exponentiation](https://cp-algorithms.com/algebra/binary-exp.html), which iterates over the bits of `exp`, multiplying by $\texttt{base}^{2^i}$ when the `i`-th bit is set.
+
+```cpp
+long long LinearFunction::mod_pow(long long base, long long exp) const {
+    long long res = 1;
+    while (exp > 0) {
+        if (exp & 1) res = mod_mul(res, base);
+        base = mod_mul(base, base);
+        exp >>= 1;
+    }
+    return res;
+}
+```
+
+Putting it all together, `mod_mul(mod_inv(k_m), 2020 - b_m)` is the answer.
+
+<Footer frontMatter={frontMatter} />

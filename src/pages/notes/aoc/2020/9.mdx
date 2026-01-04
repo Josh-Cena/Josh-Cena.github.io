@@ -1,0 +1,63 @@
+---
+description: "Advent of Code 2020 - Day 9: Encoding Error. Written in Python."
+tags:
+  - Memoization
+year: 2020
+day: 9
+---
+
+# AoC 2020 D9: Encoding Error
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The naïve solution doesn't work very badly here, since the preamble is only 25 numbers long. For each number after the preamble, we compute the pairwise sums of the previous 25 numbers and see if any of them equal the current number.
+
+```python
+if nums[i] not in sums:
+    return nums[i]
+sums = set(
+    map(sum, itertools.combinations(nums[i - preamble_len + 1 : i + 1], 2))
+)
+```
+
+Every time, it only computes $\binom{25}{2} = 300$ sums to check, which is fast enough. The following optimization attempt does not work:
+
+```python
+sums = sums.difference(
+    {nums[i - preamble_len] + x for x in nums[i - preamble_len + 1 : i]}
+).union({nums[i] + x for x in nums[i - preamble_len + 1 : i]})
+```
+
+The idea here, is if we are removing `nums[i - preamble_len]` from the preamble and adding `nums[i]`, we invalidate `nums[i - preamble_len] + nums[j]` for `j` in `[i - preamble_len + 1, i)`, and we need to add `nums[i] + nums[j]` for the same `j` range. However, this doesn't work because some sums may be duplicated; we may remove a sum that was formed by two different pairs, and only one of those pairs is invalidated.
+
+However, we can still do this, just by replacing the `set` with a `collections.Counter`, which tracks how many times each sum appears. Then, when we remove sums, we decrement their counts, and only delete them from the `Counter` when their count reaches zero.
+
+```python
+for j in range(i - preamble_len + 1, i):
+    pair_sum = nums[i - preamble_len] + nums[j]
+    sums[pair_sum] -= 1
+    pair_sum = nums[i] + nums[j]
+    sums[pair_sum] += 1
+```
+
+Now updating `sums` is $\mathcal{O}(k)$ instead of $\mathcal{O}(k^2)$, where $k$ is the preamble length.
+
+## Part 2
+
+The idea is somewhat similar to part 1. Instead of enumerating all contiguous subarrays and checking their sums, we can use a two-pointer approach to find a subarray that sums to the target value. Namely, we have `sum(nums[i:j]) == sum(nums[0:j]) - sum(nums[0:i])`, so we just need an array of prefix sums where `running_sums[i] == sum(nums[0:i])`. Then, `invalid == running_sum[j] - running_sum[i-1]` => `running_sum[j] - invalid == running_sum[i-1]`. We can just intersect `running_sums` with `running_sums - invalid` to find matching pairs, which would be the value for `running_sum[i-1]`. There will be two results: one corresponds to `running_sum[i-1]` and the other corresponds to `running_sum[index_invalid - 1]` (since `running_sum[index_invalid] - running_sum[index_invalid - 1] == invalid`); we take the smaller one. NumPy makes everything simple.
+
+```python
+running_sum = np.cumsum(nums)
+sum_i_p_1 = min(set(running_sum - invalid).intersection(set(running_sum)))
+i = np.where(running_sum == sum_i_p_1)[0][0] + 1
+j = np.where(running_sum == sum_i_p_1 + invalid)[0][0]
+num_range = nums[i : j + 1]
+```
+
+Note that enumerating all `(i, j)` pairs would also work, but that is $\mathcal{O}(n^2)$. The solution here is $\mathcal{O}(n\log n)$, assuming set membership and insertion is $\mathcal{O}(\log n)$.
+
+<Footer frontMatter={frontMatter} />

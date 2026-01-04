@@ -1,0 +1,31 @@
+---
+description: "Advent of Code 2020 - Day 6: Custom Customs. Written in Python."
+tags:
+  - Data structures
+year: 2020
+day: 6
+---
+
+# AoC 2020 D6: Custom Customs
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Each group's answers is a list of sets. For part 1, if we want the questions _anyone_ answered "yes", that's the union of the sets in each list. Conveniently we can simply concatenate all the strings in the group (removing newlines) and convert that to a set, which automatically removes duplicates.
+
+```python
+sum(len(set(g.replace("\n", ""))) for g in groups)
+```
+
+## Part 2
+
+Now we want the questions _everyone_ answered "yes", which is the intersection of the sets in each list. Python's `set.intersection` method can take multiple arguments, so we can unpack the list of sets with `*`:
+
+```python
+sum(len(set.intersection(*map(set, g.split("\n")))) for g in groups)
+```
+
+<Footer frontMatter={frontMatter} />

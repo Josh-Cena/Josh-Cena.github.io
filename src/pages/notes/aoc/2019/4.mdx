@@ -1,0 +1,25 @@
+---
+description: "Advent of Code 2019 - Day 4: Secure Container. Written in C++."
+tags:
+  - Brute force
+year: 2019
+day: 4
+---
+
+# AoC 2019 D4: Secure Container
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Again, no tricks here. Even just exhausting all six-digit numbers (100000 to 999999) would just be a million iterations, which is manageable. The only optimization I actually implemented is that after enumerating a higher digit, the next digit must be at least that digit (to ensure non-decreasing order). There are only $\binom{9+6-1}{6}=3003$ non-decreasing sequences using 9 digits, so this is very trivial already. Theoretically, I can also constrain the first digit based on the given range, but I didn't bother and just checked the range for each number.
+
+The code is just 6 nested loops, one for each digit. I check if there's at least one pair of equal adjacent digits, and that the number (`100000 * a + 10000 * b + 1000 * c + 100 * d + 10 * e + f`) is within the given range.
+
+## Part 2
+
+The check is the same as before (`num[i] == num[i - 1]`), but also check that `num[i - 2] != num[i]` and `num[i + 1] != num[i]` (with boundary checks).
+
+<Footer frontMatter={frontMatter} />

@@ -1,0 +1,55 @@
+---
+description: "Advent of Code 2019 - Day 24: Planet of Discord. Written in C++."
+tags:
+  - Cellular automata
+year: 2019
+day: 24
+---
+
+# AoC 2019 D24: Planet of Discord
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The rule number 1 of cellular automata (like mazes): always represent the grid as a `map<Coordinate, CellType>`, and never as a physical 2D array, because there will always be infinite grids, irregular grids, etc.
+
+My typical approach is to go through each alive cell and only evolve its neighbors and itself, since farther cells cannot change state. It looks like this:
+
+{/* cSpell:ignore nbrs */}
+
+```cpp
+template<typename T>
+std::set<T> evolve(
+    const std::set<T> &bugs,
+    std::vector<T> (*get_neighbors)(T)
+) {
+    std::set<T> new_bugs;
+    std::set<T> to_check;
+    for (auto &bug : bugs) {
+        to_check.insert(bug);
+        for (auto &neighbor : get_neighbors(bug))
+            to_check.insert(neighbor);
+    }
+    for (auto &cell : to_check) {
+        int alive_nbrs = 0;
+        for (auto &neighbor : get_neighbors(cell)) {
+            if (bugs.count(neighbor)) alive_nbrs++;
+        }
+        if (!bugs.count(cell) && alive_nbrs == 2 || alive_nbrs == 1) {
+            new_bugs.insert(cell);
+        }
+    }
+    return new_bugs;
+}
+```
+
+This is really, really boilerplate code for cellular automata problems. The only thing that changes is the `get_neighbors` function and the rules for evolution. In this case, I'm making the function generic, and the two parts would use different `get_neighbors` functions. For part 1, it's just the 4 orthogonal neighbors in the same grid.
+
+## Part 2
+
+For part 2, the `get_neighbors` function is more complicated, since we have to deal with multiple levels of grids. The cell is now 3D, with an additional `level` coordinate. But there isn't much to say about the `get_neighbors` function; it's just a lot of casework. The evolution rules are the same as part 1.
+
+<Footer frontMatter={frontMatter} />

@@ -1,0 +1,52 @@
+---
+description: "Advent of Code 2020 - Day 19: Monster Messages. Written in Python."
+tags:
+  - BFS/DFS
+year: 2020
+day: 19
+---
+
+# AoC 2020 D19: Monster Messages
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Parts 1 & 2
+
+If a rule matches the message at `i..j`, that means there exists an alternative `rule1 rule2` such that `i..k` matches `rule1` and `k..j` matches `rule2` for some `k` between `i` and `j`.
+
+Technically, it's possible that multiple alternatives could match at index `i` and have different ending indices `j`, and we don't know which one to pick until we try to match the rest of the message. So we have to return _all_ possible ending indices for a given starting index and rule. Then, as long as _one_ of the matches for rule `0` is `0..len(message)`, the message is valid.
+
+```python
+def matches_rule(
+    inp: str,
+    ind: int,
+    id: int,
+    rules: dict[int, Union[list[list[int]], Literal['"a"', '"b"']]],
+) -> list[int]:
+    if ind >= len(inp):
+        return []
+    rule = rules[id]
+    if rule == '"a"':
+        return [ind + 1] if inp[ind] == "a" else []
+    if rule == '"b"':
+        return [ind + 1] if inp[ind] == "b" else []
+    end_inds: list[int] = []
+    for alternative in rule:
+        possible_inds = [ind]
+        for part in alternative:
+            possible_inds = list(
+                itertools.chain.from_iterable(
+                    matches_rule(inp, i, part, rules) for i in possible_inds
+                )
+            )
+        end_inds.extend(possible_inds)
+    return end_inds
+```
+
+It turns out that for part 1, a greedy solution that always picks the first matching alternative works, but this is more general and works for both parts.
+
+I thought I needed to memoize this function or have some heuristic to avoid deep recursion in part 2, but the input is small enough that this brute-force approach finishes in a reasonable time.
+
+<Footer frontMatter={frontMatter} />

@@ -1,0 +1,35 @@
+---
+description: "Advent of Code 2019 - Day 1: The Tyranny of the Rocket Equation. Written in C++."
+tags:
+  - Brute force
+year: 2019
+day: 1
+---
+
+# AoC 2019 D1: The Tyranny of the Rocket Equation
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Not much to say about this. Division rounds down by default in C++.
+
+```cpp
+int fuel = mass / 3 - 2;
+total += fuel;
+```
+
+## Part 2
+
+I bet there's a way to mathematically calculate the limit, but this at most takes $\log_3(w)$ iterations per module, so it's efficient enough.
+
+```cpp
+while (fuel > 0) {
+    total += fuel;
+    fuel = fuel / 3 - 2;
+}
+```
+
+<Footer frontMatter={frontMatter} />

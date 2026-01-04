@@ -1,0 +1,68 @@
+---
+description: "Advent of Code 2020 - Day 21: Allergen Assessment. Written in Python."
+tags:
+  - Constraint satisfaction
+year: 2020
+day: 21
+---
+
+# AoC 2020 D21: Allergen Assessment
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+If an allergen is found in lists A, B, and C, then the ingredient must be in the intersection of those lists. So we can build a mapping from allergen to the intersection of all ingredient lists that mention that allergen.
+
+```python
+def get_possible_ingredients(data: list[tuple[set[str], set[str]]]):
+    res: dict[str, set[str]] = {}
+    for ingredients, allergens in data:
+        for a in allergens:
+            res.setdefault(a, set(ingredients)).intersection_update(ingredients)
+    return res
+```
+
+Those ingredients that cannot possibly contain any allergen are the ingredients not in `possible_ingredients.values()`.
+
+```python
+ingredient_counts = Counter[str]()
+for ingredients, _ in input_data:
+    ingredient_counts.update(ingredients)
+for ingredients in possible_ingredients.values():
+    for i in ingredients:
+        del ingredient_counts[i]
+print(sum(ingredient_counts.values()))
+```
+
+## Part 2
+
+This is basically the same as [Day 16](/notes/aoc/2020/16), except now we can't solve the constraints in a fixed order, because the constraint sets are no longer nicely nested with increasing sizes. Consider this example:
+
+{/* cSpell:ignore kfxr xzhxj chbtp */}
+
+```python
+{
+    'nuts': {'kfxr'}, 'shellfish': {'xzhxj', 'chbtp'}, 'soy': {'kfxr', 'chbtp'},
+}
+```
+
+Here, the constraints can only be solved in the order nuts → soy → shellfish, but because both shellfish and soy have constraint size 2, we cannot know in advance which to solve first. Since there are only 8 allergens anyway, I use a $\mathcal{O}(n^2)$ solution to pull one at a time:
+
+```python
+while len(possible_ingredients) > 0:
+    for allergen, ingredients in possible_ingredients.items():
+        if len(ingredients) == 1:
+            del possible_ingredients[allergen]
+            for i in possible_ingredients.values():
+                i.difference_update(ingredients)
+            allergen_to_ingredient[allergen] = ingredients.pop()
+            break
+    else:
+        # Can't find any allergen to figure out
+        raise ValueError("Arrived at an impasse")
+```
+
+<Footer frontMatter={frontMatter} />

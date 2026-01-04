@@ -1,0 +1,47 @@
+---
+description: "Advent of Code 2019 - Day 16: Flawed Frequency Transmission. Written in C++."
+tags:
+  - Puzzle
+  - Memoization
+year: 2019
+day: 16
+---
+
+# AoC 2019 D16: Flawed Frequency Transmission
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Not much to say here; just implement the algorithm as described. One useful observation is that we don't actually need to build the full pattern for each index `i`. The pattern is just the base pattern `[0, 1, 0, -1]`, with each value repeated `i + 1` times. So as the `j` index iterates through the input numbers, it also iterates through the pattern by jumping to the next value every `i + 1` steps (starting from 1, since we are skipping the very first `0` in the pattern).
+
+```cpp
+int sum = 0;
+int repeat_count = 0;
+for (size_t j = 0; j < numbers.size(); j++) {
+    sum += numbers[j] * base_pattern[((j + 1) / (i + 1)) % 4];
+}
+new_numbers[i] = std::abs(sum) % 10;
+```
+
+## Part 2
+
+There are 6,500,000 digits in the real input, and a naïve FFT is $\mathcal{O}(n^2)$, which is way too slow. However, notice that the message offset is quite large—it's in the second half of the signal. The pattern for `nums[-1]` looks like `[0, ..., 0, 1]`, and the pattern for `nums[-2]` looks like `[0, ..., 0, 1, 1]`, and so on, all the way to the middle of the signal. This means that for all indices `i` greater than half the length of the signal, the new value is just the sum of all values from `i` to the end of the signal, modulo 10. We can do this in $\mathcal{O}(n)$ time per phase by iterating backwards and keeping a running sum:
+
+```cpp
+std::vector<int> last_few(nums_len - offset);
+for (int i = offset; i < nums_len; i++) {
+    last_few[i - offset] = line[i % line.size()] - '0';
+}
+for (int phase = 0; phase < 100; phase++) {
+    int sum = 0;
+    for (int i = last_few.size() - 1; i >= 0; i--) {
+        sum = (sum + last_few[i]) % 10;
+        last_few[i] = sum;
+    }
+}
+```
+
+<Footer frontMatter={frontMatter} />

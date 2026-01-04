@@ -1,0 +1,46 @@
+---
+description: "Advent of Code 2019 - Day 18: Many-Worlds Interpretation. Written in C++."
+tags:
+  - Dijkstra
+  - Maze
+year: 2019
+day: 18
+---
+
+# AoC 2019 D18: Many-Worlds Interpretation
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+This is the first problem this year that I would consider "challenging".
+
+## Part 1
+
+As always, the maze is never represented as a grid. It would either be a `map<pair<int, int>, char>` or an adjacency list `map<pair<int, int>, vector<pair<int, int>>>`. In this case, the first observation is that most empty spaces don't matter: in a path, only which keys and which doors we go through are important; if we want to go to a key or a door, we should always take the shortest path to it, if there's nothing else in between. Therefore, the first step is to pre-compute the shortest paths between all pairs of keys and doors (and the starting position) that don't pass through any other keys or doors. This can be done with a BFS from each key/door/starting position. To get a sense of the scale: the graph only contains 53 nodes (26 keys + 26 doors + 1 start) and 252 edges, so it's not very dense.
+
+Most solutions I see base their decision-making on the next key to collect, which requires checking all possible paths from key A to key B because some paths may be blocked by locked doors. The main problem here is that we can't be greedy and always go to the closest key (which may not actually be reachable); sometimes we may need to take a slight detour to make any progress. This quickly becomes complicated. Instead, I add _doors_ to my decision making as well. Each time, I pick a target (key or door) to go to, and I only go to a door if I have the corresponding key. I still do need to keep the set of collected keys in my state, because that affects which doors I can go to, i.e., the neighbors of the current node.
+
+Therefore, the graph I actually search contains nodes of the form `(location, collectedKeys)`, and edges going to `(key, collectedKeys + [key])` and `(door, collectedKeys)` (only if `door` is in `collectedKeys`), for each `key'` and `door` that's a neighbor of the current `location` in my distance graph. We want the shortest path from `('@', [])` to any `(key, allKeys)`. The edge weights are the pre-computed shortest paths between locations. This is a Dijkstra search. Theoretically, the number of states is $53\times 2^{26}$, which is huge, but in practice, most states are unreachable, because for a given set of collected keys, I may not be able to collect precisely those without also collecting others. The `collectedKeys` can be represented as a bitmask for efficiency:
+
+```cpp
+// Check presence
+if (neighbor >= 'A' && neighbor <= 'Z') {
+    char required_key = neighbor - 'A' + 'a';
+    if ((keys_mask & (1 << (required_key - 'a'))) == 0) continue;
+}
+
+// Add key
+int new_keys_mask = keys_mask;
+if (neighbor >= 'a' && neighbor <= 'z') {
+    new_keys_mask |= (1 << (neighbor - 'a'));
+}
+```
+
+When Dijkstra finishes, we have the minimum distance to collect all keys while landing on each key or door. The answer is the minimum of these distances.
+
+## Part 2
+
+Part 2 turned out to be easier than it seems. Since only one of the four robots can move at a time, I can extend the state to `(loc1, loc2, loc3, loc4, collectedKeys)`, where `loci` is the location of robot `i`. Each time, I try moving a single robot to a reachable key or door. The rest of the logic remains the same. (I used characters `1`, `2`, `3`, `4` to represent the four robots' starting positions instead of `@` because I identify each grid cell by its character content, so they need to be unique.) The number of "theoretical" states is now $53^4 \times 2^{26}$, but again, most states are unreachable in practice. I see some writeups telling me that part 2 should have performance no worse than part 1 because the decision space for each robot is smaller, but actually my solution runs much slower...? Part 1 explored `47606` states (number of pushes to the priority queue) while part 2 explored `6994880`; a 146x increase. My first part completes in 64ms, while part 2 takes 31s. There may be some problems with my overuse of `std::pair` which create unnecessary allocations, but I haven't investigated further. I already pack the four locations as a single 32-bit integer to avoid using an array of four characters.
+
+<Footer frontMatter={frontMatter} />

@@ -1,0 +1,32 @@
+---
+description: "Advent of Code 2020 - Day 3: Toboggan Trajectory. Written in Python."
+tags:
+  - Brute force
+year: 2020
+day: 3
+---
+
+# AoC 2020 D3: Toboggan Trajectory
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+There may be smarter ways to do this, but I just simulated the movement of the toboggan. The map repeats infinitely to the right, so I used modulo to wrap around.
+
+```python
+cur = (0, 0)
+total = 0
+while cur[0] < len(grid):
+    if grid[cur]:
+        total += 1
+    cur = (cur[0] + slope[0], (cur[1] + slope[1]) % len(grid[0]))
+```
+
+## Part 2
+
+Just repeat part 1 for all slopes and multiply the results.
+
+<Footer frontMatter={frontMatter} />

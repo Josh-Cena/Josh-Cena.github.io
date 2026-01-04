@@ -1,0 +1,62 @@
+---
+description: "Advent of Code 2020 - Day 22: Crab Combat. Written in Python."
+tags:
+  - Data structures
+  - Recursion
+year: 2020
+day: 22
+---
+
+# AoC 2020 D22: Crab Combat
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+This feels back to day 10: literally play the game as asked. The only optimization is to use a `deque` instead of a list for the players' decks, since we need efficient popping from the front and appending to the back. But since there are only 50 cards in total, even using lists would be fine.
+
+```python
+player1, player2 = [
+    deque(map(int, x.split("\n")[1:])) for x in "\n".join(data).split("\n\n")
+]
+while len(player1) > 0 and len(player2) > 0:
+    card1, card2 = player1.popleft(), player2.popleft()
+    assert card1 != card2
+    if card1 > card2:
+        player1.extend([card1, card2])
+    else:
+        player2.extend([card2, card1])
+winner = player1 if len(player1) > 0 else player2
+```
+
+## Part 2
+
+Might be surprising that there's really no trick than just faithfully implementing the rules as described. Every single line corresponds to something in the problem statement, so no further explanation is needed.
+
+```python
+def play_game(player1: deque[int], player2: deque[int]):
+    seen = {(tuple(player1), tuple(player2))}
+    while len(player1) > 0 and len(player2) > 0:
+        card1, card2 = player1.popleft(), player2.popleft()
+        assert card1 != card2
+        if card1 > len(player1) or card2 > len(player2):
+            winner = 1 if card1 > card2 else 2
+        else:
+            subplayer1, subplayer2 = list(player1)[:card1], list(player2)[:card2]
+            winner = play_game(deque(subplayer1), deque(subplayer2))
+        if winner == 1:
+            player1.extend([card1, card2])
+        else:
+            player2.extend([card2, card1])
+        if (tuple(player1), tuple(player2)) in seen:
+            return 1
+        seen.add((tuple(player1), tuple(player2)))
+    if len(player1) == 0:
+        return 2
+    else:
+        return 1
+```
+
+<Footer frontMatter={frontMatter} />

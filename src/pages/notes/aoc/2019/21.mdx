@@ -1,0 +1,119 @@
+---
+description: "Advent of Code 2019 - Day 21: Springdroid Adventure. Written in C++."
+tags:
+  - Intcode
+  - Puzzle
+year: 2019
+day: 21
+---
+
+{/* cSpell:ignore springdroid */}
+
+# AoC 2019 D21: Springdroid Adventure
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I have to say that I'm a bit annoyed by the vague wording. It took me a while to see that the jump distance is always 4. Still, there's a marvelous visualizer in this tiny program, so I shouldn't complain too much.
+
+It turns out that there's no coding to do here. We just need to devise the logic, and then type it in. The observation is this: if we want to make a jump, both of these should be true: (1) the landing spot (D) must be ground, and (2) at least one of the next three spots (A, B, C) must be a hole, otherwise we should just walk. If A is a hole, we must jump; if B is a hole and A is ground, we actually may need to jump as well, because if "E" (can't see) is also a hole, we would have missed the chance. Similarly for C. So the logic is:
+
+```plain
+J = (not A or not B or not C) and D
+  = not (A and B and C) and D
+```
+
+Turning this into instructions:
+
+```plain
+NOT T T
+AND A T
+AND B T
+AND C T
+NOT T J
+AND D J
+WALK
+```
+
+## Part 2
+
+I spent a while figuring out what the additional sensors are for. If I run the same logic as part 1, I get the following:
+
+```plain
+Didn't make it across:
+
+.................
+.................
+@................
+#####.#.##.#.####
+
+.................
+.................
+.@...............
+#####.#.##.#.####
+
+.................
+.................
+..@..............
+#####.#.##.#.####
+
+.................
+...@.............
+.................
+#####.#.##.#.####
+
+....@............
+.................
+.................
+#####.#.##.#.####
+
+.................
+.....@...........
+.................
+#####.#.##.#.####
+
+.................
+.................
+......@..........
+#####.#.##.#.####
+
+.................
+.................
+.................
+#####.#@##.#.####
+```
+
+Indeed, at the final position, both A and D are holes, so we can't move. The problem looks like:
+
+```plain
+O A B C D E F G H I
+0 1 . . 4 . . 7 . 9
+```
+
+If we decide to jump at 0, then at 4, we won't be able to either jump or walk. To fix this, we need to ensure that either E or H is also ground when we jump. In conclusion:
+
+```plain
+J = not (A and B and C) and D and (E or H)
+```
+
+In code:
+
+```plain
+NOT T T
+AND A T
+AND B T
+AND C T
+NOT T J
+AND D J
+OR E T
+OR H T
+AND T J
+RUN
+```
+
+Note that to calculate `(E or H)`, we assume that `T` starts to be false. `T` was previously `A and B and C`; if that is true, then `J` is definitely false, so it's not a problem.
+
+<Footer frontMatter={frontMatter} />

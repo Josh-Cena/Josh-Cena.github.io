@@ -1,0 +1,60 @@
+---
+description: "Advent of Code 2020 - Day 24: Lobby Layout. Written in Python."
+tags:
+  - Data structures
+year: 2020
+day: 24
+---
+
+# AoC 2020 D24: Lobby Layout
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The hexagonal grid looks like this:
+
+```plain
+1      A   B
+2    C   D   E
+3  F   G   H   I
+   1 2 3 4 5 6 7
+```
+
+We can still label them by rows and columns, and now the neighbors are:
+
+- `e`: `(r, c + 2)`
+- `w`: `(r, c - 2)`
+- `ne`: `(r - 1, c + 1)`
+- `nw`: `(r - 1, c - 1)`
+- `se`: `(r + 1, c + 1)`
+- `sw`: `(r + 1, c - 1)`
+
+This encoding turns this problem back into a grid problem, where we can use a set of coordinates to track black tiles.
+
+## Part 2
+
+[Yet](/notes/aoc/2019/24) [another](//notes/aoc/2020/11) [cellular automaton](/notes/aoc/2020/17). The only twist is that the grid is hexagonal instead of square, but that just requires tweaks to the neighbor calculation. Again, the template remains unchanged:
+
+```python
+def evolve(active: set[Point], get_neighbors: Callable[[Point], list[Point]]) -> set[Point]:
+    new_active = set[Point]()
+    candidates = active.union(
+        neighbor for p in active for neighbor in get_neighbors(p)
+    )
+    for p in candidates:
+        active_neighbors = sum(
+            (neighbor in active) for neighbor in get_neighbors(p)
+        )
+        if p in active and should_stay_active(active_neighbors):
+            new_active.add(p)
+        elif p not in active and should_become_active(active_neighbors):
+            new_active.add(p)
+    return new_active
+```
+
+The neighbors are just the six directions defined above.
+
+<Footer frontMatter={frontMatter} />

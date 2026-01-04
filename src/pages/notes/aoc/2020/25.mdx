@@ -1,0 +1,31 @@
+---
+description: "Advent of Code 2020 - Day 25: Combo Breaker. Written in Python."
+tags:
+  - Brute force
+  - Modular arithmetic
+year: 2020
+day: 25
+---
+
+# AoC 2020 D25: Combo Breaker
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+I thought there would be some neat mathematical trick to this problem exploiting the weakness of the transformation function, but it seems that brute force works just fine??
+
+```python
+loop_size = 1
+num = 7
+while True:
+    if num == num1:
+        print(pow(num2, loop_size, 20201227))
+        return
+    num = (num * 7) % 20201227
+    loop_size += 1
+```
+
+(By the way, this method of using $a^m \bmod p$ and $a^n \bmod p$ as public keys and $a^{mn} \bmod p$ as the shared secret is the [Diffie–Hellman key exchange](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange).)
+
+<Footer frontMatter={frontMatter} />

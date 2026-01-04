@@ -1,0 +1,57 @@
+---
+description: "Advent of Code 2019 - Day 12: The N-Body Problem. Written in C++."
+tags:
+  - Puzzle
+  - Cycle finding
+year: 2019
+day: 12
+---
+
+# AoC 2019 D12: The N-Body Problem
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I had a bit of fun with this one. It could be done in a more boring way, but I used some OOP by making each `Moon` an object with position and velocity members, and methods to apply gravity from another moon, update its position, and compute its energy. Then, I just pairwise apply gravity, and then update each one's position:
+
+```cpp
+for (int t = 0; t < 1000; t++) {
+    for (auto &moon1 : moons) {
+        for (const auto &moon2 : moons) {
+            if (&moon1 != &moon2) {
+                moon1.apply_gravity(moon2);
+            }
+        }
+    }
+    for (auto &moon : moons) {
+        moon.apply_velocity();
+    }
+}
+```
+
+## Part 2
+
+I thought I could just let the simulation run for a while, but it turns out that the cycle is over $10^{14}$ steps. (Ballpark: anything over $10^9$ is too big to brute force in a reasonable time.) However, note that updates in each dimension are independent of the others. So I can just find the cycle length for each dimension separately, then take the least common multiple (LCM) of the three cycle lengths. The cycle finding code looks like this:
+
+```cpp
+std::set<std::vector<int>> seen_x, seen_y, seen_z;
+
+for (int t = 0; x_cycle == -1 || y_cycle == -1 || z_cycle == -1; t++) {
+    // Update moons as before
+    if (x_cycle == -1) {
+        if (seen_x.count(state_x)) {
+            x_cycle = t;
+        } else {
+            seen_x.insert(state_x);
+        }
+    }
+    // Similarly for y_cycle and z_cycle
+}
+```
+
+Note that because the update is bijective, if we see a state again, it must be the initial state; otherwise, we would have two distinct previous states that map to the same cycle-start state, which is impossible. So `x_cycle` is just `t` and we don't need to store the time we saw each state.
+
+<Footer frontMatter={frontMatter} />

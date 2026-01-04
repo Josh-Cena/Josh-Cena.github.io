@@ -1,0 +1,32 @@
+---
+description: "Advent of Code 2019 - Day 10: Monitoring Station. Written in C++."
+tags:
+  - Geometry
+year: 2019
+day: 10
+---
+
+# AoC 2019 D10: Monitoring Station
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+We just enumerate over all asteroids, and for each one, compute the direction to every other asteroid, and see how many unique directions there are. The tricky part may be how the direction is represented, because floating point errors may cause issues with comparison. Instead, I represent the direction as a reduced fraction `(dy, dx)`, where `dy` and `dx` are co-prime integers. I had to bump my C++ to C++17 to use [`std::gcd`](https://en.cppreference.com/w/cpp/numeric/gcd.html). The core logic looks like:
+
+```cpp
+int dx = to.first - from.first;
+int dy = to.second - from.second;
+int gcd = std::gcd(std::abs(dx), std::abs(dy));
+directions[{dx / gcd, dy / gcd}].push_back(to);
+```
+
+(The list of asteroids in each direction is not needed for Part 1, but is useful for Part 2.)
+
+## Part 2
+
+We already have the list of directions inside the `directions` map. We just need to sort them in clockwise order starting from "up" ($(0, -1)$). I use `atan2`, and since I want the angle from the negative y-axis increasing clockwise, the angle is computed as `atan2(dx, -dy)`. Negative angles are adjusted by adding `2 * PI`. After sorting the directions, we cycle through them, keeping track of total asteroids vaporized, and number of asteroids vaporized in the current rotation.
+
+<Footer frontMatter={frontMatter} />

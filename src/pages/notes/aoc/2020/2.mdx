@@ -1,0 +1,33 @@
+---
+description: "Advent of Code 2020 - Day 2: Password Philosophy. Written in Python."
+tags:
+  - Brute force
+year: 2020
+day: 2
+---
+
+# AoC 2020 D2: Password Philosophy
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Nothing to say here. Just parse the input and check the counts.
+
+```python
+if count[0] <= password.count(char) <= count[1]:
+    total += 1
+```
+
+## Part 2
+
+The left position check is `password[ind_range[0] - 1] == char` and the right position check is `password[ind_range[1] - 1] == char`. We want exactly one of them to be true, so we can use `!=`.
+
+```python
+if (password[ind_range[0] - 1] == char) != (password[ind_range[1] - 1] == char):
+    total += 1
+```
+
+<Footer frontMatter={frontMatter} />

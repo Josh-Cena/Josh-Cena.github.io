@@ -1,0 +1,62 @@
+---
+description: "Advent of Code 2019 - Day 3: Crossed Wires. Written in C++."
+tags:
+  - Grid walking
+  - Coordinate compression
+year: 2019
+day: 3
+---
+
+# AoC 2019 D3: Crossed Wires
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The whole area covered is 12804 × 14957, which is impossible to represent as a 2D array, where each cell's (row, column) corresponds to a point (x, y). The key observation is that most of the stuff between two endpoints doesn't matter: all we care is where a wire starts and ends, and what values come between them. Therefore we can compress the points using a hashmap idea, where there's a bidirectional (but not identity) mapping between (row, column) and (x, y). The row and column still respect the order of (x, y), so any intersection relationships still hold.
+
+For example, this example map:
+
+```plain
+...........
+...........
+...........
+....+----+.
+....|....|.
+....|....|.
+....|....|.
+.........|.
+.o-------+.
+...........
+```
+
+is isomorphic to the following grid:
+
+```plain
+.....
+..++.
+..||.
+.o-+.
+.....
+```
+
+(Note: if we want to find the enclosed area, we may need to allow some more spacing between each point so we can capture the space between lines.)
+
+In code, this corresponds to a bidirectional map between (x, y) and (row, column):
+
+```cpp
+std::map<int, int> &x_compressor;
+std::vector<int> &x_decompressor;
+```
+
+`x_compressor[x]` gives the row for a physical x-coordinate, and `x_decompressor[row]` gives the physical x-coordinate for a given row. The same applies for y-coordinates and columns. They are built by collecting all x and y coordinates, sorting them, and pairing each unique coordinate with its index in the sorted list.
+
+Now, we just need to iterate through each wire's path. The grid is represented as a 2D array of integers, where each integer is a bitmask representing which wires have passed through that cell. So `0` means no wires, `1` means wire 1, `2` means wire 2, and `3` means both wires (an intersection). We just find all intersections and compute their Manhattan distances to the origin.
+
+## Part 2
+
+Once we have the compressed grid, we just need to walk the wire again, this time counting steps. For each wire, I keep a `map<pair<int, int>, int>` that maps each (row, column) to the number of steps taken to reach that cell. We sum the two maps by key and find the minimum.
+
+<Footer frontMatter={frontMatter} />

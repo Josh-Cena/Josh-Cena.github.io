@@ -1,0 +1,48 @@
+---
+description: "Advent of Code 2020 - Day 5: Binary Boarding. Written in Python."
+tags:
+  - Puzzle
+year: 2020
+day: 5
+---
+
+# AoC 2020 D5: Binary Boarding
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+This problem is a "pseudo binary search", because actually _we_ aren't doing the search; the input tells us how to do it.
+
+Of course you can actually do the binary search, keeping track of the min and max of the range, and shrinking it based on the next character, but there's one neat trick: you can treat the input as a binary number, where `F` and `L` are `0`, and `B` and `R` are `1`. It works like this: for the row number, it's a 7-bit binary number from `0000000` to `1111111` (0 to 127). If the first character is `F`, that means the row is in the first half, which is `0000000` to `0111111` (0 to 63), and therefore the first bit is `0`. If the second character is `B`, that means the row is in the second half, which is `0100000` to `0111111` (32 to 63), and therefore the second bit is `1`. And so on.
+
+It so happens that `row * 8 + column` is equivalent to the concatenation of the row bits and the column bits. This means we can map each boarding pass to the seat ID in just two lines:
+
+```python
+def find_seat(boarding_pass: str):
+    pass_num = (
+        boarding_pass.replace("F", "0")
+        .replace("B", "1")
+        .replace("L", "0")
+        .replace("R", "1")
+    )
+    return int(pass_num, 2)
+```
+
+And then we can find the maximum seat ID just with a `max`.
+
+## Part 2
+
+We can use the same function to find all the seat IDs, and then find the missing one by checking which ID is not in the set but both its neighbors are—that is, a gap of 2 in the sorted list of seat IDs.
+
+```python
+seats = sorted([find_seat(line) for line in data])
+for i in range(1, len(seats)):
+    if seats[i] - seats[i - 1] == 2:
+        print(seats[i] - 1)
+        break
+```
+
+<Footer frontMatter={frontMatter} />
