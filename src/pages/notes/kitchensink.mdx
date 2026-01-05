@@ -136,13 +136,13 @@ import numpy as np
 color1 = np.array([69, 61, 59])
 color2 = np.array([38, 90, 77])
 
-name = 'song'
-df = pd.read_csv(f'{name}_count.csv', names=['name', 'count'])
-freq = dict(zip(df['name'], df['count']))
+name = "song"
+df = pd.read_csv(f"{name}_count.csv", names=["name", "count"])
+freq = dict(zip(df["name"], df["count"]))
 
 def color_func(word, font_size, position, orientation, random_state=None, **kwargs):
     randcolor = color1 + np.floor((color2 - color1) * np.random.random())
-    return("rgb(%d, %d, %d)" % tuple(randcolor))
+    return "rgb(%d, %d, %d)" % tuple(randcolor)
 ```
 
 ## Tables

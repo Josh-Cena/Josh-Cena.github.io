@@ -8,7 +8,7 @@
         "@mdx-js/react": "^3.0.1",
         "@mdx-js/rollup": "^3.0.1",
         "@vitejs/plugin-react": "^4.2.1",
-        "bash-parser": "patch:bash-parser@npm%3A0.5.0#~/patches/bash-parser-npm-0.5.0-911330943d.patch",
+        "bash-parser": "^0.5.0",
         "clsx": "^2.1.1",
         "color": "^4.2.3",
         "copy-text-to-clipboard": "^3.2.0",
@@ -65,6 +65,9 @@
         "typescript-plugin-css-modules": "^5.1.0",
       },
     },
+  },
+  "patchedDependencies": {
+    "bash-parser@0.5.0": "patches/bash-parser@0.5.0.patch",
   },
   "packages": {
     "@adobe/css-tools": ["@adobe/css-tools@4.3.3", "", {}, "sha512-rE0Pygv0sEZ4vBWHlAgJLGDU7Pm8xoO6p3wsEceb7GYAjScrOHpEo8KK/eVkAcnSM+slAEtXjA2JpdjLp4fJQQ=="],
