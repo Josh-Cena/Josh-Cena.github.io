@@ -1,0 +1,59 @@
+---
+description: "Advent of Code 2021 - Day 3: Binary Diagnostic. Written in TypeScript."
+tags:
+  - Bitwise operations
+year: 2021
+day: 3
+---
+
+# AoC 2021 D3: Binary Diagnostic
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The main idea is to iterate the input column by column, each time recording the counts of `0` and `1`. Since I represent my input as `data: string[]`, my loop looks like:
+
+```ts
+const length = data[0].length;
+for (let i = 0; i < length; i++) {
+  const counts = [0, 0];
+  for (const line of data) {
+    counts[parseInt(line[i], 10)]++;
+  }
+  gamma <<= 1;
+  epsilon <<= 1;
+  if (counts[0] > counts[1]) {
+    epsilon |= 1;
+  } else {
+    gamma |= 1;
+  }
+}
+```
+
+You can append a `0` or `1` to the binary number by `(num << 1) | bit`. Another way would be to build the binary as a string and then use `parseInt(str, 2)`.
+
+## Part 2
+
+I keep two arrays, `o2Candidates` and `co2Candidates`, initialized to the full input. For each bit position, I count the number of `0`s and `1`s in each array, then filter the arrays based on the criteria given.
+
+```ts
+if (o2Candidates.length > 1) {
+  const counts = [0, 0];
+  for (const line of o2Candidates) {
+    counts[parseInt(line[i], 10)]++;
+  }
+  const mostCommon = counts[0] > counts[1] ? "0" : "1";
+  o2Candidates = o2Candidates.filter((line) => line[i] === mostCommon);
+}
+
+// Same for co2Candidates
+```
+
+Finally, the result is `parseInt(o2Candidates[0], 2) * parseInt(co2Candidates[0], 2)`.
+
+In both parts, it's possible to parse the input as numbers upfront, and then extract the `i`-th bit as `(num >> (length - 1 - i)) & 1`. However, I think string indexing is sufficient here.
+
+<Footer frontMatter={frontMatter} />

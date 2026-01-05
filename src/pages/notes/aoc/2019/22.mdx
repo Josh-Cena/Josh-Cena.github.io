@@ -19,7 +19,7 @@ import { FrontMatter, Footer } from "../_components";
 This part can be simulated directly, which looks like:
 
 ```cpp
-for (const auto& line : data) {
+for (const auto &line : data) {
     if (line == "deal into new stack") {
         for (int i = 0; i < num_cards; i++) {
             new_deck[num_cards - 1 - i] = deck[i];
@@ -83,7 +83,7 @@ Now we can represent one shuffle sequence as a single linear function:
 
 ```cpp
 LinearFunction total_function = {1, 0, mod};
-for (const auto& line : data) {
+for (const auto &line : data) {
     if (line == "deal into new stack") {
         LinearFunction inst = {-1, -1, mod};
         total_function = inst.compose(total_function);
@@ -130,9 +130,11 @@ LinearFunction LinearFunction::pow(long long exponent) const {
 Now we have the overall shuffle function, $f^m$. Applying it to any number gives us that card's position after the whole shuffle operation. To find the card at final position $2020$, we need to solve $f^m(x) = 2020$ for $x$:
 
 $$
+\begin{gathered}
 f^m(x) = k_m \cdot x + b_m \mod{N} = 2020 \\
 k_m \cdot x = 2020 - b_m \mod{N} \\
 x = k_m^{-1} \cdot (2020 - b_m) \mod{N}
+\end{gathered}
 $$
 
 There's an easy way out. We can print out $k_m$ and $b_m$, and type this into [Wolfram Alpha](https://www.wolframalpha.com/):
@@ -146,8 +148,10 @@ And take the lowest positive solution.
 If we want to actually implement this, we just need to compute $k_m^{-1} \mod{N}$, which is the modular multiplicative inverse of $k_m$ modulo $N$. Since $N$ is prime, we can use Fermat's little theorem:
 
 $$
-k_m^{N-1} \equiv 1 \mod{N} \\
-k_m^{N-2} \equiv k_m^{-1} \mod{N}
+\begin{aligned}
+k_m^{N-1} &\equiv 1 \mod{N} \\
+k_m^{N-2} &\equiv k_m^{-1} \mod{N}
+\end{aligned}
 $$
 
 ```cpp

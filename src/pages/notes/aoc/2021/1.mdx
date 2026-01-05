@@ -1,0 +1,24 @@
+---
+description: "Advent of Code 2021 - Day 1: Sonar Sweep. Written in TypeScript."
+tags:
+  - Brute force
+  - Mathematics
+year: 2021
+day: 1
+---
+
+# AoC 2021 D1: Sonar Sweep
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Just iterate through the list and count the number of times the current number is larger than the previous one: `nums[i-1] < nums[i]`. Because there needs to be a previous number to compare to, we start from the second number.
+
+## Part 2
+
+No need to actually build the sliding windows. If `nums[i] + nums[i-1] + nums[i-2] < nums[i+1] + nums[i] + nums[i-1]`, then `nums[i-2] < nums[i+1]`. Therefore we can use the same logic as part 1, but compare `nums[i]` with `nums[i-3]`, so `i` starts from 3.
+
+<Footer frontMatter={frontMatter} />

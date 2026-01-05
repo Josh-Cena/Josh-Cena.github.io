@@ -1,0 +1,49 @@
+---
+description: "Advent of Code 2021 - Day 6: Lanternfish. Written in TypeScript."
+tags:
+  - Dynamic programming
+year: 2021
+day: 6
+---
+
+# AoC 2021 D6: Lanternfish
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Parts 1 & 2
+
+The naïve solution is to simulate each fish individually:
+
+```ts
+fishes = fishes.flatMap((fish) => (fish === 0 ? [6, 8] : [fish - 1]));
+```
+
+However, the number of fish grows exponentially, so this doesn't work for part 2. The next observation is that all fish with the same internal timer behave identically. Therefore, we can put fish into 9 bins based on their internal timer (0 to 8). Each day, the fish in each bin move to the next lower bin, and the fish in bin 0 create new fish in bin 8 and also move to bin 6.
+
+$$
+dp_t[c] = \begin{cases}dp_{t-1}[c+1] + dp_{t-1}[0] & \text{if } c = 6 \\
+dp_{t-1}[0] & \text{if } c = 8 \\
+dp_{t-1}[c+1] & \text{otherwise}\end{cases}
+$$
+
+I'm labeling this "Dynamic programming" because we have a state and a state transition. But this is really just bin counting.
+
+```ts
+let counterToCount = Array.from({ length: 9 }, () => 0);
+for (const fish of fishes) {
+  counterToCount[fish]++;
+}
+for (let day = 1; day <= days; day++) {
+  const newCounterToCount = Array.from({ length: 9 }, () => 0);
+  for (let newCounter = 0; newCounter < 8; newCounter++) {
+    newCounterToCount[newCounter] = counterToCount[newCounter + 1];
+  }
+  newCounterToCount[6] += counterToCount[0];
+  newCounterToCount[8] = counterToCount[0];
+  counterToCount = newCounterToCount;
+}
+```
+
+<Footer frontMatter={frontMatter} />

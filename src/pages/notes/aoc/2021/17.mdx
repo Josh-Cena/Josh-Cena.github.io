@@ -1,0 +1,155 @@
+---
+description: "Advent of Code 2021 - Day 17: Trick Shot. Written in TypeScript."
+tags:
+  - Mathematics
+  - Puzzle
+year: 2021
+day: 17
+---
+
+# AoC 2021 D17: Trick Shot
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The 2021 me was young and naïve. I knew I shouldn't simulate the trajectory, but my math was more complex than necessary. Here was my initial idea: for each $v_y$, subsequent y positions are given by $\sum_{i=0}^{t-1} (v_y - i) = (v_y + v_y - t + 1)t/2 = -t^2/2 + v_yt + t/2$. We want to find the largest $v_y$ such that $y_\text{min} \leq -t^2/2 + v_yt + t/2 \leq y_\text{max}$ has a solution for some positive integer $t$.
+
+However, there's a much simpler approach. The probe's y velocity starts at $v_y$ and decreases by 1 each step. If the highest point is $y_h$, then at height $y_h - 1$ in ascent, it has y velocity $1$. At height $y_h$, it has y velocity $0$ then $-1$. At height $y_h-1$ in descent, it has y velocity $-2$. When the probe returns to y=0, due to symmetry, its velocity is $-v_y - 1$. The next step, it will be at $-v_y - 1$. Since the target area is below y=0, we need $-v_y - 1\geq y_\text{min}$, or $v_y \leq -y_\text{min} - 1$. The maximum initial y velocity is thus $-y_\text{min} - 1$, and the height is given by $v_y(v_y + 1)/2$.
+
+Ideally, we should verify that the $t$ (which is unique) at which the probe reaches the target y range also admits an integer solution for x. I didn't do this, because I assumed that if $t$ is sufficiently large, there would always be a solution for x since the x velocity decreases to 0 and remains there.
+
+## Part 2
+
+Part 1 gave the maximum initial y velocity. The minimum initial y velocity is if you shoot down, in which case the y position after 1 step is $v_y$, and we need $y_\text{min} \leq v_y$. So the range of initial y velocities is $[y_\text{min}, -y_\text{min} - 1]$.
+
+For x, the maximum initial x velocity is if you shoot directly to the right, in which case the x position after 1 step is $v_x$, and we need $v_x \leq x_\text{max}$. The minimum initial x velocity is trickier. If the initial x velocity is $v_x$, then after $v_x$ steps, the probe will have traveled $v_x(v_x + 1)/2$ and can't move any farther. We want $(v_x(v_x + 1))/2 \geq x_\text{min}$, which is $(v_x + 1/2)^2 \geq 2x_\text{min} + 1/4$. Thus, $v_x \geq \lceil \sqrt{2x_\text{min} + 1/4} - 1/2 \rceil$.
+
+There are only more than 30,000 possible initial velocity pairs in this range, so we can brute-force test each pair. (Note that binary search would not work here since the valid velocities do not form a contiguous range.) For each one, the simple way is to run the simulation, which would only take 20-something iterations. However, I decided to flex some more math to determine whether a given initial velocity will hit the target area, and if so, when. I'm not even sure if this is more efficient since now we have floating point arithmetic, but it was fun.
+
+Recall that for y position, we want $y_\text{min} \leq \frac{t}{2}(2v_y-t+1) \leq y_\text{max}$. Rearranging:
+
+$$
+\begin{cases}
+t^2 - (2v_y+1)t + 2y_\text{min} \leq 0 \\
+t^2 - (2v_y+1)t + 2y_\text{max} \geq 0
+\end{cases}
+$$
+
+$\Delta = (2v_y + 1)^2 - 8y$ for both inequalities. Since $y_\text{min} < y_\text{max} < 0$, both discriminants are positive. Both parabolas open upwards and intersect the t-axis twice, with the $y_\text{max}$ one above, or inside, the $y_\text{min}$ one. If we label the four intersection points left-to-right as $t_1$, $t_2$, $t_3$, $t_4$, then we want the ranges $[t_1, t_2]$ and $[t_3, t_4]$.
+
+```js canvas width=500 height=300
+ctx.translate(width / 2, height / 2);
+ctx.scale(1, -1);
+const minX = -width / 2;
+const maxX = width / 2;
+const minY = -height / 2;
+const maxY = height / 2;
+ctx.strokeStyle = textColor;
+ctx.beginPath();
+ctx.moveTo(minX, 0);
+ctx.lineTo(maxX, 0);
+ctx.moveTo(0, minY);
+ctx.lineTo(0, maxY);
+ctx.stroke();
+const vy = 20;
+const yMin = -1000;
+const yMax = -100;
+ctx.strokeStyle = "red";
+function y(t, yBound) {
+  return (t ** 2 - (2 * vy + 1) * t + 2 * yBound) / 20;
+}
+ctx.beginPath();
+for (let t = minX; t <= maxX; t++) {
+  const yPos = y(t, yMin);
+  ctx.lineTo(t, yPos);
+}
+for (let t = maxX; t >= minX; t--) {
+  const yPos = y(t, yMax);
+  ctx.lineTo(t, yPos);
+}
+ctx.closePath();
+ctx.stroke();
+ctx.fillStyle = "rgb(255 0 0 / 0.2)";
+ctx.fill();
+const dMax = Math.sqrt((2 * vy + 1) ** 2 - 8 * yMax);
+const dMin = Math.sqrt((2 * vy + 1) ** 2 - 8 * yMin);
+const tMin1 = Math.ceil((2 * vy + 1 + dMax) / 2);
+const tMax1 = Math.floor((2 * vy + 1 + dMin) / 2);
+const tMin2 = Math.ceil((2 * vy + 1 - dMin) / 2);
+const tMax2 = Math.floor((2 * vy + 1 - dMax) / 2);
+ctx.fillStyle = textColor;
+ctx.beginPath();
+ctx.arc(tMin1, 0, 2, 0, 2 * Math.PI);
+ctx.fill();
+ctx.beginPath();
+ctx.arc(tMax1, 0, 2, 0, 2 * Math.PI);
+ctx.fill();
+ctx.beginPath();
+ctx.arc(tMin2, 0, 2, 0, 2 * Math.PI);
+ctx.fill();
+ctx.beginPath();
+ctx.arc(tMax2, 0, 2, 0, 2 * Math.PI);
+ctx.fill();
+ctx.scale(1, -1);
+ctx.font = "16px Arial";
+ctx.fillText("t1", tMin2 - 10, 20);
+ctx.fillText("t2", tMax2 - 10, 20);
+ctx.fillText("t3", tMin1 - 10, 20);
+ctx.fillText("t4", tMax1 - 10, 20);
+```
+
+One of these ranges is:
+
+$$
+\frac{(2v_y+1) + \sqrt{(2v_y+1)^2 - 8y_\text{max}}}{2} \leq t \leq \frac{(2v_y+1) + \sqrt{(2v_y+1)^2 - 8y_\text{min}}}{2}
+$$
+
+The other range has the minus sign in front of the square roots, which makes the range negative because $y_\text{max}$ and $y_\text{min}$ are negative, so we discard it.
+
+The x position is more complicated, because it has two pieces. The first piece is the same as y: $\frac{t}{2}(2v_x-t+1)$. The second piece is when $t\geq v_x$, in which case the x position is $v_x(v_x + 1)/2$. We now solve for $x_\text{min} \leq x(t) \leq x_\text{max}$. If $t = v_x$ is a valid solution, then any $t \geq v_x$ is also valid. Focusing on the first piece, we have:
+
+$$
+\begin{cases}
+t^2 - (2v_x+1)t + 2x_\text{min} \leq 0 \\
+t^2 - (2v_x+1)t + 2x_\text{max} \geq 0
+\end{cases}
+$$
+
+Which only holds for $t < v_x$, which is the left half. This time the determinant may be negative. If $\Delta_{x_\text{min}} < 0$, then there are no solutions because neither parabola intersects the t-axis. If $\Delta_{x_\text{max}} < 0 \leq \Delta_{x_\text{min}}$, then the $x_\text{max}$ parabola does not intersect the t-axis so $v_x$ is always a valid solution, and any $t \geq v_x$ is also valid, so the solution range is $[t_1, \infty)$. If both discriminants are positive, then the valid range is $[t_1, t_2]$, or $[t_1, \infty)$ if $t_2 \geq v_x$. Coding this up:
+
+```ts
+function validTRangeForY(
+  vy0: number,
+  yMin: number,
+  yMax: number,
+): [number, number] | null {
+  const dMin = Math.sqrt((2 * vy0 + 1) ** 2 - 8 * yMin);
+  const t4 = Math.floor((2 * vy0 + 1 + dMin) / 2);
+  const dMax = Math.sqrt((2 * vy0 + 1) ** 2 - 8 * yMax);
+  const t3 = Math.ceil((2 * vy0 + 1 + dMax) / 2);
+  if (t3 > t4) return null;
+  return [t3, t4];
+}
+
+function validTRangeForX(
+  vx0: number,
+  xMin: number,
+  xMax: number,
+): [number, number] | null {
+  const dMin = Math.sqrt((2 * vx0 + 1) ** 2 - 8 * xMin);
+  if (Number.isNaN(dMin)) return null;
+  const t1 = Math.ceil((2 * vx0 + 1 - dMin) / 2);
+  const dMax = Math.sqrt((2 * vx0 + 1) ** 2 - 8 * xMax);
+  if (Number.isNaN(dMax)) return [t1, Infinity];
+  const t2 = Math.floor((2 * vx0 + 1 - dMax) / 2);
+  if (t2 > vx0) return [t1, Infinity];
+  return [t1, t2];
+}
+```
+
+This allows us to find the valid t ranges for each $v_x$ and $v_y$ in constant time. Finally we just need to check if the two t ranges overlap.
+
+<Footer frontMatter={frontMatter} />

@@ -1,0 +1,43 @@
+---
+description: "Advent of Code 2021 - Day 5: Hydrothermal Venture. Written in TypeScript."
+tags:
+  - Grid walking
+year: 2021
+day: 5
+---
+
+# AoC 2021 D5: Hydrothermal Venture
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+It happens that the coordinates are less than `1000`, so this is doable with a fixed-size 2D array of size 1000x1000 without any kind of coordinate compression (coordinate compression won't work for part 2 with diagonal lines anyway). Each cell in the grid represents how many lines pass through that point.
+
+```ts
+if (x1 === x2) {
+  for (let y = Math.min(y1, y2); y <= Math.max(y1, y2); y++) {
+    grid[y][x1]++;
+  }
+} else if (y1 === y2) {
+  for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
+    grid[y1][x]++;
+  }
+}
+```
+
+## Part 2
+
+We just need to add another case for diagonal lines. This can be done by calculating the step for x and y separately, then iterating from the start point to the end point using those steps.
+
+```ts
+const dirX = x2 > x1 ? 1 : -1;
+const dirY = y2 > y1 ? 1 : -1;
+for (let x = x1, y = y1; x !== x2 + dirX; x += dirX, y += dirY) {
+  grid[y][x]++;
+}
+```
+
+<Footer frontMatter={frontMatter} />

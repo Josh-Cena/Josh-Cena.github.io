@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.canvas {
+  width: min(100%, var(--width));
+  height: auto;
+  aspect-ratio: var(--width) / var(--height);
+}

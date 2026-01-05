@@ -1,0 +1,76 @@
+---
+description: "Advent of Code 2021 - Day 13: Transparent Origami. Written in TypeScript."
+tags:
+  - Geometry
+  - Manual inspection
+year: 2021
+day: 13
+---
+
+# AoC 2021 D13: Transparent Origami
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I represent the points as a list of $(x, y)$ coordinates. A fold along $x = x_0$ transforms $(x, y)$ to:
+
+$$
+(x', y') = \begin{cases}
+(x, y) &\text{ if } x \le x_0 \\
+(2x_0 - x, y) &\text{ if } x > x_0
+\end{cases}
+$$
+
+A fold along $y = y_0$ is similar:
+
+$$
+(x', y') = \begin{cases}
+(x, y) &\text{ if } y \le y_0 \\
+(x, 2y_0 - y) &\text{ if } y > y_0
+\end{cases}
+$$
+
+Unfortunately again, JavaScript doesn't have composite keys for sets, so to deduplicate points after folding, I serialize each point as a string `x,y` and store them in a set.
+
+```ts
+function fold(
+  points: [number, number][],
+  axis: "x" | "y",
+  line: number,
+): [number, number][] {
+  const newPoints = points.map(([x, y]) => {
+    if (axis === "x" && x > line) {
+      return [2 * line - x, y];
+    } else if (axis === "y" && y > line) {
+      return [x, 2 * line - y];
+    } else {
+      return [x, y];
+    }
+  });
+  const uniquePoints = new Set<string>();
+  for (const [x, y] of newPoints) {
+    uniquePoints.add(`${x},${y}`);
+  }
+  return Array.from(uniquePoints).map(
+    (s) => s.split(",").map(Number) as [number, number],
+  );
+}
+```
+
+## Part 2
+
+Just apply all folds in sequence, and plot the resulting points. Like every time, I take some time to admire the ASCII art.
+
+```plain
+#  # #### #    #### #  #   ## ###  #  #
+#  #    # #    #    #  #    # #  # # #
+####   #  #    ###  ####    # #  # ##
+#  #  #   #    #    #  #    # ###  # #
+#  # #    #    #    #  # #  # # #  # #
+#  # #### #### #### #  #  ##  #  # #  #
+```
+
+<Footer frontMatter={frontMatter} />

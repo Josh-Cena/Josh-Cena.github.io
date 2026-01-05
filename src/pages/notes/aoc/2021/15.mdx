@@ -1,0 +1,45 @@
+---
+description: "Advent of Code 2021 - Day 15: Chiton. Written in TypeScript."
+tags:
+  - Dijkstra
+year: 2021
+day: 15
+---
+
+# AoC 2021 D15: Chiton
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Parts 1 & 2
+
+This is a classic shortest path problem, where the edge weights are the risk levels of the destination cells. I just run Dijkstra's. I never remember how to write one, and Wikipedia's first version is the non-ideal one, so here's a better template:
+
+```ts
+function dijkstra(grid: number[][]): number {
+  const width = grid[0].length;
+  const height = grid.length;
+  const dist = Array.from({ length: height }, () =>
+    Array.from({ length: width }, () => Infinity),
+  );
+  dist[0][0] = 0;
+  const pq = new MinPriorityQueue<[number, number]>();
+  pq.enqueue([0, 0], 0);
+  while (!pq.isEmpty()) {
+    const { priority, element } = pq.dequeue() as PriorityQueueItem<
+      [number, number]
+    >;
+    for (const [nx, ny] of neighbors(element[0], element[1], width, height)) {
+      const newCost = priority + grid[ny][nx];
+      if (newCost < dist[ny][nx]) {
+        dist[ny][nx] = newCost;
+        pq.enqueue([nx, ny], newCost);
+      }
+    }
+  }
+  return dist[height - 1][width - 1];
+}
+```
+
+<Footer frontMatter={frontMatter} />

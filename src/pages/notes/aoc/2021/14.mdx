@@ -1,0 +1,49 @@
+---
+description: "Advent of Code 2021 - Day 14: Extended Polymerization. Written in TypeScript."
+tags:
+  - Dynamic programming
+year: 2021
+day: 14
+---
+
+# AoC 2021 D14: Extended Polymerization
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Parts 1 & 2
+
+This is the exact same spirit as [day 6](/notes/aoc/2021/6), where we have exponential growth but can group identical entities together.
+
+The naïve solution is to simulate each element individually:
+
+```ts
+seq = seq.flatMap((elem, i) => {
+  if (i === seq.length - 1) return [elem];
+  const pair = elem + seq[i + 1];
+  const insert = rules.get(pair);
+  return insert ? [elem, insert] : [elem];
+});
+```
+
+However, the sequence grows exponentially, so this doesn't work for part 2. We observe that all pairs of the same type behave identically. No matter what surrounds this pair, each occurrence of `AB` always contribute one `AC` and one `CB` to the next iteration, where `C` is the inserted element, and removes itself. Therefore, we can put pairs into bins based on their type.
+
+```ts
+const newPairCounts: Record<string, number> = { ...pairCounts };
+for (const pair in pairCounts) {
+  const count = pairCounts[pair];
+  if (count > 0 && pair in rules) {
+    const insert = rules[pair];
+    newPairCounts[pair] -= count;
+    newPairCounts[pair[0] + insert] += count;
+    newPairCounts[insert + pair[1]] += count;
+  }
+}
+```
+
+{/* cSpell:ignore ABCB */}
+
+This gives us the counts of each pair after all iterations. To get the counts of each individual element, we note that each element is counted twice in pairs, except for the first and last element of the entire sequence, which never change anyway since the initial input. For example, the sequence `ABCB` has pairs `AB`, `BC`, and `CB`, which counts `A` once, `B` 3 times, and `C` twice. Because `A` and `B` are the first and last elements, we add 1 to their counts. Finally, we divide all counts by 2 to get the actual counts.
+
+<Footer frontMatter={frontMatter} />

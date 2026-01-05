@@ -1,0 +1,70 @@
+---
+description: "Advent of Code 2021 - Day 7: The Treachery of Whales. Written in TypeScript."
+tags:
+  - Mathematics
+year: 2021
+day: 7
+---
+
+# AoC 2021 D7: The Treachery of Whales
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+We are only given 1000 crabs, so a $\mathcal{O}(n^2)$ brute-force solution is feasible. First, obviously we want the alignment position to be between the minimum and maximum initial positions of the crabs, because moving outside that range would be more distance for all crabs. So we can iterate through all positions from `min` to `max`, and for each position calculate the total fuel cost by summing up the distances from each crab to that position.
+
+However, we can do better than that. Picture all crabs $c_1..c_n$ on the number line (sorted ascending), and some point $p$ between $c_1$ and $c_n$. Assume that $c_k < p < c_{k+1}$.
+
+```plain
+  c_1 .... c_k  p    c_{k+1} .... c_n
+<-- k crabs --> ^ <-- n - k - 1 crabs -->
+```
+
+Then, when we move $p$ to the right by 1 unit, all crabs to the left of $p$ need to move 1 unit more, while all crabs to the right of $p$ need to move 1 unit less. Therefore, the total fuel cost changes by $k - (n - k - 1) = 2k + 1 - n$. This means that if $k < (n-1)/2$, moving $p$ to the right decreases the fuel cost, and if $k > (n-1)/2$, moving $p$ to the right increases the fuel cost. Therefore, the optimal position is at $k = (n-1)/2$, which is the median of the initial positions. If there's an odd number of crabs, aligning at the middle element is optimal; if there's an even number of crabs, aligning anywhere between the two middle elements, inclusive, is optimal. Selecting the median can be done in $\mathcal{O}(n)$ time using the Quickselect algorithm, but since $n$ is small here, sorting the array and picking the middle element is sufficient.
+
+Mathematically the objective is:
+
+$$
+f(p) = \sum_{i=1}^n |c_i - p|
+$$
+
+The derivative is:
+
+$$
+f'(p) = \sum_{i=1}^n -\text{sgn}(c_i - p)
+$$
+
+Setting $f'(p) = 0$ gives us the same conclusion as above: we want equal number of crabs on both sides of $p$, plus a 0 if $n$ is odd.
+
+## Part 2
+
+The brute-force solution is still feasible, but the median idea no longer works, because moving $p$ by 1 unit now changes the fuel cost by more complicated amounts. However, we can still use calculus to find the optimal position. The objective is now:
+
+$$
+f(p) = \sum_{i=1}^n \frac{|c_i - p|(|c_i - p| + 1)}{2} = \frac{1}{2}\sum_{i=1}^n (c_i - p)^2 + \frac{1}{2}\sum_{i=1}^n |c_i - p|
+$$
+
+The derivative is:
+
+$$
+\begin{aligned}
+f'(p) &= -\sum_{i=1}^n (c_i - p) - \frac{1}{2}\sum_{i=1}^n \text{sgn}(c_i - p)\\
+&= np - \sum_{i=1}^n c_i - \frac{1}{2}\sum_{i=1}^n \text{sgn}(c_i - p)
+\end{aligned}
+$$
+
+If again $c_k < p < c_{k+1}$, then $\sum_{i=1}^n \text{sgn}(c_i - p) = (n - k - 1) - k = n - 2k - 1$. Setting $f'(p) = 0$ gives:
+
+$$
+\begin{gathered}
+np - \sum_{i=1}^n c_i - \frac{1}{2}(n - 2k - 1) = 0\\
+p = \frac{1}{n}\sum_{i=1}^n c_i + \frac{1}{2}\left(1 - \frac{2k + 1}{n}\right)
+\end{gathered}
+$$
+
+Because $1\le k< n$, the term $\frac{1}{2}\left(1 - \frac{2k + 1}{n}\right)$ is between $-1/2$ and $1/2$. Therefore, the optimal position is in the range $(\text{mean} - 1/2, \text{mean} + 1/2)$. This range only contains a single integer (the mean rounded to the nearest integer); this is the optimal position.
+
+<Footer frontMatter={frontMatter} />

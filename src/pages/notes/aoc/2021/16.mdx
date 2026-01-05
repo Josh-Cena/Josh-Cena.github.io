@@ -1,0 +1,142 @@
+---
+description: "Advent of Code 2021 - Day 16: Packet Decoder. Written in TypeScript."
+tags:
+  - Parsing
+year: 2021
+day: 16
+---
+
+# AoC 2021 D16: Packet Decoder
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I represent the packet tree as follows:
+
+```ts
+type Packet =
+  | {
+      version: number;
+      typeId: 4;
+      value: number;
+    }
+  | {
+      version: number;
+      typeId: 0 | 1 | 2 | 3 | 5 | 6 | 7;
+      subPackets: Packet[];
+    };
+```
+
+I parse the input into a binary string, then use a recursive descent parser to build the tree. The parser takes the input string and a starting index, and returns the parsed packet and the new index.
+
+First we read the version and type ID:
+
+```ts
+const version = parseInt(input.slice(index, index + 3), 2);
+const typeId = parseInt(input.slice(index + 3, index + 6), 2) as
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7;
+let currentIndex = index + 6;
+```
+
+If the type ID is 4, we read the literal value by repeatedly reading 5-bit groups until we find one that starts with a 0:
+
+```ts
+let valueBits = "";
+while (true) {
+  const group = input.slice(currentIndex, currentIndex + 5);
+  valueBits += group.slice(1);
+  currentIndex += 5;
+  if (group[0] === "0") break;
+}
+const value = parseInt(valueBits, 2);
+return { packet: { version, typeId, value }, newIndex: currentIndex };
+```
+
+Otherwise, we first read the length type ID:
+
+```ts
+const lengthTypeId = input[currentIndex];
+currentIndex += 1;
+const subPackets: Packet[] = [];
+```
+
+If the length type ID is 0, we read the next 15 bits for the bit length, and then continuously parse sub-packets until we've read that many bits:
+
+```ts
+const totalLength = parseInt(input.slice(currentIndex, currentIndex + 15), 2);
+currentIndex += 15;
+const end = currentIndex + totalLength;
+while (currentIndex < end) {
+  const result = parsePacket(input, currentIndex);
+  subPackets.push(result.packet);
+  currentIndex = result.newIndex;
+}
+```
+
+Otherwise, if the length type ID is 1, we read the next 11 bits for the number of sub-packets, and then parse that many sub-packets:
+
+```ts
+const subPacketsNum = parseInt(input.slice(currentIndex, currentIndex + 11), 2);
+currentIndex += 11;
+for (let i = 0; i < subPacketsNum; i++) {
+  const result = parsePacket(input, currentIndex);
+  subPackets.push(result.packet);
+  currentIndex = result.newIndex;
+}
+```
+
+In part 1, we visit this tree to sum all version numbers:
+
+```ts
+function sumVersions(packet: Packet): number {
+  let sum = packet.version;
+  if (packet.typeId !== 4) {
+    for (const subPacket of packet.subPackets) {
+      sum += sumVersions(subPacket);
+    }
+  }
+  return sum;
+}
+```
+
+## Part 2
+
+In part 2, we again visit the tree, this time evaluating the packets based on their type IDs:
+
+```ts
+function evaluate(packet: Packet): number {
+  if (packet.typeId === 4) {
+    return packet.value;
+  } else {
+    const values = packet.subPackets.map(evaluate);
+    return ops[packet.typeId](values);
+  }
+}
+```
+
+Where `ops` is defined as:
+
+```ts
+const ops = [
+  (values: number[]) => values.reduce((a, b) => a + b, 0),
+  (values: number[]) => values.reduce((a, b) => a * b, 1),
+  (values: number[]) => Math.min(...values),
+  (values: number[]) => Math.max(...values),
+  (values: number[]) => values[0],
+  (values: number[]) => (values[0] > values[1] ? 1 : 0),
+  (values: number[]) => (values[0] < values[1] ? 1 : 0),
+  (values: number[]) => (values[0] === values[1] ? 1 : 0),
+];
+```
+
+<Footer frontMatter={frontMatter} />

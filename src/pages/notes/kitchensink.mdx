@@ -66,6 +66,7 @@ Footnote[^1]
 Named footnote[^named]
 
 [^named]: This is a named footnote.
+
 [^1]: This is a footnote.
 
 ## Math
@@ -163,3 +164,23 @@ def color_func(word, font_size, position, orientation, random_state=None, **kwar
   <dt>Markdown in HTML</dt>
   <dd>_Works_! **HTML** <em>works</em> too.</dd>
 </dl>
+
+## Mermaid diagram
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
+## Canvas
+
+```js canvas width=200 height=200
+ctx.fillStyle = "#39cac4";
+ctx.fillRect(10, 10, width - 20, height - 20);
+ctx.fillStyle = textColor;
+ctx.font = "20px sans-serif";
+ctx.fillText("Text works!", 20, 100);
+```

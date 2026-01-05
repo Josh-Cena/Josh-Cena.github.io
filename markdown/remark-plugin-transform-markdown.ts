@@ -1,42 +1,24 @@
 import type { Plugin } from "unified";
-import type { Root, Heading, Literal, Image, RootContent } from "mdast";
+import type { Root, Heading, Literal, Image, RootContent, Code } from "mdast";
 import type { Nodes } from "hast";
 import { toText } from "hast-util-to-text";
 import { visit } from "unist-util-visit";
+import * as Acorn from "acorn";
+import type { Program } from "estree";
 
 function createImportDeclaration(
   localName: string,
   sourceValue: string,
 ): RootContent {
+  const code = `import ${localName} from "${sourceValue}";`;
   return {
     type: "mdxjsEsm",
     value: `import ${localName} from "${sourceValue}";`,
     data: {
-      estree: {
-        type: "Program",
-        body: [
-          {
-            type: "ImportDeclaration",
-            specifiers: [
-              {
-                type: "ImportDefaultSpecifier",
-                local: {
-                  type: "Identifier",
-                  name: localName,
-                },
-              },
-            ],
-            source: {
-              type: "Literal",
-              value: sourceValue,
-              raw: `"${sourceValue}"`,
-            },
-            attributes: [],
-          },
-        ],
+      estree: Acorn.parse(code, {
+        ecmaVersion: "latest",
         sourceType: "module",
-        comments: [],
-      },
+      }) as unknown as Program,
     },
   };
 }
@@ -55,20 +37,10 @@ function createJSXElement(
         type: "mdxJsxAttributeValueExpression",
         value: attr.value,
         data: {
-          estree: {
-            type: "Program",
-            body: [
-              {
-                type: "ExpressionStatement",
-                expression: {
-                  type: "Identifier",
-                  name: attr.value,
-                },
-              },
-            ],
+          estree: Acorn.parse(attr.value, {
+            ecmaVersion: "latest",
             sourceType: "module",
-            comments: [],
-          },
+          }) as unknown as Program,
         },
       },
     })),
@@ -117,6 +89,67 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
       ]),
     );
   });
+  let usesMermaid = false as boolean;
+  let usesCanvas = false as boolean;
+  visit(ast, "code", (node: Code) => {
+    if (node.lang === "mermaid") {
+      Object.assign(
+        // TODO: can the diagram be rendered at compile time and directly
+        // inserted as image?
+        node,
+        createJSXElement("Mermaid", [
+          {
+            name: "code",
+            value: `\`${node.value.replaceAll(/[`$\\]/gu, "\\$&")}\``,
+          },
+        ]),
+      );
+      usesMermaid = true;
+    } else if (
+      (node.lang === "js" || node.lang === "ts") &&
+      node.meta?.startsWith("canvas")
+    ) {
+      const props = node.meta
+        .split(" ")
+        .slice(1)
+        .map((prop) => prop.split("="));
+      const widthProp = props.find(([name]) => name === "width");
+      const heightProp = props.find(([name]) => name === "height");
+      if (!widthProp || !heightProp) {
+        throw new Error(
+          "Canvas code block must specify width and height props in meta.",
+        );
+      }
+      Object.assign(
+        node,
+        createJSXElement("Canvas", [
+          {
+            name: "code",
+            value: `(ctx, width, height, textColor) => {\n${node.value}\n}`,
+          },
+          ...props.map(([name, value]) => ({
+            name: name!,
+            value: value ?? "true",
+          })),
+        ]),
+      );
+      usesCanvas = true;
+    }
+  });
+  if (usesMermaid) {
+    children.splice(
+      firstHeading + 1,
+      0,
+      createImportDeclaration("Mermaid", "@/components/Mermaid"),
+    );
+  }
+  if (usesCanvas) {
+    children.splice(
+      firstHeading + 1,
+      0,
+      createImportDeclaration("Canvas", "@/components/Canvas"),
+    );
+  }
   if (vFile.dirname?.includes("blog")) {
     children.splice(
       firstHeading + 1,

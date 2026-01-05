@@ -1,0 +1,54 @@
+---
+description: "Advent of Code 2021 - Day 9: Smoke Basin. Written in TypeScript."
+tags:
+  - BFS/DFS
+year: 2021
+day: 9
+---
+
+# AoC 2021 D9: Smoke Basin
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The low points are those that are lower than all of their adjacent points (up, down, left, right). Just iterate through all points and check their neighbors.
+
+```ts
+for (let x = 0; x < board.length; x++) {
+  for (let y = 0; y < board[0].length; y++) {
+    const height = board[x][y];
+    if (neighbors(board, x, y).every(([nx, ny]) => board[nx][ny] > height)) {
+      total += height + 1;
+    }
+  }
+}
+```
+
+## Part 2
+
+A canonical flood fill problem. I use DFS here. For each low point, I start a DFS that visits all neighbors with height less than 9. The size of the basin is the number of points visited in this DFS.
+
+```ts
+let size = 1;
+const stack: [number, number][] = [[x, y]];
+while (stack.length > 0) {
+  const [cx, cy] = stack.pop()!;
+  for (const [nx, ny] of neighbors(board, cx, cy))
+    if (
+      !visited[nx][ny] &&
+      board[nx][ny] !== 9 &&
+      board[nx][ny] >= board[cx][cy]
+    ) {
+      visited[nx][ny] = true;
+      size++;
+      stack.push([nx, ny]);
+    }
+  }
+}
+basins.push(size);
+```
+
+<Footer frontMatter={frontMatter} />

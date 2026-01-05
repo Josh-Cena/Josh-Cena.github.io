@@ -30,6 +30,7 @@ defaultdict
 deque
 dialytika
 Diffie
+dists
 dopplerhq
 dotless
 elif
@@ -51,6 +52,7 @@ graphviz
 hlint
 Holodeck
 Honkai
+Hoare
 huayu
 inds
 infty
@@ -64,6 +66,7 @@ juliaup
 katex
 kitchensink
 kwargs
+lanternfish
 letterlike
 lext
 luo
@@ -89,6 +92,7 @@ npos
 numpy
 nums
 opam
+overengineered
 pandoc
 peaceiris
 perlbrew
@@ -99,6 +103,7 @@ prismjs
 probs
 prosgegrammeni
 queenside
+quickselect
 raco
 randcolor
 rehype

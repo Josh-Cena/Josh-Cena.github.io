@@ -2,6 +2,7 @@
 description: "Advent of Code 2019 - Day 11: Space Police. Written in C++."
 tags:
   - Intcode
+  - Manual inspection
 year: 2019
 day: 11
 ---
@@ -30,6 +31,17 @@ while (!prog.halted) {
     int turn = prog.pop_output();
     // Update direction
 }
+```
+
+Again, I take a second to admire the ASCII art in part 2:
+
+```plain
+ ###   ##  #  # ###  #    ###  #  # #  #
+ #  # #  # # #  #  # #    #  # #  # # #
+ #  # #    ##   #  # #    #  # #  # ##
+ ###  #    # #  ###  #    ###  #  # # #
+ #    #  # # #  # #  #    #    #  # # #
+ #     ##  #  # #  # #### #     ##  #  #
 ```
 
 <Footer frontMatter={frontMatter} />

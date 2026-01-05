@@ -1,0 +1,55 @@
+---
+description: "Advent of Code 2021 - Day 10: Syntax Scoring. Written in TypeScript."
+tags:
+  - Data structures
+year: 2021
+day: 10
+---
+
+# AoC 2021 D10: Syntax Scoring
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Bracket matching is a first-in-last-out problem: for each closing bracket, we need to match it with the most recent unclosed opening bracket. This is akin to a stack. We push opening brackets onto the stack, and for each closing bracket, we pop the stack and check if it matches. If it doesn't match, we have found a corrupted line. If everything matches at the end, we return the remaining stack, which are the unclosed opening brackets, for part 2.
+
+```ts
+function checkLine(line: string): number | string[] {
+  const stack: string[] = [];
+  for (const c of line) {
+    if ("([{<".includes(c)) {
+      stack.push(c);
+    } else {
+      const last = stack.pop();
+      if (
+        (c === ")" && last !== "(") ||
+        (c === "]" && last !== "[") ||
+        (c === "}" && last !== "{") ||
+        (c === ">" && last !== "<")
+      ) {
+        return checkerScores[c as keyof typeof checkerScores];
+      }
+    }
+  }
+  return stack;
+}
+```
+
+## Part 2
+
+Brackets are closed in reverse order, so we can iterate the remaining stack from the end (or top, since it's a stack) to get the sequence of required closing brackets.
+
+```ts
+let lineScore = 0;
+for (let i = result.length - 1; i >= 0; i--) {
+  lineScore =
+    lineScore * 5 +
+    completionScores[result[i] as keyof typeof completionScores];
+}
+scores.push(lineScore);
+```
+
+<Footer frontMatter={frontMatter} />

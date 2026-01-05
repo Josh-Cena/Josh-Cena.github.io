@@ -1,0 +1,67 @@
+---
+description: "Advent of Code 2021 - Day 22: Reactor Reboot. Written in TypeScript."
+tags:
+  - Data structures
+  - Geometry
+year: 2021
+day: 22
+---
+
+# AoC 2021 D22: Reactor Reboot
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Parts 1 & 2
+
+Essentially, the question asks us to maintain a data structure containing "on" cuboids in 3D space, supporting addition and subtraction of cuboids. Part 1's constraints allow for a simple solution using a 3D array of voxels, but that won't scale to part 2.
+
+The most natural way of thinking is to have a list of non-overlapping "on" cuboids. The problem is that, for example, if we have a cuboid from (0, 0, 0) to (3, 3, 3), and we subtract a cuboid from (1, 1, 1) to (2, 2, 2), we end up with up to 6 new cuboids, one for each face of the hollow cuboid. Implementing this correctly is quite intractable.
+
+Instead, my data structure contains both "on" and "off" cuboids. For each voxel, it's guaranteed that $n_\text{on} - n_\text{off}$ is either 0 or 1, where $n_\text{on}$ is the number of "on" cuboids containing that voxel, and $n_\text{off}$ is the number of "off" cuboids containing that voxel. This way, the scenario above simply adds the "off" cuboid to the list. The total volume of "on" voxels can be computed by summing the volumes of all "on" cuboids and subtracting the volumes of all "off" cuboids.
+
+Now we need to figure out how to maintain this invariant when adding and subtracting cuboids. Note that:
+
+$$
+\begin{align*}
+A\cup B &= A + B - A\cap B \\
+A\setminus B &= A - A\cap B
+\end{align*}
+$$
+
+where $+$ and $-$ are joining and subtraction of lists. Therefore, when adding an "on" cuboid $C$, we add $C$ to the list, and for each existing cuboid $E$, we add $E\cap C$ with the opposite state (i.e., "off" if $E$ is "on" and vice versa). Conceptually: if we have both $E$ and $C$, we have double-counted $E\cap C$, so we need to subtract it out; if we have $C$ and an existing "off" cuboid $E$, then we should stop subtracting $E\cap C$, so we need to add it back in. Subtracting a cuboid is similar, except we don't add the cuboid itself, just subtracting each intersection. Because intersections are always cuboids, this methods only ever deals with cuboids.
+
+Here's the implementation:
+
+```ts
+function add(existing: Cube[], cube: Cube): Cube[] {
+  const res = [...existing];
+  if (cube.sign === 1) res.push(cube);
+  for (const p of existing) {
+    const intersection = intersectCubes(p, cube, p.sign === 1 ? -1 : 1);
+    if (!intersection) continue;
+    res.push(intersection);
+  }
+  return res;
+}
+```
+
+As mentioned, the total volume of "on" voxels is the sum of the volumes of all "on" cuboids minus the sum of the volumes of all "off" cuboids:
+
+```ts
+let cubes: Cube[] = [];
+for (const cube of cubeOps) {
+  cubes = add(cubes, cube);
+}
+let sum = 0;
+for (const cube of cubes) {
+  const [x0, x1] = cube.x;
+  const [y0, y1] = cube.y;
+  const [z0, z1] = cube.z;
+  sum += (x1 - x0 + 1) * (y1 - y0 + 1) * (z1 - z0 + 1) * cube.sign;
+}
+console.log(sum);
+```
+
+<Footer frontMatter={frontMatter} />

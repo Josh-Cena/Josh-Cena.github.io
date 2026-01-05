@@ -1,0 +1,52 @@
+---
+description: "Advent of Code 2021 - Day 12: Passage Pathing. Written in TypeScript."
+tags:
+  - Memoization
+year: 2021
+day: 12
+---
+
+# AoC 2021 D12: Passage Pathing
+
+{/* cSpell:ignore Pathing */}
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+We can execute a naïve recurrence:
+
+$$
+\mathit{paths}(c, V) = \begin{cases}
+1 &\text{ if } c = \text{end} \\
+0 &\text{ if } c \text{ is small and } c \in V \\
+\sum_{n \in \mathit{neighbors}(c)} \mathit{paths}(n, V \cup \{c\}) &\text{ if } c \text{ is small and } c \not\in V \\
+\sum_{n \in \mathit{neighbors}(c)} \mathit{paths}(n, V) &\text{ if } c \text{ is big}
+\end{cases}
+$$
+
+The state is the current cave `c` and the set of visited small caves `V`. There's 1 way to go from end to end. If `c` is an already-visited small cave then we shouldn't have entered it in the first place, so there's no valid path. Otherwise, we can travel from `c` to any of its neighbors, and then from those to end, so the number of paths is the sum of its neighbors'. If `c` is small, then before we leave it, we have to add it to the visited set `V`, so we don't visit it again. The final answer is $\mathit{paths}(\text{start}, \varnothing)$.
+
+However, this approach is exponential in the worst case, since we may explore the same state multiple times. For example, if `A` and `B` both point to `C`, then the calculation of `A` and `B` would both recalculate `C`. To optimize it, we can memoize the results of each state. JavaScript doesn't have composite keys for maps, so I just serialize `current` and `visited` as a single string. If the same state has been computed before, we return the cached result.
+
+Note that this algorithm assumes that the graph is acyclic at least when taking the no-double-visit rule into account. Otherwise, this would be an infinite loop because we can keep visiting a circle of big caves and generating new paths.
+
+## Part 2
+
+There are many ways to represent double-visits. For example, we can upgrade the visited set to a map of visit counts. However, since we only allow a single double visit, I instead added a boolean flag `allowDoubleVisit` to the state. The recurrence becomes:
+
+$$
+\mathit{paths}(c, V, a) = \begin{cases}
+1 &\text{ if } c = \text{end} \\
+0 &\text{ if } c \text{ is small and } c \in V \text{ and } (\lnot a\text{ or }c = \text{start}) \\
+\sum_{n \in \mathit{neighbors}(c)} \mathit{paths}(n, V, \text{FALSE}) &\text{ if } c \text{ is small and } c \in V \\
+\sum_{n \in \mathit{neighbors}(c)} \mathit{paths}(n, V \cup \{c\}, a) &\text{ if } c \text{ is small and } c \not\in V \\
+\sum_{n \in \mathit{neighbors}(c)} \mathit{paths}(n, V, a) &\text{ if } c \text{ is big}
+\end{cases}
+$$
+
+Now, the first time we encounter $c \text{ is small and } c \in V$, we only set $a$ to false and continue, without instantly invalidating the path. All other cases remain the same. The final answer is $\mathit{paths}(\text{start}, \varnothing, \text{TRUE})$. Part 1 can also be subsumed into this, as $\mathit{paths}(\text{start}, \varnothing, \text{FALSE})$.
+
+<Footer frontMatter={frontMatter} />

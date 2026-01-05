@@ -1,0 +1,37 @@
+---
+description: "Advent of Code 2021 - Day 25: Sea Cucumber. Written in TypeScript."
+tags:
+  - Cellular automata
+year: 2021
+day: 25
+---
+
+# AoC 2021 D25: Sea Cucumber
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+I thought this requires something clever, but simulating it straightforwardly is fast enough. For example, this is the code for moving the east-facing cucumbers:
+
+```ts
+function moveEast(mat: string[][]) {
+  const newMat = mat.map((line) => line.slice());
+  for (let row = 0; row < mat.length; row++) {
+    for (let col = 0; col < mat[0].length; col++) {
+      if (
+        mat[row][col] === ">" &&
+        mat[row][(col + 1) % mat[0].length] === "."
+      ) {
+        newMat[row][(col + 1) % mat[0].length] = ">";
+        newMat[row][col] = ".";
+      }
+    }
+  }
+  return newMat;
+}
+```
+
+Checking for stabilization is done with a tiny trick: `JSON.stringify(mat) === JSON.stringify(newMat2)`.
+
+<Footer frontMatter={frontMatter} />

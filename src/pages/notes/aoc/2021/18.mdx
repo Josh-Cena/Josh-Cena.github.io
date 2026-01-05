@@ -1,0 +1,124 @@
+---
+description: "Advent of Code 2021 - Day 18: Snailfish. Written in TypeScript."
+tags:
+  - Data structures
+year: 2021
+day: 18
+---
+
+# AoC 2021 D18: Snailfish
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The first barrier was how to parse the input. Lucky for me, this is valid JSON, so I could just use `JSON.parse`. I wonder what happens if I use C++.
+
+The next challenge was how to represent snailfish numbers. I went with the most straightforward approach: a binary tree where each node is either a pair (with left and right children) or a regular number (a leaf node). Since we later need upward traversal during explosion, I also stored a parent pointer.
+
+```ts
+type SnailNumPair = {
+  type: "pair";
+  left: SnailNum;
+  right: SnailNum;
+  parent: SnailNumPair | null;
+};
+type SnailNumNum = { type: "num"; value: number; parent: SnailNumPair | null };
+type SnailNum = SnailNumPair | SnailNumNum;
+```
+
+Building the tree from the parsed JSON is just a matter of "inflating" each level of arrays into objects.
+
+```ts
+function buildSnailNum(obj: InputNum): SnailNum {
+  if (typeof obj === "number") {
+    return { type: "num", value: obj, parent: null };
+  }
+  const pair: SnailNumPair = {
+    type: "pair",
+    left: buildSnailNum(obj[0]),
+    right: buildSnailNum(obj[1]),
+    parent: null,
+  };
+  pair.left.parent = pair;
+  pair.right.parent = pair;
+  return pair;
+}
+```
+
+My code for `explode` is just a huge spaghetti. The signature is `function explode(a: SnailNum, depth: number): boolean`, which returns whether an explosion happened.
+
+- If `a` is a number, it can't explode, so return false.
+- If `depth` is less than 4, or it's not a pair of numbers, we can't explode here, so recursively call `explode` on the left and right children. `explode(a.left, depth + 1) || explode(a.right, depth + 1)` ensures we only explode one pair.
+- Otherwise, we've found a pair to explode. We need to find the nearest regular number to the left and right. To do this, we first move up until we find a parent where we are the right child (for left) or left child (for right). Then we move down the opposite subtree along the opposite children (left for left, right for right) until we reach a number. Finally, we add the exploding pair's values to these numbers (if they exist) and replace the exploding pair with a 0. For example, here's the left part:
+
+  ```ts
+  let left: SnailNum | null = null;
+  let cur: SnailNum | null = a;
+  while (cur.parent) {
+    if (cur.parent.left !== cur) {
+      left = cur.parent.left;
+      break;
+    }
+    cur = cur.parent;
+  }
+  if (left !== null) {
+    while (left.type === "pair") {
+      left = left.right;
+    }
+    left.value += a.left.value;
+  }
+  ```
+
+As for `split`, the idea is similar.
+
+- If `a` is not a number, recursively call `split` on the left and right children.
+- If `a` is a number and less than 10, return false.
+- Otherwise, split `a` into a pair of two numbers and return true.
+
+Once we have `explode` and `split`, `add` is straightforward.
+
+```ts
+function add(a: SnailNum, b: SnailNum): SnailNum {
+  const p: SnailNumPair = { type: "pair", left: a, right: b, parent: null };
+  a.parent = p;
+  b.parent = p;
+  while (true) {
+    if (explode(p, 0)) continue;
+    if (split(p)) continue;
+    break;
+  }
+  return p;
+}
+```
+
+In part 1, we just need to add them up:
+
+```ts
+const res = nums.slice(1).reduce((acc, curr) => {
+  const currNum = buildSnailNum(curr);
+  return add(acc, currNum);
+}, buildSnailNum(nums[0]));
+```
+
+## Part 2
+
+In part 2, we just pairwise add all snailfish numbers and compute the maximum magnitude.
+
+```ts
+let maxMag = 0;
+for (const a of nums) {
+  for (const b of nums) {
+    if (a === b) continue;
+    const sum = add(buildSnailNum(a), buildSnailNum(b));
+    const mag = magnitude(sum);
+    if (mag > maxMag) {
+      maxMag = mag;
+    }
+  }
+}
+```
+
+<Footer frontMatter={frontMatter} />
