@@ -26,13 +26,16 @@ const routesToPrerender = (
   return `/${name}`;
 });
 
-console.log("routes to prerender", routesToPrerender);
-
 async function renderSitemap(routes: string[]) {
   const sitemapStream = new SitemapStream({ hostname: "https://joshcena.com" });
   routes.forEach((url) => {
     if (url === "/404") return;
-    sitemapStream.write({ url, changefreq: "daily", priority: 0.7 });
+    // Actual site has a trailing slash
+    sitemapStream.write({
+      url: url.endsWith("/") ? url : `${url}/`,
+      changefreq: "daily",
+      priority: 0.7,
+    });
   });
   sitemapStream.end();
   const sitemap = await streamToPromise(sitemapStream);
@@ -61,7 +64,6 @@ const promises = routesToPrerender.map(async (url) => {
     );
     await FS.mkdir(Path.dirname(filePath), { recursive: true });
     await FS.writeFile(filePath, html);
-    console.log("pre-rendered", filePath);
   } catch (e) {
     console.log("pre-render error", e, "on path", url);
     if (!(e instanceof Error)) throw e;

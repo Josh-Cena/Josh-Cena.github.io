@@ -22,7 +22,15 @@ export default defineConfig({
           transformMarkdown,
           [remarkMDXFrontmatter, { name: "frontMatter" }],
         ],
-        rehypePlugins: [rehypeKatex],
+        rehypePlugins: [
+          [
+            rehypeKatex,
+            {
+              strict: (errorCode: string) =>
+                errorCode === "unicodeTextInMathMode" ? "ignore" : "warn",
+            },
+          ],
+        ],
         providerImportSource: "@mdx-js/react",
       }),
     },
