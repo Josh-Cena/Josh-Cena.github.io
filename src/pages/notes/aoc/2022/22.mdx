@@ -1,0 +1,175 @@
+---
+description: "Advent of Code 2022 - Day 22: Monkey Map. Written in Haskell."
+tags:
+  - Grid walking
+  - Geometry
+year: 2022
+day: 22
+---
+
+# AoC 2022 D22: Monkey Map
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+There's not much to say about part 1. I thought you need something fancy like precomputing the farthest reachable point in each direction for each cell, but it turns out you can just do the walk naïvely.
+
+The slightly tricky part is handling wraparound. I did a row scan followed by a column scan for the minimum/maximum points in each row/column. Then, when the current position goes out of bounds, I can just look up the corresponding point in the opposite direction.
+
+```hs
+let rowBounds = Map.fromList
+  [ (r, (minimum rowCells, maximum rowCells))
+  | r <- [0..maxRow],
+  let rowCells = [y | (x, y) <- Map.keys grid, x == r]
+  ]
+```
+
+Wrap around is handled as we move one step:
+
+```hs
+moveStep ::
+  Map (Int, Int) Char ->
+  Map State State ->
+  State ->
+  Maybe State
+moveStep board wraparound (r, c, dir) =
+  if board Map.! (r', c') == '#' then Nothing else Just st''
+  where
+    st' = case dir of
+      3 -> (r - 1, c, dir)
+      1 -> (r + 1, c, dir)
+      2 -> (r, c - 1, dir)
+      0 -> (r, c + 1, dir)
+      _ -> error "invalid direction"
+    st'' = case dir of
+      3 -> let (minR, maxR) = colBounds Map.! c in if r' < minR then (maxR, c, dir) else st'
+      -- ...
+    (r', c', _) = st''
+```
+
+And then I have `moveSteps` to move the specified number of steps until either a wall is hit (`moveStep` returns `Nothing`) or the whole distance is walked.
+
+Because the direction is an integer from 0 to 3, turning is about as convenient as using complex numbers.
+
+```hs
+move ::
+  Map (Int, Int) Char ->
+  Map State State ->
+  State ->
+  String ->
+  State
+move _ _ (r, c, dir) "L" = (r, c, (dir - 1) `mod` 4)
+move _ _ (r, c, dir) "R" = (r, c, (dir + 1) `mod` 4)
+move board wraparound st stepsStr = moveSteps board wraparound st $ read stepsStr
+```
+
+## Part 2
+
+OK, this turned out to be really intractable. I had to hardcode the wraparound rules for my input, because I have no idea how to do cube construction generically. I can't even figure out how to do it theoretically for my input; I had to actually get a piece of paper and fold it myself. Like [2020 day 20](/notes/aoc/2020/20), I represent each edge of each shape as one of T, L, B, R, and then represent wraparound as edge adjacency of the form `(A, R) <-> (D, R')`.
+
+```js canvas width=350 height=400
+const fw = 80;
+const lw = 4;
+const faces = {
+  A: [2, 0],
+  B: [1, 0],
+  C: [1, 1],
+  D: [1, 2],
+  E: [0, 2],
+  F: [0, 3],
+};
+
+ctx.translate(fw / 2, fw / 2);
+ctx.font = "20px monospace";
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
+function drawFace(x, y, label) {
+  x *= fw;
+  y *= fw;
+  ctx.strokeRect(x, y, fw, fw);
+  ctx.fillStyle = textColor;
+  ctx.fillText(label, x + fw / 2, y + fw / 2);
+  ctx.fillStyle = "teal";
+  ctx.fillRect(x + lw, y, fw - 2 * lw, lw);
+  ctx.fillStyle = "goldenrod";
+  ctx.fillRect(x + lw, y + fw - lw, fw - 2 * lw, lw);
+  ctx.fillStyle = "coral";
+  ctx.fillRect(x, y + lw, lw, fw - 2 * lw);
+  ctx.fillStyle = "mediumorchid";
+  ctx.fillRect(x + fw - lw, y + lw, lw, fw - 2 * lw);
+  ctx.fillStyle = textColor;
+}
+
+function drawConnection(face1, edge1, cx, cy, face2, edge2) {
+  ctx.beginPath();
+  const x1 = faces[face1][0] + (edge1 === "L" ? 0 : edge1 === "R" ? 1 : 0.5);
+  const y1 = faces[face1][1] + (edge1 === "T" ? 0 : edge1 === "B" ? 1 : 0.5);
+  const x2 = faces[face2][0] + (edge2 === "L" ? 0 : edge2 === "R" ? 1 : 0.5);
+  const y2 = faces[face2][1] + (edge2 === "T" ? 0 : edge2 === "B" ? 1 : 0.5);
+  ctx.moveTo(x1 * fw, y1 * fw);
+  ctx.quadraticCurveTo((cx + x1) * fw, (cy + y1) * fw, x2 * fw, y2 * fw);
+  ctx.stroke();
+}
+
+for (const [label, [x, y]] of Object.entries(faces)) {
+  drawFace(x, y, label);
+}
+
+drawConnection("C", "L", -0.5, 0, "E", "T"); // (C, left) -- (E, up)
+drawConnection("C", "R", 0.5, 0, "A", "B"); // (C, right) -- (A, down)
+drawConnection("F", "L", -1, -4, "B", "T"); // (F, left) -- (B, up)
+drawConnection("F", "R", 0.5, 0, "D", "B"); // (F, right) -- (D, down)
+drawConnection("F", "B", 3, -1, "A", "T"); // (F, down) -- (A, up)
+ctx.setLineDash([8, 6]);
+drawConnection("B", "L", -1.5, 0, "E", "L"); // (B, left) -- (E, left')
+drawConnection("A", "R", 1, 2, "D", "R"); // (A, right) -- (D, right')
+```
+
+In the diagram above, the dashed lines are "trans" edges, meaning they connect `X` to `Y'`. This means that after edge translation, we also have to reflect about the center of the edge by doing a `50 - coordinate` (the face width is 50). I hardcoded all of the exit positions and reenter positions.
+
+```hs
+cubeWraparound :: Map State State
+cubeWraparound =
+  Map.fromList
+    ( [((r, 50, 2), (151 - r, 1, 0)) | r <- [1 .. 50]] -- (B, left) -- (E, left')
+        ++ [((r, 151, 0), (151 - r, 100, 2)) | r <- [1 .. 50]] -- (A, right) -- (D, right')
+        ++ [((r, 50, 2), (101, r - 50, 1)) | r <- [51 .. 100]] -- (C, left) -- (E, up)
+        ++ [((r, 101, 0), (50, r + 50, 3)) | r <- [51 .. 100]] -- (C, right) -- (A, down)
+        ++ [((r, 0, 2), (151 - r, 51, 0)) | r <- [101 .. 150]] -- (E, left) -- (B, left')
+        ++ [((r, 101, 0), (151 - r, 150, 2)) | r <- [101 .. 150]] -- (D, right) -- (A, right')
+        ++ [((r, 0, 2), (1, r - 100, 1)) | r <- [151 .. 200]] -- (F, left) -- (B, up)
+        ++ [((r, 51, 0), (150, r - 100, 3)) | r <- [151 .. 200]] -- (F, right) -- (D, down)
+        ++ [((100, c, 3), (c + 50, 51, 0)) | c <- [1 .. 50]] -- (E, up) -- (C, left)
+        ++ [((201, c, 1), (1, c + 100, 1)) | c <- [1 .. 50]] -- (F, down) -- (A, up)
+        ++ [((0, c, 3), (c + 100, 1, 0)) | c <- [51 .. 100]] -- (B, up) -- (F, left)
+        ++ [((151, c, 1), (c + 100, 50, 2)) | c <- [51 .. 100]] -- (D, down) -- (F, right)
+        ++ [((0, c, 3), (200, c - 100, 3)) | c <- [101 .. 150]] -- (A, up) -- (F, down)
+        ++ [((51, c, 1), (c - 50, 100, 2)) | c <- [101 .. 150]] -- (A, down) -- (C, right)
+    )
+```
+
+Since we have to do hardcoding for part 2 anyway, I also turned my part 1 into a hardcoded lookup table. Now, whenever I reach a state that's immediately outside the grid, I can just look up the corresponding state on the opposite side of the cube.
+
+```hs
+moveStep ::
+  Map (Int, Int) Char ->
+  Map State State ->
+  State ->
+  Maybe State
+moveStep board wraparound (r, c, dir) =
+  if board Map.! (r', c') == '#' then Nothing else Just st''
+  where
+    st' = case dir of
+      3 -> (r - 1, c, dir)
+      1 -> (r + 1, c, dir)
+      2 -> (r, c - 1, dir)
+      0 -> (r, c + 1, dir)
+      _ -> error "invalid direction"
+    st'' = fromMaybe st' $ Map.lookup st' wraparound
+    (r', c', _) = st''
+```
+
+<Footer frontMatter={frontMatter} />

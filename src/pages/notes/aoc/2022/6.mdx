@@ -1,0 +1,41 @@
+---
+description: "Advent of Code 2022 - Day 6: Tuning Trouble. Written in Haskell."
+tags:
+  - Data structures
+year: 2022
+day: 6
+---
+
+# AoC 2022 D6: Tuning Trouble
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+TBH this feels more like a day 1 problem. I just need to iterate through the string, taking substrings of length 4. I use a `Set` to deduplicate the characters, and if we still have 4 characters, then they are all unique.
+
+```hs
+roll :: Int -> Int -> Text -> Int
+roll index input
+  | (length . Set.fromList . T.unpack) prefix == 4 = index + 4
+  | otherwise = roll (index + 1) $ T.tail input
+  where
+    prefix = T.take 4 input
+```
+
+## Part 2
+
+Same as part 1, but with length 14 instead of 4. I parameterize `roll` over the length of the marker.
+
+```hs
+roll :: Int -> Int -> Text -> Int
+roll len index input
+  | (length . S.fromList . T.unpack) prefix == len = index + len
+  | otherwise = roll len (index + 1) $ T.tail input
+  where
+    prefix = T.take len input
+```
+
+<Footer frontMatter={frontMatter} />

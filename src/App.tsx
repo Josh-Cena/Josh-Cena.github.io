@@ -11,6 +11,8 @@ import "./global.css";
 
 globalThis.Prism = Prism;
 await import("prismjs/components/prism-bash");
+await import("prismjs/components/prism-diff");
+await import("prismjs/components/prism-haskell");
 await import("prismjs/components/prism-python");
 
 export default function App(): JSX.Element {

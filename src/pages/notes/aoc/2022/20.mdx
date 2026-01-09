@@ -1,0 +1,129 @@
+---
+description: "Advent of Code 2022 - Day 20: Grove Positioning System. Written in Haskell."
+tags:
+  - Data structures
+year: 2022
+day: 20
+---
+
+# AoC 2022 D20: Grove Positioning System
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+This kind of reminds me of [2020 day 23](/notes/aoc/2020/23), where we also have to turn things around a circular list, which I implemented as a linked list. This problem needs to implement similar operations. In pseudocode it looks like:
+
+```plain
+for num in nums:
+  pos = list.find(num)
+  newPos = (pos + num) % (list.size - 1)
+  list.move(pos, newPos)
+
+zeroPos = list.find(0)
+result =
+  list.at((zeroPos + 1000) % list.size)
+  + list.at((zeroPos + 2000) % list.size)
+  + list.at((zeroPos + 3000) % list.size)
+```
+
+There are two tricky parts:
+
+- Numbers may repeat, so if we search by the value of the number, there may be multiple ones. Instead, we assign each number a unique ID, and search by that ID instead.
+- We need to modulo by `list.size - 1` instead of `list.size`, because the number is removed from the list before being reinserted, so the list size is one less than the original. Thinking about it in another way, `n - 1` and `0` are operationally equivalent: they both insert at the end of the list, so we avoid `n - 1`.
+
+Unlike 2020 day 23, the main difference is that the absolute index matters (not just the relative shifts), so a linked list can't work, unless you'd like to jump 5000 times to the target position. Whatever data structure we choose, we just need to implement three operations: `at`, `find`, and `move`. The trick is to stop thinking about `pos` as a physical position, but instead as an order. Then:
+
+- `at(pos)`: returns the `pos`-th smallest element (by some key) in the list.
+- `find(num)`: returns the order of the element with the given ID.
+- `move(pos, newPos)`: removes the `pos`-th smallest element and reinserts it with a new key that makes it the `newPos`-th smallest element.
+
+`at` and `find` strongly suggest an [order statistic tree](https://en.wikipedia.org/wiki/Order_statistic_tree). The trick for implementing `move` is to assign the new key as some number between the keys at `newPos - 1` and `newPos`. This way, the element will be in the middle of them without having to update the keys of all the other elements.
+
+```plain
+function move(pos, newPos):
+  num = list.at(pos)
+  list.remove(num)
+  if newPos == 0:
+    newKey = list.at(0).key - 1
+  else:
+    newKey = (list.at(newPos - 1).key + list.at(newPos).key) / 2
+  list.insert(num, key = newKey)
+```
+
+{/* cSpell:ignore Shlok Datye */}
+
+You know you are treading deep waters when there's basically no package to do this. I found [order-statistic-tree](https://hackage.haskell.org/package/order-statistic-tree), but it's [missing `rank`](https://github.com/lambdakazan/ostree/issues/2). I decided to just copy the code over. Thanks Shlok Datye!
+
+From the pseudocode above, we need each entry in the list to have two things: the number, and an ordering key. The `OSTree` type expects the entries to be orderable, so we implement `Ord` by just comparing the keys.
+
+```hs
+type Key = Ratio Integer
+
+data TreeEntry = TreeEntry {teKey :: Key, teNum :: Int} deriving (Eq, Show)
+
+instance Ord TreeEntry where
+  compare (TreeEntry {teKey = key1}) (TreeEntry {teKey = key2}) = compare key1 key2
+
+type CList = OSTree TreeEntry
+```
+
+(By the way, I started by defining `Key` as `Ratio Int`, but it turned out that the keys can get very large and caused some overflow issues.)
+
+To do anything with tree entries, we need to know the key of the target number. Since I already mentioned that the numbers can repeat, all lookup data structures must be keyed by a unique ID, not the number itself. So we assign each number a unique ID, and store two mappings: from ID to key and to number. The IDs are just the indices of the input list. With these mappings, we just need to iterate over the IDs, mixing each corresponding number.
+
+```hs
+solve :: [Int] -> Int
+solve nums = groveCoords zeroKey mixed
+  where
+    zeroId = fromJust $ elemIndex 0 nums
+    ids = [0 .. length nums - 1]
+    keys = map fromIntegral ids :: [Key]
+    idToNum = Map.fromList $ zip ids nums
+    idToKey = Map.fromList $ zip ids keys
+    tree = OST.fromList $ zipWith TreeEntry keys nums
+    (mixed, idToKey') = foldl' (mix idToNum) (tree, idToKey) ids
+    zeroKey = idToKey' Map.! zeroId
+```
+
+`mix` itself is just the implementation of the pseudocode above. Given one ID, it finds the corresponding key and number, calculates the new key, and updates the tree and the mapping.
+
+```hs
+mix :: Map Int Int -> (CList, Map Int Key) -> Int -> (CList, Map Int Key)
+mix idToNum (tree, idToKey) id = (tree'', Map.insert id key' idToKey)
+  where
+    num = idToNum Map.! id
+    entry = TreeEntry (idToKey Map.! id) num
+    rank = fromJust $ OST.rank tree entry
+    rank' = (rank + num) `mod` (OST.size tree - 1)
+    tree' = OST.delete entry tree
+    keyLeft = teKey $ fromJust $ OST.select tree' (rank' - 1)
+    keyRight = teKey $ fromJust $ OST.select tree' rank'
+    key' = if rank' == 0 then keyRight - 1 else (keyLeft + keyRight) / 2
+    newEntry = TreeEntry key' num
+    tree'' = OST.insert newEntry tree'
+```
+
+Finally, to get the 1000th, 2000th, and 3000th numbers after the zero, we just need to find the key of the zero entry (already done in the `solve` function), and then select the entries at the corresponding ranks.
+
+```hs
+groveCoords :: Key -> CList -> Int
+groveCoords zeroKey tree =
+  sumMap (teNum . fromJust . OST.select tree . (`mod` n) . (+ zeroRank)) [1000, 2000, 3000]
+  where
+    n = OST.size tree
+    zeroRank = fromJust $ OST.rank tree (TreeEntry zeroKey 0)
+```
+
+## Part 2
+
+Multiplication of the numbers don't change the algorithm at all (it's used to shoot down solutions that physically move the element `num` times). Repeating the mixing 10 times just requires replicating the IDs 10 times when iterating over them.
+
+```diff
+- (mixed, idToKey') = foldl' (mix idToNum) (tree, idToKey) ids
++ (mixed, idToKey') = foldl' (mix idToNum) (tree, idToKey) $ concat $ replicate rounds ids
+```
+
+<Footer frontMatter={frontMatter} />

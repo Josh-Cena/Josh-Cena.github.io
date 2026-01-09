@@ -1,0 +1,108 @@
+---
+description: "Advent of Code 2022 - Day 13: Distress Signal. Written in Haskell."
+tags:
+  - Parsing
+  - Recursion
+year: 2022
+day: 13
+---
+
+# AoC 2022 D13: Distress Signal
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I first define the data type for the packets:
+
+```hs
+data TreeNode = Leaf Int | Branch [TreeNode] deriving (Show, Eq)
+```
+
+And, very importantly, the `Ord` instance:
+
+```hs
+instance Ord TreeNode where
+  compare (Leaf a) (Leaf b) = compare a b
+  compare (Branch []) (Branch []) = EQ
+  compare (Branch []) (Branch _) = LT
+  compare (Branch _) (Branch []) = GT
+  compare (Branch (a : as)) (Branch (b : bs)) = case compare a b of
+    EQ -> compare (Branch as) (Branch bs)
+    other -> other
+  compare la@(Leaf _) bb@(Branch _) = compare (Branch [la]) bb
+  compare bb@(Branch _) la@(Leaf _) = compare bb (Branch [la])
+```
+
+(This shows how convenient Haskell type classes are: once we have `compare`, the type is automatically endowed with all the other comparison operators.)
+
+This input reminds me of [2021 day 18](/notes/aoc/2021/18), where we also had to parse a nested list structure. The difference is that this time I am using Haskell, and I do want strong types, so no `Data.Aeson`; manual parsing it is.
+
+I do parsing the old school way: tokenize, then recursively parse. Tokens are just brackets and numbers (commas and whitespace are ignored):
+
+```hs
+data Token = Number Int | OpenBracket | CloseBracket deriving (Show)
+
+tokenize :: String -> [Token]
+tokenize [] = []
+tokenize input@(c : rest) = case c of
+  ',' -> tokenize rest
+  '[' -> OpenBracket : tokenize rest
+  ']' -> CloseBracket : tokenize rest
+  _ -> Number (read token) : tokenize rest'
+    where
+      (token, rest') = span (`notElem` "[],") input
+```
+
+Now I can parse the tokens into our `TreeNode` structure, using the following BNF:
+
+```plain
+List :: OpenBracket ListElements CloseBracket
+ListElements :: empty | ListElement ListElements
+ListElement :: List | Number
+```
+
+It's all standard recursive descent parsing, so not much to say. Each time, I consume the tokens I need, and return the rest for the next step. For `parseListElements`, I keep consuming `ListElement`s until I can't anymore (i.e., I hit a `CloseBracket`).
+
+```hs
+parseList :: [Token] -> Maybe (TreeNode, [Token])
+parseList (OpenBracket : next) = Just (Branch elements, rest)
+  where
+    (elements, CloseBracket : rest) = parseListElements next
+    parseListElements tokens = case parseListElement tokens of
+      Nothing -> ([], tokens)
+      Just (firstElem, next) ->
+        let (restElems, restTokens) = parseListElements next
+         in (firstElem : restElems, restTokens)
+    parseListElement (Number n : rest) = Just (Leaf n, rest)
+    parseListElement tokens = parseList tokens
+parseList _ = Nothing
+```
+
+Now when parsing the whole input, I just unwrap and get the constructed tree. Technically, I should check that the parse was successful and that there are no remaining tokens, but I just assume that the input is well-formed and my parser is correct.
+
+```hs
+parseInput :: Text -> TreeNode
+parseInput = fst . fromJust . parseList . tokenize . T.unpack
+```
+
+With the `Ord` and the parser in place, the actual solution is straightforward.
+
+```hs
+let rightOrder = sumMap (+ 1) $ findIndices (\[a, b] -> a < b) pairs
+```
+
+## Part 2
+
+I guess the more efficient way is to implement my own sorting algorithm that tracks the indices of the elements, but I just sort the packets and find the indices of the divider packets.
+
+```hs
+let d1 = Branch [Branch [Leaf 2]]
+let d2 = Branch [Branch [Leaf 6]]
+let sorted = sort $ d1 : d2 : concat pairs
+let indices = map (+ 1) $ findIndices (\a -> a == d1 || a == d2) sorted
+```
+
+<Footer frontMatter={frontMatter} />

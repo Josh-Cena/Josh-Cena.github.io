@@ -12,8 +12,6 @@ import { FrontMatter, Footer } from "../_components";
 
 <FrontMatter frontMatter={frontMatter} />
 
-## Parts 1 & 2
-
 While this problem doesn't look graph-y on the surface, essentially we have a state space and a set of transitions between states with associated costs, so we can use Dijkstra's to find the minimum-cost path from the initial state to the goal state.
 
 The first tricky part might be parsing the input. I represented the state as `{ rooms: number[][], hallway: (number | undefined)[] }`, where `rooms[i]` is the stack of amphipods in room `i` (`rooms[i][0]` is the one closest to the hallway), and `hallway[j]` is the amphipod (or `undefined` if empty) at hallway position `j`. Amphipods are represented as numbers 0-3.

@@ -13,8 +13,6 @@ import { FrontMatter, Footer } from "../_components";
 
 <FrontMatter frontMatter={frontMatter} />
 
-## Parts 1 & 2
-
 This is like [2020 day 20](/notes/aoc/2020/20), but in 3D. We have a list of sets of coordinates, and we need to pairwise align them via rotation and translation such that there are at least 12 overlapping points. As the problem already says, there are 24 orientations possible, so for each list of coordinates, we need to compute all 24 orientations, and find one that aligns with another list.
 
 I align based on the 3D coordinate differences $(x_j - x_i, y_j - y_i, z_j - z_i)$ between each pair of points in the list, instead of their Euclidean distances, since the latter has less information: it cannot distinguish between $(1,2,2)$ and $(3,0,0)$, for example. If two sets of beacon coordinates ($A$ and $B$) contain at least 12 overlapping beacons, then there exists some rotation of $B$ that gives rise to at least $12 \times 11 = 132$ overlapping distance vectors. After obtaining the rotation, the translation ensues just by comparing the coordinates of any overlapping beacon pair.

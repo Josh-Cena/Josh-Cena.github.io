@@ -12,8 +12,6 @@ import { FrontMatter, Footer } from "../_components";
 
 <FrontMatter frontMatter={frontMatter} />
 
-## Parts 1 & 2
-
 Perhaps the single most important observation is that `algorithm[0]` is `#` and `algorithm[511]` is `.` in the real input, which means that the infinite empty space outside the image alternates between `.` and `#` each step. Other than that, this is still a cellular automaton problem, since each pixel's next state depends only on its current 3x3 neighborhood.
 
 This time, I decided to represent the image as an actual 2D array, because I need to quickly tell which cells are "out of bounds" and therefore alternates between `.` and `#`. Other than that, the implementation is the same as previous ones. For each pixel in the new image, find its 3x3 neighborhood in the old image, compute the corresponding index, and look up the new value from the algorithm string. If the neighbor is out of bounds, use the default pixel value for that step.

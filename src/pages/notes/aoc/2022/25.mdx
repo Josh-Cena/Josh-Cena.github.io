@@ -1,0 +1,70 @@
+---
+description: "Advent of Code 2022 - Day 25: Full of Hot Air. Written in Haskell."
+tags:
+  - Mathematics
+year: 2022
+day: 25
+---
+
+# AoC 2022 D25: Full of Hot Air
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+There are two solutions that probably work equally well: one is to convert the SNAFU number to decimal, do the math, and convert back to SNAFU. The other is to do the math directly in SNAFU. I went with the second approach because it looks more mathy.
+
+A SNAFU number can be represented as:
+
+$$
+\sum_{i=0}^{n} d_i \cdot 5^i
+$$
+
+Where $d_i\in \{-2, -1, 0, 1, 2\}$ and $i$ starts from the rightmost digit. I store it as a list of digits from the least significant one.
+
+```hs
+parseSnafu :: String -> [Int]
+parseSnafu = reverse . map charToDigit
+  where
+    charToDigit '2' = 2
+    charToDigit '1' = 1
+    charToDigit '0' = 0
+    charToDigit '-' = -1
+    charToDigit '=' = -2
+    charToDigit _ = error "Invalid SNAFU character"
+```
+
+Now, to do addition for $d^{(1)} + d^{(2)} = d^{(3)}$, we have the recurrence:
+
+$$
+\begin{aligned}
+c_0 &= 0 \\
+s_i &= d_i^{(1)} + d_i^{(2)} + c_i \\
+d_i^{(3)} &= (s_i + 2) \bmod 5 - 2 \\
+c_{i+1} &= \lfloor (s_i + 2) / 5 \rfloor
+\end{aligned}
+$$
+
+How the digit and carry are derived just requires casework. Our goal is to make the digit between -2 and 2, while $s_i$ can be at least -5 (if both digits are -2 and the carry is -1) and at most 5 (if both digits are 2 and the carry is 1).
+
+- If $-5\leq s_i \leq -3$, then we need to add 5 to it, which generates a carry of -1. $-3\leq s_i + 2\leq -1$, so $\lfloor (s_i + 2) / 5 \rfloor = -1$, and $(s_i + 2) \bmod 5 = s_i + 2 + 5$.
+- If $-2 \leq s_i \leq 2$, then we don't need to add anything, and the carry is 0. $0\leq s_i + 2 \leq 4$, so $\lfloor (s_i + 2) / 5 \rfloor = 0$, and $(s_i + 2) \bmod 5 = s_i + 2$.
+- If $3\leq s_i\leq 5$, then we need to subtract 5 from it, which generates a carry of 1. $5\leq s_i + 2 \leq 7$, so $\lfloor (s_i + 2) / 5 \rfloor = 1$, and $(s_i + 2) \bmod 5 = s_i + 2 - 5$.
+
+As for the implementation, I implemented it as a three-way addition of number 1, number 2, and the carry. It stops when both numbers are empty and the carry is 0.
+
+```hs
+addSnafu :: Int -> [Int] -> [Int] -> [Int]
+addSnafu 0 digits1 [] = digits1
+addSnafu 0 [] digits2 = digits2
+addSnafu carry digits1 [] = addSnafu 0 digits1 [carry]
+addSnafu carry [] digits2 = addSnafu 0 [carry] digits2
+addSnafu carry (d1 : ds1) (d2 : ds2) = digit : rest
+  where
+    sum = d1 + d2 + carry
+    carry' = (sum + 2) `div` 5
+    digit = (sum + 2) `mod` 5 - 2
+    rest = addSnafu carry' ds1 ds2
+```
+
+<Footer frontMatter={frontMatter} />

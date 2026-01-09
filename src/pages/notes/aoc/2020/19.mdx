@@ -12,8 +12,6 @@ import { FrontMatter, Footer } from "../_components";
 
 <FrontMatter frontMatter={frontMatter} />
 
-## Parts 1 & 2
-
 If a rule matches the message at `i..j`, that means there exists an alternative `rule1 rule2` such that `i..k` matches `rule1` and `k..j` matches `rule2` for some `k` between `i` and `j`.
 
 Technically, it's possible that multiple alternatives could match at index `i` and have different ending indices `j`, and we don't know which one to pick until we try to match the rest of the message. So we have to return _all_ possible ending indices for a given starting index and rule. Then, as long as _one_ of the matches for rule `0` is `0..len(message)`, the message is valid.

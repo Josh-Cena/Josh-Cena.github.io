@@ -1,0 +1,281 @@
+---
+description: "Advent of Code 2022 - Day 15: Beacon Exclusion Zone. Written in Haskell."
+tags:
+  - Geometry
+  - Puzzle
+year: 2022
+day: 15
+---
+
+# AoC 2022 D15: Beacon Exclusion Zone
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+This problem needs a tiny bit of geometric insight. Note that the detection range of each sensor is a circle in the Manhattan metric. The number of positions without a beacon is the number of positions in the union of these circles, minus the number of beacons. I just need to intersect each circle with the line $y=2000000$ and count the number of integer points in the union of these intervals.
+
+```js canvas width=500 height=300
+ctx.translate(width / 2, height / 2);
+ctx.scale(1, -1);
+ctx.beginPath();
+ctx.moveTo(-width / 2, 0);
+ctx.lineTo(width / 2, 0);
+ctx.stroke();
+function drawDiamond(x, y, r) {
+  ctx.beginPath();
+  ctx.moveTo(x, y + r);
+  ctx.lineTo(x + r, y);
+  ctx.lineTo(x, y - r);
+  ctx.lineTo(x - r, y);
+  ctx.closePath();
+  ctx.stroke();
+}
+drawDiamond(30, 30, 100);
+drawDiamond(90, -20, 50);
+drawDiamond(-120, -50, 70);
+drawDiamond(150, 35, 30);
+ctx.strokeStyle = "red";
+ctx.lineWidth = 2;
+ctx.beginPath();
+ctx.moveTo(-40, 0);
+ctx.lineTo(120, 0);
+ctx.moveTo(-140, 0);
+ctx.lineTo(-100, 0);
+ctx.stroke();
+```
+
+Therefore, the first step is to compute the segments of intersection of each circle with the line $y=2000000$. (BTW, I really don't like problems whose example uses a different parameter than the actual input; in this case the example uses $y=10$ instead of $y=2000000$. If I want to make my code work on the example too, I have to pass $y$ as part of my input.)
+
+A circle $(x, y, r)$ intersects a line $y = y_0$ if the distance $d$ from the center to the line is less than $r$. We can measure the distance by $d=|y - y_0|$. In this input we aren't given the radius directly, but we can compute it from the point $(x', y')$ which is the beacon that lies on the perimeter of the circle: $r = |x - x'| + |y - y'|$. If $d < r$, then the intersection is a line segment from $(x - (r - d), y_0)$ to $(x + (r - d), y_0)$.
+
+```js canvas width=500 height=300
+ctx.translate(width / 2, height / 2);
+ctx.scale(1, -1);
+ctx.beginPath();
+ctx.moveTo(-width / 2, 0);
+ctx.lineTo(width / 2, 0);
+ctx.stroke();
+function drawDiamond(x, y, r) {
+  ctx.beginPath();
+  ctx.moveTo(x, y + r);
+  ctx.lineTo(x + r, y);
+  ctx.lineTo(x, y - r);
+  ctx.lineTo(x - r, y);
+  ctx.closePath();
+  ctx.stroke();
+}
+drawDiamond(0, 30, 100);
+ctx.beginPath();
+ctx.arc(0, 30, 4, 0, 2 * Math.PI);
+ctx.fill();
+ctx.beginPath();
+ctx.moveTo(0, 30);
+ctx.lineTo(0, 0);
+ctx.moveTo(0, 30);
+ctx.lineTo(-70, 0);
+ctx.moveTo(0, 30);
+ctx.lineTo(70, 0);
+ctx.stroke();
+ctx.strokeStyle = "red";
+ctx.lineWidth = 2;
+ctx.beginPath();
+ctx.moveTo(-70, 0);
+ctx.lineTo(70, 0);
+ctx.stroke();
+ctx.scale(1, -1);
+ctx.font = "16px Arial";
+ctx.fillText("r", -45, -15);
+ctx.fillText("r", 45, -15);
+ctx.fillText("d", 0, -10);
+ctx.fillText("r - d", -45, 15);
+ctx.fillText("r - d", 15, 15);
+```
+
+```hs
+createSegments :: Int -> [(Int, Int, Int, Int)] -> [(Int, Int)]
+createSegments targetY circles =
+  circles
+    & map (\(x1, y1, x2, y2) -> (abs (x1 - x2) + abs (y1 - y2), abs (y1 - targetY), x1, y1))
+    & filter (\(r, dy, _, _) -> r >= dy)
+    & map (\(r, dy, x1, _) -> (x1 - (r - dy), x1 + (r - dy)))
+```
+
+After getting one segment per circle, I need to get the total length of their union. I sort them by the left endpoint, and then iterate through them, keeping track of the rightmost point. If the next segment starts before the rightmost point, the current segment is extended; otherwise, a new segment is started.
+
+```hs
+mergeSegments :: [(Int, Int)] -> [(Int, Int)]
+mergeSegments =
+  reverse . foldl step [] . sortOn fst
+  where
+    step [] seg = [seg]
+    step ((a, b) : acc) (c, d)
+      | c <= b + 1 = (a, max b d) : acc
+      | otherwise = (a, b) : (c, d) : acc
+```
+
+Finally I just sum the lengths of these segments (each one is $b - a + 1$) and subtract the number of beacons.
+
+## Part 2
+
+Given our algorithm for part 1, which runs in time proportional to the number of circles (i.e., very fast since there are only 25), a simple algorithm is to scan through all $y$ values and compute the segments. If no gap exists, then there should be a single segment that covers $[0, 4000000]$—i.e., if we search for a segment $(a, b)$ with $a>0$, it should either not exist or have $a > 4000000$. If we find a segment that has $0 < a \leq 4000000$, then we know the gap is at $x = a - 1$. This runs in 1.67s, which is okay.
+
+But there's one observation: there's a unique uncovered point. This means it must be very precisely carved out from the union of the circles. Consider the 8 neighbors of the uncovered point:
+
+```js canvas width=210 height=210
+ctx.beginPath();
+ctx.moveTo(5, 5);
+ctx.lineTo(width - 5, 5);
+ctx.lineTo(width - 5, height - 5);
+ctx.lineTo(5, height - 5);
+ctx.closePath();
+ctx.stroke();
+ctx.beginPath();
+ctx.moveTo(5 + (width - 10) / 3, 5);
+ctx.lineTo(5 + (width - 10) / 3, height - 5);
+ctx.moveTo(5 + (2 * (width - 10)) / 3, 5);
+ctx.lineTo(5 + (2 * (width - 10)) / 3, height - 5);
+ctx.moveTo(5, 5 + (height - 10) / 3);
+ctx.lineTo(width - 5, 5 + (height - 10) / 3);
+ctx.moveTo(5, 5 + (2 * (height - 10)) / 3);
+ctx.lineTo(width - 5, 5 + (2 * (height - 10)) / 3);
+ctx.stroke();
+ctx.fillStyle = "red";
+ctx.fillRect(
+  5 + (width - 10) / 3 + 0.5,
+  5 + (height - 10) / 3 + 0.5,
+  (width - 10) / 3 - 1,
+  (height - 10) / 3 - 1,
+);
+```
+
+We play the game of filling all blank cells by painting regions. The rules are: (1) the region must be diamond-shaped (including a single cell), (2) you can paint as many regions as you want, (3) the regions can overlap, (4) the red region must not be painted over. Focus on the 4 edge-adjacent neighbors of the red cell. Each one can either be covered by a single corner cell, or by a crossing edge, like this:
+
+```js canvas width=210 height=210
+ctx.beginPath();
+ctx.moveTo(5, 5);
+ctx.lineTo(width - 5, 5);
+ctx.lineTo(width - 5, height - 5);
+ctx.lineTo(5, height - 5);
+ctx.closePath();
+ctx.stroke();
+ctx.beginPath();
+ctx.moveTo(5 + (width - 10) / 3, 5);
+ctx.lineTo(5 + (width - 10) / 3, height - 5);
+ctx.moveTo(5 + (2 * (width - 10)) / 3, 5);
+ctx.lineTo(5 + (2 * (width - 10)) / 3, height - 5);
+ctx.moveTo(5, 5 + (height - 10) / 3);
+ctx.lineTo(width - 5, 5 + (height - 10) / 3);
+ctx.moveTo(5, 5 + (2 * (height - 10)) / 3);
+ctx.lineTo(width - 5, 5 + (2 * (height - 10)) / 3);
+ctx.stroke();
+ctx.fillStyle = "red";
+ctx.fillRect(
+  5 + (width - 10) / 3 + 0.5,
+  5 + (height - 10) / 3 + 0.5,
+  (width - 10) / 3 - 1,
+  (height - 10) / 3 - 1,
+);
+ctx.fillStyle = "#00800060";
+ctx.fillRect(5 + 0.5, 5 + 0.5, (width - 10) / 3 - 1, (height - 10) / 3 - 1);
+ctx.fillRect(
+  5 + (width - 10) / 3 + 0.5,
+  5 + 0.5,
+  (width - 10) / 3 - 1,
+  (height - 10) / 3 - 1,
+);
+ctx.fillRect(
+  5 + 0.5,
+  5 + (height - 10) / 3 + 0.5,
+  (width - 10) / 3 - 1,
+  (height - 10) / 3 - 1,
+);
+ctx.strokeStyle = "#008000";
+ctx.beginPath();
+ctx.moveTo(0, 10 + (2 * (height - 10)) / 3);
+ctx.lineTo(10 + (2 * (width - 10)) / 3, 0);
+ctx.stroke();
+
+ctx.fillStyle = "#00008060";
+ctx.fillRect(
+  5 + (width - 10) / 3 + 0.5,
+  5 + (2 * (height - 10)) / 3 + 0.5,
+  (width - 10) / 3 - 1,
+  (height - 10) / 3 - 1,
+);
+ctx.strokeStyle = "#000080";
+ctx.beginPath();
+ctx.moveTo((width - 10) / 3, height);
+ctx.lineTo(width / 2, 5 + (2.5 * (height - 10)) / 3);
+ctx.lineTo(10 + (2 * (width - 10)) / 3, height);
+ctx.stroke();
+```
+
+[Reddit wisdom](https://www.reddit.com/r/adventofcode/comments/zmcn64/2022_day_15_solutions/) (the smart ones, not the brute-force ones) claims that if we extend the edges of these diamonds, they must intersect around the uncovered point—four of them. But this is not true. Consider the following configuration:
+
+```js canvas width=400 height=400
+function drawDiamond(x, y, r, color) {
+  ctx.fillStyle = color;
+  for (let row = x - r; row <= x + r; row += 20) {
+    const width = r - Math.abs(row - x);
+    ctx.fillRect(row, y - width, 20, 2 * width + 20);
+  }
+}
+
+drawDiamond(260, 70, 100, "#80800080");
+drawDiamond(100, 110, 120, "#00800080");
+drawDiamond(300, 190, 120, "#80000080");
+drawDiamond(120, 210, 100, "#00008080");
+
+ctx.strokeStyle = "red";
+ctx.beginPath();
+// ctx.moveTo(110, 40);
+// ctx.lineTo(250, 180);
+ctx.moveTo(110, 240);
+ctx.lineTo(250, 100);
+// ctx.moveTo(310, 280);
+// ctx.lineTo(170, 140);
+ctx.moveTo(310, 80);
+ctx.lineTo(170, 220);
+ctx.stroke();
+```
+
+The blue and yellow diamonds' edges don't exactly go immediately around the uncovered point; rather, they are slightly farther away. But, there are still two conclusions we can draw: (1) we need at least 4 diamonds around the uncovered point (you can try to cover the neighbors with fewer, and (2) these diamonds' edges' lines must be no more than 4 cells away from each other. In the diagram above, the green and red diamonds' edges are 2 cells apart; the blue and yellow diamonds' edges are 4 cells apart.
+
+Given the $(x, y, r)$ of a diamond, because the diamond's equation is $|x - x_0| + |y - y_0| = r$, the lines of the four edges are just replacing the absolute value with positive or negative signs. We can find all such pairs of edges.
+
+```hs
+let circles = map parseLine $ tail input
+let edges =
+      concatMap
+        ( \(x1, y1, x2, y2) ->
+            let r = abs (x1 - x2) + abs (y1 - y2)
+              in [ (-1, x1 + y1 + r), -- y - y1 + x - x1 = r => y = -x + x1 + y1 + r
+                  (1, -x1 + y1 + r), -- y - y1 + x1 - x = r => y = x - x1 + y1 + r
+                  (1, -x1 + y1 - r), -- y1 - y + x - x1 = r => y = x - x1 + y1 - r
+                  (-1, x1 + y1 - r) -- y1 - y + x1 - x = r => y = -x + x1 + y1 - r
+                ]
+        )
+        circles ::
+        [(Int, Int)]
+let pairs = [(s1, c1, s2, c2) | (s1, c1) <- edges, (s2, c2) <- edges, s1 == s2 && c1 - c2 <= 4 && c1 - c2 > 0]
+```
+
+This isn't exactly fool proof, because an adversarial input could have several diamonds that are all 2 or 4 cells apart, but it turns out that the input is very nice! In this code, it turns out that there are exactly 2 pairs of edges that are both 2 cells apart—one with positive slope and one with negative slope. The intersection of these two lines is the uncovered point:
+
+$$
+x + c_1 = -x + c_2 \implies x = \frac{c_2 - c_1}{2}
+$$
+
+```hs
+let c1 = (\(_, c1, c1') -> (c1 + c1') `div` 2) $ fromJust $ find (\(s, _, _) -> s == 1) pairs
+let c2 = (\(_, c2, c2') -> (c2 + c2') `div` 2) $ fromJust $ find (\(s, _, _) -> s == -1) pairs
+let x = (c2 - c1) `div` 2
+let y = x + c1
+```
+
+This isn't a completely satisfying solution for me because I don't think it works on every input, but it works for mine. And hey—it now runs in 10ms!
+
+<Footer frontMatter={frontMatter} />

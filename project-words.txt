@@ -1,3 +1,5 @@
+accum
+aeson
 allowtransparency
 argmin
 aria-roledescription
@@ -30,9 +32,12 @@ defaultdict
 deque
 dialytika
 Diffie
+dirents
+disjointness
 dists
 dopplerhq
 dotless
+elems
 elif
 emboard
 endl
@@ -44,15 +49,18 @@ fianchetto
 flattenable
 fliplr
 flipud
+foldl
+foldr
+frozenset
 functools
 garcía
 getline
 ghcup
 graphviz
 hlint
+Hoare
 Holodeck
 Honkai
-Hoare
 huayu
 inds
 infty
@@ -75,6 +83,7 @@ mathbb
 mathcal
 mathit
 mathtt
+mathy
 matplotlib
 mdast
 mdxjs
@@ -83,8 +92,10 @@ metastring
 mmdc
 mult
 naclo
+naïvely
 neofetch
 networkx
+newtype
 noninteractive
 noreply
 nowrap
@@ -112,6 +123,8 @@ Rscript
 rustc
 rustup
 saturationl
+scanl
+scanr
 scikit
 scipy
 scrolly
@@ -125,6 +138,7 @@ statsmodels
 stoll
 struct
 subarrays
+subdirs
 subplayer
 surjectivity
 svgr
@@ -136,6 +150,7 @@ tqdm
 triaging
 tseslint
 uext
+unlines
 venv
 verdana
 vsrocq

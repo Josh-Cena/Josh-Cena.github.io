@@ -1,0 +1,140 @@
+---
+description: "Advent of Code 2022 - Day 21: Monkey Math. Written in Haskell."
+tags:
+  - Mathematics
+year: 2022
+day: 21
+---
+
+# AoC 2022 D21: Monkey Math
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+There are two kinds of monkeys: those that yell a number, and those that yell an expression. Therefore I parse the input as:
+
+```hs
+data Monkey = Const Int | Operation Text Text Text deriving (Show)
+```
+
+A `Const` monkey just returns a number, while an `Operation` monkey is `left op right`. Now I can recursively evaluate:
+
+```hs
+type EvalRes = Ratio Int
+
+evalMonkey :: Map Text Monkey -> Text -> EvalRes
+evalMonkey monkeys name = case monkeys Map.! name of
+  Const a -> fromIntegral a
+  Operation left op right ->
+    let leftVal = evalMonkey monkeys left
+        rightVal = evalMonkey monkeys right
+     in combineRes leftVal rightVal (T.unpack op)
+```
+
+Where `combineRes` just does the math:
+
+```hs
+combineRes :: EvalRes -> EvalRes -> String -> EvalRes
+combineRes a b "+" = a + b
+combineRes a b "-" = a - b
+combineRes a b "*" = a * b
+combineRes a b "/" = a / b
+combineRes _ _ op = error $ "Invalid operation " ++ op
+```
+
+## Part 2
+
+{/* cSpell:ignore humn pppw cczh sllz lgvd ljgn ptdq dvpt lfqf sjmn drzm hmdt zczc dbpl */}
+
+Now the value of `humn` is unknown, so basically we've turned a constant expression into a symbolic equation. For example, the example in part 1 looked like:
+
+```plain
+root (+)
+├── pppw (/)
+│   ├── cczh (+)
+│   │   ├── sllz (4)
+│   │   └── lgvd (*)
+│   │       ├── ljgn (2)
+│   │       └── ptdq (-)
+│   │           ├── humn (5)
+│   │           └── dvpt (3)
+│   └── lfqf (4)
+└── sjmn (*)
+    ├── drzm (-)
+    │   ├── hmdt (32)
+    │   └── zczc (2)
+    └── dbpl (5)
+```
+
+Which represents the equation:
+
+$$
+(4 + 2 * (5 - 3)) / 4 + (32 - 2) * 5
+$$
+
+Giving the answer of 152. Now with `humn` unknown, we have:
+
+$$
+(4 + 2 * (x - 3)) / 4 = (32 - 2) * 5
+$$
+
+And we need to solve for $x$. This is just a matter of simplifying both sides and then isolating $x$. To represent this equation, we need a new monkey type, `Unknown`, to stand in for `humn`:
+
+```hs
+data Monkey = Const Int | Unknown | Operation Text Text Text deriving (Show)
+```
+
+Now `EvalRes` is no longer just a number, but can also be an expression. I'm assuming that the expression is always linear in `humn`, so I represent it as `a * humn + b`:
+
+```hs
+type EvalRes = (Ratio Int, Ratio Int)
+
+evalMonkey :: Map Text Monkey -> Text -> EvalRes
+evalMonkey monkeys name = case monkeys Map.! name of
+  Const a -> (0, fromIntegral a)
+  Unknown -> (1, 0)
+  Operation left op right ->
+    let leftVal = evalMonkey monkeys left
+        rightVal = evalMonkey monkeys right
+     in combineRes leftVal rightVal (T.unpack op)
+```
+
+`combineRes` now handles the algebra of two linear expressions, but nothing more than that. This means that multiplication only works if one of the expressions is a constant, and division only works if the denominator is a constant.
+
+```hs
+combineRes :: EvalRes -> EvalRes -> String -> EvalRes
+combineRes (a1, b1) (a2, b2) "+" = (a1 + a2, b1 + b2)
+combineRes (a1, b1) (a2, b2) "-" = (a1 - a2, b1 - b2)
+combineRes (a1, b1) (0, b2) "*" = (a1 * b2, b1 * b2)
+combineRes (0, b1) (a2, b2) "*" = (a2 * b1, b2 * b1)
+combineRes (a1, b1) (0, b2) "/" = (a1 / b2, b1 / b2)
+combineRes _ _ op = error $ "Invalid operation " ++ op
+```
+
+Now we can evaluate the left and right sides of the equation, and then solve for `humn`. The simplified equation looks like:
+
+$$
+a_1x + b_1 = a_2x + b_2
+$$
+
+(Well, in reality, $x$ only appears on one side, but it doesn't hurt to be a bit more general.) The solution is just:
+
+$$
+x = \frac{b_2 - b_1}{a_1 - a_2}
+$$
+
+```hs
+let rootMonkey = monkeys Map.! T.pack "root"
+let (leftName, rightName) = case rootMonkey of
+      Operation left _ right -> (left, right)
+      _ -> error "root should be binary"
+let monkeys' = Map.insert (T.pack "humn") Unknown monkeys
+let (a1, b1) = evalMonkey monkeys' leftName
+let (a2, b2) = evalMonkey monkeys' rightName
+let humn = (b2 - b1) / (a1 - a2)
+```
+
+<Footer frontMatter={frontMatter} />

@@ -13,8 +13,6 @@ import { FrontMatter, Footer } from "../_components";
 
 <FrontMatter frontMatter={frontMatter} />
 
-## Parts 1 & 2
-
 Essentially, the question asks us to maintain a data structure containing "on" cuboids in 3D space, supporting addition and subtraction of cuboids. Part 1's constraints allow for a simple solution using a 3D array of voxels, but that won't scale to part 2.
 
 The most natural way of thinking is to have a list of non-overlapping "on" cuboids. The problem is that, for example, if we have a cuboid from (0, 0, 0) to (3, 3, 3), and we subtract a cuboid from (1, 1, 1) to (2, 2, 2), we end up with up to 6 new cuboids, one for each face of the hollow cuboid. Implementing this correctly is quite intractable.

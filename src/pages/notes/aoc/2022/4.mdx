@@ -1,0 +1,34 @@
+---
+description: "Advent of Code 2022 - Day 4: Camp Cleanup. Written in Haskell."
+tags:
+  - Data structures
+year: 2022
+day: 4
+---
+
+# AoC 2022 D4: Camp Cleanup
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Let the two ranges be $(a_1, b_1)$ and $(a_2, b_2)$. One range fully contains the other if and only if $a_1 \leq a_2$ and $b_1 \geq b_2$, or $a_2 \leq a_1$ and $b_2 \geq b_1$.
+
+```hs
+contain :: [(Int, Int)] -> Bool
+contain [(a1, b1), (a2, b2)] = (a1 <= a2 && b1 >= b2) || (a1 >= a2 && b1 <= b2)
+```
+
+`GHC.Utils.Misc` has a useful function `count`, so the answer is just `count contain lines`.
+
+## Part 2
+
+Two ranges $(a_1, b_1)$ and $(a_2, b_2)$ overlap if and only if they do not satisfy the condition $b_1 < a_2$ (range 1 is entirely less than 2) or $b_2 < a_1$ (range 2 is entirely less than 1). In other words, we need $b_1 \geq a_2$ and $b_2 \geq a_1$.
+
+```hs
+overlap [(a1, b1), (a2, b2)] = b1 >= a2 && b2 >= a1
+```
+
+<Footer frontMatter={frontMatter} />

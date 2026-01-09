@@ -1,0 +1,66 @@
+---
+description: "Advent of Code 2022 - Day 10: Cathode-Ray Tube. Written in Haskell."
+tags:
+  - VM
+  - Manual inspection
+year: 2022
+day: 10
+---
+
+# AoC 2022 D10: Cathode-Ray Tube
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I simulate the process of executing the instructions, keeping track of the current cycle and the value of the register `X`, putting all values of `X` at each cycle in a list. Then I can just sum the values at the specified cycles.
+
+When parsing the instructions, I represent each instruction as `(Int, Int)`, containing the execution time and the value to add to `X` (0 for `noop`).
+
+```hs
+parseCycles :: [Text] -> [(Int, Int)]
+parseCycles [] = []
+parseCycles (line : xs)
+  | line == T.pack "noop" = (1, 0) : parseCycles xs
+  | otherwise = (2, readT $ T.words line !! 1) : parseCycles xs
+```
+
+Then I fold over the list of the instructions. The state tracks three things: current cycle, value of `X` before the instruction, and the list of `X` values.
+
+```hs
+updateRegister :: ((Int, Int), [Int]) -> (Int, Int) -> ((Int, Int), [Int])
+updateRegister ((time, val), history) (dur, delta) = ((time', val'), history')
+  where
+    time' = time + dur
+    val' = val + delta
+    history' = replicate dur val ++ history
+```
+
+With the list of `X` values, finding the sum of the specified cycles is straightforward.
+
+## Part 2
+
+With the full list of `X` values, I can just iterate through them and print the appropriate character for each cycle (turns out that rendering a CRT is the same as printing to the console). For each `X` value, I check if the pixel corresponding to the cycle is within the sprite.
+
+```hs
+draw :: Int -> Int -> Char
+draw time spritePos = if isDrawn then '#' else ' '
+  where
+    pixel = time `mod` 40 - 1
+    isDrawn = pixel >= spritePos - 1 && pixel <= spritePos + 1
+```
+
+Once again, I appreciate the ASCII art produced:
+
+```plain
+###  #### #  # ####  ##    ##  ##  ###
+#  #    # #  # #    #  #    # #  # #  #
+#  #   #  #### ###  #       # #    ###
+###   #   #  # #    # ##    # #    #  ##
+# #  #    #  # #    #  # #  # #  # #  ##
+#  # #### #  # #     ###  ##   ##  ###
+```
+
+<Footer frontMatter={frontMatter} />

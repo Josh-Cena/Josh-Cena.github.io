@@ -23,8 +23,6 @@ std::vector<int> run_prog(std::vector<int> &codes, std::vector<int> inputs);
 
 It modifies the `codes` vector in place, and returns a vector of outputs. The inputs are provided as a vector as well, and consumed in order.
 
-## Parts 1 & 2
-
 - Input and output instructions are straightforward to implement. One reads from the input vector, and the other appends to the output vector.
 - Parameter modes require changing `codes[op1]` to `eval_param(codes, inst.params[0])` (ah yes, I also have a `struct Inst` that holds the opcode and parameters, each with mode/value, and a function to extract this information). `eval_param` just checks the mode and either returns the value at that position or the immediate value.
 - The main `for` loop doesn't increment by a fixed amount anymore; instead, each instruction in the `switch` statement specifies the new `i` value at the end.

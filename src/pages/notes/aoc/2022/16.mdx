@@ -1,0 +1,127 @@
+---
+description: "Advent of Code 2022 - Day 16: Proboscidea Volcanium. Written in Haskell."
+tags:
+  - BFS/DFS
+  - Dynamic programming
+year: 2022
+day: 16
+---
+
+# AoC 2022 D16: Proboscidea Volcanium
+
+{/* cSpell:ignore Proboscidea Volcanium */}
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+First, to dispel a few common misunderstandings:
+
+- Always going for the biggest valve first doesn't work. If the biggest is far away, you may waste too much time getting there.
+- Always going for the closest valve first doesn't work. Because the earlier you open a valve, the more reward it gives, you may want to open a bigger but slightly farther valve first.
+
+So we can't greedily choose the next valve to open. Instead, we need to consider all possible sequences of valves to open, and calculate the score for each sequence.
+
+Instead of using text labels to represent valves, I take the typical approach of mapping them to integers—more precisely, as 1-hot encodings so that we can represent sets of valves as bitmasks. This makes it easier to do all sorts of set operations later, like maintaining the set of opened valves, and for part 2, checking if the sets of valves opened by the two actors are disjoint.
+
+```hs
+newtype Node = Node Int deriving (Eq, Ord, Show)
+
+-- "AA" is the smallest node, so it's 1 << 0
+startNode :: Node
+startNode = Node 1
+
+newtype NodeSet = NodeSet Int deriving (Eq, Ord, Show)
+
+singleton :: Node -> NodeSet
+singleton (Node n) = NodeSet n
+
+insert :: Node -> NodeSet -> NodeSet
+insert (Node n) (NodeSet s) = NodeSet (s .|. n)
+
+notMember :: Node -> NodeSet -> Bool
+notMember (Node n) (NodeSet s) = (s .&. n) == 0
+
+disjoint :: NodeSet -> NodeSet -> Bool
+disjoint (NodeSet s1) (NodeSet s2) = (s1 .&. s2) == 0
+```
+
+Most of the broken valves (except the starting point) can be ignored, since they don't contribute to the score. Our graph should only contain the working valves. More precisely, we need to know the distance between each pair of valves, so we can quickly calculate how much time it takes to get from one valve to another. When we do the planning, we need to quickly move to the next valve to open—we don't want to waste time jumping through intermediate valves that we don't actually do anything with.
+
+```hs
+distance :: Map Node (Int, [Node]) -> Node -> Map Node Int
+distance graph start =
+  go Map.empty (singletonNode start) (Seq.singleton (start, 0))
+  where
+    go dist _ Seq.Empty = dist
+    go dist visited ((node, d) Seq.:<| queue) =
+      let (flow, neighbors) = second (filter (not . (`memberNode` visited))) $ graph Map.! node
+          dist' = if flow > 0 then Map.insert node d dist else dist
+          visited' = foldr insertNode visited neighbors
+          queue' = queue Seq.>< Seq.fromList (map (,d + 1) neighbors)
+       in go dist' visited' queue'
+```
+
+The `reduceGraph` function takes the original graph and produces a new graph that only contains the working valves, and the distances between them. This is the graph we will use for planning.
+
+```hs
+reduceGraph :: Map Text (Int, [Text]) -> Map Node (Int, Map Node Int)
+reduceGraph fullGraph =
+  encodedGraph
+    & Map.filterWithKey (\k (f, _) -> k == startNode || f > 0)
+    & Map.mapWithKey (\k (f, _) -> (f, distance encodedGraph k))
+  where
+    nodeMap = Map.fromList $ zip (Map.keys fullGraph) [Node (1 `shiftL` i) | i <- [0 ..]]
+    toNode k = nodeMap Map.! k
+    encodedGraph = Map.map (second (map toNode)) fullGraph & Map.mapKeys toNode
+```
+
+As for the actual optimization, I took a DFS approach. (Dijkstra should have worked here, but it would make part 2 much trickier.) My goal is to calculate _every single combination_ of valves that can be opened within the time limit, and the score for each combination. The state of the search contains: the current node, the time left, the set of opened valves, and the total score so far. Each time when starting at a state, the valve is considered open (it has been added to the open set), but the score has not been added yet. We first compute the score for the current state. Then we try to move to each of the neighboring valves, which takes time `distance + 1` (1 minute to open the valve). It's only a valid state to move to if:
+
+1. The valve is not already open.
+2. The time left is greater than the time it takes to get there and open it. (If the time is up just as we open it, then the score is 0 anyway.)
+
+Note that I still explore subsequent states even if the currently opened valve set has been seen before with a higher reward. This is because my memo doesn't contain the time left or the current node, so it's possible that the more-reward path actually spent more time and would be eventually worse. (I tried pruning and it still worked, but I cannot prove its safety.)
+
+```hs
+allPaths :: Map Node (Int, Map Node Int) -> Int -> Map NodeSet Int
+allPaths graph time = go [(startNode, time, NodeSet 0, 0)] Map.empty
+  where
+    go :: [(Node, Int, NodeSet, Int)] -> Map NodeSet Int -> Map NodeSet Int
+    go [] rewards = rewards
+    go ((current, timeLeft, opened, prevReward) : rest) rewards =
+      let (flow, neighbors) = graph Map.! current
+          reward = prevReward + flow * timeLeft
+          rewards' = Map.insertWith max opened reward rewards
+          nextStates =
+            [ (tgt, timeAfter, insert tgt opened, reward)
+              | (tgt, dist) <- Map.toList neighbors,
+                notMember tgt opened,
+                let timeAfter = timeLeft - dist - 1,
+                timeAfter > 0
+            ]
+       in go (nextStates ++ rest) rewards'
+```
+
+The return value of `allPaths` can be read as "if the actor is to open these valves within `time`, the highest possible score is this". Part 1 is just to find the maximum reward among all paths.
+
+## Part 2
+
+The key observation is that the two actors' paths are independent, except for the fact that they cannot open the same valve. So with `allPaths`, we just need to find a pair of disjoint valve sets with the highest total score. In part 1, I was careful not to implement much pruning for `allPaths`, which turns out to be useful for part 2. In particular, the paths we collected allow the actor to stop and do nothing, even if there are still valves that can be opened. This avoids the case where one actor greedily maximizes their score, forcing the other actor into more inferior paths.
+
+Technically, finding the best pair of disjoint valve sets can be done with SOS DP by memoizing the best score for each valve subset (the actual set opened by the actor may be a further subset of that subset). Then for each opened set of actor 1, look up `dp[complement]` for actor 2. This would take $\mathcal{O}(n + k\cdot 2^k)$ time where $n$ is the number of paths (~4000) and $k$ is the number of valves (16). However, since $n$ isn't too large, I just used a $\mathcal{O}(n^2)$ brute-force approach. 16,000,000 pairs is still manageable, especially because my bitset operations are fast with disjointness checks.
+
+```hs
+maximum
+  [ r1 + r2
+    | (s1, r1) <- Map.toList paths,
+      (s2, r2) <- Map.toList paths,
+      disjoint s1 s2
+  ]
+```
+
+The performance is very satisfactory: a mere 270ms, which is merely 100ms more than part 1.
+
+<Footer frontMatter={frontMatter} />

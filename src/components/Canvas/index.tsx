@@ -27,14 +27,18 @@ export default function Canvas({
     canvas.width = width * devicePixelRatio;
     canvas.height = height * devicePixelRatio;
     ctx.scale(devicePixelRatio, devicePixelRatio);
-    code(
-      ctx,
-      width,
-      height,
-      getComputedStyle(document.documentElement).getPropertyValue(
-        "--color-text",
-      ),
-    );
+    const textColor = getComputedStyle(
+      document.documentElement,
+    ).getPropertyValue("--color-text");
+    ctx.strokeStyle = textColor;
+    ctx.fillStyle = textColor;
+    try {
+      code(ctx, width, height, textColor);
+    } catch (e) {
+      ctx.fillStyle = "red";
+      ctx.font = "16px sans-serif";
+      ctx.fillText(`Error: ${(e as Error).message}`, 10, 30);
+    }
     return () => ctx.reset();
   }, [code, width, height, colorMode]);
   return (

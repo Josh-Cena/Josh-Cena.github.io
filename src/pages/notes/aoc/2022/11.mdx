@@ -1,0 +1,66 @@
+---
+description: "Advent of Code 2022 - Day 11: Monkey in the Middle. Written in Haskell."
+tags:
+  - Modular arithmetic
+year: 2022
+day: 11
+---
+
+# AoC 2022 D11: Monkey in the Middle
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+Part 1 is straightforward to simulate, and has the exact same idea as part 2 anyway, so I describe my part 2 solution here. Because the numbers get large, we need a way to keep them manageable. The key observation is that we don't care about the actual numbers: all tests are testing divisibility, so only the remainders matter. If for monkeys $1..n$, we have divisors $d_1, d_2, \ldots, d_n$, then keeping track of the remainder modulo $D = \prod_{i=1}^n d_i$ is sufficient to determine the outcome of all tests. (To be fully robust we should probably use `lcm` instead of multiplication, but it turned out that all $d_i$ are prime numbers.) Because modular arithmetic is closed under addition and multiplication, nothing else changes.
+
+I parse the monkeys into the following record type:
+
+```hs
+data Monkey = Monkey
+  { items :: [Int],
+    operation :: Int -> Int,
+    test :: Int,
+    target1 :: Int,
+    target2 :: Int,
+    inspectTimes :: Int
+  }
+```
+
+(`old * old` is represented as `(^ 2)`; all other operations are either addition or multiplication by a constant.)
+
+The main function just calls the `passAround` function, which runs the given number of rounds. The `reducer` is used to _reduce_ the worry level after each inspection, which is ```div` relief `mod` divisor``. In part 1, `relief` is 3, and in part 2, `relief` is 1. Each time we fold over the monkeys and update the `monkeys` map by passing items around, as in `monkeyDoRound`.
+
+```hs
+passAround :: Int -> Int -> Map Int Monkey -> Map Int Monkey
+passAround rounds relief monkeys = foldr ($) monkeys $ replicate rounds $ doRound (relief, divisor)
+  where
+    divisor = Map.foldr ((*) . test) 1 monkeys
+    doRound reducer monkeys = foldl' (monkeyDoRound reducer) monkeys (Map.keys monkeys)
+```
+
+In `monkeyDoRound`, the items get emptied and appended to the target monkeys' item lists. The `inspectTimes` is incremented by the number of items inspected.
+
+```hs
+monkeyDoRound :: (Int, Int) -> Map Int Monkey -> Int -> Map Int Monkey
+monkeyDoRound reducer monkeys k = updateSelf $ foldr throwToTarget monkeys targets
+  where
+    monkey = monkeys Map.! k
+    targets = map (monkeyInspect monkey reducer) $ items monkey
+    updateSelf = Map.adjust (\m -> m {items = [], inspectTimes = inspectTimes m + length targets}) k
+    throwToTarget (target, item) = Map.adjust (\m -> m {items = item : items m}) target
+```
+
+The target determination is done by the `monkeyInspect` function, which applies the operation, reduces the worry level, and checks the test condition.
+
+```hs
+monkeyInspect :: Monkey -> (Int, Int) -> Int -> (Int, Int)
+monkeyInspect (Monkey {operation, test, target1, target2}) (relief, divisor) item = (target, item')
+  where
+    item' = operation item `div` relief `mod` divisor
+    target = if item' `mod` test == 0 then target1 else target2
+```
+
+Other than the modular arithmetic, everything else is straightforward simulation, which is _slightly_ awkward in Haskell, but not too bad.
+
+<Footer frontMatter={frontMatter} />

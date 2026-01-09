@@ -80,7 +80,7 @@ export default function CodeBlock({
             </pre>
           )}
         </Highlight>
-        {language && !["plain"].includes(language) && (
+        {language && !["plain", "text"].includes(language) && (
           <span className={styles.language}>{language}</span>
         )}
         <CopyButton className={styles.copyButton} string={code} />

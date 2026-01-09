@@ -12,8 +12,6 @@ import { FrontMatter, Footer } from "../_components";
 
 <FrontMatter frontMatter={frontMatter} />
 
-## Parts 1 & 2
-
 - To add support for relative mode, the `relative_base` is added to the `Program` class. Because `eval_param` and `write_to` now relies on two states: the memory and the relative base, I just make them member functions so they can directly access on `this`. Some other things are also incorporated into the class.
 - All memory values are now `long long` instead of `int`.
 - The memory is now a `map<long long, long long>` instead of a `vector<long long>`, so that the memory can be indexed at arbitrary addresses without greatly growing its physical size.

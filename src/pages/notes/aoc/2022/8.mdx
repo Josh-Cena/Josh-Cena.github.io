@@ -1,0 +1,70 @@
+---
+description: "Advent of Code 2022 - Day 8: Treetop Tree House. Written in Haskell."
+tags:
+  - Memoization
+year: 2022
+day: 8
+---
+
+# AoC 2022 D8: Treetop Tree House
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+If the grid's side length is $n$, then there are $4n$ directions to check for visibility. We scan along each direction and count visible trees. To determine the visibility, we need to check all trees before it and see if they are all shorter than the current one—i.e., compare the maximum height of the trees before it. The maximum can be tracked as we scan, so there's no need to scan backwards again.
+
+$$
+\begin{aligned}
+\mathit{prevMax}(i, j) &= \begin{cases}-1&\text{if } j = 0\\\max(\mathit{prevMax}(i, j - 1), \mathit{grid}[i][j-1])&\text{otherwise}\end{cases}\\
+\mathit{visibleFromLeft}(i, j) &= \mathit{grid}[i][j] > \mathit{prevMax}(i, j)
+\end{aligned}
+$$
+
+So `prevMax` is an accumulator and we store `visibleFromLeft` for each tree. These two can be done at the same time with `mapAccumL` and `mapAccumR`.
+
+```hs
+scanner :: Int -> Int -> (Int, Bool)
+scanner prevMax height = (max prevMax height, height > prevMax)
+
+leftVisible :: [Int] -> [Bool]
+leftVisible = snd . mapAccumL scanner (-1)
+
+rightVisible :: [Int] -> [Bool]
+rightVisible = snd . mapAccumR scanner (-1)
+```
+
+I apply this to each row and column (by transposing the grid) and use `zipWith` to combine each cell with `||`. Finally I can count the number of `True` values.
+
+## Part 2
+
+This time, we are not _counting_ visible trees, just finding the distance to the first tree that is taller or equal in height. This can be done with a similar approach, but instead of tracking the maximum height, we track the distance to the last tree of each height.
+
+$$
+\begin{aligned}
+\mathit{lastIndex}(i, j, h) &= \begin{cases}0&\text{if } j = 0\\j - 1&\text{if } \mathit{grid}[i][j-1] = h\\\mathit{lastIndex}(i, j - 1, h)&\text{otherwise}\end{cases}\\
+\mathit{distanceToLeft}(i, j) &= \min_{h \geq \mathit{grid}[i][j]} (j - \mathit{lastIndex}(i, j, h))
+\end{aligned}
+$$
+
+We can still treat `lastIndex` as an accumulator, but instead of a single value, we now need to memorize one value per $h$. I use `Data.IntMap` for this.
+
+```hs
+scanner2 :: IntMap Int -> (Int, Int) -> (IntMap Int, Int)
+scanner2 lastIndex (j, height) = (lastIndex', minimum distances)
+  where
+    distances = [j - fromMaybe 0 (IntMap.lookup h lastIndex) | h <- [height .. 9]]
+    lastIndex' = IntMap.insert height j lastIndex
+
+leftDistances :: [Int] -> [Int]
+leftDistances = snd . mapAccumL scanner2 IntMap.empty . zip [0 ..]
+
+rightDistances :: [Int] -> [Int]
+rightDistances xs = snd $ mapAccumR scanner2 IntMap.empty $ zip [(length xs - 1), (length xs - 2) .. 0] xs
+```
+
+Again, we apply these two functions to each row and column and combine the results with `zipWith` (this time multiplying them). Finally I can find the maximum value.
+
+<Footer frontMatter={frontMatter} />

@@ -1,0 +1,51 @@
+---
+description: "Advent of Code 2022 - Day 5: Supply Stacks. Written in Haskell."
+tags:
+  - Data structures
+year: 2022
+day: 5
+---
+
+# AoC 2022 D5: Supply Stacks
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I parse the input to a `([[Char]], [(Int, Int, Int)])`, which is the list of stacks and the list of moves. Since Haskell lists are singly linked lists, pushing and popping from the front is efficient.
+
+Each time a move is made, the stacks are reconstructed as five parts:
+
+```plain
+...before..  col1  ..middle..  col2  ..after..
+```
+
+Where `col1` and `col2` are modified while the other parts stay the same. `col1` and `col2` are not necessarily `from` and `to` though; that depends on which one is on the left. The two columns are modified according to the move, and then everything is concatenated back together. Instead of actually popping and pushing one at a time, I `take` the required number of crates and prepend them to the other column reversed. The time of `++` is proportional to the length of the left list, so it's at least as efficient as popping and pushing one at a time.
+
+```hs
+makeMove :: [[Char]] -> (Int, Int, Int) -> [[Char]]
+makeMove columns (cnt, from, to) = before ++ col1' : middle ++ col2' : after
+  where
+    (before, col1 : rest) = splitAt (min from to - 1) columns
+    (middle, col2 : after) = splitAt (abs (from - to) - 1) rest
+    col1' = if from < to then drop cnt col1 else reverse (take cnt col2) ++ col1
+    col2' = if from > to then drop cnt col2 else reverse (take cnt col1) ++ col2
+```
+
+## Part 2
+
+Turns out that `makeMove` is almost exactly the same, except that the crates are not reversed when being prepended to the other column. I pass a `process` function specifying how to handle the crates being moved.
+
+```hs
+makeMove :: ([Char] -> [Char]) -> [[Char]] -> (Int, Int, Int) -> [[Char]]
+makeMove process columns (cnt, from, to) = before ++ col1' : middle ++ col2' : after
+  where
+    (before, col1 : rest) = splitAt (min from to - 1) columns
+    (middle, col2 : after) = splitAt (abs (from - to) - 1) rest
+    col1' = if from < to then drop cnt col1 else process (take cnt col2) ++ col1
+    col2' = if from > to then drop cnt col2 else process (take cnt col1) ++ col2
+```
+
+<Footer frontMatter={frontMatter} />
