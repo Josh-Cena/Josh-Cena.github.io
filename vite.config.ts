@@ -8,7 +8,7 @@ import remarkMath from "remark-math";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMDXFrontmatter from "remark-mdx-frontmatter";
 import rehypeKatex from "rehype-katex";
-import transformMarkdown from "./server/markdown/remark-plugin-transform-markdown.js";
+import transformMarkdown from "./server/markdown/remark-plugin-transform-markdown.ts";
 
 export default defineConfig({
   plugins: [

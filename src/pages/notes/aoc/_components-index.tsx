@@ -69,7 +69,7 @@ export function Table(): JSX.Element {
                     {" | "}
                     <Link href={sourceLink}>Src</Link>
                     {" | "}
-                    <Link href={`/notes/aoc/${year}/${day}`}>Notes</Link>
+                    <Link href={`/notes/aoc/${year}/${day}/`}>Notes</Link>
                   </td>
                   <td>
                     {frontMatter.tags.map((t) => (

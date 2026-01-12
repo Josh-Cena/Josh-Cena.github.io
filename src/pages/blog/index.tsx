@@ -1,5 +1,6 @@
 import Link from "@/components/Link";
 import PostData, { type FrontMatter } from "@/components/PostData";
+import { normalizeRoute } from "@/normalize-route";
 import styles from "./index.module.css";
 
 const modules = import.meta.glob<true, string, FrontMatter>("./**/*.mdx", {
@@ -17,12 +18,7 @@ const posts = Object.entries(modules)
   )
   .map(([path, frontMatter]) => (
     <section key={path}>
-      <Link
-        href={/\.\/(?<name>.*)\.mdx$/u
-          .exec(path)!
-          .groups!.name!.toLowerCase()
-          .replace(/\d{4}-\d{2}-\d{2}-/u, "")
-          .replace(/index$/u, "")}>
+      <Link href={normalizeRoute(`blog/${path}`)}>
         <h2>{frontMatter.title}</h2>
       </Link>
       <PostData frontMatter={frontMatter} />

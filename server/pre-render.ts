@@ -3,7 +3,7 @@ import Path from "node:path";
 import { fileURLToPath } from "node:url";
 import { glob } from "glob";
 import { SitemapStream, streamToPromise } from "sitemap";
-import { normalizeRoute } from "@/normalize-route.js";
+import { normalizeRoute } from "@/normalize-route.ts";
 import type { SSRContextValue } from "@/context/SSRContext";
 
 const __dirname = Path.dirname(fileURLToPath(import.meta.url));

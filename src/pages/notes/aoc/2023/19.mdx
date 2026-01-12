@@ -118,4 +118,4 @@ This generates a list of paths, such as:
 [1] "s>3448" "s>2770" "s>1350"
 ```
 
-Now we just need to find the union of these regions. This is similar to [2021 day 22](/notes/aoc/2021/22): each path corresponds to a cuboid in 4D space (bounded by $[0, 4000]^4$), and we want to find the volume of the union of these cuboids. We can use the same approach as in that problem: maintain a list of "on" and "off" cuboids, and for each new cuboid, add it to the list and add the intersection with each existing cuboid with the opposite sign.
+Now we just need to find the union of these regions. This is similar to [2021 day 22](../2021/22.mdx): each path corresponds to a cuboid in 4D space (bounded by $[0, 4000]^4$), and we want to find the volume of the union of these cuboids. We can use the same approach as in that problem: maintain a list of "on" and "off" cuboids, and for each new cuboid, add it to the list and add the intersection with each existing cuboid with the opposite sign.

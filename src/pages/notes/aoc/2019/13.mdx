@@ -23,7 +23,7 @@ for (int i = 2; i < outputs.size(); i += 3) {
 
 ## Part 2
 
-Now, building on [day 11](/notes/aoc/2019/11), the Intcode program is interactive but produces _many_ outputs at a time, so we cannot use a fixed number of `run_until_output()` calls. Instead, I added a `run_until_input()` method that runs until an input is needed, at which point we are certain that all outputs have been produced.
+Now, building on [day 11](./11.mdx), the Intcode program is interactive but produces _many_ outputs at a time, so we cannot use a fixed number of `run_until_output()` calls. Instead, I added a `run_until_input()` method that runs until an input is needed, at which point we are certain that all outputs have been produced.
 
 Initially, I thought about just playing the game myself, but it turned out to be a quite tedious process. [Reddit wisdom](https://www.reddit.com/r/adventofcode/comments/e9zgse/2019_day_13_solutions/) suggested two ways: (1) always move the paddle towards the ball, or (2) hack the memory to replace the paddle's row with walls. I implemented (1) since it felt more satisfying.
 

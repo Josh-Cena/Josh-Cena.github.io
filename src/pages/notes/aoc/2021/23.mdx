@@ -9,7 +9,7 @@ While this problem doesn't look graph-y on the surface, essentially we have a st
 
 The first tricky part might be parsing the input. I represented the state as `{ rooms: number[][], hallway: (number | undefined)[] }`, where `rooms[i]` is the stack of amphipods in room `i` (`rooms[i][0]` is the one closest to the hallway), and `hallway[j]` is the amphipod (or `undefined` if empty) at hallway position `j`. Amphipods are represented as numbers 0-3.
 
-I already have template code from [day 15](/notes/aoc/2021/15), which translates directly:
+I already have template code from [day 15](./15.mdx), which translates directly:
 
 ```ts
 function move(

@@ -6,7 +6,7 @@ tags:
 
 # Amplification Circuit
 
-This time we are introducing stateful programs, where each one needs to be paused and resumed (especially for part 2). So instead of my functional `run_prog` from [day 5](/notes/aoc/2019/5), I wrapped it into a class:
+This time we are introducing stateful programs, where each one needs to be paused and resumed (especially for part 2). So instead of my functional `run_prog` from [day 5](./5.mdx), I wrapped it into a class:
 
 ```cpp
 class Program {
@@ -24,7 +24,7 @@ public:
 };
 ```
 
-Now the execution state (instruction pointer, input/output queues, halted flag) is stored in the object. The program can be paused when an output is produced (`run_until_output()`), or run to completion (`run()`). When paused, the outputs can be popped and inputs can be sent in. I have to expose the memory (`codes`) because the caller sometimes needs to read from it (e.g., [day 2](/notes/aoc/2019/2) when there was no output) or modify it (e.g., setting flags).
+Now the execution state (instruction pointer, input/output queues, halted flag) is stored in the object. The program can be paused when an output is produced (`run_until_output()`), or run to completion (`run()`). When paused, the outputs can be popped and inputs can be sent in. I have to expose the memory (`codes`) because the caller sometimes needs to read from it (e.g., [day 2](./2.mdx) when there was no output) or modify it (e.g., setting flags).
 
 ## Part 1
 

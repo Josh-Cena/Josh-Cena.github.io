@@ -1,3 +1,4 @@
+import Path from "node:path";
 import type { Plugin } from "unified";
 import type {
   Root,
@@ -6,6 +7,7 @@ import type {
   Image,
   RootContent,
   Code,
+  Link,
   PhrasingContent,
 } from "mdast";
 import type { Nodes } from "hast";
@@ -14,6 +16,8 @@ import { visit } from "unist-util-visit";
 import * as Acorn from "acorn";
 import Yaml from "yaml";
 import type { Program } from "estree";
+
+import { normalizeRoute } from "../../src/normalize-route.ts";
 
 function createImportDeclaration(
   localName: string,
@@ -78,7 +82,9 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
   const title = children[firstHeading]!;
   let titleText = toText(title as Nodes);
   if (/notes\/aoc\/\d{4}\/\d/u.test(vFile.path)) {
-    const { year, day } = /notes\/aoc\/(?<year>\d{4})\/(?<day>\d{1,2})/u.exec(vFile.path)!.groups! as {
+    const { year, day } = /notes\/aoc\/(?<year>\d{4})\/(?<day>\d{1,2})/u.exec(
+      vFile.path,
+    )!.groups! as {
       year: `${number}`;
       day: `${number}`;
     };
@@ -150,6 +156,12 @@ day: ${day}`;
         { name: "alt", value: `"${node.alt ?? ""}"` },
       ]),
     );
+  });
+  visit(ast, "link", (node: Link) => {
+    if (!node.url.startsWith(".")) return;
+    const fullPath = Path.join(vFile.dirname ?? "", node.url);
+    const pagesRelative = fullPath.replace(/^.*src\/pages\//u, "");
+    node.url = normalizeRoute(pagesRelative);
   });
   let usesMermaid = false as boolean;
   let usesCanvas = false as boolean;

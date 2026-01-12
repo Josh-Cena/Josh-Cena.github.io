@@ -13,17 +13,17 @@ type LinkConfig = {
 };
 
 const links: LinkConfig[] = [
-  { name: "About", path: "/about" },
+  { name: "About", path: "/about/" },
   {
     name: "Tools",
-    path: "/tools",
+    path: "/tools/",
     children: [
-      { name: "Color converter", path: "/tools/color-converter" },
-      { name: "Keyboard visualizer", path: "/tools/keyboard-visualizer" },
-      { name: "Star Rail damage calculator", path: "/tools/starrail-damage" },
+      { name: "Color converter", path: "/tools/color-converter/" },
+      { name: "Keyboard visualizer", path: "/tools/keyboard-visualizer/" },
+      { name: "Star Rail damage calculator", path: "/tools/starrail-damage/" },
     ],
   },
-  { name: "Blog", path: "/blog" },
+  { name: "Blog", path: "/blog/" },
 ];
 
 function NavbarLink({ name, path, children }: LinkConfig) {

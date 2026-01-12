@@ -61,7 +61,7 @@ move board wraparound st stepsStr = moveSteps board wraparound st $ read stepsSt
 
 ## Part 2
 
-OK, this turned out to be really intractable. I had to hardcode the wraparound rules for my input, because I have no idea how to do cube construction generically. I can't even figure out how to do it theoretically for my input; I had to actually get a piece of paper and fold it myself. Like [2020 day 20](/notes/aoc/2020/20), I represent each edge of each shape as one of T, L, B, R, and then represent wraparound as edge adjacency of the form `(A, R) <-> (D, R')`.
+OK, this turned out to be really intractable. I had to hardcode the wraparound rules for my input, because I have no idea how to do cube construction generically. I can't even figure out how to do it theoretically for my input; I had to actually get a piece of paper and fold it myself. Like [2020 day 20](../2020/20.mdx), I represent each edge of each shape as one of T, L, B, R, and then represent wraparound as edge adjacency of the form `(A, R) <-> (D, R')`.
 
 ```js canvas width=350 height=400
 const fw = 80;

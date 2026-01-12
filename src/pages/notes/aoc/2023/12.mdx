@@ -7,7 +7,7 @@ tags:
 
 Because we are making a series of decisions (do I fill the `?` with `#` or `.`?) and each one determines what decisions we can make next (in order to satisfy the arrangement given), this strongly suggests dynamic programming.
 
-We iterate through each spring in the condition records and build groups one by one. The state consists of the current group's index $j$ ($1\le j\le m$, $m$ is the number of groups) and size $s$ ($0\le s\le \max(\text{arrangements})$). $s=0$ indicates an "idle" state, i.e., not actively adding springs to the current group. We count how many ways there are to reach each state (see [2021 day 6](/notes/aoc/2021/6)).
+We iterate through each spring in the condition records and build groups one by one. The state consists of the current group's index $j$ ($1\le j\le m$, $m$ is the number of groups) and size $s$ ($0\le s\le \max(\text{arrangements})$). $s=0$ indicates an "idle" state, i.e., not actively adding springs to the current group. We count how many ways there are to reach each state (see [2021 day 6](../2021/6.mdx)).
 
 Initially we start at state $j=1, s=0$ (want to construct the first group, but no springs added yet). Because in R indices start at 1, all indices into `dp` are shifted by 1, so `1, 1` corresponds to $j=1, s=0$.
 

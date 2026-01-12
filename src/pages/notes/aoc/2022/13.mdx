@@ -31,7 +31,7 @@ instance Ord TreeNode where
 
 (This shows how convenient Haskell type classes are: once we have `compare`, the type is automatically endowed with all the other comparison operators.)
 
-This input reminds me of [2021 day 18](/notes/aoc/2021/18), where we also had to parse a nested list structure. The difference is that this time I am using Haskell, and I do want strong types, so no `Data.Aeson`; manual parsing it is.
+This input reminds me of [2021 day 18](../2021/18.mdx), where we also had to parse a nested list structure. The difference is that this time I am using Haskell, and I do want strong types, so no `Data.Aeson`; manual parsing it is.
 
 I do parsing the old school way: tokenize, then recursively parse. Tokens are just brackets and numbers (commas and whitespace are ignored):
 

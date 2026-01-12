@@ -30,7 +30,7 @@ This encoding turns this problem back into a grid problem, where we can use a se
 
 ## Part 2
 
-[Yet](/notes/aoc/2019/24) [another](//notes/aoc/2020/11) [cellular automaton](/notes/aoc/2020/17). The only twist is that the grid is hexagonal instead of square, but that just requires tweaks to the neighbor calculation. Again, the template remains unchanged:
+[Yet](../2019/24.mdx) [another](./11.mdx) [cellular automaton](./17.mdx). The only twist is that the grid is hexagonal instead of square, but that just requires tweaks to the neighbor calculation. Again, the template remains unchanged:
 
 ```python
 def evolve(active: set[Point], get_neighbors: Callable[[Point], list[Point]]) -> set[Point]:

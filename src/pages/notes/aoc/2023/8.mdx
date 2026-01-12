@@ -43,7 +43,7 @@ I upgrade `cur` from a single string to a vector of strings that start with `A`:
 cur <- row.names(map)[grepl("A$", row.names(map))]
 ```
 
-Theoretically, I can run the same loop, until all the strings start with `Z`. This turned out to never finish though. The next observation is that the ghosts are all independent, so I can find the period of each ghost and then find the least common multiple of all the periods, similar to [2019 day 12](/notes/aoc/2019/12).
+Theoretically, I can run the same loop, until all the strings start with `Z`. This turned out to never finish though. The next observation is that the ghosts are all independent, so I can find the period of each ghost and then find the least common multiple of all the periods, similar to [2019 day 12](../2019/12.mdx).
 
 But period finding is a bit complicated here. I can know when the ghost first gets to an end point, but: (a) it may be in the middle of the instruction list, so the state does not perfectly repeat afterwards (b) it may not take the same steps back to the starting point (c) it may reach multiple end points in one circle, yada yada, so I was very afraid with any solution. But it turned out that the most naïve version works: just record the first time $t$ each ghost reaches an end point, and then assume it always reaches that end point at $kt$, and no other end points:
 

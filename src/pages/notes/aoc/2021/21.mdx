@@ -73,7 +73,7 @@ const totalRolls = die.return(-1).value;
 
 ## Part 2
 
-Part 2 required a different approach entirely. It is somewhat like [day 6](/notes/aoc/2021/6) and [day 14](/notes/aoc/2021/14) in that we have many copies of the identical state which propagate the same way, so we just need to put them into bins and count how many are in each bin. The state here is the positions and scores of both players, as a 4D array:
+Part 2 required a different approach entirely. It is somewhat like [day 6](./6.mdx) and [day 14](./14.mdx) in that we have many copies of the identical state which propagate the same way, so we just need to put them into bins and count how many are in each bin. The state here is the positions and scores of both players, as a 4D array:
 
 ```ts
 let states = Array.from({ length: 11 }, () =>

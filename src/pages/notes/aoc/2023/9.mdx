@@ -7,7 +7,7 @@ tags:
 
 ## Part 1
 
-It seems that every year there's always a problem where I cheat; for example [2020 day 18](/notes/aoc/2020/18) is done with Python's built-in `ast` module. For this one, we are just fitting the data to a polynomial, so I just use `lm`. Language choice rewards solutions :)
+It seems that every year there's always a problem where I cheat; for example [2020 day 18](../2020/18.mdx) is done with Python's built-in `ast` module. For this one, we are just fitting the data to a polynomial, so I just use `lm`. Language choice rewards solutions :)
 
 For why this is a polynomial fitting problem, realize that every time we compute the neighbor differences, we are essentially differentiating it because the resulting array is $\frac{\Delta y}{\Delta x}$ where $\Delta x$ is always 1. We repeatedly differentiate until we get all zeros, which means the function becomes constant after a certain number of differentiations, which means it's a polynomial of degree equal to the number of differentiations minus one.
 
