@@ -10,10 +10,6 @@ day: 12
 
 {/* cSpell:ignore Pathing */}
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 We can execute a naïve recurrence:
@@ -48,5 +44,3 @@ $$
 $$
 
 Now, the first time we encounter $c \text{ is small and } c \in V$, we only set $a$ to false and continue, without instantly invalidating the path. All other cases remain the same. The final answer is $\mathit{paths}(\text{start}, \varnothing, \text{TRUE})$. Part 1 can also be subsumed into this, as $\mathit{paths}(\text{start}, \varnothing, \text{FALSE})$.
-
-<Footer frontMatter={frontMatter} />

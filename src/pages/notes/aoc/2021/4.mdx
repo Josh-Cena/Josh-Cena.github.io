@@ -8,10 +8,6 @@ day: 4
 
 # AoC 2021 D4: Giant Squid
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The main problems to solve are: (1) where is the number on the board? (2) how to check for a win? (3) how to count the total score? A nice observation is that we don't need a physical 2D array for any of these tasks. For task 1, we can use a `Map<number, [row: number, col: number]>` to look up the position of a number; a 2D array would take 25 lookups. For task 2, we can track the number of marked numbers in each row and column. For each marked number, we increment the corresponding row and column counters; if any of them reaches 5, we have a win. For task 3, we can maintain a running total of unmarked numbers, which starts as the sum of the board; when we mark a number, we subtract it from the total.
@@ -73,5 +69,3 @@ The answer to part 1 is `scores[0]`, score for the first winning board.
 ## Part 2
 
 The answer to part 2 is `scores[scores.length - 1]`, score for the last winning board.
-
-<Footer frontMatter={frontMatter} />

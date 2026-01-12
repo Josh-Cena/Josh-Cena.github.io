@@ -9,10 +9,6 @@ day: 7
 
 # AoC 2023 D7: Camel Cards
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I have to complain: every day, my struggle starts with parsing the input 😅
@@ -95,5 +91,3 @@ data$type <- sapply(data$hand, function(hand) {
 ```
 
 (Note that `length(card_counts)` may be `0` if the hand is all jokers, but that's fine because the `hand_type()` function will just check `max_count` and return `five of a kind` in that case.)
-
-<Footer frontMatter={frontMatter} />

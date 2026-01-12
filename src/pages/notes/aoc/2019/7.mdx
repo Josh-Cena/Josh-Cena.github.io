@@ -9,10 +9,6 @@ day: 7
 
 # AoC 2019 D7: Amplification Circuit
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This time we are introducing stateful programs, where each one needs to be paused and resumed (especially for part 2). So instead of my functional `run_prog` from [day 5](/notes/aoc/2019/5), I wrapped it into a class:
 
 ```cpp
@@ -77,5 +73,3 @@ while (!all_halted) {
 ```
 
 Note, technically this may terminate in the middle of a cycle if one program halts, but it looks like the correct output is produced regardless.
-
-<Footer frontMatter={frontMatter} />

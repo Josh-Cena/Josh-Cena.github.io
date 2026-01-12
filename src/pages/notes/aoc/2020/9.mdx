@@ -8,10 +8,6 @@ day: 9
 
 # AoC 2020 D9: Encoding Error
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The naïve solution doesn't work very badly here, since the preamble is only 25 numbers long. For each number after the preamble, we compute the pairwise sums of the previous 25 numbers and see if any of them equal the current number.
@@ -59,5 +55,3 @@ num_range = nums[i : j + 1]
 ```
 
 Note that enumerating all `(i, j)` pairs would also work, but that is $\mathcal{O}(n^2)$. The solution here is $\mathcal{O}(n\log n)$, assuming set membership and insertion is $\mathcal{O}(\log n)$.
-
-<Footer frontMatter={frontMatter} />

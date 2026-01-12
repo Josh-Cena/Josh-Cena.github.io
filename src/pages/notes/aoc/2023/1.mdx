@@ -8,10 +8,6 @@ day: 1
 
 # AoC 2023 D1: Trebuchet?!
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 At the beginning, the language choice of R really created more problems than it solved. I know I'm supposed to use vectorized operations etc. etc., but figuring out the data types for each step was a nightmare. Everything might be a list or a vector; I don't know how to index them and I don't know when to use `sapply` or `lapply`.
@@ -45,5 +41,3 @@ nums <- gsub("[^0-9]", "", data)
 nums <- paste0(substr(nums, 1, 1), substr(nums, nchar(nums), nchar(nums)))
 cat(sum(as.numeric(nums)), "\n")
 ```
-
-<Footer frontMatter={frontMatter} />

@@ -8,10 +8,6 @@ day: 2
 
 # AoC 2023 D2: Cube Conundrum
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I parse each line as a list of lists, each list representing the count of R, G, and B cubes.
@@ -62,5 +58,3 @@ solve2 <- function(data) {
   cat(sum(powers), "\n")
 }
 ```
-
-<Footer frontMatter={frontMatter} />

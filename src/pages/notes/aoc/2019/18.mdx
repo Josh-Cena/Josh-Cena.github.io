@@ -9,10 +9,6 @@ day: 18
 
 # AoC 2019 D18: Many-Worlds Interpretation
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This is the first problem this year that I would consider "challenging".
 
 ## Part 1
@@ -42,5 +38,3 @@ When Dijkstra finishes, we have the minimum distance to collect all keys while l
 ## Part 2
 
 Part 2 turned out to be easier than it seems. Since only one of the four robots can move at a time, I can extend the state to `(loc1, loc2, loc3, loc4, collectedKeys)`, where `loci` is the location of robot `i`. Each time, I try moving a single robot to a reachable key or door. The rest of the logic remains the same. (I used characters `1`, `2`, `3`, `4` to represent the four robots' starting positions instead of `@` because I identify each grid cell by its character content, so they need to be unique.) The number of "theoretical" states is now $53^4 \times 2^{26}$, but again, most states are unreachable in practice. I see some writeups telling me that part 2 should have performance no worse than part 1 because the decision space for each robot is smaller, but actually my solution runs much slower...? Part 1 explored `47606` states (number of pushes to the priority queue) while part 2 explored `6994880`; a 146x increase. My first part completes in 64ms, while part 2 takes 31s. There may be some problems with my overuse of `std::pair` which create unnecessary allocations, but I haven't investigated further. I already pack the four locations as a single 32-bit integer to avoid using an array of four characters.
-
-<Footer frontMatter={frontMatter} />

@@ -8,10 +8,6 @@ day: 23
 
 # AoC 2020 D23: Crab Cups
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 We need efficient deletion and insertion at arbitrary points in the list. but we don't need to know what cup is at an arbitrary position (we do want to know the position of an arbitrary cup though). A linked list is a natural fit for this, especially since it can also be made circular easily. Here is my single-linked list:
 
 ```python
@@ -55,5 +51,3 @@ for _ in tqdm(range(rounds)):
     picked_cups[-1].next = dest_next
     cur_cup = cur_cup.next
 ```
-
-<Footer frontMatter={frontMatter} />

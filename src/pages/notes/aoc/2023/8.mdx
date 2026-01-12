@@ -8,10 +8,6 @@ day: 8
 
 # AoC 2023 D8: Haunted Wasteland
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I parse the input into a list of `source` and `targets` pairs, and then because each source can have exactly two targets, into a dataframe where each source is a row:
@@ -79,5 +75,3 @@ The bigger question is why does this work?? I printed the periods:
 ```
 
 It turns out that the instruction list is 281 steps long, and all these periods are odd multiples of 281. So doubt (a) is cleared because by the time the ghost reaches the end point, the instruction list is always fully cycled through. As for doubts (b) and (c), I printed the state every time a ghost reaches an end point, and it turns out that, indeed, the ghost always reaches the same end point at the same time, and never reaches any other end points. So I guess this solution is just by mercy of the input shape. But I don't want to devote any more time to a day 8 problem.
-
-<Footer frontMatter={frontMatter} />

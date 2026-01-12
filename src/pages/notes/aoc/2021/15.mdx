@@ -8,10 +8,6 @@ day: 15
 
 # AoC 2021 D15: Chiton
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This is a classic shortest path problem, where the edge weights are the risk levels of the destination cells. I just run Dijkstra's. I never remember how to write one, and Wikipedia's first version is the non-ideal one, so here's a better template:
 
 ```ts
@@ -39,5 +35,3 @@ function dijkstra(grid: number[][]): number {
   return dist[height - 1][width - 1];
 }
 ```
-
-<Footer frontMatter={frontMatter} />

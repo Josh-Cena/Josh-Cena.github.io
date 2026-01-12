@@ -9,10 +9,6 @@ day: 14
 
 # AoC 2019 D14: Space Stoichiometry
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Initially I simplified each recipe to "how much ORE is needed to produce 1 unit of X", but I realized that each reaction must be run in whole, so I need to account for leftovers. That is, if I have `10 ORE => 10 A` and I need 7 A, I have to run the reaction once and have 3 A left, instead of using 7 ORE directly. This also makes memoization a bit tricky, because the number of ORE not just depends on the target chemical and amount, but also the current leftovers. In the end I forewent memoization and just did a straightforward recursive implementation:
@@ -45,5 +41,3 @@ while (left <= right) {
     }
 }
 ```
-
-<Footer frontMatter={frontMatter} />

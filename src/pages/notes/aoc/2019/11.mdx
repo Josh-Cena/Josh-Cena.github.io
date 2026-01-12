@@ -9,10 +9,6 @@ day: 11
 
 # AoC 2019 D11: Space Police
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 The only additional capability from [day 7](/notes/aoc/2019/7) is that instead of having one number output at a time, the program now produces two outputs before pausing. Since the size is fixed, I just call `run_until_output()` twice to get both outputs.
 
 Both parts work the same way. I keep track of the robot's position and direction, and a map of painted panels. Each time, I use `send_input()` to provide the current panel color, then call `run_until_output()` to get the new color and direction. Abstractly:
@@ -41,5 +37,3 @@ Again, I take a second to admire the ASCII art in part 2:
  #    #  # # #  # #  #    #    #  # # #
  #     ##  #  # #  # #### #     ##  #  #
 ```
-
-<Footer frontMatter={frontMatter} />

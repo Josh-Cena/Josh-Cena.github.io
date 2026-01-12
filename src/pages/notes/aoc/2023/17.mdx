@@ -9,10 +9,6 @@ day: 17
 
 # AoC 2023 D17: Clumsy Crucible
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 This is very obviously a Dijkstra problem, where we want to walk the grid and minimize the total cost. However, it's not the case that we can always go to all our neighbors, because we can walk at most 3 steps in a given direction, and we can only turn 90 degrees. Therefore, we have to also keep track of the current direction and how many steps we've taken in that direction. This means that our state is a tuple of `(i, j, dir, steps)`. The transition is defined by (unfortunately named access in R is much slower than index access, and lists are much slower than vectors, so this is less readable than I'd like):
@@ -97,5 +93,3 @@ neighbors_ultra <- function(w, h, node) {
 ```
 
 Because the maximum number of steps is bigger, the graph is also bigger because we have more states. I pass `neighbors` and `max_steps` as arguments to `dijkstra` so that I can reuse the same function. It runs for 5 seconds.
-
-<Footer frontMatter={frontMatter} />

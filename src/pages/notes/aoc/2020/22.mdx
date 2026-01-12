@@ -9,10 +9,6 @@ day: 22
 
 # AoC 2020 D22: Crab Combat
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 This feels back to day 10: literally play the game as asked. The only optimization is to use a `deque` instead of a list for the players' decks, since we need efficient popping from the front and appending to the back. But since there are only 50 cards in total, even using lists would be fine.
@@ -58,5 +54,3 @@ def play_game(player1: deque[int], player2: deque[int]):
     else:
         return 1
 ```
-
-<Footer frontMatter={frontMatter} />

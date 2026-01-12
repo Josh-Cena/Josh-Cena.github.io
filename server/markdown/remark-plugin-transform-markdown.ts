@@ -74,7 +74,7 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
   });
   children.unshift(
     ...images.map((url, index) =>
-      createImportDeclaration(`Image${index}`, url),
+      createImportDeclaration(`imageSrc${index}`, url),
     ),
   );
   visit(ast, "image", (node: Image) => {
@@ -83,8 +83,7 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
     Object.assign(
       node,
       createJSXElement("img", [
-        { name: "src", value: `Image${imageIndex}` },
-        // TODO: the ESTree node type should not be Identifier
+        { name: "src", value: `imageSrc${imageIndex}` },
         { name: "alt", value: `"${node.alt ?? ""}"` },
       ]),
     );
@@ -156,6 +155,21 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
       0,
       createImportDeclaration("PostData", "@/components/PostData"),
       createJSXElement("PostData", [
+        { name: "frontMatter", value: "frontMatter" },
+      ]),
+    );
+  }
+  if (/notes\/aoc\/\d{4}\/\d/u.test(vFile.path)) {
+    children.splice(
+      firstHeading + 1,
+      0,
+      createImportDeclaration("{ FrontMatter, Footer }", "../_components"),
+      createJSXElement("FrontMatter", [
+        { name: "frontMatter", value: "frontMatter" },
+      ]),
+    );
+    children.push(
+      createJSXElement("Footer", [
         { name: "frontMatter", value: "frontMatter" },
       ]),
     );

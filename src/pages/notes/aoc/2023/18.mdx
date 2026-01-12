@@ -11,10 +11,6 @@ day: 18
 
 {/* cSpell:ignore lavaduct */}
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This is just a reprise of [day 10](/notes/aoc/2023/10), but with a much larger grid. Again we want to find the number of grid cells in the polygon, but this time _including_ edge cells.
 
 The most naïve way to do this is to physically do the grid walking, mark each cell as a boundary, and then do a flood fill on the outside. This works for part 1, but for part 2, the coordinates are too big to physically represent the grid. What _didn't_ change, though, is the number of coordinates, so we can still do the same thing but with coordinate compression. This preserves the relative positions of the coordinates, just that now the distance between them is not the same as their index difference.
@@ -183,5 +179,3 @@ Again, most edges add an extra half cell. This time, the 8 convex corners add an
 $$
 N = A + \frac{1}{2} E + 8\cdot \frac{1}{4} - 4 \cdot \frac{1}{4} = A + \frac{1}{2} E + 1
 $$
-
-<Footer frontMatter={frontMatter} />

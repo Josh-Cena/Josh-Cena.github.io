@@ -8,10 +8,6 @@ day: 14
 
 # AoC 2022 D14: Regolith Reservoir
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I build the literal grid as a `Map (Int, Int) Char` (exactly same representation as the problem statement). Then I drop sand. Each time, I check if the sand can move down, then down-left, then down-right. If it can't move (same position after moving down), I add it to the grid. It also stops when the sand falls to `maxY`, to prevent the sand actually falling indefinitely into the abyss.
@@ -64,5 +60,3 @@ print $ 1 + countWhile (/= sandSource) (dropSands (ymax + 1) grid)
 ```
 
 I add 1 to the count because the sand that reaches the source should still be counted.
-
-<Footer frontMatter={frontMatter} />

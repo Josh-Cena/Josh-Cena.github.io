@@ -8,10 +8,6 @@ day: 25
 
 # AoC 2022 D25: Full of Hot Air
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 There are two solutions that probably work equally well: one is to convert the SNAFU number to decimal, do the math, and convert back to SNAFU. The other is to do the math directly in SNAFU. I went with the second approach because it looks more mathy.
 
 A SNAFU number can be represented as:
@@ -66,5 +62,3 @@ addSnafu carry (d1 : ds1) (d2 : ds2) = digit : rest
     digit = (sum + 2) `mod` 5 - 2
     rest = addSnafu carry' ds1 ds2
 ```
-
-<Footer frontMatter={frontMatter} />

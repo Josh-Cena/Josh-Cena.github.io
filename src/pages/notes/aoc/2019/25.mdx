@@ -12,10 +12,6 @@ day: 25
 
 # AoC 2019 D25: Cryostasis
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This is a problem I really enjoyed, especially the gaming part. I bet there are more elegant ways to do it, but C++ makes parsing strings a huge pain, so I just manually played the game and drew the map. This is the first truly "interactive" Intcode program, since [day 13](/notes/aoc/2019/13) was solved by an intelligence. The game loop looks like:
 
 ```cpp
@@ -80,5 +76,3 @@ for (int mask = 0; mask < (1 << n); mask++) {
     }
 }
 ```
-
-<Footer frontMatter={frontMatter} />

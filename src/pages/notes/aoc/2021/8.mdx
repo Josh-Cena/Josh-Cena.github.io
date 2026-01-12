@@ -8,10 +8,6 @@ day: 8
 
 # AoC 2021 D8: Seven Segment Search
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Fun problem, but not much to say here. `1` uses 2 segments, `4` uses 4 segments, `7` uses 3 segments, and `8` uses all 7 segments. Just count how many times these lengths appear in the output values.
@@ -71,5 +67,3 @@ We can count the number of times each segment letter appears in all ten digits:
 This means that if we count the letters in the 10 scrambled patterns, we can instantly determine `b`, `e`, and `f`, because they have unique counts. We then need to tell `a` from `c` (both appear 8 times), and `d` from `g` (both appear 7 times). We already know the patterns for `1`, `4`, `7`, and `8` from part 1. Subtracting the pattern for `1` from that of `7` gives us `a`. Subtracting the pattern for `1` plus `b` from that of `4` gives us `d`.
 
 Once we have the mapping from scrambled letters to actual segments, we can decode the output values by looking up the output patterns using the `digits` map above.
-
-<Footer frontMatter={frontMatter} />

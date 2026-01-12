@@ -9,10 +9,6 @@ day: 15
 
 # AoC 2022 D15: Beacon Exclusion Zone
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 This problem needs a tiny bit of geometric insight. Note that the detection range of each sensor is a circle in the Manhattan metric. The number of positions without a beacon is the number of positions in the union of these circles, minus the number of beacons. I just need to intersect each circle with the line $y=2000000$ and count the number of integer points in the union of these intervals.
@@ -277,5 +273,3 @@ let y = x + c1
 ```
 
 This isn't a completely satisfying solution for me because I don't think it works on every input, but it works for mine. And hey—it now runs in 10ms!
-
-<Footer frontMatter={frontMatter} />

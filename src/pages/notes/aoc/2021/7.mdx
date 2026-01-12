@@ -8,10 +8,6 @@ day: 7
 
 # AoC 2021 D7: The Treachery of Whales
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 We are only given 1000 crabs, so a $\mathcal{O}(n^2)$ brute-force solution is feasible. First, obviously we want the alignment position to be between the minimum and maximum initial positions of the crabs, because moving outside that range would be more distance for all crabs. So we can iterate through all positions from `min` to `max`, and for each position calculate the total fuel cost by summing up the distances from each crab to that position.
@@ -66,5 +62,3 @@ p = \frac{1}{n}\sum_{i=1}^n c_i + \frac{1}{2}\left(1 - \frac{2k + 1}{n}\right)
 $$
 
 Because $1\le k< n$, the term $\frac{1}{2}\left(1 - \frac{2k + 1}{n}\right)$ is between $-1/2$ and $1/2$. Therefore, the optimal position is in the range $(\text{mean} - 1/2, \text{mean} + 1/2)$. This range only contains a single integer (the mean rounded to the nearest integer); this is the optimal position.
-
-<Footer frontMatter={frontMatter} />

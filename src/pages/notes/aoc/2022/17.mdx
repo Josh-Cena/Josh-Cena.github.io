@@ -9,10 +9,6 @@ day: 17
 
 # AoC 2022 D17: Pyroclastic Flow
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The first step is to choose a good data structure to represent the rocks. I chose to represent the board as a set of filled cells, and each rock as a set of coordinates relative to the bottom-left corner. This makes it easy to check for collisions and to move the rocks around. For example, block 3 is represented as:
@@ -183,5 +179,3 @@ Just cycleStart ->
       remainderHeight = (heights Map.! (cycleStart + remainder)) - cycleStartHeight
    in cycleStartHeight + numCycles * cycleHeight + remainderHeight
 ```
-
-<Footer frontMatter={frontMatter} />

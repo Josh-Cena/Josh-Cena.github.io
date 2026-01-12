@@ -9,10 +9,6 @@ day: 1
 
 # AoC 2020 D1: Report Repair
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 This is the classic [two-sum](https://leetcode.com/problems/two-sum/) problem, which should be familiar to anyone spending more than 5 minutes on LeetCode. A naïve solution is $\mathcal{O}(n^2)$ by checking all pairs; since the input is only 200 numbers and it is day 1, this is acceptable. A better solution is to use a hash set to store the numbers we have seen so far, and for each number, check if `2020 - number` is in the set. This gives us an $\mathcal{O}(n)$ solution.
@@ -20,5 +16,3 @@ This is the classic [two-sum](https://leetcode.com/problems/two-sum/) problem, w
 ## Part 2
 
 This is yet another classic problem, [three-sum](https://leetcode.com/problems/3sum/). The naïve solution is $\mathcal{O}(n^3)$ by checking all triplets; at 8,000,000 operations it's a bit out of hands, bt still doable. A better solution is to enumerate all pairs and use a hash set to check if `2020 - (num1 + num2)` exists. This gives us an $\mathcal{O}(n^2)$ solution.
-
-<Footer frontMatter={frontMatter} />

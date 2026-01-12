@@ -11,10 +11,6 @@ day: 20
 
 # AoC 2023 D20: Pulse Propagation
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I'm using [`igraph`](https://r.igraph.org/index.html) to represent the circuit graph. Each node contains:
@@ -153,5 +149,3 @@ repeat {
 Finally I just need to find the LCM of these cycle lengths.
 
 Is this completely safe? Probably not. If I see a single high pulse from an input to `zh` to $t$, that does not guarantee that a high pulse comes in every $kt$, which requires the subcircuit to be completely reset to the default state at time $t+1$. This probably has something to do with the structure of each subcircuit—probably it's a modular counter, and a high input is sent when all flip-flops are `on`? I didn't investigate this further, because the approach above already works.
-
-<Footer frontMatter={frontMatter} />

@@ -11,10 +11,6 @@ day: 17
 
 # AoC 2019 D17: Set and Forget
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This problem introduces string I/O, so I implemented two additional methods:
 
 ```cpp
@@ -69,5 +65,3 @@ std::vector<std::string> split(const std::vector<std::string> &data, const std::
 ```
 
 After acquiring the functions A, B, and C, I can replace their occurrences in the movement sequence with `A,`, `B,`, and `C,` respectively, and finally send the main routine and functions to the program.
-
-<Footer frontMatter={frontMatter} />

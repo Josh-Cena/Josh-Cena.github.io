@@ -8,10 +8,6 @@ day: 2
 
 # AoC 2022 D2: Rock Paper Scissors
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Just compute the score for each round based on the given rules.
@@ -58,5 +54,3 @@ shape game = case find (\(opp, _, score) -> (opp, scoreToOutcome score) == game)
   (Just (_, self, _)) -> self
   Nothing -> 'X'
 ```
-
-<Footer frontMatter={frontMatter} />

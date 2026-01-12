@@ -9,10 +9,6 @@ day: 2
 
 # AoC 2019 D2: 1202 Program Alarm
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This begins a very interesting series of Intcode problems. This is just like normal Assembly, with the only quirk being that the instruction memory can be modified at runtime. I iteratively modified my setup, and I will describe the version produced by each day.
 
 ## Part 1
@@ -42,5 +38,3 @@ I originally thought I had to analyze the program to figure out what noun and ve
 > Each of the two input values will be between `0` and `99`, inclusive.
 
 Once I see that, it's easy enough to just brute force all 10000 combinations of noun and verb.
-
-<Footer frontMatter={frontMatter} />

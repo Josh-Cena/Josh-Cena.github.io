@@ -9,10 +9,6 @@ day: 20
 
 # AoC 2020 D20: Jurassic Jigsaw
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This has to be the **HARDEST** Advent of Code problem I've ever done. It took me more than 24 hours over multiple days to finish it, with at least 3 rewrites.
 
 ## Part 1
@@ -228,5 +224,3 @@ monster = np.array(
 ```
 
 We just rotate and flip this array in all 8 orientations, and for each orientation, we slide it over the entire image and check for matches. If we find a match, we mark those positions as `O` in the image. At the end, we count the number of `#` remaining in the image.
-
-<Footer frontMatter={frontMatter} />

@@ -8,10 +8,6 @@ day: 21
 
 # AoC 2021 D21: Dirac Dice
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 For part 1, I had a bit of fun and overengineered the solution with classes and generator functions. None of this turned out to be useful for part 2.
@@ -168,5 +164,3 @@ for (const [roll, freq] of rolls) {
 ```
 
 Note that we have to encode the state as a _joint_ state of both players. If we track states for each player separately, then a dice roll of player 1 would not multiply the number of universes for each state of player 2, leading to a lower count.
-
-<Footer frontMatter={frontMatter} />

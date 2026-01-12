@@ -9,10 +9,6 @@ day: 3
 
 # AoC 2019 D3: Crossed Wires
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The whole area covered is 12804 × 14957, which is impossible to represent as a 2D array, where each cell's (row, column) corresponds to a point (x, y). The key observation is that most of the stuff between two endpoints doesn't matter: all we care is where a wire starts and ends, and what values come between them. Therefore we can compress the points using a hashmap idea, where there's a bidirectional (but not identity) mapping between (row, column) and (x, y). The row and column still respect the order of (x, y), so any intersection relationships still hold.
@@ -58,5 +54,3 @@ Now, we just need to iterate through each wire's path. The grid is represented a
 ## Part 2
 
 Once we have the compressed grid, we just need to walk the wire again, this time counting steps. For each wire, I keep a `map<pair<int, int>, int>` that maps each (row, column) to the number of steps taken to reach that cell. We sum the two maps by key and find the minimum.
-
-<Footer frontMatter={frontMatter} />

@@ -8,10 +8,6 @@ day: 24
 
 # AoC 2019 D24: Planet of Discord
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The rule number 1 of cellular automata (like mazes): always represent the grid as a `map<Coordinate, CellType>`, and never as a physical 2D array, because there will always be infinite grids, irregular grids, etc.
@@ -51,5 +47,3 @@ This is really, really boilerplate code for cellular automata problems. The only
 ## Part 2
 
 For part 2, the `get_neighbors` function is more complicated, since we have to deal with multiple levels of grids. The cell is now 3D, with an additional `level` coordinate. But there isn't much to say about the `get_neighbors` function; it's just a lot of casework. The evolution rules are the same as part 1.
-
-<Footer frontMatter={frontMatter} />

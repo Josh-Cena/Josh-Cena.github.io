@@ -8,10 +8,6 @@ day: 20
 
 # AoC 2022 D20: Grove Positioning System
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 This kind of reminds me of [2020 day 23](/notes/aoc/2020/23), where we also have to turn things around a circular list, which I implemented as a linked list. This problem needs to implement similar operations. In pseudocode it looks like:
@@ -125,5 +121,3 @@ Multiplication of the numbers don't change the algorithm at all (it's used to sh
 - (mixed, idToKey') = foldl' (mix idToNum) (tree, idToKey) ids
 + (mixed, idToKey') = foldl' (mix idToNum) (tree, idToKey) $ concat $ replicate rounds ids
 ```
-
-<Footer frontMatter={frontMatter} />

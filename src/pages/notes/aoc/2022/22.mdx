@@ -9,10 +9,6 @@ day: 22
 
 # AoC 2022 D22: Monkey Map
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 There's not much to say about part 1. I thought you need something fancy like precomputing the farthest reachable point in each direction for each cell, but it turns out you can just do the walk naïvely.
@@ -171,5 +167,3 @@ moveStep board wraparound (r, c, dir) =
     st'' = fromMaybe st' $ Map.lookup st' wraparound
     (r', c', _) = st''
 ```
-
-<Footer frontMatter={frontMatter} />

@@ -9,10 +9,6 @@ day: 19
 
 # AoC 2019 D19: Tractor Beam
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This problem is essentially a "oracle" problem, where the program tells us whether a given coordinate has a beam.
 
 ## Part 1
@@ -88,5 +84,3 @@ y + s &= 0.578\cdot x
 $$
 
 This gives $x = 1526.8$, $y = 782.5$ (the real answer is $(1509, 773)$, which isn't too far). If we blindly brute force our way there, we would have checked 1.2 million coordinates, which is too much. Instead, equipped with the knowledge of how to estimate the intersection points, we only need the oracle to fine-adjust the coordinates. Since the square's northwest-southeast diagonal lies on the line `x + y = c`, we enumerate over `c` values. For each `c`, we can compute the intersection of the line `x + y = c` with the lower and upper beam edges. If we floor the smaller x coordinate and ceil the larger one, we get a range to search for the actual intersection points. We then just run the oracle on each point `(x, c - x)` in this range starting from `x_min` and `x_max` respectively, until we find the first points that are inside the beam. The real answers should be fairly close to the estimates since we only allow errors up to rounding. If the distance between these two points is `100`, we have found a valid placement for the square, and this is the smallest `c` that works, hence the closest to the origin.
-
-<Footer frontMatter={frontMatter} />

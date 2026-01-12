@@ -8,10 +8,6 @@ day: 23
 
 # AoC 2019 D23: Category Six
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Again, I'm a bit annoyed by the vague wording. How do we deal with races with non-blocking I/O? In what order do we step the programs? The problem doesn't say, so I picked the most conservative approach: step each program one instruction at a time in a round-robin fashion (so they are run at the same "speed"). If a program produces output, we immediately deliver it to the destination program's input queue.
@@ -47,5 +43,3 @@ while (true) {
 The problem statement is again vague about what it means by "continuously trying to receive packets". I added a field called `starved_cycles`, which counts how many times the input instruction was executed while the input queue was empty, and is reset on `send_input()` (not during the next input instruction, so that a program is immediately considered non-starved when it receives input). If all 50 programs have `starved_cycles > 1`, we consider the network idle. (For reasons unclear to me, `starved_cycles > 1` works but `starved_cycles > 0` doesn't; I assume that's the implication of "continuously".) This check happens once after each round-robin cycle.
 
 When the network is idle, and the NAT has a packet stored, I send the stored packet to program 0 (which resets its `starved_cycles`). I also keep track of the last Y value sent by the NAT, and print it and exit if the same Y value is sent twice in a row.
-
-<Footer frontMatter={frontMatter} />

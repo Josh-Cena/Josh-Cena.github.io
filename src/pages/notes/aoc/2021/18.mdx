@@ -8,10 +8,6 @@ day: 18
 
 # AoC 2021 D18: Snailfish
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The first barrier was how to parse the input. Lucky for me, this is valid JSON, so I could just use `JSON.parse`. I wonder what happens if I use C++.
@@ -120,5 +116,3 @@ for (const a of nums) {
   }
 }
 ```
-
-<Footer frontMatter={frontMatter} />

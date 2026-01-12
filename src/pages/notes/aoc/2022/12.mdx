@@ -9,10 +9,6 @@ day: 12
 
 # AoC 2022 D12: Hill Climbing Algorithm
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This is a shortest path problem with equal edge weights, so we can just run BFS. Each node (cell) is connected to its neighbors if the height difference is at most 1.
 
 I parse the input grid into a `Map (Int, Int) Int`, storing the heights of each cell. This part isn't very interesting so I'll skip it. Anyway, part 1 has a single starting point and part 2 has multiple starting points, but the BFS logic works the same. I just enqueue all starting points at the beginning of the BFS, where the queue keeps track of the cell's coordinates and the distance from the start. The BFS stops when we reach the end cell or the queue is depleted.
@@ -45,5 +41,3 @@ runQueue matrix end ((cur, curDist) Seq.:<| rest) visited =
       Nothing -> False
       Just neighborHeight -> Set.notMember pos visited && neighborHeight - curHeight <= 1
 ```
-
-<Footer frontMatter={frontMatter} />

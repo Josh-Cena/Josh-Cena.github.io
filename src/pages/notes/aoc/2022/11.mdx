@@ -8,10 +8,6 @@ day: 11
 
 # AoC 2022 D11: Monkey in the Middle
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 Part 1 is straightforward to simulate, and has the exact same idea as part 2 anyway, so I describe my part 2 solution here. Because the numbers get large, we need a way to keep them manageable. The key observation is that we don't care about the actual numbers: all tests are testing divisibility, so only the remainders matter. If for monkeys $1..n$, we have divisors $d_1, d_2, \ldots, d_n$, then keeping track of the remainder modulo $D = \prod_{i=1}^n d_i$ is sufficient to determine the outcome of all tests. (To be fully robust we should probably use `lcm` instead of multiplication, but it turned out that all $d_i$ are prime numbers.) Because modular arithmetic is closed under addition and multiplication, nothing else changes.
 
 I parse the monkeys into the following record type:
@@ -62,5 +58,3 @@ monkeyInspect (Monkey {operation, test, target1, target2}) (relief, divisor) ite
 ```
 
 Other than the modular arithmetic, everything else is straightforward simulation, which is _slightly_ awkward in Haskell, but not too bad.
-
-<Footer frontMatter={frontMatter} />

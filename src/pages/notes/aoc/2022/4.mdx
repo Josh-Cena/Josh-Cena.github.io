@@ -8,10 +8,6 @@ day: 4
 
 # AoC 2022 D4: Camp Cleanup
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Let the two ranges be $(a_1, b_1)$ and $(a_2, b_2)$. One range fully contains the other if and only if $a_1 \leq a_2$ and $b_1 \geq b_2$, or $a_2 \leq a_1$ and $b_2 \geq b_1$.
@@ -30,5 +26,3 @@ Two ranges $(a_1, b_1)$ and $(a_2, b_2)$ overlap if and only if they do not sati
 ```hs
 overlap [(a1, b1), (a2, b2)] = b1 >= a2 && b2 >= a1
 ```
-
-<Footer frontMatter={frontMatter} />

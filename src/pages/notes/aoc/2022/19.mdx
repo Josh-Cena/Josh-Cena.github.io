@@ -8,10 +8,6 @@ day: 19
 
 # AoC 2022 D19: Not Enough Minerals
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 This is very similar to [day 16](/notes/aoc/2022/16). We also want to explore a decision space and maximize the output, where the score of each decision is dependent on how early we made it. Let's start by defining the states of our space.
@@ -179,5 +175,3 @@ go best (st : stk)
 And 🔥🔥🔥 part 2's runtime drops to 40ms (1000x speedup), and part 1's drops to 82ms! I guess this is the beauty of edge pruning.
 
 (Note: I tagged this one as "dynamic programming", because DFS on a state space with memoization is just DP. At this point I just think DP is an extremely uninformative branding.)
-
-<Footer frontMatter={frontMatter} />

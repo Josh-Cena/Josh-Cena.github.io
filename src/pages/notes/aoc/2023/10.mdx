@@ -9,10 +9,6 @@ day: 10
 
 # AoC 2023 D10: Pipe Maze
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 It's a straightforward grid walking problem: just follow the characters. The starting point doesn't have a known direction, but it turns out that there are only two possible directions (the other two don't have connected pipes), so we can pick one of them. I trace the loop, and record each corner. Each time, I determine the next direction by looking at the current character and the direction I'm coming from.
@@ -212,5 +208,3 @@ for (i in seq_along(corners)) {
 }
 cat(abs(enclosed) / 2 - loop_len / 2 + 1, "\n")
 ```
-
-<Footer frontMatter={frontMatter} />

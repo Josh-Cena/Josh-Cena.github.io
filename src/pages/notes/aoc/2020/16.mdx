@@ -8,10 +8,6 @@ day: 16
 
 # AoC 2020 D16: Ticket Translation
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Part 1 is straightforward: collect a list of ranges, then for each number in each nearby ticket, check if it falls into any of the ranges.
@@ -62,5 +58,3 @@ fields: list[str] = []
 for s in candidate_fields.values():
     fields.append(s.pop())
 ```
-
-<Footer frontMatter={frontMatter} />

@@ -8,10 +8,6 @@ day: 12
 
 # AoC 2023 D12: Hot Springs
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 Because we are making a series of decisions (do I fill the `?` with `#` or `.`?) and each one determines what decisions we can make next (in order to satisfy the arrangement given), this strongly suggests dynamic programming.
 
 We iterate through each spring in the condition records and build groups one by one. The state consists of the current group's index $j$ ($1\le j\le m$, $m$ is the number of groups) and size $s$ ($0\le s\le \max(\text{arrangements})$). $s=0$ indicates an "idle" state, i.e., not actively adding springs to the current group. We count how many ways there are to reach each state (see [2021 day 6](/notes/aoc/2021/6)).
@@ -65,5 +61,3 @@ dp[m + 1, 0 + 1] + dp[m, expected_counts[m] + 1]
 ```
 
 Parts 1 and 2 are exactly the same, except that in part 2 there's some preprocessing with the input, and the count is so big that we need `gmp` again for the total. (But each `count_dp` still fits in a 32-bit integer.)
-
-<Footer frontMatter={frontMatter} />

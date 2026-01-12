@@ -8,10 +8,6 @@ day: 2
 
 # AoC 2020 D2: Password Philosophy
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Nothing to say here. Just parse the input and check the counts.
@@ -29,5 +25,3 @@ The left position check is `password[ind_range[0] - 1] == char` and the right po
 if (password[ind_range[0] - 1] == char) != (password[ind_range[1] - 1] == char):
     total += 1
 ```
-
-<Footer frontMatter={frontMatter} />

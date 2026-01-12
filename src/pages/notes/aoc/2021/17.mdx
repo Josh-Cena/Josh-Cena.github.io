@@ -10,10 +10,6 @@ day: 17
 
 # AoC 2021 D17: Trick Shot
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The 2021 me was young and naïve. I knew I shouldn't simulate the trajectory, but my math was more complex than necessary. Here was my initial idea: for each $v_y$, subsequent y positions are given by $\sum_{i=0}^{t-1} (v_y - i) = (v_y + v_y - t + 1)t/2 = -t^2/2 + v_yt + t/2$. We want to find the largest $v_y$ such that $y_\text{min} \leq -t^2/2 + v_yt + t/2 \leq y_\text{max}$ has a solution for some positive integer $t$.
@@ -152,5 +148,3 @@ function validTRangeForX(
 ```
 
 This allows us to find the valid t ranges for each $v_x$ and $v_y$ in constant time. Finally we just need to check if the two t ranges overlap.
-
-<Footer frontMatter={frontMatter} />

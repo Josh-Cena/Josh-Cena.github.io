@@ -10,10 +10,6 @@ day: 12
 
 # AoC 2019 D12: The N-Body Problem
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I had a bit of fun with this one. It could be done in a more boring way, but I used some OOP by making each `Moon` an object with position and velocity members, and methods to apply gravity from another moon, update its position, and compute its energy. Then, I just pairwise apply gravity, and then update each one's position:
@@ -54,5 +50,3 @@ for (int t = 0; x_cycle == -1 || y_cycle == -1 || z_cycle == -1; t++) {
 ```
 
 Note that because the update is bijective, if we see a state again, it must be the initial state; otherwise, we would have two distinct previous states that map to the same cycle-start state, which is impossible. So `x_cycle` is just `t` and we don't need to store the time we saw each state.
-
-<Footer frontMatter={frontMatter} />

@@ -8,10 +8,6 @@ day: 23
 
 # AoC 2022 D23: Unstable Diffusion
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Not much to say about this one; it's a straightforward simulation. Like any other cellular automata problem, due to the potentially infinite grid, I represent the map as a `Set (Int, Int)`.
@@ -96,5 +92,3 @@ findStable = go 1
       let (elves', directions', hasMoved) = moveElves s
        in if not hasMoved then n else go (n + 1) (elves', directions')
 ```
-
-<Footer frontMatter={frontMatter} />

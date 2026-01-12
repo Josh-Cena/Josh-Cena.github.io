@@ -9,10 +9,6 @@ day: 10
 
 # AoC 2020 D10: Adapter Array
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The problem essentially asks us to arrange some numbers into a non-decreasing sequence such that the difference between adjacent numbers is at most 3. We can sort the input numbers and prepend a 0 (the charging outlet) and append `adapters[-1] + 3` (the device's built-in adapter). Then, we can just count the differences. NumPy makes this easy:
@@ -51,5 +47,3 @@ for adapter in adapters[1:]:
 ```
 
 Now the answer is `ways[adapters[-1]]`.
-
-<Footer frontMatter={frontMatter} />

@@ -8,10 +8,6 @@ day: 15
 
 # AoC 2023 D15: Lens Library
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 This is like Java string hashing, except that the base is 17 instead of 31, and the modulus is $2^8$ instead of $2^{32}$ (since in part 2 we only have 256 bins). It's kind of fun because I didn't know how to get the ASCII code for a character; turned out you have to use `charToRaw` and then `as.integer`.
@@ -55,5 +51,3 @@ powers <- sapply(seq_along(boxes), function(i) {
   i * sum(unlist(box) * seq_along(box))
 })
 ```
-
-<Footer frontMatter={frontMatter} />

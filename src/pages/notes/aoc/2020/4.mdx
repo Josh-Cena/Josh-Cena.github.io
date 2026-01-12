@@ -8,10 +8,6 @@ day: 4
 
 # AoC 2020 D4: Passport Processing
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 For each passport, we first collect the fields as (key, value) pairs in a dictionary:
@@ -64,5 +60,3 @@ else:
     if all(k in fields and required[k](fields[k]) for k in required.keys()):
         count += 1
 ```
-
-<Footer frontMatter={frontMatter} />

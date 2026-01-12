@@ -9,10 +9,6 @@ day: 24
 
 # AoC 2020 D24: Lobby Layout
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The hexagonal grid looks like this:
@@ -57,5 +53,3 @@ def evolve(active: set[Point], get_neighbors: Callable[[Point], list[Point]]) ->
 ```
 
 The neighbors are just the six directions defined above.
-
-<Footer frontMatter={frontMatter} />

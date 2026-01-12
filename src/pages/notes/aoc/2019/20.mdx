@@ -9,10 +9,6 @@ day: 20
 
 # AoC 2019 D20: Donut Maze
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 This is a surprisingly simple problem compared to the amount of trouble of parsing the input. The first step is to find the positions of the portals. I first find the inner and outer edges of the donut, by iterating over the middle row until I go into empty space. Then I iterate over each inner/outer edge and check for uppercase letters adjacent to open spaces. Finally I build a bidirectional map of portals and their grid positions.
@@ -44,5 +40,3 @@ The rest is standard BFS: for each position, we can move in 4 directions, plus g
 The same idea as part 1, except now the position is (row, column, level). The `portal_to_poss` map now maps to `(row, column, delta_level)`, where `delta_level` is `+1` for inner portals and `-1` for outer portals. When we go through a portal, we also update the level accordingly, and keep the level non-negative. The start and end positions are at level 0. Nothing else changes.
 
 To share code, I made part 1 be based on this 3D state as well, just with `delta_level` always being 0.
-
-<Footer frontMatter={frontMatter} />

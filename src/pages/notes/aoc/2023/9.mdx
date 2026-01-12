@@ -8,10 +8,6 @@ day: 9
 
 # AoC 2023 D9: Mirage Maintenance
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 It seems that every year there's always a problem where I cheat; for example [2020 day 18](/notes/aoc/2020/18) is done with Python's built-in `ast` module. For this one, we are just fitting the data to a polynomial, so I just use `lm`. Language choice rewards solutions :)
@@ -47,5 +43,3 @@ Predicting the previous value just requires plugging in `x = 0` instead of `x = 
 ```R
 round(predict(fit, newdata = data.frame(x = 0))[[1]])
 ```
-
-<Footer frontMatter={frontMatter} />

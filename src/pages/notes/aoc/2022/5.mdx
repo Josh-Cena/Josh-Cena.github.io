@@ -8,10 +8,6 @@ day: 5
 
 # AoC 2022 D5: Supply Stacks
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I parse the input to a `([[Char]], [(Int, Int, Int)])`, which is the list of stacks and the list of moves. Since Haskell lists are singly linked lists, pushing and popping from the front is efficient.
@@ -47,5 +43,3 @@ makeMove process columns (cnt, from, to) = before ++ col1' : middle ++ col2' : a
     col1' = if from < to then drop cnt col1 else process (take cnt col2) ++ col1
     col2' = if from > to then drop cnt col2 else process (take cnt col1) ++ col2
 ```
-
-<Footer frontMatter={frontMatter} />

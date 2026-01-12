@@ -8,10 +8,6 @@ day: 9
 
 # AoC 2021 D9: Smoke Basin
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The low points are those that are lower than all of their adjacent points (up, down, left, right). Just iterate through all points and check their neighbors.
@@ -50,5 +46,3 @@ while (stack.length > 0) {
 }
 basins.push(size);
 ```
-
-<Footer frontMatter={frontMatter} />

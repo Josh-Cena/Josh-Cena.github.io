@@ -8,10 +8,6 @@ day: 14
 
 # AoC 2021 D14: Extended Polymerization
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This is the exact same spirit as [day 6](/notes/aoc/2021/6), where we have exponential growth but can group identical entities together.
 
 The naïve solution is to simulate each element individually:
@@ -43,5 +39,3 @@ for (const pair in pairCounts) {
 {/* cSpell:ignore ABCB */}
 
 This gives us the counts of each pair after all iterations. To get the counts of each individual element, we note that each element is counted twice in pairs, except for the first and last element of the entire sequence, which never change anyway since the initial input. For example, the sequence `ABCB` has pairs `AB`, `BC`, and `CB`, which counts `A` once, `B` 3 times, and `C` twice. Because `A` and `B` are the first and last elements, we add 1 to their counts. Finally, we divide all counts by 2 to get the actual counts.
-
-<Footer frontMatter={frontMatter} />

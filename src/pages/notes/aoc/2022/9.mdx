@@ -8,10 +8,6 @@ day: 9
 
 # AoC 2022 D9: Rope Bridge
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 We have a tail that's always following the head, and we need to record the positions of the tail. Naturally we'd like to fold over the list of moves, tracking the current positions of the head and tail as well as the set of tail positions.
@@ -72,5 +68,3 @@ makeMove (chainHead : rest, set) (dir, count) =
         chainHead'
         rest
 ```
-
-<Footer frontMatter={frontMatter} />

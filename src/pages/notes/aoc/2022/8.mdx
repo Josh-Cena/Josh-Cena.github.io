@@ -8,10 +8,6 @@ day: 8
 
 # AoC 2022 D8: Treetop Tree House
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 If the grid's side length is $n$, then there are $4n$ directions to check for visibility. We scan along each direction and count visible trees. To determine the visibility, we need to check all trees before it and see if they are all shorter than the current one—i.e., compare the maximum height of the trees before it. The maximum can be tracked as we scan, so there's no need to scan backwards again.
@@ -66,5 +62,3 @@ rightDistances xs = snd $ mapAccumR scanner2 IntMap.empty $ zip [(length xs - 1)
 ```
 
 Again, we apply these two functions to each row and column and combine the results with `zipWith` (this time multiplying them). Finally I can find the maximum value.
-
-<Footer frontMatter={frontMatter} />

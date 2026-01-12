@@ -8,10 +8,6 @@ day: 11
 
 # AoC 2020 D11: Seating System
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I've said it before: [never represent cellular automata grids as physical 2D arrays](/notes/aoc/2019/24). Always use a map from coordinates to cell states. Well in this problem, doing so allows us to completely ignore the floor cells. We can also precompute all neighbor cells for each seat, since it's going to be non-trivial in part 2.
@@ -65,5 +61,3 @@ def neighbors2d(
                 nc = c + dc * d
     return res
 ```
-
-<Footer frontMatter={frontMatter} />

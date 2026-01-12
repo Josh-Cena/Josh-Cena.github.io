@@ -9,10 +9,6 @@ day: 10
 
 # AoC 2022 D10: Cathode-Ray Tube
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I simulate the process of executing the instructions, keeping track of the current cycle and the value of the register `X`, putting all values of `X` at each cycle in a list. Then I can just sum the values at the specified cycles.
@@ -62,5 +58,3 @@ Once again, I appreciate the ASCII art produced:
 # #  #    #  # #    #  # #  # #  # #  ##
 #  # #### #  # #     ###  ##   ##  ###
 ```
-
-<Footer frontMatter={frontMatter} />

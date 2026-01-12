@@ -9,10 +9,6 @@ day: 16
 
 # AoC 2023 D16: The Floor Will Be Lava
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I represent each direction as a number: left = 1, right = 2, up = 3, down = 4. Then I know how to turn the direction given each kind of cell and the current light direction:
@@ -76,5 +72,3 @@ for (c in seq_len(ncol(mat))) {
 ```
 
 This takes about 8 seconds to run, which IMO is acceptable for R. I could probably optimize it by memoizing the remaining path from each cell and direction, but I don't think it's worth the effort, especially since I have to think about deduplication of the energized cells, and memoization itself is a pain in R without hashmaps.
-
-<Footer frontMatter={frontMatter} />

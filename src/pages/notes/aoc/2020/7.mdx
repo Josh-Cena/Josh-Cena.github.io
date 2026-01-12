@@ -8,10 +8,6 @@ day: 7
 
 # AoC 2020 D7: Handy Haversacks
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 We can model the rules as a directed graph, where each node is a bag color, and each edge points to a bag color that it can contain. We want to find all the bag colors that can eventually contain at least one "shiny gold" bag. This is equivalent to finding all nodes that can reach the "shiny gold" node, or equivalently, all nodes reachable from the "shiny gold" node in the reversed graph. Graph reversal looks like:
@@ -33,5 +29,3 @@ This is DFS in the other direction: starting from "shiny gold", count all the ba
 def dfs(node: str) -> int:
     return sum(count * (1 + dfs(child)) for count, child in graph[node])
 ```
-
-<Footer frontMatter={frontMatter} />

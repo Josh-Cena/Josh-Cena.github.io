@@ -9,10 +9,6 @@ day: 14
 
 # AoC 2023 D14: Parabolic Reflector Dish
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The implementation of `tilt` is straightforward: we iterate each column from the "bottom" (the bottom is defined by the tilting direction; for example a north tilt means we iterate from the first row to the last row, while a east tilt means we iterate from the last column to the first column). We keep two pointers: `expected_pos` is the position where the next `O` should go, and `j` is the current position. If we see an `O`, we move it to `expected_pos` and update `expected_pos`. If we see a `#`, we update `expected_pos` to be the next position after the wall.
@@ -71,5 +67,3 @@ repeat {
 ending_pos <- (1000000000 - last_it) %% period + last_it
 cat(loads[[ending_pos + 1]], "\n")
 ```
-
-<Footer frontMatter={frontMatter} />

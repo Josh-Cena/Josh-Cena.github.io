@@ -8,10 +8,6 @@ day: 18
 
 # AoC 2022 D18: Boiling Boulders
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 We want the total surface area. The contribution of each cube to the surface area is determined only by its neighbors: For each face, if it has a neighbor in that direction, the face doesn't contribute to the surface area; otherwise, it contributes 1.
@@ -54,5 +50,3 @@ exposedArea cubes = Set.foldr (\p -> (+ exposedSides p)) 0 cubes
        in bfs q' seen'
     exposedSides p = count (`Set.member` outsideAir) (neighbors3d p)
 ```
-
-<Footer frontMatter={frontMatter} />

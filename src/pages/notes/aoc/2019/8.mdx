@@ -9,10 +9,6 @@ day: 8
 
 # AoC 2019 D8: Space Image Format
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I don't even need to build an actual 3D array representing the image. I know that `width = 25` and `height = 6`, so I have `layer_size = width * height` and `num_layers = input.size() / layer_size`. Then I can iterate over `layer` and `i` and index into `input[layer * layer_size + i]`.
@@ -31,5 +27,3 @@ I take a second to admire the ASCII art:
 #    #  #   #  #  # #  #
 ####  ###   #  #  # ###
 ```
-
-<Footer frontMatter={frontMatter} />

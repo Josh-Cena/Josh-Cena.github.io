@@ -8,10 +8,6 @@ day: 1
 
 # AoC 2022 D1: Calorie Counting
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Yes, yes, I know that finding the $k$th largest number in a list can be done in linear time with the [Quickselect](https://en.wikipedia.org/wiki/Quickselect) algorithm, but given that the input has fewer than 300 elves, I decided to just sort the list and pick the first element.
@@ -26,5 +22,3 @@ getTops input = sortOn Down tops
 ## Part 2
 
 The same function as above, just picking the first three elements instead of just the first. Again, if I used Quickselect, this would be $\mathcal{O}(n)$ instead of $\mathcal{O}(n \log n)$.
-
-<Footer frontMatter={frontMatter} />

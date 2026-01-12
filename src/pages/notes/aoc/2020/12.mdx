@@ -9,10 +9,6 @@ day: 12
 
 # AoC 2020 D12: Rain Risk
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Literally do what the problem says. Keep track of the ship's position and direction, and update them according to the instructions. There's one small detail though: I thought the direction could be any angle, but in fact it's always a multiple of 90 degrees. I used the common trick of representing directions as complex numbers, so that turning is just multiplying by `j` or `-j`. On the complex plane, `1` is east, `j` is north, `-1` is west, and `-j` is south.
@@ -33,5 +29,3 @@ else:
 ## Part 2
 
 In part 1 some people may have hardcoded the 4 directions, which is what part 2 tries to prevent. Because the waypoint can be anywhere, we must implement proper rotation. Since we are already doing that, the only difference is the initial direction (`10 + 1j` instead of `1`) and that `N`/`S`/`E`/`W` instructions affect the waypoint instead of the ship.
-
-<Footer frontMatter={frontMatter} />

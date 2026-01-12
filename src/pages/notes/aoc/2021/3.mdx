@@ -8,10 +8,6 @@ day: 3
 
 # AoC 2021 D3: Binary Diagnostic
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The main idea is to iterate the input column by column, each time recording the counts of `0` and `1`. Since I represent my input as `data: string[]`, my loop looks like:
@@ -55,5 +51,3 @@ if (o2Candidates.length > 1) {
 Finally, the result is `parseInt(o2Candidates[0], 2) * parseInt(co2Candidates[0], 2)`.
 
 In both parts, it's possible to parse the input as numbers upfront, and then extract the `i`-th bit as `(num >> (length - 1 - i)) & 1`. However, I think string indexing is sufficient here.
-
-<Footer frontMatter={frontMatter} />

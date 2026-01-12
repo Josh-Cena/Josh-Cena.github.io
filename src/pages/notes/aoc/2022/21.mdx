@@ -8,10 +8,6 @@ day: 21
 
 # AoC 2022 D21: Monkey Math
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 There are two kinds of monkeys: those that yell a number, and those that yell an expression. Therefore I parse the input as:
@@ -136,5 +132,3 @@ let (a1, b1) = evalMonkey monkeys' leftName
 let (a2, b2) = evalMonkey monkeys' rightName
 let humn = (b2 - b1) / (a1 - a2)
 ```
-
-<Footer frontMatter={frontMatter} />

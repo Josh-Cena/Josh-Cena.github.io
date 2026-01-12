@@ -11,10 +11,6 @@ day: 21
 
 # AoC 2023 D21: Step Counter
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Part 1 is a straightforward BFS, stopping when the distance is 64. However, since we can't do BFS for part 2, we might as well think about smarter solutions for part 1.
@@ -408,5 +404,3 @@ total <- odd_cells_in_mat *
   even_corners_in_mat * mat_radius -
   odd_corners_in_mat * (mat_radius + 1)
 ```
-
-<Footer frontMatter={frontMatter} />

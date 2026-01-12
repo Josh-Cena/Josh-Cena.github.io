@@ -9,10 +9,6 @@ day: 13
 
 # AoC 2022 D13: Distress Signal
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I first define the data type for the packets:
@@ -104,5 +100,3 @@ let d2 = Branch [Branch [Leaf 6]]
 let sorted = sort $ d1 : d2 : concat pairs
 let indices = map (+ 1) $ findIndices (\a -> a == d1 || a == d2) sorted
 ```
-
-<Footer frontMatter={frontMatter} />

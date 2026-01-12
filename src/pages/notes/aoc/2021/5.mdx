@@ -8,10 +8,6 @@ day: 5
 
 # AoC 2021 D5: Hydrothermal Venture
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 It happens that the coordinates are less than `1000`, so this is doable with a fixed-size 2D array of size 1000x1000 without any kind of coordinate compression (coordinate compression won't work for part 2 with diagonal lines anyway). Each cell in the grid represents how many lines pass through that point.
@@ -39,5 +35,3 @@ for (let x = x1, y = y1; x !== x2 + dirX; x += dirX, y += dirY) {
   grid[y][x]++;
 }
 ```
-
-<Footer frontMatter={frontMatter} />

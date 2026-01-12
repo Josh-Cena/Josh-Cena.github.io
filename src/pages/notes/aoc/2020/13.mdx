@@ -8,10 +8,6 @@ day: 13
 
 # AoC 2020 D13: Shuttle Search
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Once we have the list of bus IDs, we can compute the next time each bus arrives, which is the smallest multiple of the bus ID that is greater than or equal to the earliest timestamp: `np.ceil(time / buses) * buses`. We then find the bus with the smallest arrival time with `np.argmin`.
@@ -44,5 +40,3 @@ $ node
 > -10 % 3
 -1
 ```
-
-<Footer frontMatter={frontMatter} />

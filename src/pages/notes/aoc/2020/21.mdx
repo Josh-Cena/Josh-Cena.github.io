@@ -8,10 +8,6 @@ day: 21
 
 # AoC 2020 D21: Allergen Assessment
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 If an allergen is found in lists A, B, and C, then the ingredient must be in the intersection of those lists. So we can build a mapping from allergen to the intersection of all ingredient lists that mention that allergen.
@@ -64,5 +60,3 @@ while len(possible_ingredients) > 0:
         # Can't find any allergen to figure out
         raise ValueError("Arrived at an impasse")
 ```
-
-<Footer frontMatter={frontMatter} />

@@ -8,10 +8,6 @@ day: 5
 
 # AoC 2019 D5: Sunny with a Chance of Asteroids
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 The Intcode itself is relatively straightforward, but I spent some time ironing out the infrastructure for code sharing, especially since it's a bit tricky in C++.
 
 At this point, my code is still functional. My `intcode.hpp` file contains two functions:
@@ -75,5 +71,3 @@ for (int ip = 0; codes[ip] != 99;) {
     }
 }
 ```
-
-<Footer frontMatter={frontMatter} />

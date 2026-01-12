@@ -8,10 +8,6 @@ day: 2
 
 # AoC 2021 D2: Dive!
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The coordinates are a 2-element array `[horizontal, depth]`, both starting at 0. We just iterate through each command and update the coordinates accordingly.
@@ -19,5 +15,3 @@ The coordinates are a 2-element array `[horizontal, depth]`, both starting at 0.
 ## Part 2
 
 We add an extra `aim` variable also starting at 0. `down` and `up` now modify `aim`.
-
-<Footer frontMatter={frontMatter} />

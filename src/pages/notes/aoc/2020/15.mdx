@@ -9,10 +9,6 @@ day: 15
 
 # AoC 2020 D15: Rambunctious Recitation
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This is literally just simulating the game rules, no questions asked. While 30,000,000 turns is a lot, if we have an $\mathcal{O}(n)$ algorithm, it's still feasible. The only bottleneck is finding the last occurrence of a number. Instead of storing all numbers physically in an array, notice that previous occurrences of the same number are irrelevant, so we should instead maintain a dictionary that maps each number to its last occurrence index.
 
 ```python
@@ -24,5 +20,3 @@ for i in range(len(nums) + 1, round + 1):
     last_num = num
 print(last_num)
 ```
-
-<Footer frontMatter={frontMatter} />

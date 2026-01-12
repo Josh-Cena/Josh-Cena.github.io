@@ -8,10 +8,6 @@ day: 3
 
 # AoC 2022 D3: Rucksack Reorganization
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 I convert the two halves of each string into sets and find the intersection.
@@ -47,5 +43,3 @@ solve2 input = do
   let groups = map (map textToSet) $ chunksOf 3 input
   print $ sumMap (\[a, b, c] -> commonPriority a $ Set.intersection b c) groups
 ```
-
-<Footer frontMatter={frontMatter} />

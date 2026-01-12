@@ -8,10 +8,6 @@ day: 25
 
 # AoC 2021 D25: Sea Cucumber
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 I thought this requires something clever, but simulating it straightforwardly is fast enough. For example, this is the code for moving the east-facing cucumbers:
 
 ```ts
@@ -33,5 +29,3 @@ function moveEast(mat: string[][]) {
 ```
 
 Checking for stabilization is done with a tiny trick: `JSON.stringify(mat) === JSON.stringify(newMat2)`.
-
-<Footer frontMatter={frontMatter} />

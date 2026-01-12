@@ -8,10 +8,6 @@ day: 24
 
 # AoC 2022 D24: Blizzard Basin
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 All it takes is to do a BFS with the current time as part of the state. Also realize that you don't have to actually simulate the blizzards; given the time and a position, you can know if a blizzard is there by going backwards in the direction of the blizzard and checking if there was a blizzard there at time 0.
@@ -71,5 +67,3 @@ let (_, _, t) =
         (0, 1, 0)
         [(height + 1, width), (0, 1), (height + 1, width)]
 ```
-
-<Footer frontMatter={frontMatter} />

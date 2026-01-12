@@ -9,10 +9,6 @@ day: 16
 
 # AoC 2019 D16: Flawed Frequency Transmission
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 Not much to say here; just implement the algorithm as described. One useful observation is that we don't actually need to build the full pattern for each index `i`. The pattern is just the base pattern `[0, 1, 0, -1]`, with each value repeated `i + 1` times. So as the `j` index iterates through the input numbers, it also iterates through the pattern by jumping to the next value every `i + 1` steps (starting from 1, since we are skipping the very first `0` in the pattern).
@@ -43,5 +39,3 @@ for (int phase = 0; phase < 100; phase++) {
     }
 }
 ```
-
-<Footer frontMatter={frontMatter} />

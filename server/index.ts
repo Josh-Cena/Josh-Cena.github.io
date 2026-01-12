@@ -1,7 +1,12 @@
 import FS from "node:fs/promises";
+import Path from "node:path";
+import { fileURLToPath } from "node:url";
 import express from "express";
 import * as Vite from "vite";
 import type { SSRContextValue } from "@/context/SSRContext";
+
+const __dirname = Path.dirname(fileURLToPath(import.meta.url));
+const toAbsolute = (p: string) => Path.resolve(__dirname, p);
 
 export async function createServer(
   root = process.cwd(),
@@ -33,10 +38,7 @@ export async function createServer(
     try {
       const url = req.originalUrl;
 
-      let template = await FS.readFile(
-        import.meta.resolve("../index.html"),
-        "utf-8",
-      );
+      let template = await FS.readFile(toAbsolute("../index.html"), "utf-8");
       template = await viteServer.transformIndexHtml(url, template);
       const { render } = (await viteServer.ssrLoadModule(
         "/src/server-entry.tsx",

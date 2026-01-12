@@ -8,10 +8,6 @@ day: 14
 
 # AoC 2020 D14: Docking Data
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The mask can do one of three things to a bit: set to 0, set to 1, or leave unchanged. We know that "set to 0" is done with `& 0` (whereas `& 1` leaves unchanged), and "set to 1" is done with `| 1` (whereas `| 0` leaves unchanged). So we can maintain two bitmasks, one for setting to 0 and one for setting to 1; bits that are set by neither remain unchanged. I construct the masks by first reversing the mask string, so that the character index corresponds with the shift amount. `^ 1` is used to toggle bits in the masks.
@@ -58,5 +54,3 @@ val = int(match.group(2))
 for x_mask_0, x_mask_1 in x_masks:
     mem[base_index & x_mask_0 | x_mask_1] = val
 ```
-
-<Footer frontMatter={frontMatter} />

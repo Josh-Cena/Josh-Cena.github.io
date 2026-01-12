@@ -8,10 +8,6 @@ day: 18
 
 # AoC 2020 D18: Operation Order
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 OK, I cheated for this one. Python already has `ast`; I just need to hack it to get the right precedence. Turns out that I can just replace the operators with some other ones. For part 1, replacing `+` with `/` would put it at the same precedence as `*`. For part 2, replacing `+` with `**` would put it at higher precedence than `*`.
 
 Once I have the tree with the correct precedence, I evaluate it recursively using a visitor.
@@ -36,5 +32,3 @@ class ExprEvaluator(ast.NodeVisitor):
 ```
 
 Of course I could have built an actual recursive descent parser, but this was way easier and is what nature intended for AoC purposes—language choices reward simple solutions.
-
-<Footer frontMatter={frontMatter} />

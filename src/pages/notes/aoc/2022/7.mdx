@@ -9,10 +9,6 @@ day: 7
 
 # AoC 2022 D7: No Space Left On Device
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 The main goal is to construct a dirent tree, represented as:
@@ -153,5 +149,3 @@ Since the `sizes` list is ordered from top down, the root size is the head. To m
 ```hs
 fromJust $ find (>= total - 40000000) (sort dirSizes)
 ```
-
-<Footer frontMatter={frontMatter} />

@@ -10,10 +10,6 @@ day: 15
 
 # AoC 2019 D15: Oxygen System
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 This problem really shows what Intcode has to offer, and is what I'd say the first problem that's not just "run this Intcode program". This kind of problem is impossible to create with an Intcode VM, since it's basically a CTF-style interactive puzzle.
 
 ## Part 1
@@ -70,5 +66,3 @@ For part 1, I could have stopped when I found the oxygen system, but since part 
 ## Part 2
 
 Part 1 already built the full map, so part 2 is just a BFS from the oxygen system to find the maximum distance to any reachable cell.
-
-<Footer frontMatter={frontMatter} />

@@ -8,10 +8,6 @@ day: 6
 
 # AoC 2022 D6: Tuning Trouble
 
-import { FrontMatter, Footer } from "../_components";
-
-<FrontMatter frontMatter={frontMatter} />
-
 ## Part 1
 
 TBH this feels more like a day 1 problem. I just need to iterate through the string, taking substrings of length 4. I use a `Set` to deduplicate the characters, and if we still have 4 characters, then they are all unique.
@@ -37,5 +33,3 @@ roll len index input
   where
     prefix = T.take len input
 ```
-
-<Footer frontMatter={frontMatter} />
