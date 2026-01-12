@@ -1,13 +1,10 @@
 ---
-description: "Advent of Code 2023 - Day 5: If You Give A Seed A Fertilizer. Written in R."
 tags:
   - Mathematics
   - Puzzle
-year: 2023
-day: 5
 ---
 
-# AoC 2023 D5: If You Give A Seed A Fertilizer
+# If You Give A Seed A Fertilizer
 
 ## Part 1
 
@@ -153,7 +150,6 @@ function blend(color, mask) {
 
 function drawRange2(start, end, color, mask) {
   const blended = blend(color, mask);
-  console.log({ blended });
   ctx.fillStyle = blended;
   ctx.beginPath();
   ctx.arc(140 + offset, start, 5, 0, 2 * Math.PI);

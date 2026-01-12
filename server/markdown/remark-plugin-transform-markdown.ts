@@ -1,9 +1,18 @@
 import type { Plugin } from "unified";
-import type { Root, Heading, Literal, Image, RootContent, Code } from "mdast";
+import type {
+  Root,
+  Heading,
+  Literal,
+  Image,
+  RootContent,
+  Code,
+  PhrasingContent,
+} from "mdast";
 import type { Nodes } from "hast";
 import { toText } from "hast-util-to-text";
 import { visit } from "unist-util-visit";
 import * as Acorn from "acorn";
+import Yaml from "yaml";
 import type { Program } from "estree";
 
 function createImportDeclaration(
@@ -48,16 +57,68 @@ function createJSXElement(
   };
 }
 
+const languages: { [year: number]: string } = {
+  2019: "C++",
+  2020: "Python",
+  2021: "TypeScript",
+  2022: "Haskell",
+  2023: "R",
+  2024: "OCaml",
+  2025: "Rust",
+};
+
 const transformMarkdown: Plugin = () => (ast, vFile) => {
   const { children } = ast as Root;
   if (!children.length) return;
   const firstHeading = children.findIndex(
     (node): node is Heading => node.type === "heading" && node.depth === 1,
   );
-  if (!firstHeading) return;
-  const title = children[firstHeading];
-  const titleText = title ? toText(title as Nodes) : "";
+  if (!firstHeading) throw new Error("Markdown file must have H1");
   const frontMatter = children.find((node) => node.type === "yaml");
+  const title = children[firstHeading]!;
+  let titleText = toText(title as Nodes);
+  if (/notes\/aoc\/\d{4}\/\d/u.test(vFile.path)) {
+    const { year, day } = /notes\/aoc\/(?<year>\d{4})\/(?<day>\d{1,2})/u.exec(vFile.path)!.groups! as {
+      year: `${number}`;
+      day: `${number}`;
+    };
+    const { tags } = Yaml.parse((frontMatter as Literal).value) as {
+      tags: string[];
+    };
+    const problemCode = `Advent of Code ${year} - Day ${day}`;
+    (frontMatter as Literal).value += `
+description: "${problemCode}: ${titleText}, a problem that involves ${new Intl.ListFormat("en-US").format(tags)}. Solution written in ${languages[year]!}, with detailed walkthrough and proof."
+year: ${year}
+day: ${day}`;
+    (title as Heading).children = [
+      {
+        type: "text",
+        value: problemCode,
+      },
+      {
+        type: "mdxJsxFlowElement",
+        name: "span",
+        children: (title as Heading).children,
+        attributes: [
+          {
+            type: "mdxJsxAttribute",
+            name: "className",
+            value: {
+              type: "mdxJsxAttributeValueExpression",
+              value: `"subtitle"`,
+              data: {
+                estree: Acorn.parse(`"subtitle"`, {
+                  ecmaVersion: "latest",
+                  sourceType: "module",
+                }) as unknown as Program,
+              },
+            },
+          },
+        ],
+      } as unknown as PhrasingContent,
+    ];
+    titleText = `${problemCode}: ${titleText}`;
+  }
   if (!frontMatter) {
     children.unshift({
       type: "yaml",
@@ -72,7 +133,9 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
     if (images.includes(node.url)) return;
     images.push(node.url);
   });
-  children.unshift(
+  children.splice(
+    firstHeading + 1,
+    0,
     ...images.map((url, index) =>
       createImportDeclaration(`imageSrc${index}`, url),
     ),

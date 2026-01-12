@@ -1,13 +1,10 @@
 ---
-description: "Advent of Code 2021 - Day 19: Beacon Scanner. Written in TypeScript."
 tags:
   - Image processing
   - Geometry
-year: 2021
-day: 19
 ---
 
-# AoC 2021 D19: Beacon Scanner
+# Beacon Scanner
 
 This is like [2020 day 20](/notes/aoc/2020/20), but in 3D. We have a list of sets of coordinates, and we need to pairwise align them via rotation and translation such that there are at least 12 overlapping points. As the problem already says, there are 24 orientations possible, so for each list of coordinates, we need to compute all 24 orientations, and find one that aligns with another list.
 

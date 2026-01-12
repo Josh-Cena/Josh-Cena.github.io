@@ -1,13 +1,10 @@
 ---
-description: "Advent of Code 2020 - Day 15: Rambunctious Recitation. Written in Python."
 tags:
   - Brute force
   - Data structures
-year: 2020
-day: 15
 ---
 
-# AoC 2020 D15: Rambunctious Recitation
+# Rambunctious Recitation
 
 This is literally just simulating the game rules, no questions asked. While 30,000,000 turns is a lot, if we have an $\mathcal{O}(n)$ algorithm, it's still feasible. The only bottleneck is finding the last occurrence of a number. Instead of storing all numbers physically in an array, notice that previous occurrences of the same number are irrelevant, so we should instead maintain a dictionary that maps each number to its last occurrence index.
 

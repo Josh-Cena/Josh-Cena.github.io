@@ -205,3 +205,11 @@ img[src^="https://img.shields.io/badge/"] {
   text-underline-offset: 0.2em;
   cursor: help;
 }
+
+.subtitle {
+  display: block;
+  font-size: 80%;
+  color: var(--color-text-subdued);
+  font-style: italic;
+  line-height: 1.2;
+}

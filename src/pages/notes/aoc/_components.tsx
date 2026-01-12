@@ -54,7 +54,7 @@ function Paginator({
   readonly frontMatter: MDFrontMatter;
 }): JSX.Element {
   return (
-    <p
+    <nav
       style={{
         width: "100%",
         display: "flex",
@@ -71,7 +71,7 @@ function Paginator({
           Next →
         </Link>
       )}
-    </p>
+    </nav>
   );
 }
 

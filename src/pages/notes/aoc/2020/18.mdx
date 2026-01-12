@@ -1,12 +1,9 @@
 ---
-description: "Advent of Code 2020 - Day 18: Operation Order. Written in Python."
 tags:
   - Parsing
-year: 2020
-day: 18
 ---
 
-# AoC 2020 D18: Operation Order
+# Operation Order
 
 OK, I cheated for this one. Python already has `ast`; I just need to hack it to get the right precedence. Turns out that I can just replace the operators with some other ones. For part 1, replacing `+` with `/` would put it at the same precedence as `*`. For part 2, replacing `+` with `**` would put it at higher precedence than `*`.
 

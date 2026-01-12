@@ -1,12 +1,9 @@
 ---
-description: "Advent of Code 2021 - Day 20: Trench Map. Written in TypeScript."
 tags:
   - Cellular automata
-year: 2021
-day: 20
 ---
 
-# AoC 2021 D20: Trench Map
+# Trench Map
 
 Perhaps the single most important observation is that `algorithm[0]` is `#` and `algorithm[511]` is `.` in the real input, which means that the infinite empty space outside the image alternates between `.` and `#` each step. Other than that, this is still a cellular automaton problem, since each pixel's next state depends only on its current 3x3 neighborhood.
 
