@@ -1,0 +1,157 @@
+---
+description: "Advent of Code 2023 - Day 20: Pulse Propagation. Written in R."
+tags:
+  - BFS/DFS
+  - Puzzle
+  - Manual inspection
+  - Period finding
+year: 2023
+day: 20
+---
+
+# AoC 2023 D20: Pulse Propagation
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I'm using [`igraph`](https://r.igraph.org/index.html) to represent the circuit graph. Each node contains:
+
+- `type`: `%`, `&`, `broadcaster`, or nothing (pure output)
+- `label`
+- `state`: for `%`, a boolean that's `FALSE` for `off` and `TRUE` for `on`. For `&`, a bitset of the remembered inputs; starting as `0` for all inputs low.
+
+Now I need to implement pushing the button. I basically use a BFS approach, keeping a queue of pulses. Each pulse is the source and target nodes and its level. Each time I pop a pulse, I deliver it to the target node and update its state and generate new pulses as needed. I keep track of the number of low and high pulses generated.
+
+```R
+push_btn <- function(graph, broadcaster) {
+  nbrs <- igraph::neighbors(graph, broadcaster, "out")
+  q <-
+    queue(items = lapply(nbrs, function(x) make_pulse(x, FALSE, broadcaster)))
+  # Include 1 from the button to the broadcaster
+  low_pulses <- length(nbrs) + 1
+  high_pulses <- 0
+  while (q$size() > 0) {
+    pulse <- q$pop()
+    node_type <- igraph::vertex_attr(graph, "type", pulse$node)
+    out_level <- NULL
+    # ...
+    if (!is.null(out_level)) {
+      nbrs <- igraph::neighbors(graph, pulse$node, "out")
+      for (nbr in nbrs) {
+        new_pulse <- make_pulse(nbr, out_level, pulse$node)
+        q$push(new_pulse)
+      }
+      if (out_level) {
+        high_pulses <- high_pulses + length(nbrs)
+      } else {
+        low_pulses <- low_pulses + length(nbrs)
+      }
+    }
+  }
+  list(graph = graph, pulses = c(low_pulses, high_pulses))
+}
+```
+
+Flip-flops flip their state on low pulse:
+
+```R
+if (node_type == "%") {
+  if (pulse$level == TRUE) {
+    next
+  }
+  cur_st <- igraph::vertex_attr(graph, "state", pulse$node)
+  cur_st <- !cur_st
+  graph <- igraph::set_vertex_attr(graph, "state", pulse$node, cur_st)
+  out_level <- cur_st
+}
+```
+
+Conjunctions update their memory and output low only if all memory is high (i.e., `1 << n - 1`):
+
+```R
+if (node_type == "&") {
+  cur_st <- igraph::vertex_attr(graph, "state", pulse$node)
+  node_inputs <- igraph::neighbors(graph, pulse$node, "in")
+  from_ind <- match(pulse$from, node_inputs)
+  if (pulse$level == TRUE) {
+    cur_st <- bitwOr(cur_st, bitwShiftL(1L, from_ind - 1))
+  } else {
+    cur_st <- bitwAnd(cur_st, bitwNot(bitwShiftL(1L, from_ind - 1)))
+  }
+  graph <- igraph::set_vertex_attr(graph, "state", pulse$node, cur_st)
+  out_level <- cur_st != bitwShiftL(1L, length(node_inputs)) - 1
+}
+```
+
+## Part 2
+
+Another period finding problem, like [day 8](/notes/aoc/2023/8). However, unlike day 8, it's not immediately clear how the cycle can be decomposed into several independent subcycles, and just simulating the whole thing turned out to never finish. However, plotting the graph reveals important structural information:
+
+![Graph visualization](https://github.com/Josh-Cena/aoc2023/blob/master/src/day20.png?raw=true)
+
+The graph starts at the broadcaster, going to four different clusters of flip-flops. Each cluster is eventually connected to a single conjunction (`zp`, `nx`, `dj`, `bz`), which then go into four other conjunctions (`bh`, `vd`, `ns`, `dl`), which then go into a final conjunction (`zh`) before sending to `rx`. Therefore, if `rx` receives a single low pulse, that means `zh` received a high pulse from every input. Therefore, I just need to repeatedly push buttons and check when each input to `zh` sent a high pulse.
+
+My `push_btn` now takes an optional `track_inputs` that takes a node to track for its input pulses. Each time I send a pulse to `track_inputs`, I record the source node and the level of the pulse.
+
+```R
+push_btn <- function(graph, broadcaster, track_inputs = NULL) {
+  # ...
+  inputs <- list()
+  while (q$size() > 0) {
+    # ...
+    if (!is.null(out_level)) {
+      nbrs <- igraph::neighbors(graph, pulse$node, "out")
+      for (nbr in nbrs) {
+        new_pulse <- make_pulse(nbr, out_level, pulse$node)
+        q$push(new_pulse)
+        if (!is.null(track_inputs) && track_inputs == nbr) {
+          key <- igraph::vertex_attr(graph, "label", pulse$node)
+          if (!(key %in% names(inputs))) {
+            inputs[[key]] <- c()
+          }
+          inputs[[key]] <- c(inputs[[key]], out_level)
+        }
+      }
+      if (out_level) {
+        high_pulses <- high_pulses + length(nbrs)
+      } else {
+        low_pulses <- low_pulses + length(nbrs)
+      }
+    }
+  }
+  list(graph = graph, pulses = c(low_pulses, high_pulses), inputs = inputs)
+}
+```
+
+Then I record the cycle length for each input to `zh`.
+
+```R
+first_time_single_high <- list()
+i <- 1
+repeat {
+  result <- push_btn(graph, broadcaster, rx_parent)
+  graph <- result$graph
+  inputs <- result$inputs
+  for (p in rx_grandparents) {
+    key <- igraph::vertex_attr(graph, "label", p)
+    if (sum(inputs[[key]]) == 1) {
+      if (!(key %in% names(first_time_single_high))) {
+        first_time_single_high[[key]] <- as.bigz(i)
+      }
+    }
+  }
+  if (length(first_time_single_high) == length(rx_grandparents)) {
+    break
+  }
+  i <- i + 1
+}
+```
+
+Finally I just need to find the LCM of these cycle lengths.
+
+Is this completely safe? Probably not. If I see a single high pulse from an input to `zh` to $t$, that does not guarantee that a high pulse comes in every $kt$, which requires the subcircuit to be completely reset to the default state at time $t+1$. This probably has something to do with the structure of each subcircuit—probably it's a modular counter, and a high input is sent when all flip-flops are `on`? I didn't investigate this further, because the approach above already works.
+
+<Footer frontMatter={frontMatter} />

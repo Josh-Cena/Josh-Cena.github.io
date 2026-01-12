@@ -1,0 +1,75 @@
+---
+description: "Advent of Code 2023 - Day 14: Parabolic Reflector Dish. Written in R."
+tags:
+  - Arcade game
+  - Period finding
+year: 2023
+day: 14
+---
+
+# AoC 2023 D14: Parabolic Reflector Dish
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The implementation of `tilt` is straightforward: we iterate each column from the "bottom" (the bottom is defined by the tilting direction; for example a north tilt means we iterate from the first row to the last row, while a east tilt means we iterate from the last column to the first column). We keep two pointers: `expected_pos` is the position where the next `O` should go, and `j` is the current position. If we see an `O`, we move it to `expected_pos` and update `expected_pos`. If we see a `#`, we update `expected_pos` to be the next position after the wall.
+
+```R
+tilt <- function(mat, dir) {
+  m <- if (dir %in% c("N", "S")) nrow(mat) else ncol(mat)
+  n <- if (dir %in% c("N", "S")) ncol(mat) else nrow(mat)
+  for (i in seq_len(m)) {
+    expected_pos <- if (dir %in% c("N", "W")) 1 else n
+    for (j in if (dir %in% c("N", "W")) seq_len(n) else rev(seq_len(n))) {
+      cur_ch <- if (dir %in% c("N", "S")) mat[j, i] else mat[i, j]
+      if (cur_ch == "O") {
+        if (dir %in% c("N", "S")) {
+          mat[j, i] <- "."
+          mat[expected_pos, i] <- "O"
+        } else {
+          mat[i, j] <- "."
+          mat[i, expected_pos] <- "O"
+        }
+        expected_pos <- expected_pos + if (dir %in% c("N", "W")) 1 else -1
+      } else if (cur_ch == "#") {
+        expected_pos <- j + if (dir %in% c("N", "W")) 1 else -1
+      }
+    }
+  }
+  mat
+}
+```
+
+## Part 2
+
+Again, R has given me more headaches than it spares me 😅 Obviously, we want to find the period for the tilting cycles, which involves tracking the list of seen configurations, but R does not have hashing for matrices. I used the classic `new.env()` hack, which gives me a string map, but its keys can be at most 10,000 bytes long, and the matrix has exactly 10,000 elements, so I can't just naïvely stringify it as a key. Instead, I had to compress the matrix to 2 bits per cell (since there are only 3 states) and serialize it as base64. Anyway, all of this is really tedious and nothing remarkable.
+
+Once I have a hashmap implementation, the rest is standard period finding. If I see the same configuration twice, once at $t_0$ and once at $t_1$, then the period is $t_1 - t_0$, and the configuration at $T$ is the same as $(T - t_0) \bmod (t_1 - t_0) + t_0$. The time starts at `0`, but again because in R the first index is `1`, I had to add `1` when indexing into `loads`.
+
+```R
+seen <- new.env()
+its <- 0
+loads <- list()
+repeat {
+  key <- serialize_matrix(mat)
+  if (!is.null(seen[[key]])) {
+    last_it <- seen[[key]]
+    period <- its - last_it
+    break
+  }
+  loads[[its + 1]] <- load(mat)
+  seen[[key]] <- its
+  mat <- tilt(mat, "N")
+  mat <- tilt(mat, "W")
+  mat <- tilt(mat, "S")
+  mat <- tilt(mat, "E")
+  its <- its + 1
+}
+ending_pos <- (1000000000 - last_it) %% period + last_it
+cat(loads[[ending_pos + 1]], "\n")
+```
+
+<Footer frontMatter={frontMatter} />

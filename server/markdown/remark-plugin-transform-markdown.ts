@@ -125,7 +125,7 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
         createJSXElement("Canvas", [
           {
             name: "code",
-            value: `(ctx, width, height, textColor) => {\n${node.value}\n}`,
+            value: `(ctx, width, height, textColor, colorMode) => {\n${node.value}\n}`,
           },
           ...props.map(([name, value]) => ({
             name: name!,

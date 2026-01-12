@@ -1,0 +1,46 @@
+---
+description: "Advent of Code 2023 - Day 11: Cosmic Expansion. Written in R."
+tags:
+  - Puzzle
+year: 2023
+day: 11
+---
+
+# AoC 2023 D11: Cosmic Expansion
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+There's obviously no need to physically expand the matrix (which is proven infeasible for part 2 anyway). If we consider any pair of galaxies, their base horizontal distance is the difference in their column indices; this number then needs to be bumped up by `expansion - 1` for each empty column between them.
+
+```R
+distance <- abs(g1y - g2y) +
+  abs(g1x - g2x) +
+  (crossed_empty_rows + crossed_empty_cols) * (expansion - 1)
+```
+
+The next question is how to compute `crossed_empty_rows` and `crossed_empty_cols`. First we can get the indices of these empty rows and columns:
+
+```R
+empty_rows <- which(apply(mat, 1, function(x) all(x == ".")))
+```
+
+Then, `crossed_empty_rows` is the number of empty row indices that are between the two galaxies' row indices. This can be computed with `sum(empty_rows > min(g1x, g2x) & empty_rows < max(g1x, g2x))`. The same applies to columns. Because there are only about 10 empty rows/columns, this is efficient enough. If we have more, we can consider a prefix sum array that records how many empty rows/columns are up to each index, and then compute the number of empty rows/columns between two indices with a subtraction.
+
+As for enumerating pairs of galaxies, I just used a double for loop:
+
+```R
+galaxies <- which(mat == "#", arr.ind = TRUE)
+for (i in 1:(nrow(galaxies) - 1)) {
+  for (j in (i + 1):nrow(galaxies)) {
+    g1y <- galaxies[i, 1]
+    g1x <- galaxies[i, 2]
+    g2y <- galaxies[j, 1]
+    g2x <- galaxies[j, 2]
+    # ...
+  }
+}
+```
+
+<Footer frontMatter={frontMatter} />

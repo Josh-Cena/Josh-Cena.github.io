@@ -1,0 +1,210 @@
+---
+description: "Advent of Code 2023 - Day 5: If You Give A Seed A Fertilizer. Written in R."
+tags:
+  - Mathematics
+  - Puzzle
+year: 2023
+day: 5
+---
+
+# AoC 2023 D5: If You Give A Seed A Fertilizer
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+Let me reformulate the problem. There is a list of functions, each piecewise linear of the form
+
+$$
+f_i(x) = \begin{cases}
+x + d_1 & s_1 \leq x \leq e_1 \\
+x + d_2 & s_2 \leq x \leq e_2 \\
+\vdots \\
+x + d_n & s_n \leq x \leq e_n \\
+x & \text{otherwise}
+\end{cases}
+$$
+
+We need to map a list of numbers through these functions. To map a single number, we just need to check which piece applies to it, and add the corresponding $d_i$ to it. It's not a bad idea to use binary search, but since $n$ is small, a linear search suffices.
+
+```R
+map_seed <- function(seed, map) {
+  applicable <- map[map$from_start <= seed & map$from_end > seed, ]
+  if (nrow(applicable) == 0) {
+    # Identity mapping if there are no applicable pieces
+    return(seed)
+  }
+  seed + applicable$diff[1]
+}
+```
+
+(My input is parsed to a list of dataframes, each one containing columns `from_start`, `from_end`, and `diff`, which are $s_i$, $e_i$, and $d_i$ respectively.)
+
+## Part 2
+
+Now we need to map _ranges_ of numbers. Because the ranges are big, it's infeasible to map each number individually. However, there's a key observation: most points' relative order do not change. For example, if $p$ and $p+1$ are both in the target range and are mapped by the same function piece for every function, then their relative order never changes, and $p+1$ is always larger than $p$. When _can_ $p+1$ become a candidate for the minimum mapped value? Only when $p$ and $p+1$ are mapped by different pieces of some function—in other words, when $p$ is the ending point of one piece and $p+1$ is the starting point of another piece.
+
+So, consider one mapping step:
+
+```js canvas width=200 height=450
+ctx.strokeRect(90, 40, 20, 400);
+ctx.fillStyle = colorMode === "light" ? "#80808080" : "#80808080";
+ctx.fillRect(90, 60, 20, 50);
+ctx.fillStyle = colorMode === "light" ? "#60606080" : "#A0A0A080";
+ctx.fillRect(90, 110, 20, 50);
+ctx.fillStyle = colorMode === "light" ? "#40404080" : "#C0C0C080";
+ctx.fillRect(90, 160, 20, 50);
+ctx.fillStyle = colorMode === "light" ? "#20202080" : "#E0E0E080";
+ctx.fillRect(90, 310, 20, 100);
+ctx.setLineDash([3, 3]);
+ctx.strokeStyle = textColor;
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(90, 60);
+ctx.lineTo(30, 60);
+ctx.moveTo(90, 110);
+ctx.lineTo(30, 110);
+ctx.moveTo(90, 160);
+ctx.lineTo(30, 160);
+ctx.moveTo(90, 210);
+ctx.lineTo(30, 210);
+ctx.moveTo(90, 310);
+ctx.lineTo(30, 310);
+ctx.moveTo(90, 410);
+ctx.lineTo(30, 410);
+ctx.stroke();
+ctx.setLineDash([]);
+
+drawRange(80, 180, "red");
+drawRange(200, 260, "lime");
+drawRange(330, 400, "blue");
+ctx.fillStyle = textColor;
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
+ctx.font = "16px serif";
+ctx.fillText("Input", 60, 45);
+ctx.fillText("Function", 100, 25);
+ctx.fillText("Output", 140, 45);
+
+let offset = 0;
+drawRange2(
+  80,
+  110,
+  "#FF0000",
+  colorMode === "light" ? "#80808080" : "#80808080",
+);
+drawRange2(
+  110,
+  160,
+  "#FF0000",
+  colorMode === "light" ? "#60606080" : "#A0A0A080",
+);
+drawRange2(
+  160,
+  180,
+  "#FF0000",
+  colorMode === "light" ? "#40404080" : "#C0C0C080",
+);
+drawRange2(
+  200,
+  210,
+  "#00FF00",
+  colorMode === "light" ? "#40404080" : "#C0C0C080",
+);
+drawRange2(210, 260, "#00FF00", "#00000000");
+drawRange2(
+  330,
+  400,
+  "#0000FF",
+  colorMode === "light" ? "#20202080" : "#E0E0E080",
+);
+
+function drawRange(start, end, color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.arc(60, start, 5, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(60, end, 5, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(60, start);
+  ctx.lineTo(60, end);
+  ctx.stroke();
+}
+
+function blend(color, mask) {
+  const parseHexByte = (hex, i) => parseInt(hex.slice(i, i + 2), 16);
+  const br = parseHexByte(color, 1);
+  const bg = parseHexByte(color, 3);
+  const bb = parseHexByte(color, 5);
+  const fr = parseHexByte(mask, 1);
+  const fg = parseHexByte(mask, 3);
+  const fb = parseHexByte(mask, 5);
+  const a8 = parseHexByte(mask, 7);
+  const a = a8 / 255;
+  const blendChan = (f, b) => Math.round(f * a + b * (1 - a));
+  const rr = blendChan(fr, br);
+  const rg = blendChan(fg, bg);
+  const rb = blendChan(fb, bb);
+  const toHex2 = (n) => n.toString(16).padStart(2, "0").toUpperCase();
+  return `#${toHex2(rr)}${toHex2(rg)}${toHex2(rb)}`;
+}
+
+function drawRange2(start, end, color, mask) {
+  const blended = blend(color, mask);
+  console.log({ blended });
+  ctx.fillStyle = blended;
+  ctx.beginPath();
+  ctx.arc(140 + offset, start, 5, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(140 + offset, end, 5, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.strokeStyle = blended;
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(140 + offset, start);
+  ctx.lineTo(140 + offset, end);
+  ctx.stroke();
+  offset = offset === 0 ? 10 : 0;
+}
+```
+
+We can map each range one by one. First, we find all pieces that overlap with the input range. The first and last piece may not be fully covered by the range; they are clipped to the input range. For example, in the diagram above, the blue range is mapped by a single piece that's greater than the range, so the piece is clipped. We iterate through these pieces in order. It is guaranteed that the pieces are fully covered by the input range (although might not be vice versa). Therefore we can just apply the mapping to the endpoints of each piece to get its output range. If there's a gap between this piece and the previous one (including at the beginning and end of the input range—we can pretend there's a piece that ends immediately before the input range, and another that starts immediately after), the gap is filled by an identity mapping.
+
+```R
+map_range <- function(range, map) {
+  # All pieces that overlap with the range
+  applicable <- map[!(map$from_end <= range[1] | map$from_start >= range[2]), ]
+  n <- nrow(applicable)
+  if (n == 0) {
+    # Identity mapping if there are no applicable pieces
+    return(list(range))
+  }
+  # Clip the first and last pieces to the range
+  applicable[1, "from_start"] <- max(applicable[1, "from_start"], range[1])
+  applicable[n, "from_end"] <- min(applicable[n, "from_end"], range[2])
+  ranges <- list()
+  last_end <- range[1]
+  for (i in seq_len(n)) {
+    piece <- applicable[i, ]
+    if (piece$from_start > last_end) {
+      # Identity mapping if there's no corresponding piece
+      ranges <- push(ranges, c(last_end, piece$from_start))
+    }
+    ranges <- push(ranges, c(piece$from_start, piece$from_end) + piece$diff)
+    last_end <- piece$from_end
+  }
+  if (last_end < range[2]) {
+    ranges <- push(ranges, c(last_end, range[2]))
+  }
+  ranges
+}
+```
+
+<Footer frontMatter={frontMatter} />

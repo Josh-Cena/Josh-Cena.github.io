@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { useColorMode } from "@/context/ColorMode";
+import { useColorMode, type ColorMode } from "@/context/ColorMode";
 import styles from "./index.module.css";
 
 export default function Canvas({
@@ -13,6 +13,7 @@ export default function Canvas({
     w: number,
     h: number,
     textColor: string,
+    colorMode: ColorMode,
   ) => void;
   readonly width: number;
   readonly height: number;
@@ -33,7 +34,7 @@ export default function Canvas({
     ctx.strokeStyle = textColor;
     ctx.fillStyle = textColor;
     try {
-      code(ctx, width, height, textColor);
+      code(ctx, width, height, textColor, colorMode);
     } catch (e) {
       ctx.fillStyle = "red";
       ctx.font = "16px sans-serif";

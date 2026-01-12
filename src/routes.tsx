@@ -1,5 +1,6 @@
 import React from "react";
 import * as H from "react-helmet-async";
+import { normalizeRoute } from "./normalize-route";
 
 // The types are extremely messed up
 const { Helmet } = (H as unknown as { default?: typeof H }).default ?? H;
@@ -14,25 +15,14 @@ const pages = import.meta.glob<
 
 export const routes = Object.entries(pages)
   .map(([path, module]) => {
-    const name = /\.\/pages\/(?<name>.*)\.(?:tsx|mdx)$/u.exec(path)!.groups!
-      .name!;
+    const canonical = normalizeRoute(path.replace(/^\.\/pages\//u, ""));
     return {
-      path:
-        name === "404"
-          ? "*"
-          : `/${name.toLowerCase()}`
-              .replace(/\d{4}-\d{2}-\d{2}-/u, "")
-              .replace(/index$/u, ""),
+      path: canonical === "/404" ? "*" : canonical,
       RouteComp: React.lazy(async () => {
         const { default: Comp, ...rest } = await module();
         const metadata = (
           path.endsWith(".mdx") ? rest.frontMatter : rest.meta
-        ) as
-          | {
-              title: string;
-              description: string;
-            }
-          | undefined;
+        ) as { title: string; description: string } | undefined;
         if (!metadata) {
           return {
             default: () => (
@@ -52,6 +42,10 @@ export const routes = Object.entries(pages)
                     : "Joshua Chen"}
                 </title>
                 <meta name="description" content={metadata.description} />
+                <link
+                  rel="canonical"
+                  href={`https://joshcena.com${canonical}`}
+                />
               </Helmet>
               <Comp {...rest} />
             </>

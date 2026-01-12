@@ -1,0 +1,99 @@
+---
+description: "Advent of Code 2023 - Day 7: Camel Cards. Written in R."
+tags:
+  - Data structures
+  - Puzzle
+year: 2023
+day: 7
+---
+
+# AoC 2023 D7: Camel Cards
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I have to complain: every day, my struggle starts with parsing the input 😅
+
+```R
+data <- data.frame(matrix(
+  unlist(strsplit(data, " ")),
+  ncol = 2,
+  byrow = TRUE
+))
+data <- setNames(data, c("hand", "bid"))
+data$bid <- as.numeric(data$bid)
+```
+
+Then, we can calculate the type of each hand. R's `table()` function is very handy: it generates a frequency table of the values. Then we just need to check the number of unique values and the maximum count. I define each type as an integer, so I can easily compare them later.
+
+```R
+types <- list(
+  "five of a kind" = 6,
+  "four of a kind" = 5,
+  "full house" = 4,
+  "three of a kind" = 3,
+  "two pair" = 2,
+  "one pair" = 1,
+  "high card" = 0
+)
+
+hand_type <- function(max_count, card_counts) {
+  if (max_count == 5) {
+    types[["five of a kind"]]
+  } else if (max_count == 4) {
+    types[["four of a kind"]]
+  } else if (max_count == 3 && length(card_counts) == 2) {
+    types[["full house"]]
+  } else if (max_count == 3) {
+    types[["three of a kind"]]
+  } else if (max_count == 2 && length(card_counts) == 3) {
+    types[["two pair"]]
+  } else if (max_count == 2) {
+    types[["one pair"]]
+  } else {
+    types[["high card"]]
+  }
+}
+
+data$type <- sapply(data$hand, function(hand) {
+  card_counts <- table(unlist(strsplit(hand, "")))
+  max_count <- max(card_counts)
+  hand_type(max_count, card_counts)
+})
+```
+
+Then we can sort the hands by the type. Unfortunately, the ordering is relative and not absolute, so we need a comparator function. R's `order()` function can only sort by columns, so I wrote a `quicksort()` function that takes a custom comparator. Then we can sort the dataframe by row.
+
+{/* cSpell:ignore TJQKA */}
+
+```R
+data_sorted <- quicksort(
+  split(data, seq_len(nrow(data))),
+  compare_rows(unlist(strsplit("23456789TJQKA", "")))
+)
+data <- do.call(rbind, data_sorted)
+```
+
+Finally calculating the total score is just a matter of multiplying the bid by the rank. `sum(seq_len(nrow(data)) * data$bid)`
+
+## Part 2
+
+A useful observation is that there's a single choice for what jokers can become: the most frequent card. Because the `max_count` is the determining factor for the hand type (the more `max_count` is, the better the hand), we want to bump it up as much as possible. So we can just replace the jokers with the most frequent card in the hand.
+
+```R
+data$type <- sapply(data$hand, function(hand) {
+  card_counts <- table(unlist(strsplit(hand, "")))
+  j_count <- if ("J" %in% names(card_counts)) card_counts["J"] else 0
+  card_counts <- card_counts[names(card_counts) != "J"]
+  max_count <- (if (length(card_counts) > 0) max(card_counts) else 0) +
+    j_count
+  hand_type(max_count, length(card_counts))
+})
+```
+
+(Note that `length(card_counts)` may be `0` if the hand is all jokers, but that's fine because the `hand_type()` function will just check `max_count` and return `five of a kind` in that case.)
+
+<Footer frontMatter={frontMatter} />

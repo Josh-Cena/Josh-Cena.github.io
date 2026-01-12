@@ -1,5 +1,5 @@
 import Link from "@/components/Link";
-import PostData from "@/components/PostData";
+import PostData, { type FrontMatter } from "@/components/PostData";
 import styles from "./index.module.css";
 
 const modules = import.meta.glob<true, string, FrontMatter>("./**/*.mdx", {

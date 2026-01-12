@@ -1,0 +1,68 @@
+---
+description: "Advent of Code 2023 - Day 13: Point of Incidence. Written in R."
+tags:
+  - Geometry
+year: 2023
+day: 13
+---
+
+# AoC 2023 D13: Point of Incidence
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+If a shape is symmetric about a line $x=x_0$, it means that for each point $(x,y)$ on the shape, $(2x_0-x,y)$ is also on the shape. I cheated slightly: to do this in R, I just need to physically get the two halves of the shape, reflect one half, and check if they are equal. One half goes from `1` to `axis`, and the other half goes from `axis+1` to `n` (the axis of reflection sits between `axis` and `axis+1`). However I need to make sure their sizes are the same—for example, if the left half is smaller than the right half, then the right half actually can't go up to `n`, but only up to `2*axis`. Similarly, if the right half is smaller than the left half, then the left half can't go down to `1`, but only down to `2*axis+1-n` (the reflection of `n` about `axis`).
+
+```R
+is_symmetric_about <- function(data, axis, dir) {
+  n <- if (dir == "row") nrow(data) else ncol(data)
+  range_half <- axis:max(1, 2 * axis + 1 - n)
+  range_other <- (axis + 1):min(n, 2 * axis)
+  if (dir == "row") {
+    reflected_half <- data[range_half, , drop = FALSE]
+    other <- data[range_other, , drop = FALSE]
+  } else {
+    reflected_half <- data[, range_half, drop = FALSE]
+    other <- data[, range_other, drop = FALSE]
+  }
+  all(other == reflected_half)
+}
+```
+
+Then I can just iterate through all possible axes and check if the shape is symmetric about any of them.
+
+```R
+num_axes <- function(data) {
+  total <- 0
+  for (i in 1:(nrow(data) - 1)) {
+    if (is_symmetric_about(data, i, "row")) {
+      total <- total + 100 * i
+    }
+  }
+  for (i in 1:(ncol(data) - 1)) {
+    if (is_symmetric_about(data, i, "col")) {
+      total <- total + i
+    }
+  }
+  total
+}
+```
+
+## Part 2
+
+Given my cheating implementation of `is_symmetric_about`, I can easily find all mismatches between the two halves. Part 2 just requires to have at most 1 mismatch.
+
+```R
+is_symmetric_about <- function(data, axis, dir, tolerance) {
+  # ...
+  difference <- sum(other != reflected_half)
+  difference == tolerance
+}
+```
+
+Now part 1 is a special case of part 2 with `tolerance = 0`.
+
+<Footer frontMatter={frontMatter} />

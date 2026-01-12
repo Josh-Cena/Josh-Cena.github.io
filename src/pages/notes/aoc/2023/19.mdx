@@ -1,0 +1,130 @@
+---
+description: "Advent of Code 2023 - Day 19: Aplenty. Written in R."
+tags:
+  - BFS/DFS
+  - Geometry
+year: 2023
+day: 19
+---
+
+# AoC 2023 D19: Aplenty
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+I parse the input to a mapping from name to the rules, where each rule contains a `cond` and a `target`.
+
+```plain
+$px
+cond     target
+"a<2006" "qkq"
+"m>2090" "A"
+"TRUE"   "rfg"
+
+$pv
+cond     target
+"a>1716" "R"
+"TRUE"   "A"
+
+$lnx
+cond     target
+"m>1548" "A"
+"TRUE"   "A"
+```
+
+For part 1, I just use `eval`. It's actually trivial to parse these conditions, but what other opportunity do you have to use `eval`?
+
+```R
+apply_rule <- function(rule, rating) {
+  for (i in seq_len(nrow(rule))) {
+    dest <- rule[i, ]
+    if (eval(parse(text = dest$cond), envir = rating)) {
+      return(dest$target)
+    }
+  }
+  stop("No rule matched")
+}
+```
+
+Now I just repeatedly apply, see if I end up at `A`.
+
+```R
+res <- sapply(ratings, function(r) {
+  current <- "in"
+  while (current != "A" && current != "R") {
+    rule <- rules[[current]]
+    current <- apply_rule(rule, r)
+  }
+  current == "A"
+})
+```
+
+## Part 2
+
+Let's think about the process of applying these rules. Each time I go down a path, I know additional information about the input. For example, `in` → `qqz` → `hdj` → `pv` → `A` tells me that `s >= 1351`, `s < 2771 && m < 1801`, `m < 839`, `a < 1717`. Therefore, if we label each edge by its condition, then a path from `in` to `A` corresponds to a conjunction of conditions specifying a region of the input space. If we find all paths from `in` to `A`, we can take the union of these regions, which is the set of all inputs that lead to `A`.
+
+There's a pitfall: the conditions aren't mutually exclusive. However, they are applied in order, so if we took a later rule, we know that the earlier rules didn't apply—so the edge condition actually contains the negation of all earlier conditions. For example, the rule from `qqz` to `hdj` itself just says `m < 1801`, but the previous rule says `s > 2770` and it didn't apply, so we know `s < 2771`, so the edge has condition `s < 2771 && m < 1801`.
+
+I built a reverse graph, and then did a DFS from `A` to `in`.
+
+```R
+get_paths <- function(rules) {
+  paths <- list()
+  out_i <- 0
+  stk <- stack()
+  stk$push(list(node = "A", path = NULL, visited = "A"))
+
+  while (stk$size() > 0) {
+    st <- stk$pop()
+    node <- st$node
+    if (st$node == "in") {
+      out_i <- out_i + 1
+      paths[[out_i]] <- st$path[st$path != "TRUE"]
+      next
+    }
+    node_rules <- rules[[node]]
+    if (is.null(node_rules) || length(node_rules) == 0) {
+      next
+    }
+    sources <- names(node_rules)
+    for (s in sources) {
+      if (s %in% st$visited) {
+        next
+      }
+      edge_list <- node_rules[[s]]
+      for (conds in edge_list) {
+        stk$push(list(
+          node = s,
+          path = c(st$path, conds),
+          visited = c(st$visited, s)
+        ))
+      }
+    }
+  }
+
+  paths
+}
+```
+
+This generates a list of paths, such as:
+
+```plain
+[[1]]
+[1] "m>838"  "s<2771" "m<1801" "s>1350"
+
+[[2]]
+[1] "x>2662" "x>1415" "a<2006" "s<1351"
+
+[[3]]
+[1] "x<1416" "a<2006" "s<1351"
+
+[[4]]
+[1] "s>3448" "s>2770" "s>1350"
+```
+
+Now we just need to find the union of these regions. This is similar to [2021 day 22](/notes/aoc/2021/22): each path corresponds to a cuboid in 4D space (bounded by $[0, 4000]^4$), and we want to find the volume of the union of these cuboids. We can use the same approach as in that problem: maintain a list of "on" and "off" cuboids, and for each new cuboid, add it to the list and add the intersection with each existing cuboid with the opposite sign.
+
+<Footer frontMatter={frontMatter} />

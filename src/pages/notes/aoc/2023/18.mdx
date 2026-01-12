@@ -1,0 +1,187 @@
+---
+description: "Advent of Code 2023 - Day 18: Lavaduct Lagoon. Written in R."
+tags:
+  - Coordinate compression
+  - Geometry
+year: 2023
+day: 18
+---
+
+# AoC 2023 D18: Lavaduct Lagoon
+
+{/* cSpell:ignore lavaduct */}
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+This is just a reprise of [day 10](/notes/aoc/2023/10), but with a much larger grid. Again we want to find the number of grid cells in the polygon, but this time _including_ edge cells.
+
+The most naïve way to do this is to physically do the grid walking, mark each cell as a boundary, and then do a flood fill on the outside. This works for part 1, but for part 2, the coordinates are too big to physically represent the grid. What _didn't_ change, though, is the number of coordinates, so we can still do the same thing but with coordinate compression. This preserves the relative positions of the coordinates, just that now the distance between them is not the same as their index difference.
+
+However, there's a pitfall: we can't just compress the coordinates to the unique values, because then we lose information about adjacency. Consider the following shape:
+
+```plain
+# # # # # # #
+#           #
+#   # # #   #
+# # #   # # #
+```
+
+If we do a naïve coordinate compression, we get:
+
+```plain
+# # # #
+# # # #
+# # # #
+```
+
+There's no internal cell left! To fix this, we have to add "buffer" coordinates between each pair of coordinates. This means if we have coordinates `x1` and `x2` and no other coordinates between them, then they are compressed to `x1'` and `x1' + 2` (not `x1' + 1`). `x1' + 1` is the buffer coordinate, which is mapped from `x1 + 1`.
+
+```R
+r_compressor <- setNames(seq_len(num_r) * 2, as.character(all_r))
+c_compressor <- setNames(seq_len(num_c) * 2, as.character(all_c))
+r_decompressor <- rep(1, num_r * 2 + 1)
+c_decompressor <- rep(1, num_c * 2 + 1)
+r_decompressor[1] <- min_r - 1
+r_decompressor[seq_len(num_r) * 2] <- all_r
+r_decompressor[seq_len(num_r) * 2 + 1] <- all_r + 1
+c_decompressor[1] <- min_c - 1
+c_decompressor[seq_len(num_c) * 2] <- all_c
+c_decompressor[seq_len(num_c) * 2 + 1] <- all_c + 1
+```
+
+Now we can build the grid as `matrix(FALSE, nrow = num_r * 2 + 1, ncol = num_c * 2 + 1)`. Each cell represents its top-left corner's coordinate, so for example column 1 represents the x coordinate `min_c - 1`, column 2 represents the x coordinate `all_c[1]` (`min_c`), column 3 represents the x coordinate `all_c[1] + 1`, column 4 represents the x coordinate `all_c[2]`, and so on.
+
+```R
+cur_r <- 1
+cur_c <- 1
+for (i in seq_along(dirs)) {
+  dir <- dirs[i]
+  dist <- dists[i]
+  dr <- dir_to_diff[[dir]][1] * dist
+  dc <- dir_to_diff[[dir]][2] * dist
+  mat_r <- r_compressor[as.character(cur_r)]
+  mat_c <- c_compressor[as.character(cur_c)]
+  mat_r_2 <- r_compressor[as.character(cur_r + dr)]
+  mat_c_2 <- c_compressor[as.character(cur_c + dc)]
+  mat[mat_r:mat_r_2, mat_c:mat_c_2] <- TRUE
+  cur_r <- cur_r + dr
+  cur_c <- cur_c + dc
+}
+```
+
+Now we can do a flood fill from the outside. Note that there may be certain cells in this matrix that have physical area 0 because the buffer coordinate coincides with the next coordinate, but that's okay. It just means we have to keep a separate `visited` matrix instead of relying on whether `outside` is positive. The area of a single cell `(r, c)` is `(r_decompressor[r + 1] - r_decompressor[r]) * (c_decompressor[c + 1] - c_decompressor[c])`.
+
+```R
+outside <- matrix(0, nrow = nrow(mat), ncol = ncol(mat))
+q <- queue()
+q$push(c(1, 1))
+visited <- matrix(FALSE, nrow = nrow(mat), ncol = ncol(mat))
+while (q$size() > 0) {
+  pos <- q$pop()
+  for (dir in c("R", "L", "U", "D")) {
+    next_pos <- pos + dir_to_diff[[dir]]
+    r <- next_pos[1]
+    c <- next_pos[2]
+    if (
+      r >= 1 &&
+        r <= nrow(mat) &&
+        c >= 1 &&
+        c <= ncol(mat) &&
+        !mat[r, c] &&
+        !visited[r, c]
+    ) {
+      r_decompressed <- r_decompressor[[r]]
+      c_decompressed <- c_decompressor[[c]]
+      next_r <- if (r == nrow(mat)) max_r + 2 else r_decompressor[[r + 1]]
+      next_c <- if (c == ncol(mat)) max_c + 2 else c_decompressor[[c + 1]]
+      area <- (next_r - r_decompressed) * (next_c - c_decompressed)
+      outside[r, c] <- area
+      visited[r, c] <- TRUE
+      q$push(next_pos)
+    }
+  }
+}
+```
+
+Finally we can sum up these outside cells and subtract from the total area. The total area is `(max_r - min_r + 3) * (max_c - min_c + 3)` because we added a buffer of 1 on all sides.
+
+```R
+total <- as.bigz(max_r - min_r + 3) * as.bigz(max_c - min_c + 3)
+outside <- as.bigz(outside)
+cat(as.character(total - sum(outside)), "\n")
+```
+
+So much for the algorithmic solution. The smart solution is, again, to use the [Shoelace formula](https://en.wikipedia.org/wiki/Shoelace_formula) to compute the area of the polygon directly from the coordinates. This is much faster and doesn't build a physical grid at all. But again, like day 10, we need to adjust edge cells. This time, we wish to _include_ them.
+
+```js canvas width=360 height=320
+ctx.fillStyle = "#39CAC480";
+ctx.beginPath();
+ctx.moveTo(1 * 40, 1 * 40);
+ctx.lineTo(8 * 40, 1 * 40);
+ctx.lineTo(8 * 40, 7 * 40);
+ctx.lineTo(5 * 40, 7 * 40);
+ctx.lineTo(5 * 40, 5 * 40);
+ctx.lineTo(7 * 40, 5 * 40);
+ctx.lineTo(7 * 40, 2 * 40);
+ctx.lineTo(2 * 40, 2 * 40);
+ctx.lineTo(2 * 40, 5 * 40);
+ctx.lineTo(4 * 40, 5 * 40);
+ctx.lineTo(4 * 40, 7 * 40);
+ctx.lineTo(1 * 40, 7 * 40);
+ctx.closePath();
+ctx.stroke();
+ctx.fill();
+
+ctx.strokeStyle = "#80808060";
+ctx.beginPath();
+for (let i = 0.5; i < 9.5; i++) {
+  ctx.moveTo(i * 40, 0);
+  ctx.lineTo(i * 40, 8 * 40);
+}
+for (let i = 0.5; i < 8.5; i++) {
+  ctx.moveTo(0, i * 40);
+  ctx.lineTo(9 * 40, i * 40);
+}
+ctx.stroke();
+
+ctx.fillStyle = "#CA7D3980";
+ctx.beginPath();
+ctx.moveTo(0.5 * 40, 0.5 * 40);
+ctx.lineTo(8.5 * 40, 0.5 * 40);
+ctx.lineTo(8.5 * 40, 7.5 * 40);
+ctx.lineTo(5 * 40, 7.5 * 40);
+ctx.lineTo(5 * 40, 7 * 40);
+ctx.lineTo(8 * 40, 7 * 40);
+ctx.lineTo(8 * 40, 1 * 40);
+ctx.lineTo(1 * 40, 1 * 40);
+ctx.lineTo(1 * 40, 7 * 40);
+ctx.lineTo(4 * 40, 7 * 40);
+ctx.lineTo(4 * 40, 7.5 * 40);
+ctx.lineTo(0.5 * 40, 7.5 * 40);
+ctx.fill();
+ctx.beginPath();
+ctx.moveTo(2 * 40, 2 * 40);
+ctx.lineTo(7 * 40, 2 * 40);
+ctx.lineTo(7 * 40, 5 * 40);
+ctx.lineTo(5 * 40, 5 * 40);
+ctx.lineTo(5 * 40, 4.5 * 40);
+ctx.lineTo(6.5 * 40, 4.5 * 40);
+ctx.lineTo(6.5 * 40, 2.5 * 40);
+ctx.lineTo(2.5 * 40, 2.5 * 40);
+ctx.lineTo(2.5 * 40, 4.5 * 40);
+ctx.lineTo(4 * 40, 4.5 * 40);
+ctx.lineTo(4 * 40, 5 * 40);
+ctx.lineTo(2 * 40, 5 * 40);
+ctx.fill();
+ctx.fillRect(4 * 40, 4.5 * 40, 40, 120);
+```
+
+Again, most edges add an extra half cell. This time, the 8 convex corners add an extra 3/4 cell, while the 4 reflex corners add an extra 1/4 cell. So the area is:
+
+$$
+N = A + \frac{1}{2} E + 8\cdot \frac{1}{4} - 4 \cdot \frac{1}{4} = A + \frac{1}{2} E + 1
+$$
+
+<Footer frontMatter={frontMatter} />

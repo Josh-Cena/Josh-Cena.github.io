@@ -14,6 +14,7 @@ await import("prismjs/components/prism-bash");
 await import("prismjs/components/prism-diff");
 await import("prismjs/components/prism-haskell");
 await import("prismjs/components/prism-python");
+await import("prismjs/components/prism-r");
 
 export default function App(): JSX.Element {
   return (

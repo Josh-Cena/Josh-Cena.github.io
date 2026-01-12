@@ -1,0 +1,41 @@
+---
+description: "Advent of Code 2023 - Day 6: Wait For It. Written in R."
+tags:
+  - Mathematics
+year: 2023
+day: 6
+---
+
+# AoC 2023 D6: Wait For It
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+If I held the button for $x$ milliseconds to reach speed $x$, then the distance traveled in $t$ milliseconds is $(t - x)\cdot x$. I need this to be more than $d$. Rearranging gives $x^2 - tx + d < 0$, which means I can't win if $\Delta = t^2 - 4d < 0$. Otherwise, I need $(t - \sqrt{\Delta})/2 < x < (t + \sqrt{\Delta})/2$. I just need to count the integers in this range.
+
+The number of integers in the exclusive range $(a, b)$ is $\max(0, \lceil b \rceil - \lfloor a \rfloor - 1)$. Why? Because $[\lceil b \rceil, \infty)$ and $(-\infty, \lfloor a \rfloor]$ are the integers outside the range.
+
+```R
+winning_vals <- function(row) {
+  t <- row[["times"]]
+  d <- row[["distances"]]
+  discriminant <- t^2 - 4 * d
+  if (discriminant < 0) {
+    return(0)
+  }
+  x1 <- (t - sqrt(discriminant)) / 2
+  x2 <- (t + sqrt(discriminant)) / 2
+  ceiling(x2) - floor(x1) - 1
+}
+```
+
+Part 1 is the product of applying this function to each row.
+
+## Part 2
+
+Because we aren't doing simulations, just calculations, making the input larger doesn't change anything. Previously it was `wins <- apply(parsed_data, 1, winning_vals)`; now it's `wins <- winning_vals(list(times = times, distances = distances))`.
+
+<Footer frontMatter={frontMatter} />

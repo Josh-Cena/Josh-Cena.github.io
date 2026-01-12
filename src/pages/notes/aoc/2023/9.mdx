@@ -1,0 +1,51 @@
+---
+description: "Advent of Code 2023 - Day 9: Mirage Maintenance. Written in R."
+tags:
+  - Mathematics
+year: 2023
+day: 9
+---
+
+# AoC 2023 D9: Mirage Maintenance
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+It seems that every year there's always a problem where I cheat; for example [2020 day 18](/notes/aoc/2020/18) is done with Python's built-in `ast` module. For this one, we are just fitting the data to a polynomial, so I just use `lm`. Language choice rewards solutions :)
+
+For why this is a polynomial fitting problem, realize that every time we compute the neighbor differences, we are essentially differentiating it because the resulting array is $\frac{\Delta y}{\Delta x}$ where $\Delta x$ is always 1. We repeatedly differentiate until we get all zeros, which means the function becomes constant after a certain number of differentiations, which means it's a polynomial of degree equal to the number of differentiations minus one.
+
+$$
+\begin{aligned}
+f(x) &= a_k x^k + a_{n-1} x^{k-1} + \cdots + a_1 x + a_0 \\
+f^{(1)}(x) &= k a_k x^{k-1} + (k-1) a_{k-1} x^{k-2} + \cdots + a_1 \\
+f^{(2)}(x) &= k (k-1) a_k x^{k-2} + (k-1)(k-2) a_{k-1} x^{k-3} + \cdots + 2a_2 \\
+&\vdots \\
+f^{(k)}(x) &= k! a_k \\
+f^{(k+1)}(x) &= 0
+\end{aligned}
+$$
+
+When actually fitting the data, it doesn't hurt to make the model more permissive by allowing higher order terms; since it's guaranteed to be a perfect fit, the extra terms will just be zero. Each differentiation reduces the length by 1, and we need at least 1 number left (which is zero) to assert that the differences are all zero, so we can at most differentiate `length(data) - 1` times, which means the polynomial can at most have degree `length(data) - 2`. After obtaining the model, the next value is just plugging in `length(data) + 1` into the model.
+
+```R
+predict_next <- function(seq) {
+  n <- length(seq)
+  x <- 1:n
+  fit <- lm(seq ~ poly(x, n - 2))
+  predict(fit, newdata = data.frame(x = n + 1))[[1]]
+}
+```
+
+## Part 2
+
+Predicting the previous value just requires plugging in `x = 0` instead of `x = n + 1`. I added a `round` because a lot of these values are close to 0 and have some floating point error, and the problem guarantees that the answer is an integer.
+
+```R
+round(predict(fit, newdata = data.frame(x = 0))[[1]])
+```
+
+<Footer frontMatter={frontMatter} />

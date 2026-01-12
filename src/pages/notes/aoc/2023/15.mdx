@@ -1,0 +1,59 @@
+---
+description: "Advent of Code 2023 - Day 15: Lens Library. Written in R."
+tags:
+  - Data structures
+year: 2023
+day: 15
+---
+
+# AoC 2023 D15: Lens Library
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+This is like Java string hashing, except that the base is 17 instead of 31, and the modulus is $2^8$ instead of $2^{32}$ (since in part 2 we only have 256 bins). It's kind of fun because I didn't know how to get the ASCII code for a character; turned out you have to use `charToRaw` and then `as.integer`.
+
+```R
+string_hash <- function(s) {
+  codes <- as.integer(charToRaw(s))
+  res <- 0
+  for (ch in codes) {
+    res <- ((res + ch) * 17) %% 256
+  }
+  res
+}
+```
+
+## Part 2
+
+It's just a really standard hashmap; absolutely nothing to see here. In fact it's simpler than real hashmaps because there's no rehashing. I faithfully implemented the spec, using a list of 256 lists.
+
+```R
+boxes <- replicate(256, list(), simplify = FALSE)
+for (part in parts) {
+  label <- gsub("[-=].*", "", part)
+  label_hash <- string_hash(label)
+  ind <- label_hash + 1
+  op <- gsub("[^-=]", "", part)
+  if (op == "=") {
+    focal_length <- as.numeric(gsub(".*=", "", part))
+    boxes[[ind]][[label]] <- focal_length
+  } else {
+    boxes[[ind]][[label]] <- NULL
+  }
+}
+```
+
+Now I can get the powers:
+
+```R
+powers <- sapply(seq_along(boxes), function(i) {
+  box <- boxes[[i]]
+  i * sum(unlist(box) * seq_along(box))
+})
+```
+
+<Footer frontMatter={frontMatter} />

@@ -4,6 +4,12 @@ const formatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
+export interface FrontMatter {
+  title: string;
+  description: string;
+  date: string;
+}
+
 export default function PostData({
   frontMatter,
 }: {

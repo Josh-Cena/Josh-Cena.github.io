@@ -1,0 +1,216 @@
+---
+description: "Advent of Code 2023 - Day 10: Pipe Maze. Written in R."
+tags:
+  - Grid walking
+  - Geometry
+year: 2023
+day: 10
+---
+
+# AoC 2023 D10: Pipe Maze
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+It's a straightforward grid walking problem: just follow the characters. The starting point doesn't have a known direction, but it turns out that there are only two possible directions (the other two don't have connected pipes), so we can pick one of them. I trace the loop, and record each corner. Each time, I determine the next direction by looking at the current character and the direction I'm coming from.
+
+There's one gotcha: we didn't test if `S` itself is a corner. One way to do this is to check which two directions are valid from `S`, and if they are not opposite to each other, then `S` is a corner too. Another one (which IMO is simpler) is to just check if we come back to `S` in a different direction.
+
+```R
+trace_loop <- function(mat) {
+  start <- which(mat == "S", arr.ind = TRUE)
+  dir <- if (mat[start[1], start[2] + 1] %in% c("-", "J", "7")) {
+    c(1, 0)
+  } else if (mat[start[1], start[2] - 1] %in% c("-", "F", "L")) {
+    c(-1, 0)
+  } else if (mat[start[1] + 1, start[2]] %in% c("|", "L", "J")) {
+    c(0, 1)
+  } else if (mat[start[1] - 1, start[2]] %in% c("|", "F", "7")) {
+    c(0, -1)
+  } else {
+    stop("Invalid start")
+  }
+  cur <- start + dir
+  corners <- list()
+  while (!all(cur == start)) {
+    if (mat[cur[1], cur[2]] %in% c("L", "J", "7", "F")) {
+      corners <- push(corners, cur)
+    }
+    dir <- if (mat[cur[1], cur[2]] %in% c("-", "|")) {
+      dir
+    } else if (mat[cur[1], cur[2]] == "L") {
+      if (dir[1] == 0) c(-1, 0) else c(0, 1)
+    } else if (mat[cur[1], cur[2]] == "J") {
+      if (dir[1] == 0) c(-1, 0) else c(0, -1)
+    } else if (mat[cur[1], cur[2]] == "7") {
+      if (dir[1] == 0) c(1, 0) else c(0, -1)
+    } else if (mat[cur[1], cur[2]] == "F") {
+      if (dir[1] == 0) c(1, 0) else c(0, 1)
+    } else {
+      stop("Invalid move")
+    }
+    cur <- cur + dir
+  }
+  if (!all(dir == init_dir)) {
+    # If we came back to the start in a different direction, then start
+    # is actually a corner too.
+    corners <- push(corners, start)
+  }
+  corners
+}
+```
+
+Now I can calculate the total loop perimeter. The point farthest from the starting point is just half of the length.
+
+```R
+loop_len <- 0
+for (i in seq_along(corners)) {
+  c1 <- corners[[i]]
+  c2 <- corners[[if (i == length(corners)) 1 else i + 1]]
+  loop_len <- loop_len + abs(c1[1] - c2[1]) + abs(c1[2] - c2[2])
+}
+cat(loop_len / 2, "\n")
+```
+
+## Part 2
+
+Part 1 found the perimeter; natural part 2 finds the enclosed area. I will offer two solutions, one algorithmic and one mathematical.
+
+The first instinct is to do a flood fill from outside, and count how many cells are neither "outside" nor "loop". But there's a problem: there are certain kinds of openings in the loop that the matrix representation cannot capture, such as this:
+
+```plain
+..........
+.S------7.
+.|F----7|.
+.||OOOO||.
+.||OOOO||.
+.|L-7F-J|.
+.|II||II|.
+.L--JL--J.
+..........
+```
+
+Here, the `is_loop` matrix will record the opening in the middle as a big block of `TRUE`, disallowing the flood fill to reach the inner area. This is fixable by expanding each step from 1 cell to 2 cells, so that the opening has an empty cell in the middle. However this seems complicated, so I went another solution: ray tracing. I shoot rays from each row, and alter between "inside" and "outside" whenever I hit a loop cell. There are a lot of cases to consider:
+
+- If I hit `|`, then I have cut across the boundary, so I flip the inside/outside state.
+- If I hit `F-----7` or `L-----J`, then actually the inside state doesn't change because I haven't cut across the boundary.
+- If I hit `F-----J` or `L-----7`, then I _have_ cut across the boundary.
+
+<details>
+<summary>So it's just a bunch of spaghetti.</summary>
+
+```R
+enclosed <- 0
+for (i in seq_len(nrow(mat))) {
+  inside <- FALSE
+  j <- 1
+  while (j <= ncol(mat)) {
+    if (is_loop[i, j]) {
+      if (mat[i, j] %in% c("|")) {
+        inside <- !inside
+      } else if (mat[i, j] == "L") {
+        j <- j + 1
+        while (mat[i, j] == "-") {
+          j <- j + 1
+        }
+        if (mat[i, j] == "7") {
+          inside <- !inside
+        }
+      } else if (mat[i, j] == "F") {
+        j <- j + 1
+        while (mat[i, j] == "-") {
+          j <- j + 1
+        }
+        if (mat[i, j] == "J") {
+          inside <- !inside
+        }
+      }
+    } else if (inside) {
+      enclosed <- enclosed + 1
+    }
+    j <- j + 1
+  }
+}
+```
+
+</details>
+
+But there's a smarter mathematical solution. I can use the [Shoelace formula](https://en.wikipedia.org/wiki/Shoelace_formula) to get the area of the polygon directly from the coordinates of the corners:
+
+$$
+A = \frac{1}{2} \left| \sum_{i=1}^{n} (x_i y_{i+1} - x_{i+1} y_i) \right|
+$$
+
+where $x_{n+1} = x_1$ and $y_{n+1} = y_1$. We need some adjustments though; consider the same shape above:
+
+```js canvas width=360 height=320
+ctx.beginPath();
+ctx.moveTo(1 * 40, 1 * 40);
+ctx.lineTo(8 * 40, 1 * 40);
+ctx.lineTo(8 * 40, 7 * 40);
+ctx.lineTo(5 * 40, 7 * 40);
+ctx.lineTo(5 * 40, 5 * 40);
+ctx.lineTo(7 * 40, 5 * 40);
+ctx.lineTo(7 * 40, 2 * 40);
+ctx.lineTo(2 * 40, 2 * 40);
+ctx.lineTo(2 * 40, 5 * 40);
+ctx.lineTo(4 * 40, 5 * 40);
+ctx.lineTo(4 * 40, 7 * 40);
+ctx.lineTo(1 * 40, 7 * 40);
+ctx.closePath();
+ctx.stroke();
+
+ctx.strokeStyle = "#80808060";
+ctx.beginPath();
+for (let i = 0.5; i < 9.5; i++) {
+  ctx.moveTo(i * 40, 0);
+  ctx.lineTo(i * 40, 8 * 40);
+}
+for (let i = 0.5; i < 8.5; i++) {
+  ctx.moveTo(0, i * 40);
+  ctx.lineTo(9 * 40, i * 40);
+}
+ctx.stroke();
+ctx.fillStyle = "#39CAC480";
+ctx.fillRect(1.5 * 40, 5.5 * 40, 80, 40);
+ctx.fillRect(5.5 * 40, 5.5 * 40, 80, 40);
+ctx.fillStyle = "#CA7D3980";
+ctx.fillRect(1 * 40, 1 * 40, 40, 180);
+ctx.fillRect(2 * 40, 1 * 40, 200, 40);
+ctx.fillRect(7 * 40, 1 * 40, 40, 180);
+ctx.fillRect(2 * 40, 5 * 40, 80, 20);
+ctx.fillRect(3.5 * 40, 5.5 * 40, 20, 60);
+ctx.fillRect(1 * 40, 6.5 * 40, 100, 20);
+ctx.fillRect(1 * 40, 5.5 * 40, 20, 40);
+ctx.fillRect(5 * 40, 5 * 40, 80, 20);
+ctx.fillRect(5 * 40, 5.5 * 40, 20, 60);
+ctx.fillRect(5.5 * 40, 6.5 * 40, 100, 20);
+ctx.fillRect(7.5 * 40, 5.5 * 40, 20, 40);
+```
+
+It only fully contains 4 cells (cyan); the other cells (orange) are partially contained and shouldn't count towards the total area. To fix this, realize that each edge cell contributes half of its area to this excluded border area, except 4 reflex corners that contribute 3/4 and 8 convex corners that contribute 1/4, so the area is:
+
+$$
+N = A - \frac{1}{2} E - \frac{1}{4} \cdot 4 + \frac{1}{4} \cdot 8 = A - \frac{1}{2} E + 1
+$$
+
+Is this $+1$ a coincidence? No. Recall that a closed curve must have total turn $360^\circ$. Each corner that contributes 1/4 turns $90^\circ$, while those that contribute 3/4 turns $-90^\circ$. Therefore $N_{90} - N_{270}=4$. Alternatively, we can invoke [Pick's theorem](https://en.wikipedia.org/wiki/Pick%27s_theorem) to get the same result.
+
+Anyway, given the corners, we can calculate the area as follows:
+
+```R
+enclosed <- 0
+loop_len <- 0
+for (i in seq_along(corners)) {
+  c1 <- corners[[i]]
+  c2 <- corners[[if (i == length(corners)) 1 else i + 1]]
+  enclosed <- enclosed + c1[1] * c2[2] - c2[1] * c1[2]
+  loop_len <- loop_len + abs(c1[1] - c2[1]) + abs(c1[2] - c2[2])
+}
+cat(abs(enclosed) / 2 - loop_len / 2 + 1, "\n")
+```
+
+<Footer frontMatter={frontMatter} />

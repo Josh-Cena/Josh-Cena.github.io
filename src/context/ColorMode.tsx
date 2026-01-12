@@ -6,7 +6,7 @@ import React, {
   useMemo,
 } from "react";
 
-type ColorMode = "light" | "dark";
+export type ColorMode = "light" | "dark";
 
 type ColorModeContext = {
   colorMode: ColorMode;

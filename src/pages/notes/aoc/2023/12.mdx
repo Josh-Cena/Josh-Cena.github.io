@@ -1,0 +1,69 @@
+---
+description: "Advent of Code 2023 - Day 12: Hot Springs. Written in R."
+tags:
+  - Dynamic programming
+year: 2023
+day: 12
+---
+
+# AoC 2023 D12: Hot Springs
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+Because we are making a series of decisions (do I fill the `?` with `#` or `.`?) and each one determines what decisions we can make next (in order to satisfy the arrangement given), this strongly suggests dynamic programming.
+
+We iterate through each spring in the condition records and build groups one by one. The state consists of the current group's index $j$ ($1\le j\le m$, $m$ is the number of groups) and size $s$ ($0\le s\le \max(\text{arrangements})$). $s=0$ indicates an "idle" state, i.e., not actively adding springs to the current group. We count how many ways there are to reach each state (see [2021 day 6](/notes/aoc/2021/6)).
+
+Initially we start at state $j=1, s=0$ (want to construct the first group, but no springs added yet). Because in R indices start at 1, all indices into `dp` are shifted by 1, so `1, 1` corresponds to $j=1, s=0$.
+
+```R
+dp <- matrix(0, nrow = m + 1, ncol = max_seg_len + 1)
+dp[1, 1] <- 1
+```
+
+Given a current state, we can do one of the following transitions:
+
+- If the current spring may be operational (`.` or `?`), and the current group size is positive (i.e., the group is active), then we close the current group. However, if the current group size is not equal to the expected size, then it's not a valid place to close, and this state contributes nothing. Otherwise, this state contributes its number to the next state $j'=j+1,s'=0$.
+- If the current spring may be operational (`.` or `?`), and the current group size is zero (i.e., the group is idle), then we are idle and should stay idle. This state contributes its number to the next state $j'=j,s'=0$.
+- If the current spring may be damaged (`#` or `?`), then we add it to the current group. However, if the current group size is already at the expected size, or if we have already built enough groups, then this is invalid and contributes nothing. Otherwise, this state contributes its number to the next state $j'=j,s'=s+1$.
+
+```R
+for (ch in cur_springs) {
+  next_dp <- matrix(0, nrow = m + 1, ncol = max_seg_len + 1)
+
+  for (j in 1:(m + 1)) {
+    for (s in 0:max_seg_len) {
+      ways <- dp[j, s + 1]
+      if (ways == 0) {
+        # Unreachable state
+        next
+      }
+      if (ch == "." || ch == "?") {
+        if (j <= m && s == expected_counts[j]) {
+          next_dp[j + 1, 0 + 1] <- next_dp[j + 1, 0 + 1] + ways
+        } else if (s == 0) {
+          next_dp[j, 0 + 1] <- next_dp[j, 0 + 1] + ways
+        }
+      }
+      if (ch == "#" || ch == "?") {
+        if (j <= m && s < expected_counts[j]) {
+          next_dp[j, s + 1 + 1] <- next_dp[j, s + 1 + 1] + ways
+        }
+      }
+    }
+  }
+  dp <- next_dp
+}
+```
+
+The valid ending states are those where we have built all $m$ groups and the $m+1$-th group is idle ($j=m+1, s=0$), or we have built $m-1$ groups and the $m$-th group is active with the expected size ($j=m, s=\text{expected\_counts}[m]$). We sum these two states to get the final answer.
+
+```R
+dp[m + 1, 0 + 1] + dp[m, expected_counts[m] + 1]
+```
+
+Parts 1 and 2 are exactly the same, except that in part 2 there's some preprocessing with the input, and the count is so big that we need `gmp` again for the total. (But each `count_dp` still fits in a 32-bit integer.)
+
+<Footer frontMatter={frontMatter} />

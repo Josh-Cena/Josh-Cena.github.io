@@ -1,0 +1,50 @@
+---
+description: "Advent of Code 2023 - Day 4: Scratchcards. Written in R."
+tags: []
+year: 2023
+day: 4
+---
+
+# AoC 2023 D4: Scratchcards
+
+import { FrontMatter, Footer } from "../_components";
+
+<FrontMatter frontMatter={frontMatter} />
+
+## Part 1
+
+The score for each line is just the number of `numbers` that are in `winning`.
+
+```R
+num_matches <- function(line) {
+  winning <- line$winning
+  numbers <- line$numbers
+  length(numbers[numbers %in% winning])
+}
+```
+
+Because no match = 0, 1 match = 1 = $2^0$, $n$ matches = $2^{n-1}$, the score can be calculated as $\lfloor 2^{num\_matches(line) - 1}\rfloor$ (floor is needed because $2^{0-1} = 0.5$).
+
+```R
+scores <- sapply(lines, num_matches)
+scores <- floor(2^(scores - 1))
+cat(sum(scores), "\n")
+```
+
+## Part 2
+
+We can do bin counting of each scratchcard. Each card increments the $n$ cards following it by its own count.
+
+```R
+counts <- rep(1, length(lines))
+for (i in seq_along(scores)) {
+  if (scores[i] > 0) {
+    for (j in (i + 1):(i + scores[i])) {
+      counts[j] <- counts[j] + counts[i]
+    }
+  }
+}
+cat(sum(counts), "\n")
+```
+
+<Footer frontMatter={frontMatter} />
