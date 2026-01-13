@@ -21,6 +21,7 @@ chsh
 closedness
 cmyk
 codomain
+collinearity
 conds
 conlang
 copiable
@@ -54,6 +55,7 @@ eshost
 eslintcache
 estree
 esvu
+failwith
 fianchetto
 flattenable
 fliplr
@@ -94,6 +96,7 @@ letterlike
 lext
 luo
 márquez's
+mapi
 mathbb
 mathbf
 mathcal
@@ -125,6 +128,7 @@ nrow
 nsteps
 numpy
 nums
+ocamlformat
 opam
 overengineered
 pandoc
