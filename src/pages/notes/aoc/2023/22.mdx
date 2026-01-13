@@ -1,0 +1,107 @@
+---
+tags:
+  - BFS/DFS
+---
+
+# Sand Slabs
+
+## Part 1
+
+This problem just requires some insight about the way the sand slabs depend on each other. Each slab is supported by some slabs directly below it, and supports slabs directly above it. If we can build this dependency graph, then we can easily answer the question of which slabs can be disintegrated: they are the ones that have no slabs above them, or the slabs above them are supported by other slabs.
+
+```R
+blocks <- create_static_stack(data)
+total <- sum(sapply(blocks, function(x) {
+  all(sapply(blocks[x$supports], function(x) length(x$supported_by) > 1))
+}))
+```
+
+The question is how to construct this dependency graph. My approach is to stack them bottom-up. Each time, I drop the one with the lowest bottom face, and find the highest top face that intersects with it. This will be the one that supports it.
+
+So the first step is to sort the slabs by their bottom faces, and the already-stacked slabs by their top faces:
+
+```R
+blocks <- blocks[order(sapply(blocks, function(x) x$start[3]))]
+order_by_top <- order(
+  sapply(blocks[1], function(x) x$end[3]),
+  decreasing = TRUE
+)
+```
+
+I assume that `blocks[1]` is already touching the ground, so I start with dropping `blocks[2]`. `eventual_z` records the top face of the first supporting slab. However, I can't immediately stop when I find the first supporting slab, because there may be other slabs that are also supporting it. Therefore I only stop the search when I find a slab whose top face is _below_ `eventual_z`. I start `eventual_z` at `-1`, so that by default the loop runs to the end. Then, when I find the first supporting slab, I update `eventual_z` to its top face, and drop the current slab down to just above it.
+
+Ideally, `order_by_top` should be updated by "sinking" `blocks[[i]]` down into the existing `order_by_top` list, but I just re-sort the whole list for simplicity. There are only 1233 slabs, so an extra log(n) won't hurt.
+
+```R
+for (i in 2:length(blocks)) {
+  eventual_z <- -1
+  for (j in order_by_top) {
+    bi <- blocks[[i]]
+    bj <- blocks[[j]]
+    if (bj$end[3] < eventual_z) {
+      break
+    }
+    if (bi$start[3] <= bj$end[3] || !x_y_intersect(bi, bj)) {
+      next
+    }
+    if (eventual_z == -1) {
+      eventual_z <- bj$end[3]
+      diff <- bi$start[3] - eventual_z - 1
+      blocks[[i]]$start[3] <- bi$start[3] - diff
+      blocks[[i]]$end[3] <- bi$end[3] - diff
+      order_by_top <- order(
+        sapply(blocks[1:i], function(x) x$end[3]),
+        decreasing = TRUE
+      )
+    }
+    blocks[[i]]$supported_by <- c(bi$supported_by, j)
+    blocks[[j]]$supports <- c(bj$supports, i)
+  }
+}
+```
+
+(By the way, in R, objects are copy-on-write, so we can't save `bi` once and reuse it for all `j`, because we are going to update `blocks[[i]]` in the loop. We have to re-assign `bi` every time. Also we have to assign to `blocks[[i]]` instead of `bi`, because otherwise the changes won't be reflected in the original list.)
+
+Finally, if no slab is below the current slab, then it is supported by the ground, so we set `eventual_z` to 0.
+
+```R
+if (eventual_z == -1) {
+  eventual_z <- 0
+  diff <- blocks[[i]]$start[3] - eventual_z - 1
+  blocks[[i]]$start[3] <- blocks[[i]]$start[3] - diff
+  blocks[[i]]$end[3] <- blocks[[i]]$end[3] - diff
+  order_by_top <- order(
+    sapply(blocks[1:i], function(x) x$end[3]),
+    decreasing = TRUE
+  )
+}
+```
+
+## Part 2
+
+Given the dependency graph, if we have a list of slabs disintegrated/falling, we can know what slabs will fall next by checking which slabs are only supported by the ones that are disintegrated/falling. I do this with a simple BFS.
+
+```R
+num_fall <- function(blocks, gone) {
+  q <- queue()
+  q$push(gone)
+  fall <- rep(FALSE, length(blocks))
+  fall[gone] <- TRUE
+  while (q$size() > 0) {
+    i <- q$pop()
+    for (j in blocks[[i]]$supports) {
+      if (all(fall[blocks[[j]]$supported_by])) {
+        fall[j] <- TRUE
+        q$push(j)
+      }
+    }
+  }
+  sum(fall) - 1
+}
+```
+
+I just sum this up for all slabs.
+
+```R
+total <- sum(sapply(seq_along(blocks), function(i) num_fall(blocks, i)))
+```

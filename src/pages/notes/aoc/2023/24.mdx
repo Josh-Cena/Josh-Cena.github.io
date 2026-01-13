@@ -1,0 +1,128 @@
+---
+tags:
+  - Geometry
+  - Mathematics
+---
+
+# Never Tell Me The Odds
+
+## Part 1
+
+Each hailstone is a parametric equation. If we are given `x1, y1, z1 @ vx1, vy1, vz1`, then the position of the hailstone at time `t` is given by:
+
+$$
+\mathbf{p}_1(t) = \mathbf{p}_1(0) + t \mathbf{v}_1
+$$
+
+where $\mathbf{p}_1(0) = (x_1, y_1, z_1)^\top$ and $\mathbf{v}_1 = (vx_1, vy_1, vz_1)^\top$.
+
+In part 1 we only care about 2D, so instead $\mathbf{p}_1(0) = (x_1, y_1)^\top$ and $\mathbf{v}_1 = (vx_1, vy_1)^\top$. To find the intersection of two hailstone paths (perhaps at different times) is to find the solution to:
+
+$$
+\begin{aligned}
+\mathbf{p}_1(t_1) &= \mathbf{p}_2(t_2)\\
+\mathbf{p}_1(0) + t_1 \mathbf{v}_1 &= \mathbf{p}_2(0) + t_2 \mathbf{v}_2\\
+\begin{bmatrix}vx_1 & -vx_2 \\ vy_1 & -vy_2\end{bmatrix} \begin{bmatrix}t_1 \\ t_2\end{bmatrix} &= \begin{bmatrix}x_2 - x_1 \\ y_2 - y_1\end{bmatrix}
+\end{aligned}
+$$
+
+This linear system can be directly solved in R `gmp` with `solve.bigz`. The system may not have a solution if the two paths are parallel; we additionally require $t_1, t_2 \geq 0$ for the solution to be valid. The intersection point can be found by plugging $t_1$ into $\mathbf{p}_1(t)$.
+
+```R
+intersection2d <- function(l1, l2) {
+  v_mat <- matrix(c(l1[4], l1[5], -l2[4], -l2[5]), nrow = 2)
+  b_vec <- c(l2[1] - l1[1], l2[2] - l1[2])
+  sol <- tryCatch(solve.bigz(v_mat, b_vec), error = function(e) NULL)
+  if (is.null(sol) || any(sol < 0)) {
+    return(NULL)
+  }
+  c(l1[1], l1[2]) + sol[1] * c(l1[4], l1[5])
+}
+```
+
+After obtaining the intersection point, we can easily test if it's in the test area.
+
+## Part 2
+
+Now coordinates are 3D. We need some $\mathbf{p}(0)$ and $\mathbf{v}$, such that for every $i$,
+
+$$
+\begin{aligned}
+\mathbf{p}_i(0) + t_i \mathbf{v}_i = \mathbf{p}(0) + t_i \mathbf{v}\\
+\mathbf{p}_i(0) + t_i (\mathbf{v}_i - \mathbf{v}) = \mathbf{p}(0)
+\end{aligned}
+$$
+
+If we take two trails, $i$ and $j$, we can eliminate $\mathbf{p}(0)$:
+
+$$
+\begin{aligned}
+\mathbf{p}_i(0) + t_i (\mathbf{v}_i - \mathbf{v}) &= \mathbf{p}_j(0) + t_j (\mathbf{v}_j - \mathbf{v})\\
+t_i (\mathbf{v}_i - \mathbf{v}) - t_j (\mathbf{v}_j - \mathbf{v}) &= \mathbf{p}_j(0) - \mathbf{p}_i(0)
+\end{aligned}
+$$
+
+This means that $\mathbf{p}_j(0) - \mathbf{p}_i(0)$ can be expressed as a linear combination of $\mathbf{v}_i - \mathbf{v}$ and $\mathbf{v}_j - \mathbf{v}$, i.e., $\mathbf{p}_j(0) - \mathbf{p}_i(0)$ is in the plane spanned by $\{\mathbf{v}_i - \mathbf{v}, \mathbf{v}_j - \mathbf{v}\}$. Note that $\mathbf{v}_j - \mathbf{v}_i$ is also in this plane, so we can express this in terms of the scalar triple product:
+
+$$
+((\mathbf{p}_j(0) - \mathbf{p}_i(0))\times (\mathbf{v}_j - \mathbf{v}_i)) \cdot (\mathbf{v}_i - \mathbf{v}) = 0
+$$
+
+(because $\times$ gives a normal vector to the plane, and $\cdot$ returns 0 if the two vectors are perpendicular).
+
+Now this can be separated into an equation in $\mathbf{v}$:
+
+$$
+((\mathbf{p}_j(0) - \mathbf{p}_i(0))\times (\mathbf{v}_j - \mathbf{v}_i)) \cdot \mathbf{v} = ((\mathbf{p}_j(0) - \mathbf{p}_i(0))\times (\mathbf{v}_j - \mathbf{v}_i)) \cdot \mathbf{v}_i
+$$
+
+This is a single linear equation. Because $\mathbf{v}$ has three components, we need at least three equations in this form, which means taking three trails.
+
+$$
+\begin{bmatrix}
+(\mathbf{p}_2(0) - \mathbf{p}_1(0))\times (\mathbf{v}_2 - \mathbf{v}_1)\\
+(\mathbf{p}_3(0) - \mathbf{p}_2(0))\times (\mathbf{v}_3 - \mathbf{v}_2)\\
+(\mathbf{p}_1(0) - \mathbf{p}_3(0))\times (\mathbf{v}_1 - \mathbf{v}_3)
+\end{bmatrix} \mathbf{v} =
+\begin{bmatrix}
+((\mathbf{p}_2(0) - \mathbf{p}_1(0))\times (\mathbf{v}_2 - \mathbf{v}_1)) \cdot \mathbf{v}_1\\
+((\mathbf{p}_3(0) - \mathbf{p}_2(0))\times (\mathbf{v}_3 - \mathbf{v}_2)) \cdot \mathbf{v}_2\\
+((\mathbf{p}_1(0) - \mathbf{p}_3(0))\times (\mathbf{v}_1 - \mathbf{v}_3)) \cdot \mathbf{v}_3
+\end{bmatrix}
+$$
+
+```R
+num_eq <- 3
+A <- matrix(as.bigz(0), nrow = num_eq, ncol = 3)
+b <- matrix(as.bigz(0), nrow = num_eq, ncol = 1)
+for (i in 1:num_eq) {
+  j <- i %% num_eq + 1
+  v_diff <- hails[[j]][4:6] - hails[[i]][4:6]
+  p_diff <- hails[[j]][1:3] - hails[[i]][1:3]
+  cross_prod <- cross(v_diff, p_diff)
+  A[i, ] <- cross_prod
+  b[i] <- sum(cross_prod * hails[[i]][4:6])
+}
+v <- tryCatch(solve.bigz(A, b), error = function(e) NULL)
+```
+
+I didn't really verify that this solution works on the remaining hail paths, because they'd better be (otherwise there's no answer). After solving for $\mathbf{v}$, we can plug it into two lines to solve for $t$ on 2D (it's guaranteed that the z-coordinate must match as well, otherwise it wouldn't be a solution). This can take advantage of the existing `intersection2d` function.
+
+$$
+\mathbf{p}(0) = \mathbf{p}_1(0) + t_1 (\mathbf{v}_1 - \mathbf{v}) = \mathbf{p}_2(0) + t_2 (\mathbf{v}_2 - \mathbf{v})
+$$
+
+```R
+p1 <- as.bigz(hails[[1]][1:3])
+p2 <- as.bigz(hails[[2]][1:3])
+v1 <- as.bigz(hails[[1]][4:6])
+v2 <- as.bigz(hails[[2]][4:6])
+pxy <- intersection2d(c(p1, v1 - v), c(p2, v2 - v))
+```
+
+Finally, we can deduce the z-coordinate.
+
+```R
+t1 <- (pxy[1] - p1[1]) / (v1[1] - v[1])
+pz <- p1[3] + t1 * (v1[3] - v[3])
+```

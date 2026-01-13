@@ -1,5 +1,6 @@
 import Path from "node:path";
 import type { Plugin } from "unified";
+import type { VFile } from "vfile";
 import type {
   Root,
   Heading,
@@ -71,15 +72,9 @@ const languages: { [year: number]: string } = {
   2025: "Rust",
 };
 
-const transformMarkdown: Plugin = () => (ast, vFile) => {
-  const { children } = ast as Root;
-  if (!children.length) return;
-  const firstHeading = children.findIndex(
-    (node): node is Heading => node.type === "heading" && node.depth === 1,
-  );
-  if (!firstHeading) throw new Error("Markdown file must have H1");
-  const frontMatter = children.find((node) => node.type === "yaml");
-  const title = children[firstHeading]!;
+function transformFrontMatter(ast: Root, vFile: VFile, firstHeading: number) {
+  const frontMatter = ast.children.find((node) => node.type === "yaml");
+  const title = ast.children[firstHeading]!;
   let titleText = toText(title as Nodes);
   if (/notes\/aoc\/\d{4}\/\d/u.test(vFile.path)) {
     const { year, day } = /notes\/aoc\/(?<year>\d{4})\/(?<day>\d{1,2})/u.exec(
@@ -126,20 +121,23 @@ day: ${day}`;
     titleText = `${problemCode}: ${titleText}`;
   }
   if (!frontMatter) {
-    children.unshift({
+    ast.children.unshift({
       type: "yaml",
       value: `title: ${titleText}`,
     });
   } else {
     (frontMatter as Literal).value += `\ntitle: "${titleText}"`;
   }
+}
+
+function transformImages(ast: Root, firstHeading: number) {
   const images: string[] = [];
   visit(ast, "image", (node: Image) => {
     if (/^https?:\/\//u.test(node.url)) return;
     if (images.includes(node.url)) return;
     images.push(node.url);
   });
-  children.splice(
+  ast.children.splice(
     firstHeading + 1,
     0,
     ...images.map((url, index) =>
@@ -157,12 +155,18 @@ day: ${day}`;
       ]),
     );
   });
+}
+
+function transformLinks(ast: Root, vFile: VFile) {
   visit(ast, "link", (node: Link) => {
     if (!node.url.startsWith(".")) return;
     const fullPath = Path.join(vFile.dirname ?? "", node.url);
     const pagesRelative = fullPath.replace(/^.*src\/pages\//u, "");
     node.url = normalizeRoute(pagesRelative);
   });
+}
+
+function transformCode(ast: Root, firstHeading: number) {
   let usesMermaid = false as boolean;
   let usesCanvas = false as boolean;
   visit(ast, "code", (node: Code) => {
@@ -211,19 +215,32 @@ day: ${day}`;
     }
   });
   if (usesMermaid) {
-    children.splice(
+    ast.children.splice(
       firstHeading + 1,
       0,
       createImportDeclaration("Mermaid", "@/components/Mermaid"),
     );
   }
   if (usesCanvas) {
-    children.splice(
+    ast.children.splice(
       firstHeading + 1,
       0,
       createImportDeclaration("Canvas", "@/components/Canvas"),
     );
   }
+}
+
+const transformMarkdown: Plugin = () => (ast, vFile) => {
+  const { children } = ast as Root;
+  if (!children.length) return;
+  const firstHeading = children.findIndex(
+    (node): node is Heading => node.type === "heading" && node.depth === 1,
+  );
+  if (!firstHeading) throw new Error("Markdown file must have H1");
+  transformFrontMatter(ast as Root, vFile, firstHeading);
+  transformImages(ast as Root, firstHeading);
+  transformLinks(ast as Root, vFile);
+  transformCode(ast as Root, firstHeading);
   if (vFile.dirname?.includes("blog")) {
     children.splice(
       firstHeading + 1,

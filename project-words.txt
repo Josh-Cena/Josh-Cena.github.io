@@ -10,6 +10,7 @@ binom
 bitmask
 bitmasks
 bitw
+bmatrix
 buendía
 byrow
 casedness
@@ -43,6 +44,7 @@ disjointness
 dists
 dopplerhq
 dotless
+edgelist
 elems
 elif
 emboard
@@ -93,6 +95,7 @@ lext
 luo
 márquez's
 mathbb
+mathbf
 mathcal
 mathit
 mathtt
@@ -128,6 +131,7 @@ pandoc
 peaceiris
 perlbrew
 pipeable
+pmax
 popleft
 posix
 prismjs
@@ -159,6 +163,7 @@ silw
 starrail
 statsmodels
 stoll
+stopifnot
 strsplit
 struct
 subarrays
@@ -172,6 +177,7 @@ texlive
 texttt
 tlsv
 tonos
+topo
 tqdm
 triaging
 tseslint
@@ -179,6 +185,7 @@ uext
 unlines
 unlist
 vapply
+vcount
 venv
 verdana
 vsrocq

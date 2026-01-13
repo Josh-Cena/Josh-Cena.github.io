@@ -1,0 +1,41 @@
+---
+tags:
+  - Graph theory
+  - Manual inspection
+---
+
+# Snowverload
+
+{/* cSpell:ignore Snowverload */}
+
+I think this is an easy cheat. Since I already use [`igraph`](https://r.igraph.org/index.html), I can directly find the min-cut, i.e., the smallest set of edges that disconnects the graph.
+
+```R
+parts <- strsplit(data, ": ")
+nodes <- sapply(parts, function(x) x[1])
+targets <- lapply(parts, function(x) strsplit(x[2], " ")[[1]])
+nodes <- unique(c(nodes, unlist(targets)))
+graph <- igraph::make_empty_graph(n = length(nodes), directed = FALSE)
+for (i in seq_along(targets)) {
+  graph <- igraph::add_edges(
+    graph,
+    unlist(sapply(targets[[i]], function(x) c(i, match(x, nodes))))
+  )
+}
+igraph::V(graph)$label <- nodes
+min_cut <- igraph::min_cut(graph, value.only = FALSE)
+stopifnot(min_cut$value == 3)
+cat(length(min_cut$partition1) * length(min_cut$partition2), "\n")
+```
+
+Of course one could just implement the [min-cut algorithm](https://en.wikipedia.org/wiki/Minimum_cut) by hand, but why bother??
+
+Alternative you can export the graph and look at it directly:
+
+<img
+  src="https://github.com/Josh-Cena/aoc2023/blob/master/src/day25.png?raw=true"
+  alt="Graph visualization"
+  width="1668"
+  height="1367"
+  style={{ maxWidth: "100%", height: "auto" }}
+/>
