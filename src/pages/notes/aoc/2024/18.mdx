@@ -1,0 +1,116 @@
+---
+tags:
+  - BFS/DFS
+  - Data structures
+  - Geometry
+---
+
+# RAM Run
+
+This problem pays tribute to 2017 day 2 (unimplemented).
+
+## Part 1
+
+Finding the shortest path in a maze with equal costs is a straightforward BFS. I need not show how BFS works at this point.
+
+## Part 2
+
+To be honest, this problem is a bit... underwhelming? I was expecting a shortest path finding problem where the maze changes every second. But I guess that would be hard because of exploding states.
+
+Instead, we are just asked for the time when the path is cut off. If you've played maze games for a while, you know that a path exists if and only if there does not exist a wall that cuts across the whole maze.
+
+```js canvas width=500 height=200
+ctx.lineWidth = 2;
+ctx.beginPath();
+ctx.moveTo(1, 1);
+ctx.lineTo(1, 199);
+ctx.lineTo(180, 199);
+ctx.moveTo(20, 1);
+ctx.lineTo(199, 1);
+ctx.lineTo(199, 199);
+ctx.moveTo(1, 90);
+ctx.lineTo(100, 90);
+ctx.moveTo(100, 80);
+ctx.lineTo(199, 80);
+ctx.stroke();
+ctx.strokeStyle = "red";
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(10, 1);
+ctx.lineTo(10, 85);
+ctx.lineTo(190, 85);
+ctx.lineTo(190, 199);
+ctx.stroke();
+
+ctx.lineWidth = 2;
+ctx.strokeStyle = textColor;
+ctx.beginPath();
+ctx.moveTo(301, 1);
+ctx.lineTo(301, 199);
+ctx.lineTo(480, 199);
+ctx.moveTo(320, 1);
+ctx.lineTo(499, 1);
+ctx.lineTo(499, 199);
+ctx.moveTo(301, 90);
+ctx.lineTo(400, 90);
+ctx.lineTo(400, 80);
+ctx.lineTo(499, 80);
+ctx.stroke();
+ctx.strokeStyle = "red";
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(310, 1);
+ctx.lineTo(310, 85);
+ctx.lineTo(390, 85);
+ctx.moveTo(380, 75);
+ctx.lineTo(400, 95);
+ctx.moveTo(400, 75);
+ctx.lineTo(380, 95);
+ctx.stroke();
+```
+
+Therefore, the question is: as we add more walls, when do we connect the top-right border to the bottom-left border? This is a great use case for the union-find data structure. Essentially, we have a list of connected walls, and each time we add a wall, we connect the components of its neighboring walls. If the top-right border and the bottom-left border are in the same component, then we know that the path is cut off. I use the [`unionFind`](https://ocaml.org/p/unionFind/20220122/doc/index.html) package for this.
+
+Each time a wall is added, a `UnionFind` node is allocated. Initially, it only includes the borders (note that `points` are now shifted by 1 from the input so that they start at 1, leaving the borders at 0 and `w - 1`/`h - 1`):
+
+```ocaml
+for x = 1 to w - 2 do
+  cells.(0).(x) <- Some (UnionFind.make (x, 0));
+  cells.(h - 1).(x) <- Some (UnionFind.make (x, h - 1))
+done;
+for y = 1 to h - 2 do
+  cells.(y).(0) <- Some (UnionFind.make (0, y));
+  cells.(y).(w - 1) <- Some (UnionFind.make (w - 1, y))
+done;
+cells.(0).(w - 1) <- Some (UnionFind.make (w - 1, 0));
+cells.(h - 1).(0) <- Some (UnionFind.make (0, h - 1));
+```
+
+Then I join walls within the bottom-left border and top-right border (but at this time the two borders are still not connected due to the openings at the start and end points). `try_union` just calls `UnionFind.union` on two points if they are in-bounds and not `None`:
+
+```ocaml
+for x = 1 to w - 1 do
+  try_union x 0 (x - 1) 0;
+  try_union x (h - 1) (x - 1) (h - 1)
+done;
+for y = 1 to h - 1 do
+  try_union 0 y 0 (y - 1);
+  try_union (w - 1) y (w - 1) (y - 1)
+done;
+```
+
+Now we just iterate through the additional walls, each time merging it with all its neighbors, until the top-right border and the bottom-left border are in the same component.
+
+```ocaml
+let first_blocking =
+  List.find
+    (fun (x, y) ->
+      cells.(y).(x) <- Some (UnionFind.make (x, y));
+      for dx = -1 to 1 do
+        for dy = -1 to 1 do
+          if dx <> 0 || dy <> 0 then try_union x y (x + dx) (y + dy)
+        done
+      done;
+      UnionFind.eq (Option.get cells.(1).(0)) (Option.get cells.(0).(1)))
+    points
+```

@@ -1,0 +1,159 @@
+---
+tags:
+  - Puzzle
+  - Constraint satisfaction
+  - Manual inspection
+---
+
+# Crossed Wires
+
+This problem pays tribute to [2022 day 23](../2022/23.mdx).
+
+## Part 1
+
+On realizing that the circuit isn't _strictly_ a tree but more like a graph where each node can have multiple inputs and outputs (identical ones but going to different places), I decided to not parse the circuit as a tree, but just as a map instead. I can still do recursive evaluation, and I can also easily memoize the results of each gate, which saves some time reevaluating the same gate for different output bits.
+
+```ocaml
+let rec eval_gate values gates name =
+  if Hashtbl.mem values name then Hashtbl.find values name
+  else
+    let (x, op, y) = Hashtbl.find gates name in
+    let x_val = eval_gate values gates x in
+    let y_val = eval_gate values gates y in
+    let result =
+      match op with
+      | "AND" -> x_val && y_val
+      | "OR" -> x_val || y_val
+      | "XOR" -> x_val <> y_val
+      | _ -> failwith "Invalid operator"
+    in
+    Hashtbl.add values name result;
+    result
+```
+
+Initially `values` just contains the input bits; it gets populated as we evaluate the gates, and the same gate is never recomputed.
+
+## Part 2
+
+Conceptually, a full adder takes inputs $A_i$, $B_i$, and $C_{i-1}$, and produces outputs $S_i$ and $C_i$, as follows:
+
+$$
+\begin{aligned}
+S_i &= A_i \oplus B_i \oplus C_{i-1} \\
+C_i &= (A_i \land B_i) \lor (C_{i-1} \land (A_i \oplus B_i))
+\end{aligned}
+$$
+
+A half adder does not have a carry input, which means that $C_{-1}$ is always 0.
+
+Let's print a few outputs:
+
+```plain
+z00 = (x00 ^ y00)
+z01 = ((x00 & y00) ^ (x01 ^ y01))
+z02 = ((((x00 & y00) & (x01 ^ y01)) | (x01 & y01)) ^ (x02 ^ y02))
+z03 = ((((((x00 & y00) & (x01 ^ y01)) | (x01 & y01)) & (x02 ^ y02)) | (x02 & y02)) ^ (x03 ^ y03))
+```
+
+Take `z02` as an example. From the mathematical formula, we know that `z02 = x02 ^ y02 ^ C01`, where `C01 = (x01 & y01) | (C00 & (x01 ^ y01))`, where `C00 = x00 & y00`. This matches the actual printed output, so it looks like `z02`'s structure is as expected.
+
+More generally, it appears that each full adder has the following structure (because of commutativity, the two operands' order may change, but the order of operations is the same):
+
+```plain
+foo[n] = xn ^ yn
+zn = carry[n-1] ^ foo[n]
+bar[n] = xn & yn
+baz[n] = carry[n-1] & foo[n]
+carry[n] = baz[n] | bar[n]
+```
+
+The first adder, a half adder, has this structure:
+
+```plain
+z00 = x00 ^ y00
+carry[0] = x00 & y00
+```
+
+The last adder is a full adder, but its `carry44` output is labeled `z45` instead.
+
+But now we know that some gate labels are swapped, meaning that, while the right-hand side is accurate about the structure of the circuit, the left-hand side may be swapped. For example, the real data may say this:
+
+```plain
+!! Bad labels !!
+
+bar[n] = xn ^ yn
+zn = carry[n-1] ^ foo[n]
+foo[n] = xn & yn
+baz[n] = carry[n-1] & foo[n]
+carry[n] = baz[n] | bar[n]
+```
+
+By swapping `foo[n]` and `bar[n]`, if we see `abc = xn ^ yn`, and we just naïvely assume that `abc` is `foo[n]`, then we would be surprised that we never see `carry[n-1] ^ abc` anywhere, because actually `abc` is `bar[n]`. Now the question is, what _do_ we know? What can we be certain about?
+
+- First, because `n` goes from 0 to 44, we know that there are 44 full adders and 1 half adder, so 44 OR gates, 89 XOR gates, and 89 AND gates.
+- We also know that the _operands_ of each gate are correct, so for example if we know the correct mapping for `carry[n-1]`, then the operand it ANDs and XORs with must be `foo[n]`.
+- Certain "swaps" are immaterial. For example, `carry[n-1]` and `foo[n]` are always used together, so swapping their labels do not change the meaning at all. Similarly, `bar[n]` and `baz[n]` are equivalent label-wise.
+
+However, this is about the information that the right-hand side in isolation can tell us: that a label belongs to the `carry[n-1]`/`foo[n]` group or the `bar[n]`/`baz[n]` group. It does not tell us exactly which one it is. To do so, we must take the potentially-faulty left-hand side into consideration. Fear not, there are only very few faulty lines, and if we can immediately tell which ones are "suspicious", we can safely trust the rest to give us the extra information.
+
+We can start by categorizing each label as "`carry` or `foo`" or "`bar` or `baz`".
+
+```ocaml
+let carry_or_foo, baz_or_bar =
+  Hashtbl.fold
+    (fun _ (x, op, y) (carry_or_foo, baz_or_bar) ->
+      if
+        (op = "XOR" || op = "AND")
+        && (not (String.starts_with ~prefix:"x" x))
+        && not (String.starts_with ~prefix:"y" x)
+      then (carry_or_foo |> GateSet.add x |> GateSet.add y, baz_or_bar)
+      else if op = "OR" then
+        (carry_or_foo, baz_or_bar |> GateSet.add x |> GateSet.add y)
+      else (carry_or_foo, baz_or_bar))
+    gates
+    (GateSet.empty, GateSet.empty)
+```
+
+Using these, we can extract the "suspicious" lines. A line is not suspicious if it follows the template given above:
+
+```plain
+foo[n] = xn ^ yn
+zn = carry[n-1] ^ foo[n]
+bar[n] = xn & yn
+baz[n] = carry[n-1] & foo[n]
+carry[n] = baz[n] | bar[n]
+
+==>
+
+carry_or_foo = xn ^ yn
+zn = carry_or_foo ^ carry_or_foo
+baz_or_bar = xn & yn
+baz_or_bar = carry_or_foo & carry_or_foo
+carry_or_foo = baz_or_bar | baz_or_bar
+```
+
+```ocaml
+let is_expected_gate k x op y carry_or_foo baz_or_bar =
+  (* First does not receive carry *)
+  (op = "XOR" && (x = "x00" || x = "y00") && k = "z00")
+  || (op = "AND" && (x = "x00" || x = "y00") && GateSet.mem k carry_or_foo)
+  || op = "XOR"
+     && (String.starts_with ~prefix:"x" x || String.starts_with ~prefix:"y" x)
+     && GateSet.mem k carry_or_foo
+  || op = "XOR" && GateSet.mem x carry_or_foo && GateSet.mem y carry_or_foo
+     && String.starts_with ~prefix:"z" k
+  || op = "AND"
+     && (String.starts_with ~prefix:"x" x || String.starts_with ~prefix:"y" x)
+     && GateSet.mem k baz_or_bar
+  || op = "AND" && GateSet.mem x carry_or_foo && GateSet.mem y carry_or_foo
+     && GateSet.mem k baz_or_bar
+  || op = "OR" && GateSet.mem x baz_or_bar && GateSet.mem y baz_or_bar
+     (* Last does not have carry[44]; instead z45 *)
+     && (GateSet.mem k carry_or_foo || k = "z45")
+```
+
+I did not see this coming but the list of unexpected gates turns out to contain exactly 8 lines...? After all, there could both be false negatives because, for example, `foo[10]` and `foo[11]` could be swapped, which would not be detected by this logic.
+
+Also! I don't even have to know _which_ pairs are swapped, because the problem asks to sort them all together. So I just literally print these.
+
+Perhaps a bulk of the analysis above isn't necessary for this problem; I would challenge anyone to make a fully generic anomaly detection algorithm that works with the false negatives mentioned above.

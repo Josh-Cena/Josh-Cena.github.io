@@ -1,0 +1,157 @@
+---
+tags:
+  - Graph theory
+---
+
+# LAN Party
+
+This problem pays tribute to 2016 day 9 (unimplemented).
+
+First we can conceptually understand what the two parts are asking for. The first part enumerates the triangles (cliques of size 3) in the graph, looking for ones that contain one node starting with `t`; the second part finds the maximum clique (largest maximal clique). This is extremely trivial if OCaml has a library as powerful as `networkx`:
+
+```python
+import networkx as nx
+
+G = nx.Graph()
+for line in data:
+    u, v = line.split("-")
+    G.add_edge(u, v)
+
+total = 0
+for t in nx.all_triangles(G):
+    if t[0].startswith("t") or t[1].startswith("t") or t[2].startswith("t"):
+        total += 1
+print(total)
+
+print(",".join(sorted(nx.max_weight_clique(G, None)[0])))
+```
+
+But since there is not (I often talk about "reward of a good language choice is you can cheat"; maybe this is "punishment of a bad language choice"? :)), we have to implement these algorithms ourselves.
+
+## Part 1
+
+I build the graph as a normal adjacency list with bidirectional edges.
+
+```ocaml
+module NodeSet = Set.Make (String)
+
+let parse_graph data =
+  let adj = Hashtbl.create 100 in
+  List.iter
+    (fun line ->
+      let parts = String.split_on_char '-' line in
+      let u = List.nth parts 0 in
+      let v = List.nth parts 1 in
+      let neighbors_u =
+        match Hashtbl.find_opt adj u with Some s -> s | None -> NodeSet.empty
+      in
+      let neighbors_v =
+        match Hashtbl.find_opt adj v with Some s -> s | None -> NodeSet.empty
+      in
+      Hashtbl.replace adj u (NodeSet.add v neighbors_u);
+      Hashtbl.replace adj v (NodeSet.add u neighbors_v))
+    data;
+  adj
+```
+
+A triangle is defined by one node plus an edge between two of its neighbors. So we can iterate over all (node, edge) pairs, and check if the edge's endpoints are neighbors of the node. This is $\mathcal{O}(|V| \cdot |E|)$, which is better than the naïve $\mathcal{O}(|V|^3)$.
+
+```ocaml
+let triangles = ref 0 in
+Hashtbl.iter
+  (fun u neighbors_u ->
+    NodeSet.iter
+      (fun v ->
+        Hashtbl.iter
+          (fun w neighbors_w ->
+            if
+              List.exists (String.starts_with ~prefix:"t") [ u; v; w ]
+              && NodeSet.mem u neighbors_w && NodeSet.mem v neighbors_w
+            then incr triangles)
+          adj)
+      neighbors_u)
+  adj;
+```
+
+Each triangle is counted 6 times, once for each corner, and twice for each edge in both directions, so the answer is `!triangles / 6`.
+
+## Part 2
+
+I drew the graph with `networkx` and it looks like this:
+
+<img
+  src="https://github.com/Josh-Cena/aoc2024/blob/master/bin/day23.png?raw=true"
+  alt="Graph"
+  width={800}
+  height={1000}
+  style={{ maxWidth: "min(100%, 400px)", height: "auto" }}
+/>
+
+While not immediately clear, I guess it gives some sense of the problem structure and scale? :)
+
+Here's comes the real challenge: finding the maximum clique. I chose [Bron–Kerbosch](https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm) with pivoting. I'm not going to explain exactly how it works, since it's all on Wikipedia. I just aim to implement the following pseudocode:
+
+```plain
+algorithm BronKerbosch2(R, P, X) is
+    if P and X are both empty then
+        report R as a maximal clique
+    choose a pivot vertex u in P ⋃ X
+    for each vertex v in P \ N(u) do
+        BronKerbosch2(R ⋃ {v}, P ⋂ N(v), X ⋂ N(v))
+        P := P \ {v}
+        X := X ⋃ {v}
+```
+
+As for choosing the pivot, Wikipedia says "chosen to minimize the number of recursive calls made by the algorithm". The heuristic is to choose the pivot such that $P\setminus N(u)$ is as small as possible—i.e., choose $u$ that maximizes $|P \cap N(u)|$.
+
+Because I'm not interested in _all_ maximal cliques, just the largest one, each time I find a maximal clique, I check if it's larger than the best one found so far. I also implemented a pruning condition: if the size of the current clique $|R|$ plus the number of remaining candidates $|P|$ can never beat the current best, I stop searching that branch. The following is a faithful implementation of the above algorithm.
+
+```ocaml
+let max_clique adj =
+  (* Choose a pivot u in (P ∪ X) maximizing |P ∩ N(u)| *)
+  let choose_pivot p x =
+    let candidates = NodeSet.union p x in
+    NodeSet.fold
+      (fun u (best_u, best_deg) ->
+        let deg = Hashtbl.find adj u |> NodeSet.inter p |> NodeSet.cardinal in
+        if Option.is_none best_u || deg > best_deg then (Some u, deg)
+        else (best_u, best_deg))
+      candidates (None, -1)
+    |> fst |> Option.get
+  in
+
+  let rec search_max r p x best =
+    let best_size = NodeSet.cardinal best in
+    if NodeSet.cardinal r + NodeSet.cardinal p <= best_size then
+      (* Can't beat the best *)
+      best
+    else if NodeSet.is_empty p && NodeSet.is_empty x then
+      (* if P and X are both empty then *)
+      (* Report R as a maximal clique; update best if R is larger *)
+      if NodeSet.cardinal r > best_size then r else best
+    else
+      (* choose a pivot vertex u in P ⋃ X *)
+      let u = choose_pivot p x in
+      let nu = Hashtbl.find adj u in
+      (* for each vertex v in P \ N(u) do *)
+      let _, _, best =
+        NodeSet.fold
+          (fun v (p, x, best) ->
+            let nv = Hashtbl.find adj v in
+            (* BronKerbosch2(R ⋃ {v}, P ⋂ N(v), X ⋂ N(v)) *)
+            let best' =
+              search_max (NodeSet.add v r) (NodeSet.inter p nv)
+                (NodeSet.inter x nv) best
+            in
+            (* P := P \ {v}; X := X ⋃ {v} *)
+            (NodeSet.remove v p, NodeSet.add v x, best'))
+          (NodeSet.diff p nu) (p, x, best)
+      in
+      best
+  in
+
+  let nodes =
+    Hashtbl.fold (fun k _ acc -> NodeSet.add k acc) adj NodeSet.empty
+  in
+  search_max NodeSet.empty nodes NodeSet.empty NodeSet.empty
+```

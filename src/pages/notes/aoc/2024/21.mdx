@@ -1,0 +1,170 @@
+---
+tags:
+  - Puzzle
+  - Memoization
+---
+
+# Keypad Conundrum
+
+This problem pays tribute to [2019 day 25](../2019/25.mdx).
+
+Yeah it's hard. Yeah it may not even be comprehensible. Let's understand what's going on.
+
+Let's call the directional keypad you type `0` and each directional keypad next as `1` and `2` (or `3`, `4`, etc. for part 2). Finally the numpad is `3` (or `26` for part 2). A sequence of keys on `0` can be translated to a sequence of keys on each successive keypad, and vice versa:
+
+```plain
+0 |  <vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A
+1 |    v <<   A >>  ^ A   <   A > A  v  A   <  ^ AA > A   < v  AAA >  ^ A
+2 |           <       A       ^   A     >        ^^   A        vvv      A
+3 |                   0           2                   9                 A
+```
+
+For each keypad, note that its sequence of keys can be seen as a list of segments, each one beginning with `A` and ending with `A` (including the numpad one; you can prepend an `A` to each sequence to see this more clearly, since robots start at the `A` position anyway). Each `A...A` segment corresponds to a single key on the next keypad—more precisely, a single key, plus an updated robot position. Conversely, given a single key to type out on keypad `n` and robot `n`'s current position, we can find the corresponding `A...A` segment on keypad `n-1`. This means that when typing a single key on keypad `n`, robot `n`'s position only affects the key sequence for robot `n-1`, but no robots before that, because robot `n-1`'s key sequence always starts and ends with `A`, so it resets its position.
+
+This means that our approach is that given a sequence `A...A` on keypad `n`, we can find the corresponding optimal `A...A` sequence on keypad `n-1`, all the way until `0`. The question is how we should do the mapping. Let's consider a movement from key X to key Y on `n`.
+
+1. If X and Y are on the same row or column, we should always move in a straight line, because any detour would just involve net extra key presses on `n-1`, which doesn't really lead to a better path on any previous keypads.
+
+   ```plain
+     n |  X   Y
+   n-1 |  A > A
+
+     n |  X       Y
+   n-1 |  A ^ > v A
+   ```
+
+2. If X and Y are on different rows and columns, say Y is to the upper right of X, then we can either move up then right, or right then up. However, we should always move in one direction before changing to the other, because if you alternate between `>` and `^`, then on the `n-2`-th keypad, it would take extra presses to move the `n-1` robot back and forth between the two buttons, as opposed to just pressing `A` repeatedly on `n-2`.
+
+   ```plain
+     n |  X       Y
+   n-1 |  A >>  ^ A
+   n-2 |  AvAA<^A>A
+
+     n |  X         Y
+   n-1 |  A >  ^  > A
+   n-2 |  AvA<^Av>A^A
+   ```
+
+3. Rule 2 doesn't tell us whether we should move up then right, or right then up. We don't always have a choice. For example, on the directional pad, when moving from `A` to `<`, we have to go down then left, because the other way would move into the gap.
+4. If rule 3 still doesn't give an unambiguous path, we now need to consider the next keypad, `n-3`, because the number of presses on `n-2` is the same. Consider `^<` vs. `<^`:
+
+   ```plain
+     n |  X                        Y
+   n-1 |  A       ^        <       A
+   n-2 |  A   <   A   < v  A >>  ^ A
+   n-3 |  Av<<A>>^Av<<A>A^>AvAA<^A>A
+
+     n |  X                    Y
+   n-1 |  A         <      ^   A
+   n-2 |  A  v <<   A ^  > A > A
+   n-3 |  A<vA<AA>>^A<Av>A>AvA^A
+   ```
+
+   So there _is_ a difference on `n-3`, and `<^` is better than `^<`! The reason is because `<^` collocates the two expensive `<` presses together, while `^<` has to move left in two cycles: `A<A` and `A<vA`, each one incurring a full left-left-right-right cycle on the `n-3`-th keypad.
+
+   Similarly, `<v` is better than `v<` because it also presses `<` first:
+
+   ```plain
+     n |  X                        Y
+   n-1 |  A        v       <       A
+   n-2 |  A   < v  A   <   A >>  ^ A
+   n-3 |  Av<<A>A^>Av<<A>>^AvAA<^A>A
+
+     n |  X                    Y
+   n-1 |  A         <   v      A
+   n-2 |  A  v <<   A > A ^  > A
+   n-3 |  A<vA<AA>>^AvA^A<Av>A^A
+   ```
+
+   In the same spirit that "keys to the left should be pressed first", `v>` is better than `>v`:
+
+   ```plain
+     n |  X                Y
+   n-1 |  A        v   >   A
+   n-2 |  A   < v  A > A ^ A
+   n-3 |  Av<<A>A^>AvA^A<A>A
+
+     n |  X                    Y
+   n-1 |  A     >       v      A
+   n-2 |  A  v  A   <   A ^  > A
+   n-3 |  A<vA^>Av<<A>>^A<Av>A^A
+   ```
+
+   Finally, `^>` is better than `>^`:
+
+   ```plain
+     n |  X              Y
+   n-1 |  A   ^      >   A
+   n-2 |  A < A  v > A ^ A
+   n-3 |  A<A>A<vA>A^A<A>A
+
+     n |  X                  Y
+   n-1 |  A     >        ^   A
+   n-2 |  A  v  A   <  ^ A > A
+   n-3 |  A<vA^>Av<<A^>A>AvA^A
+   ```
+
+   So the conclusion is that the priority of moves is: `<` > `v` > `^` > `>`.
+
+Now let's code this up. The `move_seq` function generates a list of to move `dx` or `dy` steps in either the x or y direction (but not both):
+
+```ocaml
+let move_seq dx dy =
+  match (compare dx 0, compare dy 0) with
+  | 0, 0 -> []
+  | 0, 1 -> List.init dy (fun _ -> '^')
+  | 0, -1 -> List.init (-dy) (fun _ -> 'v')
+  | 1, 0 -> List.init dx (fun _ -> '>')
+  | -1, 0 -> List.init (-dx) (fun _ -> '<')
+  | _ -> failwith "Invalid move"
+```
+
+Now we implement the above 4 rules. For the third rule, we define our coordinate system such that the gap is always at `(-2, 0)` for both kinds of keypads (which, incidentally, also puts `A` at `(0, 0)` for both keypads).
+
+```ocaml
+let optimal_path (from_x, from_y) (to_x, to_y) =
+  let dx, dy = (to_x - from_x, to_y - from_y) in
+  if dx = 0 || dy = 0 then move_seq dx dy @ [ 'A' ]
+  else
+    let interm1, interm2 = ((from_x + dx, from_y), (from_x, from_y + dy)) in
+    if interm1 = (-2, 0) then move_seq 0 dy @ move_seq dx 0 @ [ 'A' ]
+    else if interm2 = (-2, 0) then move_seq dx 0 @ move_seq 0 dy @ [ 'A' ]
+    else if dx < 0 then
+      (* <v, <^ *)
+      move_seq dx 0 @ move_seq 0 dy @ [ 'A' ]
+    else
+      (* >v, ^> *)
+      move_seq 0 dy @ move_seq dx 0 @ [ 'A' ]
+```
+
+Now we just need to recursively apply this function to unroll the key sequence from the last keypad to the first. The path will become very long so we can't physically hold it as a string, but we just need the mapping from `(from, to, depth)` to the length of the key presses on keypad 0. This can be recursively defined as $\text{cost}(f, t, d) = \sum_{i}\text{cost}(a_i, a_{i+1}, d-1)$ where $a = \text{optimal\_path}(f, t)$. Since there are relatively few $f$ and $t$ combinations but a lot of repeated calls on smaller depths, we can memoize the results in a hash table.
+
+{/* cSpell:ignore dirpad */}
+
+```ocaml
+let rec optimal_path_cost from_pos to_pos depth memo =
+  if Hashtbl.mem memo (from_pos, to_pos, depth) then
+    Hashtbl.find memo (from_pos, to_pos, depth)
+  else
+    let path = optimal_path from_pos to_pos in
+    let total_cost =
+      if depth = 1 then List.length path
+      else
+        optimal_total_path_cost
+          (List.map (Hashtbl.find dirpad) ('A' :: path))
+          (depth - 1) memo
+    in
+    Hashtbl.add memo (from_pos, to_pos, depth) total_cost;
+    total_cost
+
+and optimal_total_path_cost poses depth memo =
+  let rec aux acc = function
+    | [] | [ _ ] -> acc
+    | step1 :: step2 :: rest ->
+        let step_cost = optimal_path_cost step1 step2 depth memo in
+        aux (acc + step_cost) (step2 :: rest)
+  in
+  aux 0 poses
+```
+
+Now implementing a sequence of presses on the numpad just requires calling `optimal_total_path_cost` with the sequence of coordinates.

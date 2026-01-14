@@ -1,0 +1,60 @@
+---
+tags:
+  - Data structures
+---
+
+# Historian Hysteria
+
+## Part 1
+
+After years of Haskell practice, I'm still getting used to what OCaml has and doesn't have, so this is a good warmup. Split each line, parse two numbers, then `List.split` (OCaml's `unzip`) to get two lists. Sort each of them, then zip them and sum the diffs.
+
+```ocaml
+let (nums1, nums2) = List.split (List.map (fun x ->
+  match Str.split (Str.regexp " +") x with
+  | [a; b] -> (int_of_string a, int_of_string b)
+  | _ -> failwith "Invalid input") data) in
+let nums1' = List.sort compare nums1 in
+let nums2' = List.sort compare nums2 in
+let differences = List.map2 (fun a b -> abs (b - a)) nums1' nums2' in
+Printf.printf "%d\n" (List.fold_left (+) 0 differences)
+```
+
+## Part 2
+
+We want
+
+$$
+\sum_{i=1}^n a_i \cdot #(b, a_i)
+$$
+
+where $#(b, a_i)$ is the number of $a_i$'s in the list $b$. This is equivalent to
+
+$$
+\sum_{a_i\in a} a_i \cdot #(a, a_i) \cdot #(b, a_i)
+$$
+
+where $a$ is the set of _unique_ elements in the list $a$. We can compute this by first counting the occurrences of each unique element in $a$ and $b$, then summing over the unique elements in $a$.
+
+OCaml doesn't have a straightforward way to count occurrences (!) so I have to DIY via `Map.Make (Int)`.
+
+```ocaml
+module IntMap = Map.Make (Int)
+
+let counts lst =
+  List.fold_left
+    (fun acc x ->
+      IntMap.update x (function None -> Some 1 | Some n -> Some (n + 1)) acc)
+    IntMap.empty lst
+
+(* Within solve2 *)
+let counts1 = counts nums1 in
+let counts2 = counts nums2 in
+let join_counts =
+  IntMap.merge
+    (fun _ c1 c2 ->
+      match (c1, c2) with Some n1, Some n2 -> Some (n1 * n2) | _ -> None)
+    counts1 counts2
+in
+Printf.printf "%d\n" (IntMap.fold (fun k v acc -> acc + (k * v)) join_counts 0)
+```

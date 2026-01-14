@@ -1,0 +1,50 @@
+---
+tags:
+  - Dynamic programming
+---
+
+# Plutonian Pebbles
+
+This problem pays tribute to [2019 day 20](../2019/20.mdx).
+
+This is yet another [lanternfish problem](../2021/6.mdx). Each time, the objects can morph into other objects, but objects in the same state are indistinguishable. Therefore we can keep track of how many objects are in each state.
+
+First we can count the existing states.
+
+```ocaml
+module IntMap = Map.Make (Int)
+
+let counts lst =
+  List.fold_left
+    (fun acc x ->
+      IntMap.update x (function None -> Some 1 | Some n -> Some (n + 1)) acc)
+    IntMap.empty lst
+```
+
+Each time, we evolve the counts by applying the rules. All `0`'s become `1`'s; numbers with even digits are split; the rest are `* 2024`.
+
+```ocaml
+let evolve nums =
+  IntMap.fold
+    (fun x count acc ->
+      let sx = string_of_int x in
+      let new_x =
+        if x = 0 then [ 1 ]
+        else if String.length sx mod 2 = 0 then
+          [
+            int_of_string (String.sub sx 0 (String.length sx / 2));
+            int_of_string
+              (String.sub sx (String.length sx / 2) (String.length sx / 2));
+          ]
+        else [ x * 2024 ]
+      in
+      List.fold_left
+        (fun acc' nx ->
+          IntMap.update nx
+            (function None -> Some count | Some c -> Some (c + count))
+            acc')
+        acc new_x)
+    nums IntMap.empty
+```
+
+Parts 1 and 2 just apply `evolve` 25 and 75 times, respectively.

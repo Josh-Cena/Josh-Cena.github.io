@@ -13,6 +13,7 @@ globalThis.Prism = Prism;
 await import("prismjs/components/prism-bash");
 await import("prismjs/components/prism-diff");
 await import("prismjs/components/prism-haskell");
+await import("prismjs/components/prism-ocaml");
 await import("prismjs/components/prism-python");
 await import("prismjs/components/prism-r");
 

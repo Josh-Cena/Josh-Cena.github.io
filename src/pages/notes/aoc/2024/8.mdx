@@ -1,0 +1,64 @@
+---
+tags:
+  - Geometry
+---
+
+# Resonant Collinearity
+
+This problem pays tribute to 2016 day 25 (unimplemented).
+
+## Part 1
+
+I parse the input to four things: `mat`, a `char array array`, the `width` and `height`, and `antenna_groups`, a `(char * (int * int) list) list` mapping each frequency character to the list of coordinates.
+
+Then, for each group of antennas, I get all combinations of antenna pairs and mark their antinodes on the map.
+
+```ocaml
+let antinodes = Array.map (Array.map (fun _ -> false)) mat in
+List.iter
+  (fun (_, positions) ->
+    List.iter
+      (fun ((x1, y1), (x2, y2)) ->
+        let dx = x2 - x1 in
+        let dy = y2 - y1 in
+        if 0 <= y2 + dy && y2 + dy < height && 0 <= x2 + dx && x2 + dx < width
+        then antinodes.(y2 + dy).(x2 + dx) <- true;
+        if 0 <= y1 - dy && y1 - dy < height && 0 <= x1 - dx && x1 - dx < width
+        then antinodes.(y1 - dy).(x1 - dx) <- true)
+      (combinations2 positions))
+  antenna_groups;
+```
+
+Finally, I count the number of `true` values in `antinodes`.
+
+## Part 2
+
+Same as part 1, except now I can explore farther than one `dx` and `dy`. Because `x2 = x1 + dx`, `y2 = y1 + dy`, we can simply traverse all `x1 + m * dx` and `y1 + m * dy` until we go out of bounds.
+
+```ocaml
+let antinodes = Array.map (Array.map (fun _ -> false)) mat in
+List.iter
+  (fun (_, positions) ->
+    List.iter
+      (fun ((x1, y1), (x2, y2)) ->
+        let dx = x2 - x1 in
+        let dy = y2 - y1 in
+        let rec loop m =
+          let nx1 = x1 + (m * dx) in
+          let ny1 = y1 + (m * dy) in
+          let nx2 = x1 - (m * dx) in
+          let ny2 = y1 - (m * dy) in
+          let in_bounds1 =
+            0 <= nx1 && nx1 < width && 0 <= ny1 && ny1 < height
+          in
+          let in_bounds2 =
+            0 <= nx2 && nx2 < width && 0 <= ny2 && ny2 < height
+          in
+          if in_bounds1 then antinodes.(ny1).(nx1) <- true;
+          if in_bounds2 then antinodes.(ny2).(nx2) <- true;
+          if (not in_bounds1) && not in_bounds2 then () else loop (m + 1)
+        in
+        loop 0)
+      (combinations2 positions))
+  antenna_groups;
+```

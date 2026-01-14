@@ -1,0 +1,64 @@
+---
+tags:
+  - BFS/DFS
+---
+
+# Bridge Repair
+
+This problem pays tribute to [2022 day 9](../2022/9.mdx).
+
+## Part 1
+
+Obviously this problem involves an exponential decision space: for every space, we can insert either a `+` or a `*`. An easy optimization is to stop whenever we find a valid expression, but when the expression actually _doesn't_ work we are still forced to explore the whole space. In the input, the list of operands can have length up to 12, $2^{11} = 2048$ possibilities, which is not too bad.
+
+However, we can prune edges that we know _will never work_. The trick is to construct the expression _backwards_.
+
+```plain
+(a1 op1 a2) op2 a3) op3 a4) ... op[n-1] an = target
+```
+
+When we try to fill in `op1`, we don't know anything and must try both `+` and `*`; but what about `op[n-1]`? If we want to fill it with `*`, then we know that `b * an = target` for some `b`, which means that `target` must be divisible by `an`. If it's not, then we can skip the `*` option for `op[n-1]`. The `+` option is always valid, so we can always try it. After filling in `op[n-1]`, the problem has been reduced to one of the following:
+
+```plain
+(a1 op1 a2) op2 a3) op3 a4) ... op[n-2] an-1 = target - an
+(a1 op1 a2) op2 a3) op3 a4) ... op[n-2] an-1 = target / an
+```
+
+And we repeat until we get `a1 = target`, which is trivial to check. The merit of this approach is that often times there remains only one valid option for the next operator, so we can skip a large portion of the search space, regardless of whether the final expression is valid or not. If a valid solution is found, it still returns early.
+
+The order of the two tests don't matter, but I prefer to test the `*` option first since if it is `true` then that is more likely to lead to a solution, and we can skip the `+` option due to short circuiting.
+
+```ocaml
+let rec can_calc cur_res ops =
+  match ops with
+  | [] -> failwith "No operators left"
+  | [ op ] -> cur_res = op
+  | op :: rest ->
+      (op <> 0 && cur_res mod op = 0 && can_calc (cur_res / op) rest)
+      || can_calc (cur_res - op) rest
+```
+
+Note that this takes operands right-to-left, so we need to reverse the list.
+
+## Part 2
+
+The only difference is the addition of `||`, which doesn't change our approach of searching backwards. Now we need to consider the reverse operation of `||`: for `*`, we test if `target / an` is valid; for `||`, we need to test if we can strip `an` from `target` as a string suffix, and still have some numbers left.
+
+```ocaml
+let rec can_calc cur_res ops =
+  match ops with
+  | [] -> failwith "No operators left"
+  | [ op ] -> cur_res = op
+  | op :: rest ->
+      (op <> 0 && cur_res mod op = 0 && can_calc (cur_res / op) rest)
+      || (let op_str = string_of_int op in
+          let cur_str = string_of_int cur_res in
+          String.length cur_str > String.length op_str
+          && String.ends_with ~suffix:op_str cur_str
+          &&
+          let remaining_str =
+            String.sub cur_str 0 (String.length cur_str - String.length op_str)
+          in
+          can_calc (int_of_string remaining_str) rest)
+      || (cur_res > op && can_calc (cur_res - op) rest)
+```

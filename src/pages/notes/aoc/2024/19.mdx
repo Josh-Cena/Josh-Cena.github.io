@@ -1,0 +1,52 @@
+---
+tags:
+  - Memoization
+---
+
+# Linen Layout
+
+This problem pays tribute to [2023 day 12](../2023/12.mdx).
+
+Essentially we are given a list of strings and we want to use them to construct a target string. This problem is recursive in nature, because each time, we find a suitable string that is a prefix of the target string, remove it and match the rest. For example, given the target string `abc` and the towels `["a", "ab", "bc"]`, we can either use `a` and then try to construct `bc`, or we can use `ab` and then try to construct `c`.
+
+$$
+\text{ways}(s) = \begin{cases}
+1 & s = \texttt{""} \\
+\sum_{p \in \text{prefixes}(s)\cap\text{towels}} \text{ways}(s - p) & \text{otherwise}
+\end{cases}
+$$
+
+```ocaml
+let rec ways_to_construct pattern towels =
+  towels
+  |> List.filter (fun towel -> String.starts_with ~prefix:towel pattern)
+  |> List.map (fun towel ->
+      ways_to_construct
+        (String.sub pattern (String.length towel)
+          (String.length pattern - String.length towel))
+        towels memo)
+  |> List.fold_left ( + ) 0
+```
+
+The problem is that we may be recomputing `ways` with the same target string multiple times. The easy way out is to memoize each input for `ways`.
+
+```ocaml
+let rec ways_to_construct pattern towels memo =
+  match Hashtbl.find_opt memo pattern with
+  | Some count -> count
+  | None ->
+      let count =
+        towels
+        |> List.filter (fun towel -> String.starts_with ~prefix:towel pattern)
+        |> List.map (fun towel ->
+            ways_to_construct
+              (String.sub pattern (String.length towel)
+                 (String.length pattern - String.length towel))
+              towels memo)
+        |> List.fold_left ( + ) 0
+      in
+      Hashtbl.add memo pattern count;
+      count
+```
+
+Now part 1 is the count of `ways_to_construct > 0`, and part 2 is the sum of `ways_to_construct`.

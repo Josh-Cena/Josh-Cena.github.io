@@ -1,0 +1,74 @@
+---
+tags:
+  - Dynamic programming
+---
+
+# Hoof It
+
+This problem pays tribute to [2023 day 15](../2023/15.mdx).
+
+## Part 1
+
+We want the number of `9`s reachable from each `0`. This problem is recursive in nature: for a cell with value `v`, the number of `9`s reachable from there is the sum of the number of reachable `9`s from each adjacent cell with value `v + 1`, i.e., as the following recurrence:
+
+$$
+\text{reachable9}(x, y) = \begin{cases}
+{\displaystyle\bigcup_{\substack{(x', y') \in \text{adj}(x, y)\\mat[x', y'] = mat[x, y] + 1}} \text{reachable9}(x', y')} &  mat[x, y] < 9 \\
+\{(x, y)\} & mat[x, y] = 9 \\
+\varnothing & \text{otherwise}
+\end{cases}
+$$
+
+Note that $\bigcup$ deduplicates, because we may have two paths that reach the same `9`, which should only be counted once. We can memoize the result for each cell, so that we only compute it once for each cell, starting with the paths from `9` to `9`.
+
+```ocaml
+let dp = Array.make_matrix height width [] in
+let value_to_pos = Array.make 10 [] in
+for y = 0 to height - 1 do
+  for x = 0 to width - 1 do
+    let v = mat.(y).(x) in
+    value_to_pos.(v) <- (x, y) :: value_to_pos.(v)
+  done
+done;
+List.iter (fun (x, y) -> dp.(y).(x) <- [ (x, y) ]) value_to_pos.(9);
+```
+
+Then we can fill in the rest of the `dp` table by iterating through the cells in reverse order of their values, starting from `8` down to `0`.
+
+```ocaml
+for d = 8 downto 0 do
+  List.iter
+    (fun (x, y) ->
+      dp.(y).(x) <-
+        List.map
+          (fun (dx, dy) ->
+            let nx = x + dx in
+            let ny = y + dy in
+            if
+              0 <= nx && nx < width && 0 <= ny && ny < height
+              && mat.(ny).(nx) = d + 1
+            then dp.(ny).(nx)
+            else [])
+          dirs
+        |> List.fold_left ( @ ) [] |> List.sort_uniq compare)
+    value_to_pos.(d)
+done;
+```
+
+(I'm using lists to store the reachable `9`s, but we could also use sets; they are just a bit hard to use in OCaml.)
+
+Finally we just sum up the lengths of the reachable `9`s for each `0` cell.
+
+## Part 2
+
+The way I implemented part 1 made part 2 even simpler, just by replacing the recurrence with summation instead of union:
+
+$$
+\text{paths9}(x, y) = \begin{cases}
+{\displaystyle\sum_{\substack{(x', y') \in \text{adj}(x, y)\\mat[x', y'] = mat[x, y] + 1}} \text{paths9}(x', y')} &  mat[x, y] < 9 \\
+1 & mat[x, y] = 9 \\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+The only difference is that there's no deduplication of paths this time. My `dp` table now just stores the numbers.

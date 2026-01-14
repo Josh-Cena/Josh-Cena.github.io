@@ -1,0 +1,64 @@
+---
+tags:
+  - Brute force
+---
+
+# Print Queue
+
+This problem pays tribute to 2017 day 1 (unimplemented).
+
+## Part 1
+
+I parse my input to two things: `orders`, a `(int * int) list` saying that `a` should come before `b`, and `lists`, a `int list list`.
+
+If a list is valid, then for each order `(a, b)`, `a` must come before `b` in the list. Instead of searching for `a` and `b` for each order, I can build a map from each element to its index in the list, and then check that `index(a) < index(b)` for each order.
+
+```ocaml
+module IntMap = Map.Make (Int)
+
+let map_num_to_ind lst =
+  List.fold_right
+    (fun (i, x) -> IntMap.add x i)
+    (List.mapi (fun i x -> (i, x)) lst)
+    IntMap.empty
+
+let order_holds num_to_ind (a, b) =
+  match (IntMap.find_opt a num_to_ind, IntMap.find_opt b num_to_ind) with
+  | Some i1, Some i2 -> i1 < i2
+  | _ -> true
+```
+
+Finding the middle element is just `List.nth lst (List.length lst / 2)`.
+
+## Part 2
+
+To be honest, I'm not too fond of this problem, because there's no guarantee that the given order is total and consistent. In the end, I implemented a very dumb (IMO) solution that just fixes violations one by one. Each time, I pull an order, and if it's violated, swap the two elements. But one pass may not be enough, since fixing one order may break another. So I repeat this process until no more changes are needed.
+
+```ocaml
+let rec sort_list_repeatedly orders num_to_ind =
+  let rec sort_list orders num_to_ind =
+    match orders with
+    | [] -> (false, num_to_ind)
+    | (a, b) :: rest ->
+        let ind_a = IntMap.find_opt a num_to_ind in
+        let ind_b = IntMap.find_opt b num_to_ind in
+        begin match (ind_a, ind_b) with
+        | Some i, Some j when i > j ->
+            let _, num_to_ind' =
+              num_to_ind |> IntMap.add a j |> IntMap.add b i |> sort_list rest
+            in
+            (true, num_to_ind')
+        | _ -> sort_list rest num_to_ind
+        end
+  in
+  let has_changed, num_to_ind' = sort_list orders num_to_ind in
+  if has_changed then sort_list_repeatedly orders num_to_ind' else num_to_ind
+```
+
+Now finding the middle element is slightly more complicated, since we have to invert the map from element to index back to a list of elements. I just do a search for the element with index `List.length num_to_ind / 2` in the map.
+
+```ocaml
+let middle_element num_to_ind =
+  let mapping = IntMap.bindings num_to_ind in
+  List.find (fun (_, ind) -> ind = List.length mapping / 2) mapping |> fst
+```

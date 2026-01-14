@@ -1,0 +1,67 @@
+---
+tags:
+  - Grid walking
+---
+
+# Ceres Search
+
+This problem pays tribute to [2019 day 10](../2019/10.mdx).
+
+## Part 1
+
+This starts a series of days where my solution starts with the incantation:
+
+```ocaml
+let mat =
+  Array.of_list
+    (List.map (fun line -> Array.of_seq (String.to_seq line)) data)
+in
+let width = Array.length mat.(0) in
+let height = Array.length mat
+```
+
+This is the thing I really appreciate about OCaml: not only does it have arrays, but also `for` loops and refs. Perhaps a bit guilty, but I find imperative code much more straightforward than recursion or folds (which I spend non-trivial time rewriting into tail recursion).
+
+Given a direction `(dx, dy)` and a starting point `(x, y)`, we can walk in that direction and validate that we see `X`, `M`, `A`, `S` in order. We just repeat this for all 8 directions for each cell.
+
+```ocaml
+let is_xmas mat x y dx dy =
+  (not
+     ((dx == -1 && x <= 2)
+     || (dx == 1 && x >= width - 3)
+     || (dy == -1 && y <= 2)
+     || (dy == 1 && y >= height - 3)))
+  && mat.(y).(x) = 'X'
+  && mat.(y + dy).(x + dx) = 'M'
+  && mat.(y + (2 * dy)).(x + (2 * dx)) = 'A'
+  && mat.(y + (3 * dy)).(x + (3 * dx)) = 'S'
+in
+let count = ref 0 in
+for y = 0 to height - 1 do
+  for x = 0 to width - 1 do
+    List.iter
+      (fun (dx, dy) -> if is_xmas mat x y dx dy then incr count)
+      [ (1, 0); (1, -1); (0, -1); (-1, -1); (-1, 0); (-1, 1); (0, 1); (1, 1) ]
+  done
+done;
+```
+
+## Part 2
+
+Now for each cell, we need to search its 3x3 neighborhood for two diagonals of `MAS`. For each diagonal, we should see either `MAS` or `SAM`.
+
+```ocaml
+let is_xmas mat x y =
+  mat.(y).(x) = 'A'
+  && ((mat.(y - 1).(x - 1) = 'M' && mat.(y + 1).(x + 1) = 'S')
+      || (mat.(y - 1).(x - 1) = 'S' && mat.(y + 1).(x + 1) = 'M'))
+  && ((mat.(y - 1).(x + 1) = 'M' && mat.(y + 1).(x - 1) = 'S')
+      || (mat.(y - 1).(x + 1) = 'S' && mat.(y + 1).(x - 1) = 'M'))
+in
+let count = ref 0 in
+for y = 1 to height - 2 do
+  for x = 1 to width - 2 do
+    if is_xmas mat x y then incr count
+  done
+done;
+```

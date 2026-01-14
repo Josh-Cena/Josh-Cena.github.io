@@ -1,0 +1,93 @@
+---
+tags:
+  - Mathematics
+---
+
+# Red-Nosed Reports
+
+This problem pays tribute to 2015 day 19 (unimplemented).
+
+## Part 1
+
+There are three types of neighbor difference $\Delta_i = a_{i+1} - a_i$: increasing ($1 \le \Delta \le 3$), decreasing ($-3 \le \Delta \le -1$), and invalid. I can parse the successive differences to this structural representation, which makes subsequent analysis easier.
+
+```ocaml
+type diff_type = Inc of int | Dec of int | Invalid of int
+
+let get_diff_type d =
+  if 1 <= d && d <= 3 then Inc d
+  else if -3 <= d && d <= -1 then Dec d
+  else Invalid d
+
+let is_inc d = match d with Inc _ -> true | _ -> false
+let is_dec d = match d with Dec _ -> true | _ -> false
+
+let rec differences lst =
+  match lst with
+  | a :: b :: rest -> get_diff_type (b - a) :: differences (b :: rest)
+  | _ -> []
+```
+
+For part 1, we just need lists that are all `Inc` or all `Dec`.
+
+```ocaml
+let is_safe lst =
+  let diffs = differences lst in
+  List.for_all is_inc diffs || List.for_all is_dec diffs
+in
+let safe_lines = List.filter is_safe (List.map parse_line data) in
+```
+
+## Part 2
+
+Now we want to delete a single element from the list to make it safe. Obviously there's an $\mathcal{O}(n^2)$ solution where we try deleting each element and checking if the result is safe. But we can do better.
+
+For starters, deleting an element can only fix one invalid difference, or two that share an endpoint. So if there are two invalid differences that don't share an endpoint, we can immediately return false. Otherwise, we can try deleting the shared endpoint $a_i$ (or either endpoint if there's just one invalid difference), which removes $\Delta_i$ and $\Delta_{i-1}$, replacing them with $\Delta_i' = \Delta_i + \Delta_{i-1}$ (if $i > 0$ and $i < n-1$). If $i=0$ or $i=n-1$, the resulting list is automatically safe; otherwise, we need to check if $\Delta_i'$ is compatible with the remaining differences.
+
+Other than those that are straight `Invalid`, a difference may also be invalid because it's incompatible with the other differences. Therefore, our first step is to group all differences by type so we can identify the incompatible ones.
+
+```ocaml
+let diff_groups diffs =
+  let rec aux diffs (inc, dec, invalid) =
+    match diffs with
+    | (i, Inc d) :: rest -> aux rest ((i, d) :: inc, dec, invalid)
+    | (i, Dec d) :: rest -> aux rest (inc, (i, d) :: dec, invalid)
+    | (i, Invalid d) :: rest -> aux rest (inc, dec, (i, d) :: invalid)
+    | [] -> (inc, dec, invalid)
+  in
+  aux (List.mapi (fun i x -> (i, x)) diffs) ([], [], [])
+```
+
+Now, there are the following cases:
+
+- All increasing, plus two invalid or one invalid and one decreasing: delete the shared endpoint, and validate that $\Delta_i + \Delta_{i-1}$ is increasing.
+- All decreasing, plus two invalid or one invalid and one increasing: delete the shared endpoint, and validate that $\Delta_i + \Delta_{i-1}$ is decreasing.
+- All increasing, plus one invalid or one decreasing: if the invalid difference is at the start or end, we can delete the first or last element, respectively. Otherwise, we can delete either endpoint and check if the resulting difference is increasing.
+- All decreasing, plus one invalid or one increasing: similar to the above.
+- Already all increasing or all decreasing: return true.
+- Otherwise, return false.
+
+```ocaml
+let is_safe lst =
+  let diffs = differences lst in
+  let inc, dec, invalid = diff_groups diffs in
+  match (inc, dec, invalid) with
+  | (_, [], [ (j, dj); (i, di) ] | _, [ (j, dj) ], [ (i, di) ])
+    when j = i + 1 || j = i - 1 ->
+      is_inc (get_diff_type (di + dj))
+  | ([], _, [ (j, dj); (i, di) ] | [ (j, dj) ], _, [ (i, di) ])
+    when j = i + 1 || j = i - 1 ->
+      is_dec (get_diff_type (di + dj))
+  | _, [ (i, di) ], [] | _, [], [ (i, di) ] ->
+      i = 0
+      || i = List.length lst - 2
+      || is_inc (get_diff_type (List.assoc (i - 1) inc + di))
+      || is_inc (get_diff_type (List.assoc (i + 1) inc + di))
+  | [ (i, di) ], _, [] | [], _, [ (i, di) ] ->
+      i = 0
+      || i = List.length lst - 2
+      || is_dec (get_diff_type (List.assoc (i - 1) dec + di))
+      || is_dec (get_diff_type (List.assoc (i + 1) dec + di))
+  | _, [], [] | [], _, [] -> true
+  | _ -> false
+```

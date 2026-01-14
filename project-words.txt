@@ -1,6 +1,7 @@
 accum
 aeson
 allowtransparency
+antinodes
 argmin
 aria-roledescription
 backquote
@@ -11,6 +12,7 @@ bitmask
 bitmasks
 bitw
 bmatrix
+Bron
 buendía
 byrow
 casedness
@@ -45,6 +47,7 @@ disjointness
 dists
 dopplerhq
 dotless
+downto
 edgelist
 elems
 elif
@@ -62,6 +65,7 @@ fliplr
 flipud
 foldl
 foldr
+fragmenter
 frozenset
 functools
 garcía
@@ -72,6 +76,7 @@ gregexpr
 grepl
 gsub
 gsubfn
+Hashtbl
 hlint
 Hoare
 Holodeck
@@ -82,12 +87,15 @@ inds
 infty
 injectivity
 Intcode
+interm
+iteri
 itertools
 joltage
 joltages
 joshcena
 juliaup
 katex
+Kerbosch
 kitchensink
 kwargs
 lanternfish
@@ -95,8 +103,9 @@ lapply
 letterlike
 lext
 luo
-márquez's
+lxor
 mapi
+márquez's
 mathbb
 mathbf
 mathcal
@@ -138,6 +147,7 @@ pipeable
 pmax
 popleft
 posix
+Pqueue
 prismjs
 probs
 prosgegrammeni
@@ -164,6 +174,7 @@ setdefault
 shellenv
 sida
 silw
+Sokoban
 starrail
 statsmodels
 stoll
@@ -175,8 +186,10 @@ subcircuit
 subcycles
 subdirs
 subplayer
+substack
 surjectivity
 svgr
+Tetris
 texlive
 texttt
 tlsv

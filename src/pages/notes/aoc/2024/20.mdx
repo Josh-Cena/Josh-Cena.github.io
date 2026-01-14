@@ -1,0 +1,43 @@
+---
+tags:
+  - Geometry
+---
+
+# Race Condition
+
+This problem pays tribute to 2017 day 24 (unimplemented).
+
+The total time of a path that uses a cheat from $a$ to $b$ can be calculated as:
+
+$$
+d = d(S, a) + D(a, b) + d(b, E)
+$$
+
+where $d(x, y)$ is the track length and $D(x, y)$ is the Manhattan distance (since walls are ignored during the cheat). The total time _without_ the cheat is:
+
+$$
+d = d(S, a) + d(a, b) + d(b, E)
+$$
+
+So the cheat works whenever $d(a, b) - D(a, b) \ge 100$.
+
+I first run a "pseudo-BFS" to calculate $d(S, a)$ and $d(b, E)$ for all $a$ and $b$. Because there's a single path, I didn't use a queue; I just find the next neighbor that hasn't been visited yet. The results are a `distances` matrix recording $d(S, a)$ for each $a$, and a `path` list of all points along the path. $d(a, b)$ can be derived by $d(S, b) - d(S, a)$ since the path is linear.
+
+For each point along the path, we can either use the cheat or not. When using a cheat, we can jump to any point that is within the radius of 2 (or 20 for part 2) measured in Manhattan distance. I just iterate over all points in this range, verifying that $d(a, b) - D(a, b) \ge 100$.
+
+```ocaml
+let num_working_cheats distances i j radius =
+  let count = ref 0 in
+  let h = Array.length distances in
+  let w = Array.length distances.(0) in
+  for ni = i - radius to i + radius do
+    for nj = j - radius + abs (i - ni) to j + radius - abs (i - ni) do
+      if ni < 0 || ni >= h || nj < 0 || nj >= w then ()
+      else if
+        distances.(ni).(nj) - distances.(i).(j)
+        >= 100 + abs (i - ni) + abs (j - nj)
+      then count := !count + 1
+    done
+  done;
+  !count
+```
