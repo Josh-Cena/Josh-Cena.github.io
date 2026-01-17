@@ -20,29 +20,13 @@ This reminds of [2019 day 18](../2019/18.mdx), where we also simplified the maze
 
 Anyway, this is an entirely unremarkable (by the standards of day 23) algorithm. I first extract all such junction points (which just requires looking at the cell and its neighbors' values; no traversal required). Then I walk from each exit direction of each junction point until I hit another junction point (the path is unique along the way), and record the distance between them. This gives me a graph of junction points and their distances.
 
-{/* TODO: the remark plugin should handle JSX images as well, or allow arbitrary attributes in image syntax */}
-
-import imgIntermediate from "./23-intermediate.png";
-
-<img
-  src={imgIntermediate}
-  alt="Intermediate junction graph"
-  width={2149}
-  height={3258}
-  style={{ maxWidth: "100%", height: "auto" }}
-/>
+![Intermediate junction graph](./23-intermediate.png)
 
 (By the way, there was a minor hiccup with producing these graphs: turned out that `DiagrammeR` doesn't work well with graphs containing `name`, so I have to delete the names before converting to `DiagrammeR`.)
 
 There's already something we can see from this graph, but it's still a bit too bloated. If we look at the path from one junction point to another, it looks like `A -> B -> C <-> D`. `B` is obviously useless because there's a single way to go from `A` to `C`; `C` is also useless because it can only be exited in one direction, so it must be entered from the other direction. So we can prune these nodes and get the following graph:
 
-<img
-  src="https://github.com/Josh-Cena/aoc2023/blob/master/src/day23_1.png?raw=true"
-  alt="Final junction graph"
-  width={805}
-  height={874}
-  style={{ maxWidth: "100%", height: "auto" }}
-/>
+![Final junction graph](https://github.com/Josh-Cena/aoc2023/blob/master/src/day23_1.png?raw=true)
 
 This is a grid graph where each edge points to the target node. (There are two triangles in the corners, but if you add an extra node in the middle of those edges, you get a regular grid graph.) Because it's a DAG, we can do a topological sort and then do a DFS (see [longest path](https://en.wikipedia.org/wiki/Longest_path_problem#Acyclic_graphs)).
 
@@ -72,13 +56,7 @@ longest_path_dag <- function(graph, start_id, end_id) {
 
 After removing the slopes, now all edges are bidirectional, so essentially the graph is the same but undirected:
 
-<img
-  src="https://github.com/Josh-Cena/aoc2023/blob/master/src/day23_2.png?raw=true"
-  alt="Final junction graph, undirected"
-  width={805}
-  height={874}
-  style={{ maxWidth: "100%", height: "auto" }}
-/>
+![Final junction graph, undirected](https://github.com/Josh-Cena/aoc2023/blob/master/src/day23_2.png?raw=true)
 
 However! Longest paths in undirected graphs are [NP-hard](https://en.wikipedia.org/wiki/Longest_path_problem#NP-hardness), including in grid graphs. So a naïve DFS solution would be very slow. Let's start with the ill-performing version as a baseline. It enumerates every single path from the start to the end, [of which there are 1,262,816](https://oeis.org/A007764), by adding one edge to the path at a time, and keeping track of the longest path length found so far. It uses a visited set to avoid cycles, which is reset when backtracking.
 

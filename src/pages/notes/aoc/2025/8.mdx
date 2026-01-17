@@ -66,3 +66,20 @@ loop {
     }
 }
 ```
+
+By the way, initially I had a wrong solution, which was basically this:
+
+```rust
+let mut disconnected = HashSet::from_iter(0..coords.len());
+loop {
+    let Reverse((_, a, b)) = heap.pop().unwrap();
+    disconnected.remove(&a);
+    disconnected.remove(&b);
+    if disconnected.len() == 0 {
+        println!("{}", coords[a][0] * coords[b][0]);
+        break;
+    }
+}
+```
+
+However, this would break as soon as every component has size greater than 1, not when there is only one component left. I didn't even realize I was wrong before I started writing this writeup. I guess I just got lucky.

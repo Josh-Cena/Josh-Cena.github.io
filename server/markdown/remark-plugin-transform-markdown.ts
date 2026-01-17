@@ -16,6 +16,7 @@ import { toText } from "hast-util-to-text";
 import { visit } from "unist-util-visit";
 import * as Acorn from "acorn";
 import Yaml from "yaml";
+import { imageSizeFromFile } from "image-size/fromFile";
 import type { Program } from "estree";
 
 import { normalizeRoute } from "../../src/normalize-route.ts";
@@ -130,28 +131,55 @@ day: ${day}`;
   }
 }
 
-function transformImages(ast: Root, firstHeading: number) {
-  const images: string[] = [];
+async function transformImages(ast: Root, vFile: VFile, firstHeading: number) {
+  const images = new Map<
+    string,
+    { width?: number; height?: number; srcName: string; importUrl: string }
+  >();
+  const imagePromises: Promise<void>[] = [];
   visit(ast, "image", (node: Image) => {
     if (/^https?:\/\//u.test(node.url)) return;
-    if (images.includes(node.url)) return;
-    images.push(node.url);
+    if (images.has(node.url)) return;
+    imagePromises.push(
+      imageSizeFromFile(Path.join(vFile.dirname ?? "", node.url))
+        .then(({ width, height }) => {
+          images.set(node.url, {
+            width,
+            height,
+            srcName: `imageSrc${images.size}`,
+            importUrl: node.url,
+          });
+        })
+        .catch(() => {
+          images.set(node.url, {
+            srcName: `imageSrc${images.size}`,
+            importUrl: node.url,
+          });
+        }),
+    );
   });
+  await Promise.all(imagePromises);
   ast.children.splice(
     firstHeading + 1,
     0,
-    ...images.map((url, index) =>
-      createImportDeclaration(`imageSrc${index}`, url),
+    ...Array.from(images.values()).map(({ importUrl, srcName }) =>
+      createImportDeclaration(srcName, importUrl),
     ),
   );
   visit(ast, "image", (node: Image) => {
-    const imageIndex = images.indexOf(node.url);
-    if (imageIndex === -1) return;
+    const imageData = images.get(node.url);
+    if (!imageData) return;
     Object.assign(
       node,
       createJSXElement("img", [
-        { name: "src", value: `imageSrc${imageIndex}` },
+        { name: "src", value: imageData.srcName },
         { name: "alt", value: `"${node.alt?.replaceAll('"', '\\"') ?? ""}"` },
+        ...(imageData.width && imageData.height
+          ? [
+              { name: "width", value: String(imageData.width) },
+              { name: "height", value: String(imageData.height) },
+            ]
+          : []),
       ]),
     );
   });
@@ -230,7 +258,7 @@ function transformCode(ast: Root, firstHeading: number) {
   }
 }
 
-const transformMarkdown: Plugin = () => (ast, vFile) => {
+const transformMarkdown: Plugin = () => async (ast, vFile) => {
   const { children } = ast as Root;
   if (!children.length) return;
   const firstHeading = children.findIndex(
@@ -238,7 +266,7 @@ const transformMarkdown: Plugin = () => (ast, vFile) => {
   );
   if (!firstHeading) throw new Error("Markdown file must have H1");
   transformFrontMatter(ast as Root, vFile, firstHeading);
-  transformImages(ast as Root, firstHeading);
+  await transformImages(ast as Root, vFile, firstHeading);
   transformLinks(ast as Root, vFile);
   transformCode(ast as Root, firstHeading);
   if (vFile.dirname?.includes("blog")) {
