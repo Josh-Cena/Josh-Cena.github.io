@@ -1,0 +1,88 @@
+---
+tags:
+  - Brute force
+  - Mathematics
+---
+
+# Gift Shop
+
+## Part 1
+
+If a number contains two repeating sequences of digits, then it must be of the form $aa$ where $a$ is the repeating sequence; written another way, the number is $a \cdot 10^d + a = a \cdot (10^d + 1)$ where $d$ is the number of digits in $a$, which is $\lfloor \log_{10} a \rfloor + 1$. These numbers form the set $\{a\cdot (10^{d(a)} + 1) \mid a\ge 1\}$.
+
+The search ranges only contain fewer than 2,000,000 numbers, so it's possible to brute-force each number and check its inclusion in this set. However, for each range $[L, R]$, we can actually find its intersection with the set above in constant time by finding the smallest and largest $a$, since $a\cdot (10^{d(a)} + 1)$ is a monotonous, piecewise linear function. We just need to solve the inequalities
+
+$$
+\begin{aligned}
+a_1\cdot (10^{d(a_1)} + 1) &\ge L \\
+a_2\cdot (10^{d(a_2)} + 1) &\le R
+\end{aligned}
+$$
+
+To solve the first one, we can first determine the value of $d(a_1)$. For each value of $d(a_1)$, $a_1$ is in the range $[10^{d-1}, 10^d - 1]$. So the smallest $d$ needs to satisfy $(10^d - 1)\cdot (10^d + 1) \ge L$.
+
+$$
+\begin{aligned}
+(10^d - 1)\cdot (10^d + 1) &\ge L \\
+10^{2d} - 1 &\ge L \\
+d &\ge \frac{\log_{10}(L + 1)}{2} \\
+d &\ge \left\lceil \frac{\log_{10}(L + 1)}{2} \right\rceil
+\end{aligned}
+$$
+
+Similarly, to solve the second one, we want the largest $d$ such that $10^{d-1}\cdot (10^d + 1) \le R$.
+
+$$
+\begin{aligned}
+10^d\cdot (10^d + 1) &\le 10R\\
+\left(2\cdot 10^d + 1\right)^2 &\le 4\cdot 10R + 1 \\
+2\cdot 10^d + 1 &\le \sqrt{40R + 1} \\
+d &\le \log_{10}\left(\frac{\sqrt{40R + 1} - 1}{2}\right) \\
+d &\le \left\lfloor \log_{10}\left(\frac{\sqrt{40R + 1} - 1}{2}\right) \right\rfloor
+\end{aligned}
+$$
+
+Now we have the range of $d$ values. For each $d$, we can get all valid $a$ values $[a_l, a_r]$ which is the intersection of $[10^{d-1}, 10^d - 1]$ and $[\lceil L / (10^d + 1) \rceil, \lfloor R / (10^d + 1) \rfloor]$. The sum of them is $(10^d + 1)\cdot \sum_{a=a_l}^{a_r} a = (10^d + 1)\cdot\frac{(a_l + a_r)(a_r - a_l + 1)}{2}$.
+
+```rust
+let d_min = ((*low as f64 + 1.0).log10() / 2.0).ceil() as u32;
+let d_max = (((40 * *high + 1) as f64).sqrt() / 2.0 - 0.5).log10().floor() as u32;
+for d in d_min..=d_max {
+    let multiplier = 10u64.pow(d) + 1;
+    let a_min = ceil_div(*low, multiplier).max(10u64.pow(d - 1));
+    let a_max = (*high / multiplier).min(10u64.pow(d) - 1);
+    if a_min > a_max {
+        continue;
+    }
+    total += (a_max - a_min + 1) * (a_max + a_min) * multiplier / 2;
+}
+```
+
+## Part 2
+
+Now the number can contain any number of repeating sequences of digits, so it can be any of $aa$, $aaa$, $aaaa$, etc.
+
+I'm sure there's still a closed-form solution, but I don't see it right now. There's a second complication, which is double-counting: for example, `222222` can be counted as `22 * 10101`, or `222 * 1001`. To avoid this, I have to enumerate every number in the ranges and check if it has repeating sequences. I hardcoded each value of the multiplier and the corresponding range of $a$ values:
+
+```rust
+let candidates = vec![
+    (11, 1, 9),
+    (111, 1, 9),
+    (11111, 1, 9),
+    (1111111, 1, 9),
+    (101, 10, 99),
+    (10101, 10, 99),
+    (1010101, 10, 99),
+    (101010101, 10, 99),
+    (1001, 100, 999),
+    (1001001, 100, 999),
+    (1001001001, 100, 999),
+    (10001, 1000, 9999),
+    (100001, 10000, 99999),
+    (1001001, 100, 999),
+];
+```
+
+And then I do a very dumb brute-force check to see if `num % multiplier == 0 && a >= a_min && a <= a_max` for each `num`.
+
+Going to put a big "TODO" here because I'm not happy with this solution.

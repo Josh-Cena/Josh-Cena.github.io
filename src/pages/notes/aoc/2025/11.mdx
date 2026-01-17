@@ -1,0 +1,73 @@
+---
+tags:
+  - Graph theory
+---
+
+# Reactor
+
+## Part 1
+
+Since this is a DAG, counting the number of paths between two nodes can be done by dynamic programming: `num_paths[node] = sum(num_paths[prev_node] for prev_node in graph[node])`. How do we make sure that we compute `num_paths[node]` only after all `num_paths[prev_node]` are computed? We can do a topological sort of the graph, and compute the number of paths in that order.
+
+I use [Kahn's algorithm](https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm) for topo sorting, which basically a BFS that only adds nodes with in-degree 0 to the queue. First compute the in-degree of each node:
+
+{/* cSpell:ignore indeg */}
+
+```rust
+let mut num_paths: HashMap<String, i64> = HashMap::new();
+let mut indeg: HashMap<String, i32> = HashMap::new();
+for (u, neighbors) in graph {
+    indeg.entry(u.clone()).or_insert(0);
+    num_paths.insert(u.clone(), 0);
+    for v in neighbors {
+        *indeg.entry(v.clone()).or_insert(0) += 1;
+    }
+}
+```
+
+Initially the queue only contains root nodes. The `num_paths` of the root nodes is 1, since there is one path from the root to itself.
+
+```rust
+*num_paths.get_mut(start).unwrap() = 1;
+
+let mut queue = VecDeque::from_iter(
+    indeg
+        .iter()
+        .filter_map(|(v, &d)| if d == 0 { Some(v.clone()) } else { None }),
+);
+```
+
+Now we do BFS as normal. Each time a node is visited, its successors' `num_paths` are updated, and their in-degrees are decreased (as if the node is removed). New nodes with in-degree 0 are added to the queue.
+
+```rust
+while let Some(u) = queue.pop_front() {
+    let count_u = num_paths[&u];
+    for v in graph.get(&u).unwrap_or(&Vec::new()) {
+        if avoid.contains(&v.as_str()) {
+            continue;
+        }
+        if let Some(d) = indeg.get_mut(v) {
+            *num_paths.entry(v.clone()).or_insert(0) += count_u;
+            *d -= 1;
+            if *d == 0 {
+                queue.push_back(v.clone());
+            }
+        }
+    }
+}
+```
+
+## Part 2
+
+Now we want paths that visit the `dac` and `fft` nodes. One way to do it is to keep track of whether these nodes have been visited in the state, which multiplies the number of states by 4, which _isn't too bad_. But I already have a working `count_paths` function and I don't want to change it.
+
+My first approach was a failure. I thought that I could compute `count_paths(start, dac) * count_paths(dac, fft) * count_paths(fft, end)` (and with `dac` and `fft` swapped), but this doesn't work because not all paths from `start` to `dac` can be combined with all paths from `dac` to `fft`, etc., because some paths from `start` to `dac` might not be able to go back to `fft`.
+
+My second approach is to use inclusion-exclusion. The number of paths that visit `dac` and `fft` is equal to the total number of paths, minus the number of paths that don't visit `dac`, minus the number of paths that don't visit `fft`. This subtracts the paths that don't visit either `dac` or `fft` twice, so we need to add it back once. While it's hard to keep track of which paths _do_ visit a node, it turns out that making a path _not_ visit a node is easy: we can just remove that node from the graph and recompute the number of paths. I make my `count_paths` function take an `avoid` list, which are essentially removed from the graph. Now the number of paths is:
+
+```rust
+let total = count_paths(&graph, "svr", "out", &[])
+    - count_paths(&graph, "svr", "out", &["dac"])
+    - count_paths(&graph, "svr", "out", &["fft"])
+    + count_paths(&graph, "svr", "out", &["dac", "fft"]);
+```

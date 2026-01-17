@@ -1,0 +1,105 @@
+---
+tags:
+  - BFS/DFS
+  - Mathematics
+---
+
+# Factory
+
+## Part 1
+
+See this problem as a graph problem. Each light state is a node, and each button press is a directed edge to another node. We want to find the shortest path from the initial state to the target state. This can be done with a BFS. As a micro-optimization, I used a bitset to represent the state of the lights.
+
+```rust
+let lights_st = lights
+    .chars()
+    .fold(0, |acc, c| acc * 2 + if c == '#' { 1 } else { 0 });
+let n_lights = lights.len();
+let start = 0;
+let mut queue = VecDeque::new();
+let mut visited = HashSet::new();
+queue.push_back((start, 0));
+visited.insert(start);
+while !queue.is_empty() {
+    let (cur_st, dist) = queue.pop_front().unwrap();
+    for wiring in &wirings {
+        let mut next_st = cur_st;
+        for &i in wiring {
+            next_st = next_st ^ (1 << (n_lights - 1 - i));
+        }
+        if lights_st == next_st {
+            total += dist + 1;
+            continue 'machines;
+        }
+        if !visited.contains(&next_st) {
+            visited.insert(next_st);
+            queue.push_back((next_st, dist + 1));
+        }
+    }
+}
+```
+
+## Part 2
+
+I think this is the hardest problem of the year (of which there are few). Essentially, we have a list of button presses $x_1, x_2, \ldots, x_k$. For each joltage $y_j \in \{y_1, y_2, \ldots, y_m\}$, button $i$ either works or doesn't work for that joltage (denoted by $a_{ij}\in\{0,1\}$). This means solving the system of equations:
+
+$$
+\begin{aligned}
+a_{11}x_1 + a_{12}x_2 + \cdots + a_{1k}x_k &= y_1 \\
+a_{21}x_1 + a_{22}x_2 + \cdots + a_{2k}x_k &= y_2 \\
+\vdots \\
+a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mk}x_k &= y_m
+\end{aligned}
+$$
+
+And we'd like to minimize $x_1 + x_2 + \cdots + x_k$. This is a linear programming problem. (Note that an exact solution only exists if $k\le m$.) Of course I can implement [Simplex](https://en.wikipedia.org/wiki/Simplex_algorithm) myself, which I actually did once but in Haskell, but I don't want to do that again. I just used [`good_lp`](https://docs.rs/good_lp/latest/good_lp/) with its default `microlp` solver.
+
+To define an LP problem, we need to define the variables, the constraints, and the objective function. The variables are $x_1, x_2, \ldots, x_k$. The first set of constraints is that $x_i \ge 0$ for all $i$. The second set, perhaps less obvious, is that $x_i \le y_j$ for all $i, j$ such that $a_{ij} = 1$—because more presses would always overshoot.
+
+```rust
+for (j, affected_counters) in buttons.iter().enumerate() {
+    let var = vars.add(
+        variable()
+            .integer()
+            .min(0)
+            .max(affected_counters.iter().map(|&i| target[i]).min().unwrap())
+            .name(format!("x_{}", j)),
+    );
+    x_vars.push(var);
+}
+```
+
+The objective function is simply $x_1 + x_2 + \cdots + x_k$.
+
+{/* cSpell:ignore minimise */}
+
+```rust
+let mut objective = Expression::default();
+for &x in &x_vars {
+    objective.add_mul(1.0, x);
+}
+let mut model = microlp(vars.minimise(&objective));
+```
+
+The final set of constraints is the system of equations above.
+
+```rust
+for i in 0..target.len() {
+    let mut expr = Expression::default();
+    for (j, affected_counters) in buttons.iter().enumerate() {
+        if affected_counters.contains(&i) {
+            expr.add_mul(1.0, x_vars[j]);
+        }
+    }
+    model = model.with(expr.eq(target[i] as f64));
+}
+```
+
+Then we just call `solve()` and extract the value of the objective function.
+
+```rust
+let solution = model.solve().unwrap();
+solution.eval(&objective).round() as i32
+```
+
+Of course this is a bit of cheat, but I just don't want to spend an hour implementing an LP solver myself.

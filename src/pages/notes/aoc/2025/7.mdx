@@ -1,0 +1,33 @@
+---
+tags:
+  - Dynamic programming
+---
+
+# Laboratories
+
+This is yet another [lanternfish problem](../2021/6.mdx). As a beam moves down level by level, it either moves into the same column or splits into the column to the left and right. We can keep track of how many beams are in each column at each level. If a splitter is encountered, the beam is added to the left and right columns; otherwise, it is added to the same column.
+
+```rust
+let mut num_beams = vec![0; data[0].len()];
+num_beams[data[0].iter().position(|&c| c == 'S').unwrap()] = 1;
+for line in data.iter().skip(1) {
+    let mut new_num_beams = vec![0; line.len()];
+    for (i, &c) in line.iter().enumerate() {
+        if c == '^' {
+            if i > 0 {
+                new_num_beams[i - 1] += num_beams[i];
+            }
+            if i + 1 < new_num_beams.len() {
+                new_num_beams[i + 1] += num_beams[i];
+            }
+        } else {
+            new_num_beams[i] += num_beams[i];
+        }
+    }
+    num_beams = new_num_beams;
+}
+```
+
+For part 1, I just count how many columns have non-zero beams.
+
+For part 2, I count the total number of beams by summing the counts in each column.

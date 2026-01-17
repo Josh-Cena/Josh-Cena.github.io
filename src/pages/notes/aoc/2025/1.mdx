@@ -1,0 +1,52 @@
+---
+tags:
+  - Brute force
+  - Mathematics
+---
+
+# Secret Entrance
+
+## Part 1
+
+I only learned that it's possible to simulate every single step of the dial—I guess that's more expected of day 1. Anyway, I implemented it the cleverer way, which is to update the position once per turn. Completing one turn resets the dial from `100` to `0`, which is `% 100`. However, in Rust, `%` is remainder, which can return negative numbers if the LHS is negative. The modulo operation is provided by `rem_euclid`.
+
+```rust
+let mut pos = 50;
+let mut count = 0;
+for line in data {
+    let dir = &line[0..1];
+    let dist: i32 = line[1..].parse().unwrap();
+    pos = match dir {
+        "L" => (pos - dist).rem_euclid(100),
+        "R" => (pos + dist).rem_euclid(100),
+        c => panic!("Unknown direction: {}", c),
+    };
+    if pos == 0 {
+        count += 1;
+    }
+}
+```
+
+## Part 2
+
+Now we need to detect if a movement from $pos$ to $pos + dist$ passes _through_ 0. The trick is to imagine that the circular path is "unrolled" into a straight line, in which case every multiple of 100 corresponds to a position of 0. So we can calculate the number of multiples of 100 in the range $(pos, pos + dist]$ (or $[pos - dist, pos)$ when moving left). The number of multiples of 100 that are less than or equal to $x$ is $\lfloor x / 100\rfloor$. So the number of multiples of 100 in the range $(pos, pos + dist]$ is $\lfloor (pos + dist) / 100 \rfloor - \lfloor pos / 100 \rfloor$ (those less than or equal to $pos + dist$, but _not_ less than or equal to $pos$). For $[pos - dist, pos)$, it's $\lfloor (pos - 1) / 100 \rfloor - \lfloor (pos - dist - 1) / 100 \rfloor$. Floor division (not rounding to zero) is provided by `div_euclid`.
+
+```rust
+let mut pos = 50;
+let mut count = 0;
+for line in data {
+    let dir = &line[0..1];
+    let dist: i32 = line[1..].parse().unwrap();
+    pos = match dir {
+        "L" => {
+            count += (pos - 1i32).div_euclid(100) - (pos - dist - 1).div_euclid(100);
+            (pos - dist).rem_euclid(100)
+        }
+        "R" => {
+            count += (pos + dist).div_euclid(100) - pos.div_euclid(100);
+            (pos + dist).rem_euclid(100)
+        }
+        c => panic!("Unknown direction: {}", c),
+    };
+}
+```

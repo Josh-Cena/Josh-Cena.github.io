@@ -1,0 +1,68 @@
+---
+tags:
+  - Data structures
+---
+
+# Playground
+
+## Part 1
+
+First collect the distance between each pair of point (more precisely, squared distance to avoid floating point issues).
+
+```rust
+let mut dist: Vec<(i64, usize, usize)> = Vec::new();
+for i in 0..coords.len() {
+    for j in i + 1..coords.len() {
+        let d = (coords[i][0] - coords[j][0]).pow(2)
+            + (coords[i][1] - coords[j][1]).pow(2)
+            + (coords[i][2] - coords[j][2]).pow(2);
+        dist.push((d, i, j));
+    }
+}
+```
+
+Now, the naïve way is to sort all edges by distance, which is $\mathcal{O}(|V|^2 \log (|V|^2))$.; but note that we don't need that many edges, so most of the ordering is useless. Turns out that _on-demand_ sorting is possible with a heap. Heapifying a list is $\mathcal{O}(n)$, and each pop is $\mathcal{O}(\log n)$, so the total time is $\mathcal{O}(|V|^2 + |E| \log (|V|^2))$, which is much better than the previous approach. To make Rust's `BinaryHeap` work as a min-heap, we can wrap the values in `Reverse`.
+
+```rust
+let mut heap = BinaryHeap::from_iter(dist.into_iter().map(Reverse));
+for _ in 0..num_conn {
+    let (_, a, b) = heap.pop().unwrap().0;
+    // ...
+}
+```
+
+Then we can connect each pair of points in order of distance. I could have used adjacency lists and BFS, which would have time $\mathcal{O}(|E| + |V|)$, but since we are only interested in the number of components, I use a union-find data structure instead, which turns out to be very useful for part 2 as well. Theoretically, this should be $\mathcal{O}((|E| + |V|) \alpha(|V|))$, which is slightly worse than BFS, but in practice both are dwarfed by the $\mathcal{O}(|V|^2)$ distance calculation.
+
+```rust
+let mut uf = QuickUnionUf::<UnionBySize>::new(coords.len());
+for _ in 0..num_conn {
+    let Reverse((_, a, b)) = heap.pop().unwrap();
+    uf.union(a, b);
+}
+let mut sizes = HashMap::new();
+for i in 0..coords.len() {
+    let root = uf.find(i);
+    *sizes.entry(root).or_insert(0) += 1;
+}
+```
+
+Finally I just get the top 3 sizes and multiply them together.
+
+## Part 2
+
+I believe that the naïve solution is to run a BFS for every additional edge until we have only one component left. However, this is at least $\mathcal{O}(|E|^2)$. Since I already have a union-find, this becomes much easier. I just keep track of the number of components, and stop when it reaches 1. I decrement the number of components every time I union two components together—when `union()` returns `true`.
+
+```rust
+let mut uf = QuickUnionUf::<UnionBySize>::new(coords.len());
+let mut num_components = coords.len();
+loop {
+   let Reverse((_, a, b)) = heap.pop().unwrap();
+    if uf.union(a, b) {
+        num_components -= 1;
+    }
+    if num_components == 1 {
+        println!("{}", coords[a][0] * coords[b][0]);
+        break;
+    }
+}
+```

@@ -38,6 +38,8 @@ dafny
 dataframe
 dataframes
 decompressor
+dedup
+dedupe
 defaultdict
 deque
 dialytika
@@ -77,6 +79,7 @@ grepl
 gsub
 gsubfn
 Hashtbl
+heapifying
 hlint
 Hoare
 Holodeck
@@ -88,6 +91,7 @@ infty
 injectivity
 Intcode
 interm
+isize
 iteri
 itertools
 joltage
@@ -117,6 +121,7 @@ mdast
 mdxjs
 mediavalist
 metastring
+microlp
 mmdc
 mult
 naclo
@@ -148,6 +153,7 @@ pmax
 popleft
 posix
 Pqueue
+println
 prismjs
 probs
 prosgegrammeni
@@ -201,6 +207,7 @@ tseslint
 uext
 unlines
 unlist
+usize
 vapply
 vcount
 venv

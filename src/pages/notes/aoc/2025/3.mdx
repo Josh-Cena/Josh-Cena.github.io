@@ -1,0 +1,43 @@
+---
+tags:
+  - Greedy
+---
+
+# Lobby
+
+## Part 1
+
+To maximize the 2-digit number, we must maximize the first digit, because the second digit can never compensate for a smaller first digit. So I choose the largest digit from `0` to `length - 2` (leaving at least one digit for the second digit) as the first digit, and then choose the largest digit from the remaining substring. If there are multiple occurrences of the largest digit, I choose the _first_ appearance, because that leaves more digits for the second one.
+
+Unfortunately, Rust's `max_by_key` returns the _last_ occurrence of the maximum element. To break ties in favor of the earlier element, I also use `-index` as a secondary comparison key.
+
+```rust
+let chars: Vec<char> = line.chars().collect();
+let (max_ind, max1) = chars[..chars.len() - 1]
+    .iter()
+    .enumerate()
+    .max_by_key(|&(i, c)| (*c, -(i as isize)))
+    .unwrap();
+let max2 = chars[max_ind + 1..].iter().max().unwrap();
+total += (*max1 as u64 - '0' as u64) * 10 + (*max2 as u64 - '0' as u64);
+```
+
+## Part 2
+
+Similarly, we want to maximize the digits one-by-one, but be sure to leave enough digits for the remaining ones. If there are `n` digits left to fill, then we can only find the maximum from `last_index + 1` to `length - n`.
+
+```rust
+let chars: Vec<char> = line.chars().collect();
+let mut num = 0;
+let mut bound = 0;
+for i in 0..12 {
+    let (max_ind, max_char) = chars[bound..chars.len() - 11 + i]
+        .iter()
+        .enumerate()
+        .max_by_key(|&(i, c)| (*c, -(i as isize)))
+        .unwrap();
+    num = num * 10 + (*max_char as u64 - '0' as u64);
+    bound += max_ind + 1;
+}
+total += num;
+```

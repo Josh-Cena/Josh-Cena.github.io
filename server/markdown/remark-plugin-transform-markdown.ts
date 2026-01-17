@@ -151,7 +151,7 @@ function transformImages(ast: Root, firstHeading: number) {
       node,
       createJSXElement("img", [
         { name: "src", value: `imageSrc${imageIndex}` },
-        { name: "alt", value: `"${node.alt ?? ""}"` },
+        { name: "alt", value: `"${node.alt?.replaceAll('"', '\\"') ?? ""}"` },
       ]),
     );
   });
