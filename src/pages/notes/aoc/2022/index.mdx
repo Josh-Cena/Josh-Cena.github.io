@@ -1,0 +1,37 @@
+---
+description: "Advent of Code 2022 solutions and notes. Summary of my experience with the puzzles and the Haskell language."
+---
+
+# Advent of Code 2022 notes
+
+![Haskell](https://img.shields.io/badge/Haskell-5e5086?style=for-the-badge&logo=haskell&logoColor=white) | [Problem statements](https://adventofcode.com/2022) | [Source code](https://github.com/Josh-Cena/aoc2022)
+
+<nav
+  style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+  <a href="/notes/aoc/2021/">← Previous year</a>
+  <a href="/notes/aoc/">Back to AoC index</a>
+  <a href="/notes/aoc/2023/">→ Next year</a>
+</nav>
+
+<ul
+  style={{
+    display: "flex",
+    gap: "0.5rem",
+    flexWrap: "wrap",
+    listStyle: "none",
+    padding: 0,
+  }}>
+  {Array.from({ length: 25 }, (_, i) => i + 1).map((day) => (
+    <li key={day} style={{ width: "1.5rem", textAlign: "center" }}>
+      <a href={`/notes/aoc/2022/${day}`}>{day}</a>
+    </li>
+  ))}
+</ul>
+
+2022 was my second year doing AoC. I was freshly in college and had time to spare. In early 2022, out of boredom after college application, and inspired by everyone raving about functional programming™, I decided to learn Haskell via [Wikibooks](https://en.wikibooks.org/wiki/Haskell). AoC was a great way to try it out, especially since algorithm problems would involve far less fiddling with monads compared to IRL projects. I was very thankful for this experience: two years later, I took a [software analysis and verification](https://coursetable.com/worksheet?course-modal=202403-10141) class where half of my projects were written in Haskell, and I was immediately at home.
+
+Anyway, in 2022, I soon found out that I was inflicting pain on myself because I often have to wrap my head around doing things with tail recursion. BFS was intuitive to _read_ but not at all intuitive to _write_, at least when I was new. There were a lot of folds, a lot of states being passed around, and a lot of inconsistency in my code style (despite using HLint). For example, [7](./7.mdx) would have been a trivial problem in mutable languages but was a bit verbose and error-prone in Haskell. Nevertheless, I would rate 2022 very high on my "enjoyment" scale because the code was always extremely neat and concise—features I highly value. Towards the latter half, I became very familiar with the language and it stopped being a hindrance.
+
+Difficulty-wise, I consider this year a significant hike from 2021. I bailed on [15](./15.mdx), when I couldn't see clearly how to model it mathematically. Even in hindsight, 15 was a particularly hard problem especially at this numbering. [16](./16.mdx) and [19](./19.mdx) were very challenging among DP problems, especially because the pruning strategies for 19 were not obvious. [18](./18.mdx) was not supposed to be a pain; half of the difficulty, IMO, came from using Haskell. [20](./20.mdx) is brute-forceable but was significantly sped up with an order statistic tree, which the 2022 me couldn't have known existed. On the upside though, 21–25 were all very approachable, although I was already intimidated and didn't come back (also I was traveling around).
+
+![landing page](./index.png)

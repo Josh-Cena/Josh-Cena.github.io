@@ -1,0 +1,36 @@
+---
+description: "Advent of Code 2025 solutions and notes. Summary of my experience with the puzzles and the Rust language."
+---
+
+# Advent of Code 2025 notes
+
+![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white) | [Problem statements](https://adventofcode.com/2025) | [Source code](https://github.com/Josh-Cena/aoc2025)
+
+<nav
+  style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+  <a href="/notes/aoc/2024/">← Previous year</a>
+  <a href="/notes/aoc/">Back to AoC index</a>
+</nav>
+
+<ul
+  style={{
+    display: "flex",
+    gap: "0.5rem",
+    flexWrap: "wrap",
+    listStyle: "none",
+    padding: 0,
+  }}>
+  {Array.from({ length: 12 }, (_, i) => i + 1).map((day) => (
+    <li key={day} style={{ width: "1.5rem", textAlign: "center" }}>
+      <a href={`/notes/aoc/2025/${day}`}>{day}</a>
+    </li>
+  ))}
+</ul>
+
+In 2025, I restarted AoC mainly because I haven't done "real coding" in more than a year (most classes were theoretical or just data analysis in R/Python). I wanted to get back into the groove of algorithms. I started on a whim so there wasn't much time to deliberate on the language choice—I picked Rust, which I had already been writing for 4 years. So this year I went easy on myself by using a proficient language, and it turned out that AoC also went easy on me.
+
+Rust was a joy to use as always, and somehow I managed to use the most number of packages of all years. As expected, `union-find` and `itertools` were useful. I didn't get to use priority queues though because there was no Dijkstra this year. Surprisingly I also used `good_lp` which I didn't see it coming. The borrow checker was not a nuisance at all because all data structures were short-lived, and I just added `&` or `*` as the compiler suggested. I really enjoyed Rust's pattern matching and expression-based syntax, which made the code much more elegant than other C-like languages.
+
+Difficulty-wise, I found this year to be the easiest of all time. When I first learned that this year would only contain 12 days as opposed to 25, I thought that this means "compressed" difficulty trajectory (i.e., every two days get merged into one), but it appeared to be more like "clipped" difficulty trajectory (as in, only the first 12 days). Nevertheless, as I went back, I actually found many problems to be non-trivial especially when you try to optimize hard. For example, [1](./1.mdx) is supposed to be a brute-force problem, but one can implement a proper modular arithmetic solution. [2](./2.mdx) also involves non-trivial math if one wants to avoid brute-force search. [8](./8.mdx) almost demands a union-find although my real solution at the time was a naïve BFS that just happened to work. [10](./10.mdx) is IMO the hardest problem because it involves linear programming. [12](./12.mdx) is only hard if one wants to do it properly, but it turned out to be a gimmick problem. So I think this is generally a well-designed year: easy to get started, but deep enough for the rest of us, if not for the frustration with the last day 😅
+
+![landing page](./index.png)

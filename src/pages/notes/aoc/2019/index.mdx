@@ -1,0 +1,40 @@
+---
+description: "Advent of Code 2019 solutions and notes. Summary of my experience with the puzzles and the C++ language."
+---
+
+# Advent of Code 2019 notes
+
+![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) | [Problem statements](https://adventofcode.com/2019) | [Source code](https://github.com/Josh-Cena/aoc2019)
+
+<nav
+  style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+  <a href="/notes/aoc/">Back to AoC index</a>
+  <a href="/notes/aoc/2020/">→ Next year</a>
+</nav>
+
+<nav>
+  <ul
+    style={{
+      display: "flex",
+      gap: "0.5rem",
+      flexWrap: "wrap",
+      listStyle: "none",
+      padding: 0,
+    }}>
+    {Array.from({ length: 25 }, (_, i) => i + 1).map((day) => (
+      <li key={day} style={{ width: "1.5rem", textAlign: "center" }}>
+        <a href={`/notes/aoc/2019/${day}/`}>{day}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+I started AoC in 2021, so 2019 and 2020 were done retrospectively in 2025. I started programming in 2017 with Arduino and Lego, but I didn't _seriously_ learn programming until the summer of 2019, so I decided that I won't go further back than 2019 to respect history. By the end of 2019, I knew 4 languages, three of which pretty much _only_ learned in 2019: C/C++ (from Arduino & coding competitions), Java (from AP CS & some personal projects), Python (I was starting with mathematical modeling), and JavaScript (I was starting with web dev). The 2019 me would probably have chosen Java since I was most fluent in that at the time, but since I'm doing this in 2025 anyway, I decided to go with C++ since Java is a pain to run in VS Code, and also I'd really hate to ever be associated with Java again. So, first language I learned, first AoC—C++ it is.
+
+Before I started, I already heard many good things about this year. Intcode did turn out to be a lot of fun—these problems would not have been possible without it. Code sharing was one of the weak points of C++ though; the 2019 me would probably have suffered because I didn't know about `make` back then, but now with some makefile incantation I was able to implement a `make run` command that runs the code in one line while splitting out Intcode into a separate file.
+
+C++ turned out to be surprisingly versatile while maintaining okay performance. There are surprisingly few languages that get stdlib right, although C++ does it with terrible verbosity—I've had enough writing `std::unordered_map<std::pair<int, int>, std::string>`!! Its string manipulation was pretty limited though, lacking things like `split()` and `replace()`. I also didn't particularly optimize my code, otherwise I would have cut back on my use of `std::pair`, `std::tuple`, etc. which do a lot of allocation and copying.
+
+Difficulty-wise, I find this year harder than average. Problems I've had non-trivial struggles with include: [13](./13.mdx), [16](./16.mdx), [17](./17.mdx), [18](./18.mdx), [19](./19.mdx), and [21](./21.mdx). [22](./22.mdx) was tricky but the input magnitude forced the optimization (many problems appear doable within one minute or two and it's hard to tell if you are supposed to do better). [25](./25.mdx) was tedious, but I wouldn't consider it hard.
+
+![landing page](./index.png)

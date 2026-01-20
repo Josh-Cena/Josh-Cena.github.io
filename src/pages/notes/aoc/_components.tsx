@@ -65,7 +65,7 @@ function Paginator({
           ← Previous
         </Link>
       )}{" "}
-      <Link href="/notes/aoc/">Back to AoC Index</Link>{" "}
+      <Link href={`/notes/aoc/${frontMatter.year}/`}>Back to year Index</Link>{" "}
       {frontMatter.day < maxDay(frontMatter.year) && (
         <Link href={`/notes/aoc/${frontMatter.year}/${frontMatter.day + 1}/`}>
           Next →

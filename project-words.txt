@@ -37,6 +37,7 @@ cumsum
 dafny
 dataframe
 dataframes
+datastructures-js
 decompressor
 dedup
 dedupe
@@ -67,6 +68,7 @@ fliplr
 flipud
 foldl
 foldr
+forceable
 fragmenter
 frozenset
 functools
@@ -86,6 +88,7 @@ Holodeck
 Honkai
 huayu
 igraph
+IMMC
 inds
 infty
 injectivity
@@ -183,6 +186,7 @@ silw
 Sokoban
 starrail
 statsmodels
+stdlib
 stoll
 stopifnot
 strsplit
@@ -214,6 +218,7 @@ venv
 verdana
 vsrocq
 wfla
+Wikibooks
 wolframscript
 wordcloud
 writeups

@@ -4,7 +4,7 @@ import styles from "./_components.module.css";
 
 // This has to be split out because the individual pages cannot depend on
 // this glob call, or a circular dependency occurs.
-const pages = import.meta.glob<true, string, MDFrontMatter>("./*/[!_]*.mdx", {
+const pages = import.meta.glob<true, string, MDFrontMatter>("./*/[0-9]*.mdx", {
   eager: true,
   import: "frontMatter",
 });

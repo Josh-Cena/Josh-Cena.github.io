@@ -1,0 +1,37 @@
+---
+description: "Advent of Code 2020 solutions and notes. Summary of my experience with the puzzles and the Python language."
+---
+
+# Advent of Code 2020 notes
+
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) | [Problem statements](https://adventofcode.com/2020) | [Source code](https://github.com/Josh-Cena/aoc2020)
+
+<nav
+  style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+  <a href="/notes/aoc/2019/">← Previous year</a>
+  <a href="/notes/aoc/">Back to AoC index</a>
+  <a href="/notes/aoc/2021/">→ Next year</a>
+</nav>
+
+<ul
+  style={{
+    display: "flex",
+    gap: "0.5rem",
+    flexWrap: "wrap",
+    listStyle: "none",
+    padding: 0,
+  }}>
+  {Array.from({ length: 25 }, (_, i) => i + 1).map((day) => (
+    <li key={day} style={{ width: "1.5rem", textAlign: "center" }}>
+      <a href={`/notes/aoc/2020/${day}/`}>{day}</a>
+    </li>
+  ))}
+</ul>
+
+As I said in the [2019 notes](../2019/index.mdx), I started AoC in 2021, so 2019 and 2020 were done retrospectively in 2025. There were two remarkable advancements in my CS skills in 2020: (1) I mastered Python to the proficiency of developing mathematical models individually (winning the IMMC competition the winter after); (2) I was tutored for competitive programming so I was fresh off the mint with Dijkstra, DP, etc. On the front of learning languages, I didn't learn any new languages beyond improving my Python, C++, and JavaScript skills, so I chose Python in retrospect for 2020.
+
+2019, 2020, 2021, and 2025 were the only years I did not have language-related issues—the other years, I chose to inflict pain on myself with "other languages" I was less proficient in. Python was enjoyable, and I didn't even take advantage of its package ecosystem—I only used NumPy to a limited extent, and `itertools` occasionally. Its `ast` module helped me cheat my way through [18](./18.mdx). Python had _the best_ ergonomics for hash maps and sets of all languages I've used so far, thanks to its dynamic typing and literal syntax. Performance was actually okay—similar to my C++ and Haskell solutions, because the problems for this year were not particularly demanding.
+
+Difficulty-wise, I find almost all problems approachable with the exception of [20](./20.mdx). In fact, I was on a cruise trip when I solved this year, and I downloaded all problem texts and inputs during shore day, solved them on sea days without Internet, and then uploaded all solutions when we were ashore again (all correct, of course). 20 took the most of said time—probably more than 24 hours combined over a week. The other problems I found non-trivial were: [13](./13.mdx), [16](./16.mdx), [19](./19.mdx), and [21](./21.mdx).
+
+![landing page](./index.png)

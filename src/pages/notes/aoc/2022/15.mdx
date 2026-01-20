@@ -235,7 +235,7 @@ ctx.lineTo(170, 220);
 ctx.stroke();
 ```
 
-The blue and yellow diamonds' edges don't exactly go immediately around the uncovered point; rather, they are slightly farther away. But, there are still two conclusions we can draw: (1) we need at least 4 diamonds around the uncovered point (you can try to cover the neighbors with fewer, and (2) these diamonds' edges' lines must be no more than 4 cells away from each other. In the diagram above, the green and red diamonds' edges are 2 cells apart; the blue and yellow diamonds' edges are 4 cells apart.
+The blue and yellow diamonds' edges don't exactly go immediately around the uncovered point; rather, they are slightly farther away. But, there are still two conclusions we can draw: (1) we need at least 4 diamonds around the uncovered point (you can try to cover the neighbors with fewer), and (2) these diamonds' edges' lines must be no more than 4 cells away from each other. In the diagram above, the green and red diamonds' edges are 2 cells apart; the blue and yellow diamonds' edges are 4 cells apart.
 
 Given the $(x, y, r)$ of a diamond, because the diamond's equation is $|x - x_0| + |y - y_0| = r$, the lines of the four edges are just replacing the absolute value with positive or negative signs. We can find all such pairs of edges.
 

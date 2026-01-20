@@ -31,10 +31,10 @@ There's one simple trick here, for the purpose of submission: I can print out th
 
 Of course, this isn't a general solution. To implement this logic in code, the idea is this:
 
-1. We enumerate all prefixes of length up to 21 characters as function A. The prefix must end at a comma. (e.g., `R,8,L,12,R,8`)
-2. We split the sequence by A into non-empty segments. (e.g., `["R,12,L,8,R,10,R,12,L,8,R,10,", "R,8,L,8,L,8,R,8,R,10,", "R,8,L,8,L,8,R,8,R,10,R,12,L,8,R,10,R,8,L,8,L,8,R,8,R,10,"]`)
-3. For the first segment, we enumerate all prefixes of length up to 21 characters as function B. Again, the prefix must end at a comma. (e.g., `R,12,L,8,`)
-4. We split all segments by B into non-empty segments. (e.g., `["R,10,", "R,10,", "R,8,L,8,L,8,R,8,R,10,", "R,8,L,8,L,8,R,8,R,10,", "R,10,R,8,L,8,L,8,R,8,R,10,"]`)
+1. I enumerate all prefixes of length up to 21 characters as function A. The prefix must end at a comma. (e.g., `R,8,L,12,R,8`)
+2. I split the sequence by A into non-empty segments. (e.g., `["R,12,L,8,R,10,R,12,L,8,R,10,", "R,8,L,8,L,8,R,8,R,10,", "R,8,L,8,L,8,R,8,R,10,R,12,L,8,R,10,R,8,L,8,L,8,R,8,R,10,"]`)
+3. For the first segment, I enumerate all prefixes of length up to 21 characters as function B. Again, the prefix must end at a comma. (e.g., `R,12,L,8,`)
+4. I split all segments by B into non-empty segments. (e.g., `["R,10,", "R,10,", "R,8,L,8,L,8,R,8,R,10,", "R,8,L,8,L,8,R,8,R,10,", "R,10,R,8,L,8,L,8,R,8,R,10,"]`)
 5. If all remaining segments are identical and of length up to 21 characters, these segments are function C.
 
 C++ does not make this job easy for me, because it doesn't have convenient methods like `split()` or `replace()`, which I had to implement myself:
