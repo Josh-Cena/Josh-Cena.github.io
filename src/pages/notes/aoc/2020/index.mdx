@@ -4,29 +4,9 @@ description: "Advent of Code 2020 solutions and notes. Summary of my experience 
 
 # Advent of Code 2020 notes
 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) | [Problem statements](https://adventofcode.com/2020) | [Source code](https://github.com/Josh-Cena/aoc2020)
+import { YearHeader } from "../_components";
 
-<nav
-  style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-  <a href="/notes/aoc/2019/">← Previous year</a>
-  <a href="/notes/aoc/">Back to AoC index</a>
-  <a href="/notes/aoc/2021/">→ Next year</a>
-</nav>
-
-<ul
-  style={{
-    display: "flex",
-    gap: "0.5rem",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 0,
-  }}>
-  {Array.from({ length: 25 }, (_, i) => i + 1).map((day) => (
-    <li key={day} style={{ width: "1.5rem", textAlign: "center" }}>
-      <a href={`/notes/aoc/2020/${day}/`}>{day}</a>
-    </li>
-  ))}
-</ul>
+<YearHeader year={2020} />
 
 As I said in the [2019 notes](../2019/index.mdx), I started AoC in 2021, so 2019 and 2020 were done retrospectively in 2025. There were two remarkable advancements in my CS skills in 2020: (1) I mastered Python to the proficiency of developing mathematical models individually (winning the IMMC competition the winter after); (2) I was tutored for competitive programming so I was fresh off the mint with Dijkstra, DP, etc. On the front of learning languages, I didn't learn any new languages beyond improving my Python, C++, and JavaScript skills, so I chose Python in retrospect for 2020.
 

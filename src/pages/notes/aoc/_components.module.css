@@ -7,3 +7,22 @@
   font-size: smaller;
   white-space: nowrap;
 }
+
+.paginator {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.yearIndex {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
+.yearIndex li {
+  width: 1.5rem;
+  text-align: center;
+}

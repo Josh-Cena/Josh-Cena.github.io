@@ -4,29 +4,9 @@ description: "Advent of Code 2023 solutions and notes. Summary of my experience 
 
 # Advent of Code 2023 notes
 
-![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white) | [Problem statements](https://adventofcode.com/2023) | [Source code](https://github.com/Josh-Cena/aoc2023)
+import { YearHeader } from "../_components";
 
-<nav
-  style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-  <a href="/notes/aoc/2022/">← Previous year</a>
-  <a href="/notes/aoc/">Back to AoC index</a>
-  <a href="/notes/aoc/2024/">→ Next year</a>
-</nav>
-
-<ul
-  style={{
-    display: "flex",
-    gap: "0.5rem",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 0,
-  }}>
-  {Array.from({ length: 25 }, (_, i) => i + 1).map((day) => (
-    <li key={day} style={{ width: "1.5rem", textAlign: "center" }}>
-      <a href={`/notes/aoc/2023/${day}`}>{day}</a>
-    </li>
-  ))}
-</ul>
+<YearHeader year={2023} />
 
 2023 was supposedly my third year doing AoC, but I actually did it retrospectively in 2025. I was just appointed leader of [CourseTable](https://coursetable.com/) and I was grinding on it every day. When I chose a language for 2023 in retrospect, I actually had several candidates. First, I started learning Rust in early 2022, but I already happened to do [2025](../2025/index.mdx) with it; second, I learned Racket in late 2022 because my friends were all taking an [intro CS](https://coursetable.com/worksheet?course-modal=202203-10948) class, but I don't consider myself proficient enough (I might still revisit it in a future year); third, I learned R in early 2023 in a [data analysis an exploration](https://coursetable.com/worksheet?course-modal=202301-20528) class. Since then, in late 2023, I took another [probability class](https://coursetable.com/worksheet?course-modal=202303-18256) where I was intimidated by assignments using R, so overall it seemed like a year of R. If not now, when?
 

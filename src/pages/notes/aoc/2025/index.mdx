@@ -4,28 +4,9 @@ description: "Advent of Code 2025 solutions and notes. Summary of my experience 
 
 # Advent of Code 2025 notes
 
-![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white) | [Problem statements](https://adventofcode.com/2025) | [Source code](https://github.com/Josh-Cena/aoc2025)
+import { YearHeader } from "../_components";
 
-<nav
-  style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-  <a href="/notes/aoc/2024/">← Previous year</a>
-  <a href="/notes/aoc/">Back to AoC index</a>
-</nav>
-
-<ul
-  style={{
-    display: "flex",
-    gap: "0.5rem",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 0,
-  }}>
-  {Array.from({ length: 12 }, (_, i) => i + 1).map((day) => (
-    <li key={day} style={{ width: "1.5rem", textAlign: "center" }}>
-      <a href={`/notes/aoc/2025/${day}`}>{day}</a>
-    </li>
-  ))}
-</ul>
+<YearHeader year={2025} />
 
 In 2025, I restarted AoC mainly because I haven't done "real coding" in more than a year (most classes were theoretical or just data analysis in R/Python). I wanted to get back into the groove of algorithms. I started on a whim so there wasn't much time to deliberate on the language choice—I picked Rust, which I had already been writing for 4 years. So this year I went easy on myself by using a proficient language, and it turned out that AoC also went easy on me.
 

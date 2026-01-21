@@ -48,25 +48,24 @@ export type MDFrontMatter = {
   readonly day: number;
 };
 
-function Paginator({
+function ProblemPaginator({
   frontMatter,
 }: {
   readonly frontMatter: MDFrontMatter;
 }): JSX.Element {
   return (
-    <nav
-      style={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "space-between",
-      }}>
-      {frontMatter.day > 1 && (
+    <nav className={styles.paginator}>
+      {frontMatter.day === 1 ? (
+        <span className="phantom">← Previous</span>
+      ) : (
         <Link href={`/notes/aoc/${frontMatter.year}/${frontMatter.day - 1}/`}>
           ← Previous
         </Link>
       )}{" "}
       <Link href={`/notes/aoc/${frontMatter.year}/`}>Back to year Index</Link>{" "}
-      {frontMatter.day < maxDay(frontMatter.year) && (
+      {frontMatter.day === maxDay(frontMatter.year) ? (
+        <span className="phantom">→ Next</span>
+      ) : (
         <Link href={`/notes/aoc/${frontMatter.year}/${frontMatter.day + 1}/`}>
           Next →
         </Link>
@@ -75,7 +74,7 @@ function Paginator({
   );
 }
 
-export function FrontMatter({
+export function ProblemHeader({
   frontMatter,
 }: {
   readonly frontMatter: MDFrontMatter;
@@ -99,15 +98,66 @@ export function FrontMatter({
           </span>
         ))}
       </p>
-      <Paginator frontMatter={frontMatter} />
+      <ProblemPaginator frontMatter={frontMatter} />
     </>
   );
 }
 
-export function Footer({
+export function ProblemFooter({
   frontMatter,
 }: {
   readonly frontMatter: MDFrontMatter;
 }): JSX.Element {
-  return <Paginator frontMatter={frontMatter} />;
+  return <ProblemPaginator frontMatter={frontMatter} />;
+}
+
+function YearPaginator({ year }: { readonly year: number }): JSX.Element {
+  return (
+    <nav className={styles.paginator}>
+      {year === 2019 ? (
+        <span className="phantom">← Previous year</span>
+      ) : (
+        <Link href={`/notes/aoc/${year - 1}/`}>← Previous year</Link>
+      )}{" "}
+      <Link href="/notes/aoc/">Back to AoC index</Link>{" "}
+      {year === 2025 ? (
+        <span className="phantom">→ Next year</span>
+      ) : (
+        <Link href={`/notes/aoc/${year + 1}/`}>→ Next year</Link>
+      )}
+    </nav>
+  );
+}
+
+function YearIndex({ year }: { readonly year: number }): JSX.Element {
+  return (
+    <nav>
+      <ul className={styles.yearIndex}>
+        {Array.from({ length: maxDay(year) }, (_, i) => i + 1).map((day) => (
+          <li key={day}>
+            <Link href={`/notes/aoc/${year}/${day}/`}>{day}</Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+export function YearHeader({ year }: { readonly year: number }): JSX.Element {
+  const language = languages[year]!;
+  const icon = icons[language];
+  const sourceLink = `https://github.com/Josh-Cena/aoc${year}`;
+  return (
+    <>
+      <p>
+        <img src={icon} alt={language} /> |{" "}
+        <Link href={`https://adventofcode.com/${year}`}>
+          Problem statements
+        </Link>{" "}
+        | <Link href={sourceLink}>Source code</Link>
+      </p>
+      <YearPaginator year={year} />
+      <YearIndex year={year} />
+    </>
+  );
 }

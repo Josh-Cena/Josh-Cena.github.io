@@ -283,13 +283,16 @@ const transformMarkdown: Plugin = () => async (ast, vFile) => {
     children.splice(
       firstHeading + 1,
       0,
-      createImportDeclaration("{ FrontMatter, Footer }", "../_components"),
-      createJSXElement("FrontMatter", [
+      createImportDeclaration(
+        "{ ProblemHeader, ProblemFooter }",
+        "../_components",
+      ),
+      createJSXElement("ProblemHeader", [
         { name: "frontMatter", value: "frontMatter" },
       ]),
     );
     children.push(
-      createJSXElement("Footer", [
+      createJSXElement("ProblemFooter", [
         { name: "frontMatter", value: "frontMatter" },
       ]),
     );

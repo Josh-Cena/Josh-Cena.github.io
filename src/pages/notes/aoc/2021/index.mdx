@@ -4,29 +4,9 @@ description: "Advent of Code 2021 solutions and notes. Summary of my experience 
 
 # Advent of Code 2021 notes
 
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) | [Problem statements](https://adventofcode.com/2021) | [Source code](https://github.com/Josh-Cena/aoc2021)
+import { YearHeader } from "../_components";
 
-<nav
-  style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-  <a href="/notes/aoc/2020/">← Previous year</a>
-  <a href="/notes/aoc/">Back to AoC index</a>
-  <a href="/notes/aoc/2022/">→ Next year</a>
-</nav>
-
-<ul
-  style={{
-    display: "flex",
-    gap: "0.5rem",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 0,
-  }}>
-  {Array.from({ length: 25 }, (_, i) => i + 1).map((day) => (
-    <li key={day} style={{ width: "1.5rem", textAlign: "center" }}>
-      <a href={`/notes/aoc/2021/${day}`}>{day}</a>
-    </li>
-  ))}
-</ul>
+<YearHeader year={2021} />
 
 2021 was my first year doing AoC. By the end of 2021, I was invited to the [Docusaurus](https://docusaurus.io/) team and my TypeScript skills improved steadily since. It was virtually the _only_ language I programmed in, becoming the natural choice for 2021. However, for fear that the typings would slow me down where I don't need it, I actually stuck to untyped JS. But I also was naïve and didn't preserve my solutions, so I redid all of 2021 in TypeScript in 2025.
 
