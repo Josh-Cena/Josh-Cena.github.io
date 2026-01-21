@@ -1,0 +1,8 @@
+import{u as r,j as e}from"./index-B20ZWnCO.js";import{P as a,a as i}from"./_components-DvaCmDFe.js";const s={tags:["Brute force","Mathematics"],description:"Advent of Code 2021 - Day 1: Sonar Sweep, a problem that involves Brute force and Mathematics. Solution written in TypeScript, with detailed walkthrough and proof.",year:2021,day:1,title:"Advent of Code 2021 - Day 1: Sonar Sweep"};function o(t){const n={code:"code",h1:"h1",h2:"h2",p:"p",span:"span",...r(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsxs(n.h1,{children:["Advent of Code 2021 - Day 1",e.jsx(n.span,{className:"subtitle",children:"Sonar Sweep"})]}),`
+`,`
+`,e.jsx(a,{frontMatter:s}),`
+`,e.jsx(n.h2,{children:"Part 1"}),`
+`,e.jsxs(n.p,{children:["Just iterate through the list and count the number of times the current number is larger than the previous one: ",e.jsx(n.code,{children:"nums[i-1] < nums[i]"}),". Because there needs to be a previous number to compare to, we start from the second number."]}),`
+`,e.jsx(n.h2,{children:"Part 2"}),`
+`,e.jsxs(n.p,{children:["No need to actually build the sliding windows. If ",e.jsx(n.code,{children:"nums[i] + nums[i-1] + nums[i-2] < nums[i+1] + nums[i] + nums[i-1]"}),", then ",e.jsx(n.code,{children:"nums[i-2] < nums[i+1]"}),". Therefore we can use the same logic as part 1, but compare ",e.jsx(n.code,{children:"nums[i]"})," with ",e.jsx(n.code,{children:"nums[i-3]"}),", so ",e.jsx(n.code,{children:"i"})," starts from 3."]}),`
+`,e.jsx(i,{frontMatter:s})]})}function h(t={}){const{wrapper:n}={...r(),...t.components};return n?e.jsx(n,{...t,children:e.jsx(o,{...t})}):o(t)}export{h as default,s as frontMatter};

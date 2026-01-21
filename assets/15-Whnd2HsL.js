@@ -1,0 +1,13 @@
+import{u as r,j as n}from"./index-B20ZWnCO.js";import{P as i,a as o}from"./_components-DvaCmDFe.js";const s={tags:["Brute force","Data structures"],description:"Advent of Code 2020 - Day 15: Rambunctious Recitation, a problem that involves Brute force and Data structures. Solution written in Python, with detailed walkthrough and proof.",year:2020,day:15,title:"Advent of Code 2020 - Day 15: Rambunctious Recitation"};function a(t){const e={annotation:"annotation",code:"code",h1:"h1",math:"math",mi:"mi",mo:"mo",mrow:"mrow",p:"p",pre:"pre",semantics:"semantics",span:"span",...r(),...t.components};return n.jsxs(n.Fragment,{children:[n.jsxs(e.h1,{children:["Advent of Code 2020 - Day 15",n.jsx(e.span,{className:"subtitle",children:"Rambunctious Recitation"})]}),`
+`,`
+`,n.jsx(i,{frontMatter:s}),`
+`,n.jsxs(e.p,{children:["This is literally just simulating the game rules, no questions asked. While 30,000,000 turns is a lot, if we have an ",n.jsxs(e.span,{className:"katex",children:[n.jsx(e.span,{className:"katex-mathml",children:n.jsx(e.math,{xmlns:"http://www.w3.org/1998/Math/MathML",children:n.jsxs(e.semantics,{children:[n.jsxs(e.mrow,{children:[n.jsx(e.mi,{mathvariant:"script",children:"O"}),n.jsx(e.mo,{stretchy:"false",children:"("}),n.jsx(e.mi,{children:"n"}),n.jsx(e.mo,{stretchy:"false",children:")"})]}),n.jsx(e.annotation,{encoding:"application/x-tex",children:"\\mathcal{O}(n)"})]})})}),n.jsx(e.span,{className:"katex-html","aria-hidden":"true",children:n.jsxs(e.span,{className:"base",children:[n.jsx(e.span,{className:"strut",style:{height:"1em",verticalAlign:"-0.25em"}}),n.jsx(e.span,{className:"mord mathcal",style:{marginRight:"0.02778em"},children:"O"}),n.jsx(e.span,{className:"mopen",children:"("}),n.jsx(e.span,{className:"mord mathnormal",children:"n"}),n.jsx(e.span,{className:"mclose",children:")"})]})})]})," algorithm, it's still feasible. The only bottleneck is finding the last occurrence of a number. Instead of storing all numbers physically in an array, notice that previous occurrences of the same number are irrelevant, so we should instead maintain a dictionary that maps each number to its last occurrence index."]}),`
+`,n.jsx(e.pre,{children:n.jsx(e.code,{className:"language-python",children:`most_recent_turn = {x: i + 1 for i, x in enumerate(nums)}
+last_num = nums[-1]
+for i in range(len(nums) + 1, round + 1):
+    num = i - 1 - most_recent_turn.get(last_num, i - 1)
+    most_recent_turn[last_num] = i - 1
+    last_num = num
+print(last_num)
+`})}),`
+`,n.jsx(o,{frontMatter:s})]})}function m(t={}){const{wrapper:e}={...r(),...t.components};return e?n.jsx(e,{...t,children:n.jsx(a,{...t})}):a(t)}export{m as default,s as frontMatter};
