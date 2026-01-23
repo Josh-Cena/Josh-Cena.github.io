@@ -1,0 +1,64 @@
+# Paste this query into https://coursetable.com/graphiql
+{
+  listings(
+    where: {
+      _or: [
+        { season_code: { _eq: "202203" }, crn: { _eq: 11311 } }
+        { season_code: { _eq: "202203" }, crn: { _eq: 11615 } }
+        { season_code: { _eq: "202203" }, crn: { _eq: 12174 } }
+        { season_code: { _eq: "202203" }, crn: { _eq: 15892 } }
+        { season_code: { _eq: "202301" }, crn: { _eq: 20528 } }
+        { season_code: { _eq: "202301" }, crn: { _eq: 20656 } }
+        { season_code: { _eq: "202301" }, crn: { _eq: 21280 } }
+        { season_code: { _eq: "202301" }, crn: { _eq: 21282 } }
+        { season_code: { _eq: "202301" }, crn: { _eq: 22897 } }
+        { season_code: { _eq: "202303" }, crn: { _eq: 17211 } }
+        { season_code: { _eq: "202303" }, crn: { _eq: 17748 } }
+        { season_code: { _eq: "202303" }, crn: { _eq: 18256 } }
+        { season_code: { _eq: "202303" }, crn: { _eq: 20148 } }
+        { season_code: { _eq: "202401" }, crn: { _eq: 28082 } }
+        { season_code: { _eq: "202401" }, crn: { _eq: 28107 } }
+        { season_code: { _eq: "202401" }, crn: { _eq: 28168 } }
+        { season_code: { _eq: "202401" }, crn: { _eq: 29154 } }
+        { season_code: { _eq: "202401" }, crn: { _eq: 29515 } }
+        { season_code: { _eq: "202403" }, crn: { _eq: 10132 } }
+        { season_code: { _eq: "202403" }, crn: { _eq: 10141 } }
+        { season_code: { _eq: "202403" }, crn: { _eq: 10811 } }
+        { season_code: { _eq: "202403" }, crn: { _eq: 10815 } }
+        { season_code: { _eq: "202403" }, crn: { _eq: 11382 } }
+        { season_code: { _eq: "202501" }, crn: { _eq: 20446 } }
+        { season_code: { _eq: "202501" }, crn: { _eq: 20835 } }
+        { season_code: { _eq: "202501" }, crn: { _eq: 21367 } }
+        { season_code: { _eq: "202501" }, crn: { _eq: 22146 } }
+        { season_code: { _eq: "202501" }, crn: { _eq: 22580 } }
+        { season_code: { _eq: "202503" }, crn: { _eq: 10171 } }
+        { season_code: { _eq: "202503" }, crn: { _eq: 10926 } }
+        { season_code: { _eq: "202503" }, crn: { _eq: 11001 } }
+        { season_code: { _eq: "202503" }, crn: { _eq: 11699 } }
+        { season_code: { _eq: "202503" }, crn: { _eq: 11738 } }
+        { season_code: { _eq: "202503" }, crn: { _eq: 11743 } }
+        { season_code: { _eq: "202601" }, crn: { _eq: 20516 } }
+        { season_code: { _eq: "202601" }, crn: { _eq: 20564 } }
+        { season_code: { _eq: "202601" }, crn: { _eq: 21196 } }
+        { season_code: { _eq: "202601" }, crn: { _eq: 21225 } }
+        { season_code: { _eq: "202601" }, crn: { _eq: 24754 } }
+      ]
+    }
+  ) {
+    season_code
+    crn
+    course_code
+    course {
+      areas
+      course_professors {
+        professor {
+          name
+        }
+      }
+      credits
+      section
+      skills
+      title
+    }
+  }
+}

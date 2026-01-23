@@ -141,7 +141,13 @@ export default function About(): JSX.Element {
           organization="Yale University"
           position="Bachelor's of Science">
           <ul>
-            <li>BS in Statistics & Data Science, BA in Linguistics</li>
+            <li>
+              BS in Statistics & Data Science, BA in Linguistics, Programming
+              Certificate
+            </li>
+            <li>
+              <Link href="/notes/yale/courses/">Courses taken</Link>
+            </li>
           </ul>
         </Timeline.Item>
         <Timeline.Item

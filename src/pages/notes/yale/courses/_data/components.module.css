@@ -1,0 +1,14 @@
+.tag {
+  margin: 1px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 2px 4px;
+  border-radius: var(--border-radius-small);
+}
+
+.courseTitle {
+  display: inline-block;
+  font-size: smaller;
+  line-height: 1;
+  font-style: italic;
+}

@@ -10,5 +10,10 @@
       "noSuggest": true
     }
   ],
-  "ignorePaths": ["package.json", "project-words.txt", "assets"]
+  "ignorePaths": [
+    "package.json",
+    "project-words.txt",
+    "assets",
+    "src/pages/notes/yale/courses/_data/data.json"
+  ]
 }

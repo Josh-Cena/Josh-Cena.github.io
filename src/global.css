@@ -190,6 +190,10 @@ img[src^="https://img.shields.io/badge/"] {
   vertical-align: bottom;
 }
 
+.no-br {
+  white-space: nowrap;
+}
+
 .tooltip {
   --rt-opacity: 1;
   background-color: var(--color-background);
