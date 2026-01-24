@@ -1,4 +1,6 @@
+import FS from "node:fs/promises";
 import Path from "node:path";
+import { createHash } from "node:crypto";
 import type { Plugin } from "unified";
 import type { VFile } from "vfile";
 import type {
@@ -194,23 +196,32 @@ function transformLinks(ast: Root, vFile: VFile) {
   });
 }
 
-function transformCode(ast: Root, firstHeading: number) {
-  let usesMermaid = false as boolean;
+async function transformCode(ast: Root, firstHeading: number) {
   let usesCanvas = false as boolean;
+  const mermaidCodes = new Map<string, string>();
   visit(ast, "code", (node: Code) => {
     if (node.lang === "mermaid") {
+      const props = (node.meta ?? "")
+        .split(" ")
+        .slice(1)
+        .map((prop) => prop.split("="));
+      if (!mermaidCodes.has(node.value)) {
+        const hash = createHash("sha256")
+          .update(node.value)
+          .digest("hex")
+          .slice(0, 8);
+        mermaidCodes.set(node.value, hash);
+      }
       Object.assign(
-        // TODO: can the diagram be rendered at compile time and directly
-        // inserted as image?
         node,
-        createJSXElement("Mermaid", [
-          {
-            name: "code",
-            value: `\`${node.value.replaceAll(/[`$\\]/gu, "\\$&")}\``,
-          },
-        ]),
+        createJSXElement(
+          `Diagram_${mermaidCodes.get(node.value)!}`,
+          props.map(([name, value]) => ({
+            name: name!,
+            value: value ?? "true",
+          })),
+        ),
       );
-      usesMermaid = true;
     } else if (
       (node.lang === "js" || node.lang === "ts") &&
       node.meta?.startsWith("canvas")
@@ -242,11 +253,24 @@ function transformCode(ast: Root, firstHeading: number) {
       usesCanvas = true;
     }
   });
-  if (usesMermaid) {
+  if (mermaidCodes.size > 0) {
     ast.children.splice(
       firstHeading + 1,
       0,
-      createImportDeclaration("Mermaid", "@/components/Mermaid"),
+      ...Array.from(mermaidCodes.values()).map((hash) =>
+        createImportDeclaration(
+          `Diagram_${hash}`,
+          `assets/diagrams/${hash}.mmd`,
+        ),
+      ),
+    );
+    const outDir = Path.join(process.cwd(), "assets/diagrams");
+    await FS.mkdir(outDir, { recursive: true });
+    await Promise.all(
+      Array.from(mermaidCodes.entries()).map(async ([code, hash]) => {
+        const filePath = Path.join(outDir, `${hash}.mmd`);
+        await FS.writeFile(filePath, code, "utf8");
+      }),
     );
   }
   if (usesCanvas) {
@@ -268,7 +292,7 @@ const transformMarkdown: Plugin = () => async (ast, vFile) => {
   transformFrontMatter(ast as Root, vFile, firstHeading);
   await transformImages(ast as Root, vFile, firstHeading);
   transformLinks(ast as Root, vFile);
-  transformCode(ast as Root, firstHeading);
+  await transformCode(ast as Root, firstHeading);
   if (vFile.dirname?.includes("blog")) {
     children.splice(
       firstHeading + 1,

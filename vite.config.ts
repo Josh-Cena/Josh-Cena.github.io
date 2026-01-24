@@ -8,6 +8,7 @@ import remarkMath from "remark-math";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMDXFrontmatter from "remark-mdx-frontmatter";
 import rehypeKatex from "rehype-katex";
+import mermaidPlugin from "./server/vite-plugin-mermaid.ts";
 import transformMarkdown from "./server/markdown/remark-plugin-transform-markdown.ts";
 
 export default defineConfig({
@@ -34,7 +35,8 @@ export default defineConfig({
         providerImportSource: "@mdx-js/react",
       }),
     },
-    react(),
+    mermaidPlugin(),
+    react({ include: /\.(?:mmd|js|jsx|ts|tsx)$/u }),
     svgr(),
   ],
   define: {

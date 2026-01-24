@@ -15,6 +15,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.12.0",
     "@types/chroma-js": "^3.1.2",
     "@types/color": "^4.2.0",
     "@types/express": "^5.0.6",

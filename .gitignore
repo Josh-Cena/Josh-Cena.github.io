@@ -2,6 +2,7 @@ node_modules
 
 build
 dist
+assets/diagrams
 
 .docusaurus
 .eslintcache
