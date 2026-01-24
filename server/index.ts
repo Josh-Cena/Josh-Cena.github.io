@@ -33,8 +33,7 @@ export async function createServer(
   });
   app.use(viteServer.middlewares);
 
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  app.use("*", async (req, res) => {
+  app.use("*_", async (req, res) => {
     try {
       const url = req.originalUrl;
 

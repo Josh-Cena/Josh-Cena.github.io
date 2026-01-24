@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import chroma from "chroma-js";
 import Link from "@/components/Link";
 import { tableByProb } from "./_data";
@@ -5,11 +6,7 @@ import styles from "./_components.module.css";
 
 const scale = chroma.scale(["#ca393e", "#3eca39"]).domain([0, 1]);
 
-export function Difficulty({
-  prob,
-}: {
-  readonly prob: string;
-}): JSX.Element | string {
+export function Difficulty({ prob }: { readonly prob: string }): ReactNode {
   const row = tableByProb.get(prob);
   if (!row || Number.isNaN(row.medianSolvePct)) return "N/A";
   const color = scale(row.medianSolvePct).hex();
@@ -33,11 +30,7 @@ export function Difficulty({
   );
 }
 
-export function YearPaginator({
-  year,
-}: {
-  readonly year: number;
-}): JSX.Element {
+export function YearPaginator({ year }: { readonly year: number }): ReactNode {
   return (
     <nav className={styles.paginator}>
       {year === 2022 ? (

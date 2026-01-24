@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "@/components/Link";
 import PostData, { type FrontMatter } from "@/components/PostData";
 import { normalizeRoute } from "@/normalize-route";
@@ -26,7 +27,7 @@ const posts = Object.entries(modules)
     </section>
   ));
 
-export default function Blog(): JSX.Element {
+export default function Blog(): ReactNode {
   return (
     <>
       <h1>Josh-Cena’s (secret) blog</h1>

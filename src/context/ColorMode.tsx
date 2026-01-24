@@ -4,6 +4,7 @@ import React, {
   useContext,
   useCallback,
   useMemo,
+  type ReactNode,
 } from "react";
 
 export type ColorMode = "light" | "dark";
@@ -18,8 +19,8 @@ const Context = React.createContext<ColorModeContext | null>(null);
 export function ColorModeProvider({
   children,
 }: {
-  readonly children: React.ReactNode;
-}): JSX.Element {
+  readonly children: ReactNode;
+}): ReactNode {
   const [colorMode, setColorMode] = useState<ColorMode>("light");
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "@/components/Link";
 import GitHub from "assets/github-logo.svg?react";
 import LinkedIn from "assets/linkedin-logo.svg?react";
@@ -16,7 +17,7 @@ const links = [
   { Logo: Mail, path: "mailto:sidachen2003@gmail.com" },
 ];
 
-export default function Footer(): JSX.Element {
+export default function Footer(): ReactNode {
   return (
     <footer className={styles.footer}>
       <div>

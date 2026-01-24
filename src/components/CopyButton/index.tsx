@@ -11,7 +11,7 @@ export default function CopyButton({
   readonly string: string;
   readonly children?: ReactNode;
   readonly className?: string;
-}): JSX.Element {
+}): ReactNode {
   const [copied, setCopied] = useState(false);
   const timeout = useRef<number | null>(null);
   useEffect(

@@ -11,11 +11,7 @@ const formatter = new Intl.DateTimeFormat("en-US", {
   month: "long",
 });
 
-function Timeline({
-  children,
-}: {
-  readonly children: ReactNode[];
-}): JSX.Element {
+function Timeline({ children }: { readonly children: ReactNode[] }): ReactNode {
   return (
     <div>
       <ul className={styles.timeline}>{children}</ul>
@@ -39,7 +35,7 @@ Timeline.Item = ({
   readonly organization: string;
   readonly position: string;
   readonly children?: ReactNode;
-}): JSX.Element => {
+}): ReactNode => {
   const localStartDate = new Date(startDate);
   const startTimeStamp =
     localStartDate.valueOf() + localStartDate.getTimezoneOffset() * 60 * 1000;
@@ -66,7 +62,7 @@ Timeline.Item = ({
   );
 };
 
-export default function About(): JSX.Element {
+export default function About(): ReactNode {
   const nameId = useId();
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, type ReactNode } from "react";
 import styles from "./index.module.css";
 
 const 属性击破系数 = {
@@ -90,11 +90,7 @@ function aggregateBuffs(allBuffs: { [id: string]: Buffs }): {
   return res;
 }
 
-function StackedEquations({
-  children,
-}: {
-  readonly children: React.ReactNode;
-}) {
+function StackedEquations({ children }: { readonly children: ReactNode }) {
   return (
     <div className={styles.stackedEquationsContainer}>
       <div className={styles.leftBracket} />
@@ -212,6 +208,7 @@ function BuffTable({
                 <button
                   type="button"
                   onClick={() => {
+                    // eslint-disable-next-line no-useless-assignment
                     let value = 0;
                     try {
                       value = safeEval(buffValueRef.current!.value);
@@ -265,7 +262,7 @@ function BuffTable({
   );
 }
 
-export default function StarRailDamage(): JSX.Element {
+export default function StarRailDamage(): ReactNode {
   /* eslint-disable react/hook-use-state */
   const [角色等级, set角色等级] = useState(80);
   const [属性击破倍率, set属性击破倍率] = useState(属性击破系数.冰);

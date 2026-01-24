@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "@/components/Link";
 import styles from "./_components.module.css";
 
@@ -52,7 +53,7 @@ function ProblemPaginator({
   frontMatter,
 }: {
   readonly frontMatter: MDFrontMatter;
-}): JSX.Element {
+}): ReactNode {
   return (
     <nav className={styles.paginator}>
       {frontMatter.day === 1 ? (
@@ -78,7 +79,7 @@ export function ProblemHeader({
   frontMatter,
 }: {
   readonly frontMatter: MDFrontMatter;
-}): JSX.Element {
+}): ReactNode {
   const language = languages[frontMatter.year]!;
   const icon = icons[language];
   const sourceLink =
@@ -107,11 +108,11 @@ export function ProblemFooter({
   frontMatter,
 }: {
   readonly frontMatter: MDFrontMatter;
-}): JSX.Element {
+}): ReactNode {
   return <ProblemPaginator frontMatter={frontMatter} />;
 }
 
-function YearPaginator({ year }: { readonly year: number }): JSX.Element {
+function YearPaginator({ year }: { readonly year: number }): ReactNode {
   return (
     <nav className={styles.paginator}>
       {year === 2019 ? (
@@ -129,7 +130,7 @@ function YearPaginator({ year }: { readonly year: number }): JSX.Element {
   );
 }
 
-function YearIndex({ year }: { readonly year: number }): JSX.Element {
+function YearIndex({ year }: { readonly year: number }): ReactNode {
   return (
     <nav>
       <ul className={styles.yearIndex}>
@@ -143,7 +144,7 @@ function YearIndex({ year }: { readonly year: number }): JSX.Element {
   );
 }
 
-export function YearHeader({ year }: { readonly year: number }): JSX.Element {
+export function YearHeader({ year }: { readonly year: number }): ReactNode {
   const language = languages[year]!;
   const icon = icons[language];
   const sourceLink = `https://github.com/Josh-Cena/aoc${year}`;

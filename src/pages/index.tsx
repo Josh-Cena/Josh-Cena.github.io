@@ -1,9 +1,9 @@
-import { useId } from "react";
+import { useId, type ReactNode } from "react";
 import Scrolly from "@/components/Scrolly";
 import { Tooltip } from "react-tooltip";
 import styles from "./index.module.css";
 
-export default function Home(): JSX.Element {
+export default function Home(): ReactNode {
   const id = useId();
   return (
     <>

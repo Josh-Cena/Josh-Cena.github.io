@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, type ReactNode } from "react";
 
 export type SSRContextValue = { [key: string]: unknown };
 
@@ -8,9 +8,9 @@ export function SSRContextProvider({
   children,
   context,
 }: {
-  readonly children: React.ReactNode;
+  readonly children: ReactNode;
   readonly context: SSRContextValue;
-}): JSX.Element {
+}): ReactNode {
   return <SSRContext.Provider value={context}>{children}</SSRContext.Provider>;
 }
 

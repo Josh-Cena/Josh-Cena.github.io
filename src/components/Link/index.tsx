@@ -1,10 +1,10 @@
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { Link as RRLink } from "react-router-dom";
 
 export default function Link({
   href,
   ...props
-}: ComponentPropsWithoutRef<"a">): JSX.Element {
+}: ComponentPropsWithoutRef<"a">): ReactNode {
   // eslint-disable-next-line jsx-a11y/anchor-has-content, react/jsx-no-target-blank
   if (!href) return <a {...props} />;
   const isInternal =

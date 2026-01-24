@@ -7,8 +7,8 @@ const Context = React.createContext<GithubSlugger | null>(null);
 export function SluggerProvider({
   children,
 }: {
-  readonly children: React.ReactNode;
-}): JSX.Element {
+  readonly children: ReactNode;
+}): ReactNode {
   const slugger = useMemo(() => new GithubSlugger(), []);
   useEffect(
     () => () => {
@@ -41,9 +41,9 @@ export default function Heading({
   anchor,
 }: {
   readonly level: 2 | 3 | 4 | 5 | 6;
-  readonly children?: React.ReactNode;
+  readonly children?: ReactNode;
   readonly anchor?: string;
-}): JSX.Element {
+}): ReactNode {
   const HeadingTag = `h${level}` as const;
   useSlugger();
   // TODO use slugger properly

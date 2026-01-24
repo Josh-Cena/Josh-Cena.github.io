@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, type ReactNode } from "react";
 import { Tooltip } from "react-tooltip";
 import CommentIcon from "assets/comment-icon.svg?react";
 import avatar from "assets/avatar.svg";
@@ -11,7 +11,7 @@ const formatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
-export function Time({ dateTime }: { readonly dateTime: string }): JSX.Element {
+export function Time({ dateTime }: { readonly dateTime: string }): ReactNode {
   return (
     <time dateTime={dateTime}>{formatter.format(new Date(dateTime))}</time>
   );
@@ -22,10 +22,10 @@ export function ChatBox({
   name,
   comment,
 }: {
-  readonly children: React.ReactNode;
+  readonly children: ReactNode;
   readonly name: string;
   readonly comment?: string;
-}): JSX.Element {
+}): ReactNode {
   const id = useId();
   return (
     <>

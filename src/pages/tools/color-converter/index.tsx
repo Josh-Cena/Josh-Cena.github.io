@@ -1,5 +1,5 @@
 import { useState, type ReactNode, type ReactElement } from "react";
-import Color from "color";
+import Color, { type ColorInstance } from "color";
 import Link from "@/components/Link";
 import CopyButton from "@/components/CopyButton";
 import styles from "./index.module.css";
@@ -54,7 +54,7 @@ function ColorInput({
   setColor,
 }: {
   readonly name: string;
-  readonly color: Color;
+  readonly color: ColorInstance;
   readonly method:
     | "red"
     | "blue"
@@ -73,7 +73,7 @@ function ColorInput({
     | "chroma";
   readonly min?: number;
   readonly max: number;
-  readonly setColor: (c: Color) => void;
+  readonly setColor: (c: ColorInstance) => void;
 }) {
   return (
     <label>
@@ -113,8 +113,8 @@ function CopiableColor({ colorString }: { readonly colorString: string }) {
   );
 }
 
-export default function ColorConverter(): JSX.Element {
-  const [color, setColor] = useState<Color>(new Color("#39cac4"));
+export default function ColorConverter(): ReactNode {
+  const [color, setColor] = useState<ColorInstance>(new Color("#39cac4"));
   return (
     <>
       <h1>Color converter</h1>

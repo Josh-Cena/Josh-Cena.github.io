@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, type ReactNode } from "react";
 import { useColorMode, type ColorMode } from "@/context/ColorMode";
 import styles from "./index.module.css";
 
@@ -17,7 +17,7 @@ export default function Canvas({
   ) => void;
   readonly width: number;
   readonly height: number;
-} & React.CanvasHTMLAttributes<HTMLCanvasElement>): JSX.Element {
+} & React.CanvasHTMLAttributes<HTMLCanvasElement>): ReactNode {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { colorMode } = useColorMode();
   useEffect(() => {

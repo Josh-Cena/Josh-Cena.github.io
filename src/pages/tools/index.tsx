@@ -1,6 +1,7 @@
+import type { ReactNode } from "react";
 import Link from "@/components/Link";
 
-export default function Tools(): JSX.Element {
+export default function Tools(): ReactNode {
   return (
     <ul>
       <li>

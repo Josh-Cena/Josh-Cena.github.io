@@ -69,7 +69,7 @@ function CommandInput(
 
 const CommandInputWithRef = React.forwardRef(CommandInput);
 
-export default function Command(): JSX.Element {
+export default function Command(): ReactNode {
   const [expanded, setExpanded] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputHasFocus, setInputHasFocus] = useState(false);

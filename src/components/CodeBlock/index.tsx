@@ -16,7 +16,7 @@ export default function CodeBlock({
   readonly title?: string | undefined;
   readonly language?: string;
   readonly className?: string | undefined;
-}): JSX.Element {
+}): ReactNode {
   const language =
     languageProp ??
     classNameProp?.match(/language-(?<lang>[^ ]+)/u)?.groups?.lang;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import mermaid, { type RenderResult } from "mermaid";
 import { useColorMode } from "@/context/ColorMode";
 
@@ -6,7 +6,7 @@ export default function Mermaid({
   code,
 }: {
   readonly code: string;
-}): JSX.Element | null {
+}): ReactNode {
   const [result, setResult] = useState<RenderResult | null>(null);
   const { colorMode } = useColorMode();
   // TODO: replace with useId() when upgrading to React 19

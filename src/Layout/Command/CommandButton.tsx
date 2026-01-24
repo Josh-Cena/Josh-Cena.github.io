@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import clsx from "clsx";
 import styles from "./index.module.css";
 
@@ -5,7 +6,7 @@ export default function CommandButton({
   onClick,
 }: {
   readonly onClick?: () => void;
-}): JSX.Element {
+}): ReactNode {
   return (
     <div className={styles.inputContent}>
       <button

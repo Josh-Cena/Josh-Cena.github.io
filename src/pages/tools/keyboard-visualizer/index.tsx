@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import clsx from "clsx";
 import Heading from "@/components/Heading";
@@ -17,7 +17,7 @@ function MapManager({
   readonly addMap: (s: string) => void;
   readonly deleteMap: (s: string) => void;
   readonly maps: string[];
-}): JSX.Element {
+}): ReactNode {
   return (
     <div className={styles.mapManager}>
       <button
@@ -153,7 +153,7 @@ function KeyboardMapTable({
 }
 
 function LetterToKey({ keyboardMap }: { readonly keyboardMap: KeyboardMap }) {
-  const letterToKey: [string, JSX.Element][] = [];
+  const letterToKey: [string, ReactNode][] = [];
   for (const [code, keys] of Object.entries(keyboardMap)) {
     if (keys[0] && !["Unidentified", "Dead"].includes(keys[0]))
       // eslint-disable-next-line react/jsx-key
@@ -209,7 +209,7 @@ function LetterToKey({ keyboardMap }: { readonly keyboardMap: KeyboardMap }) {
   );
 }
 
-export default function Keyboard(): JSX.Element {
+export default function Keyboard(): ReactNode {
   const [index, setIndex] = useState<0 | 1 | 2 | 3>(0);
   const [keyboardMaps, setKeyboardMaps] = useLocalStorageState<{
     [mapName: string]: KeyboardMap;

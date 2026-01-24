@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import { useColorMode } from "@/context/ColorMode";
 import styles from "./Elements.module.css";
 
@@ -69,7 +69,7 @@ export default function ScrollyElements({
 }: {
   readonly className?: string;
   readonly getVal: (keyframes: readonly number[]) => number;
-}): JSX.Element {
+}): ReactNode {
   const [mousePos, setMousePos] = useState<
     { x: number; y: number } | undefined
   >(undefined);

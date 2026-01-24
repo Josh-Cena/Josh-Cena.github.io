@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type ReactNode } from "react";
 import { ColorModeProvider } from "@/context/ColorMode";
 import { SluggerProvider } from "@/components/Heading";
 import MDXComponents from "@/context/MDXComponents";
@@ -13,8 +13,8 @@ const Command = React.lazy(() => import("./Command"));
 export default function Layout({
   children,
 }: {
-  readonly children: React.ReactNode;
-}): JSX.Element {
+  readonly children: ReactNode;
+}): ReactNode {
   return (
     <ColorModeProvider>
       <RouteListener />

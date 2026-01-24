@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "@/components/Link";
 import { type MDFrontMatter, source } from "./_components";
 import styles from "./_components.module.css";
@@ -21,7 +22,7 @@ const data = Object.entries(pages).map(([path, frontMatter]) => {
   };
 });
 
-export function Table(): JSX.Element {
+export function Table(): ReactNode {
   const allTags: { [tag: string]: [number, number][] } = {};
   data.forEach(({ year, day, frontMatter }) => {
     frontMatter.tags.forEach((t) => {

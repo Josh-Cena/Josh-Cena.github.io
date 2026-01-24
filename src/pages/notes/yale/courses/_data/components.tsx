@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Tooltip } from "react-tooltip";
 import chroma from "chroma-js";
 import Link from "@/components/Link";
@@ -34,7 +35,7 @@ function SkillBadge({ skill }: { readonly skill: string }) {
   );
 }
 
-export function CourseInfo({ id }: { readonly id: string }): JSX.Element {
+export function CourseInfo({ id }: { readonly id: string }): ReactNode {
   const course = table.get(id);
   if (!course) return <span>Course not found: {id}</span>;
   return (

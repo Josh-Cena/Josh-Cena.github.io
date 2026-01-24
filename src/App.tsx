@@ -1,7 +1,7 @@
 import "core-js/proposals/set-methods-v2";
 import "core-js/proposals/iterator-helpers";
 
-import React from "react";
+import React, { type ReactNode } from "react";
 import { Prism } from "prism-react-renderer";
 import { Route, Routes } from "react-router-dom";
 import { routes } from "./routes";
@@ -17,7 +17,7 @@ await import("prismjs/components/prism-ocaml");
 await import("prismjs/components/prism-python");
 await import("prismjs/components/prism-r");
 
-export default function App(): JSX.Element {
+export default function App(): ReactNode {
   return (
     <Layout>
       <Routes>

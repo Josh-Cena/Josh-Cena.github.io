@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import Link from "@/components/Link";
 import { useColorMode } from "@/context/ColorMode";
 import LogoLight from "assets/logo.svg?react";
@@ -73,7 +79,7 @@ function NavbarLink({ name, path, children }: LinkConfig) {
   );
 }
 
-export default function Navbar(): JSX.Element {
+export default function Navbar(): ReactNode {
   const { colorMode } = useColorMode();
   const Logo = colorMode === "light" ? LogoLight : LogoDark;
   return (

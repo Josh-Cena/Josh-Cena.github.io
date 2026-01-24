@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, type ReactNode } from "react";
 
 function randInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -108,7 +108,7 @@ const pictureWidth = Math.floor(Math.sqrt(rgbWidth ** 3));
 const canvasWidth = 800;
 const scale = canvasWidth / pictureWidth;
 
-export default function RandomColor(): JSX.Element {
+export default function RandomColor(): ReactNode {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>();
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import clsx from "clsx";
 import ScrollyElements from "./Elements";
 import styles from "./index.module.css";
@@ -63,7 +63,7 @@ function ScrollyServer() {
   );
 }
 
-export default function Scrolly(): JSX.Element {
+export default function Scrolly(): ReactNode {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);

@@ -8,7 +8,7 @@ export default function MDXComponents({
   children,
 }: {
   readonly children: ReactNode;
-}): JSX.Element {
+}): ReactNode {
   return (
     <MDXProvider
       components={{

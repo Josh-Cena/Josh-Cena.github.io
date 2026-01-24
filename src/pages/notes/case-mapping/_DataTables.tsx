@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import clsx from "clsx";
 import styles from "./_DataTables.module.css";
 
@@ -18,7 +19,7 @@ export function CharSet<T>({
   readonly set: Iterable<T>;
   readonly display?: (char: T) => string;
   readonly assertSize?: number;
-}): JSX.Element {
+}): ReactNode {
   const values = [...set];
   const assertionFailed =
     assertSize !== undefined && values.length !== assertSize;
