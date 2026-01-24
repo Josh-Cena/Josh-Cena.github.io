@@ -52,12 +52,12 @@ export default function mermaidPlugin(): Plugin {
         runMmdc(source, {
           svgId,
           mermaidConfig: { theme: "default" },
-          backgroundColor: "var(--color-background)",
+          backgroundColor: "transparent",
         }),
         runMmdc(source, {
           svgId,
           mermaidConfig: { theme: "dark" },
-          backgroundColor: "var(--color-background)",
+          backgroundColor: "transparent",
         }),
       ]);
       return diagramCode({ id, lightSVG, darkSVG });

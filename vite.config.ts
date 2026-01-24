@@ -9,7 +9,13 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMDXFrontmatter from "remark-mdx-frontmatter";
 import rehypeKatex from "rehype-katex";
 import mermaidPlugin from "./server/vite-plugin-mermaid.ts";
-import transformMarkdown from "./server/markdown/remark-plugin-transform-markdown.ts";
+import remarkAOC from "./server/markdown/remark-plugin-aoc.ts";
+import remarkBlog from "./server/markdown/remark-plugin-blog.ts";
+import remarkCanvas from "./server/markdown/remark-plugin-canvas.ts";
+import remarkExtractTitle from "./server/markdown/remark-plugin-extract-title.ts";
+import remarkLocalImage from "./server/markdown/remark-plugin-local-image.ts";
+import remarkMDLink from "./server/markdown/remark-plugin-md-link.ts";
+import remarkMermaid from "./server/markdown/remark-plugin-mermaid.ts";
 
 export default defineConfig({
   plugins: [
@@ -20,7 +26,13 @@ export default defineConfig({
           remarkGfm,
           remarkMath,
           remarkFrontmatter,
-          transformMarkdown,
+          remarkAOC,
+          remarkBlog,
+          remarkCanvas,
+          remarkExtractTitle,
+          remarkLocalImage,
+          remarkMDLink,
+          remarkMermaid,
           [remarkMDXFrontmatter, { name: "frontMatter" }],
         ],
         rehypePlugins: [
