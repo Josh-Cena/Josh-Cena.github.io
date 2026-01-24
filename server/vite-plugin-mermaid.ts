@@ -5,7 +5,10 @@ import puppeteer from "puppeteer";
 import { renderMermaid, type ParseMDDOptions } from "@mermaid-js/mermaid-cli";
 
 async function runMmdc(code: string, options: ParseMDDOptions) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox"], // Needed for GHA
+  });
   try {
     const { data } = await renderMermaid(browser, code, "svg", options);
     return new TextDecoder().decode(data);
@@ -47,7 +50,7 @@ export default function mermaidPlugin(): Plugin {
       if (!id.endsWith(".mmd")) return null;
       this.addWatchFile(id);
       const source = await FS.readFile(id, "utf8");
-      const svgId = Path.basename(id, ".mmd");
+      const svgId = `mermaid-${Path.basename(id, ".mmd")}`;
       const [lightSVG, darkSVG] = await Promise.all([
         runMmdc(source, {
           svgId,
