@@ -20,6 +20,7 @@ const posts = Object.entries(modules)
   .map(([path, frontMatter]) => (
     <section key={path}>
       <Link href={normalizeRoute(`blog/${path}`)}>
+        {/* eslint-disable-next-line react/forbid-elements */}
         <h2>{frontMatter.title}</h2>
       </Link>
       <PostData frontMatter={frontMatter} />

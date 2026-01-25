@@ -1,6 +1,6 @@
 import React, { type ReactNode } from "react";
 import { ColorModeProvider } from "@/context/ColorMode";
-import { SluggerProvider } from "@/components/Heading";
+import { HeadingProvider } from "@/components/Heading";
 import MDXComponents from "@/context/MDXComponents";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -18,12 +18,12 @@ export default function Layout({
   return (
     <ColorModeProvider>
       <RouteListener />
-      <Navbar />
-      <SluggerProvider>
+      <HeadingProvider>
         <MDXComponents>
+          <Navbar />
           <main className={styles.mainBody}>{children}</main>
         </MDXComponents>
-      </SluggerProvider>
+      </HeadingProvider>
       <Footer />
       <React.Suspense fallback={<CommandButton />}>
         <Command />

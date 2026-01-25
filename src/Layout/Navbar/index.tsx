@@ -9,6 +9,7 @@ import Link from "@/components/Link";
 import { useColorMode } from "@/context/ColorMode";
 import LogoLight from "assets/logo.svg?react";
 import LogoDark from "assets/logo-dark.svg?react";
+import TOC from "../TOC";
 import ColorModeToggle from "./ColorModeToggle";
 import styles from "./index.module.css";
 
@@ -97,6 +98,7 @@ export default function Navbar(): ReactNode {
           <ColorModeToggle />
         </div>
       </div>
+      <TOC />
     </nav>
   );
 }

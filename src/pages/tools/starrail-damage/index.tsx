@@ -1,4 +1,5 @@
-import React, { useState, useRef, type ReactNode } from "react";
+import { useState, useRef, type ReactNode } from "react";
+import Heading from "@/components/Heading";
 import styles from "./index.module.css";
 
 const 属性击破系数 = {
@@ -379,7 +380,7 @@ export default function StarRailDamage(): ReactNode {
           下面的输入框支持基本数学表达式，如<code>44*5</code>
         </li>
       </ul>
-      <h2>敌人基础数值</h2>
+      <Heading level={2}>敌人基础数值</Heading>
       <table>
         <tr>
           <th>
@@ -457,7 +458,7 @@ export default function StarRailDamage(): ReactNode {
           </td>
         </tr>
       </table>
-      <h2>角色基础数值</h2>
+      <Heading level={2}>角色基础数值</Heading>
       <table>
         <tr>
           <th>
@@ -664,37 +665,37 @@ export default function StarRailDamage(): ReactNode {
           </td>
         </tr>
       </table>
-      <h2>角色自拐</h2>
+      <Heading level={2}>角色自拐</Heading>
       <BuffTable
         id="角色"
         buffs={buffs.角色!}
         setBuffs={(value) => setBuffs({ ...buffs, 角色: value })}
       />
-      <h2>角色遗器方案</h2>
+      <Heading level={2}>角色遗器方案</Heading>
       <BuffTable
         id="遗器"
         buffs={buffs.遗器!}
         setBuffs={(value) => setBuffs({ ...buffs, 遗器: value })}
       />
-      <h2>辅助1</h2>
+      <Heading level={2}>辅助1</Heading>
       <BuffTable
         id="辅助1"
         buffs={buffs.辅助1!}
         setBuffs={(value) => setBuffs({ ...buffs, 辅助1: value })}
       />
-      <h2>辅助2</h2>
+      <Heading level={2}>辅助2</Heading>
       <BuffTable
         id="辅助2"
         buffs={buffs.辅助2!}
         setBuffs={(value) => setBuffs({ ...buffs, 辅助2: value })}
       />
-      <h2>辅助3</h2>
+      <Heading level={2}>辅助3</Heading>
       <BuffTable
         id="辅助3"
         buffs={buffs.辅助3!}
         setBuffs={(value) => setBuffs({ ...buffs, 辅助3: value })}
       />
-      <h2>最终伤害</h2>
+      <Heading level={2}>最终伤害</Heading>
       <div>
         <StackedEquations>
           <div className={styles.equationLine}>

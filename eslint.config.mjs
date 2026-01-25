@@ -20,6 +20,10 @@ export default tseslint.config(
     },
     rules: {
       "import/no-extraneous-dependencies": "off",
+      "react/forbid-elements": [
+        "error",
+        { forbid: ["h2", "h3", "h4", "h5", "h6"] },
+      ],
     },
   },
 );

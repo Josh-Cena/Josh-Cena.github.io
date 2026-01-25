@@ -5,6 +5,7 @@ description: A collection of all Markdown syntaxes — for testing
 # Kitchensink
 
 import CodeBlock from "@/components/CodeBlock";
+import { DynamicHeading } from "./_kitchensink-components";
 
 ## Basic Markdown
 
@@ -139,6 +140,10 @@ def color_func(word, font_size, position, orientation, random_state=None, **kwar
     return "rgb(%d, %d, %d)" % tuple(randcolor)
 ```
 
+### H3
+
+Duplicate heading
+
 ## Tables
 
 ### Markdown table
@@ -158,6 +163,8 @@ def color_func(word, font_size, position, orientation, random_state=None, **kwar
   <dt>Markdown in HTML</dt>
   <dd>_Works_! **HTML** <em>works</em> too.</dd>
 </dl>
+
+<DynamicHeading />
 
 ## Mermaid diagram
 

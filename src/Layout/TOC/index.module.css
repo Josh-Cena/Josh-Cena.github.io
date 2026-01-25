@@ -1,0 +1,51 @@
+.container {
+  position: relative;
+  top: 9px;
+  left: calc(100% - var(--margin-paragraph) - 200px);
+  width: 200px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.tocButton {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--color-text);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  box-shadow: var(--shadow-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
+}
+
+.toc {
+  position: relative;
+  top: -35px;
+  width: 200px;
+  max-height: calc(100vh - 100px);
+  overflow-x: visible;
+  padding: 10px;
+  border: 2px solid var(--color-text-subdued);
+  border-radius: var(--border-radius-medium);
+  font-size: smaller;
+  background-color: var(--color-background);
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0.5rem;
+  margin-left: 0.5rem;
+  border-left: 1px solid var(--color-text-subdued);
+}
