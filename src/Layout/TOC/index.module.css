@@ -10,7 +10,7 @@
 
 .tocButton {
   width: 40px;
-  height: 40px;
+  height: 30px;
   border: 2px solid var(--color-text);
   border-top: none;
   border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
@@ -29,7 +29,7 @@
 
 .toc {
   position: relative;
-  top: -35px;
+  top: -25px;
   width: 200px;
   max-height: calc(100vh - 100px);
   overflow-x: visible;
@@ -41,6 +41,10 @@
   transition:
     background-color 0.2s ease-out,
     color 0.2s ease-out;
+}
+
+.toc p {
+  color: var(--color-text-subdued);
 }
 
 .toc ul {

@@ -44,7 +44,14 @@ function TOCItem({ node }: { readonly node: TOCTree }): ReactNode {
 function TOCContent(): ReactNode {
   const { headings } = useHeadings();
   const tree = listToTree(headings);
-  if (tree.length === 0) return null;
+  if (tree.length === 0) {
+    return (
+      <nav className={styles.toc} aria-label="Table of contents">
+        <strong>Contents</strong>
+        <p>No headings on this page.</p>
+      </nav>
+    );
+  }
   return (
     <nav className={styles.toc} aria-label="Table of contents">
       <strong>Contents</strong>
