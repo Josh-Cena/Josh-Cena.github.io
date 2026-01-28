@@ -69,6 +69,24 @@ const buffKind = [
   "独立乘区",
 ] as const;
 
+const 词条: { [kind in (typeof buffKind)[number]]: number } = {
+  百分比攻击: 4.32,
+  百分比生命: 4.32,
+  百分比防御: 5.4,
+  固定攻击: 21.169,
+  固定生命: 42.338,
+  固定防御: 21.169,
+  增伤: 3.84,
+  暴击伤害: 6.48,
+  击破特攻: 6.48,
+  击破增伤: 1,
+  易伤: 1,
+  减防: 1,
+  减抗: 1,
+  真伤: 1,
+  独立乘区: 1,
+};
+
 type BuffKind = (typeof buffKind)[number];
 
 type Buffs = [BuffKind, string, number][];
@@ -264,28 +282,42 @@ function BuffTable({
   );
 }
 
-export default function StarRailDamage(): ReactNode {
-  /* eslint-disable react/hook-use-state */
-  const [角色等级, set角色等级] = useState(80);
-  const [属性击破倍率, set属性击破倍率] = useState(属性击破系数.冰);
-  const [基础攻击, set基础攻击] = useState(1155);
-  const [基础生命, set基础生命] = useState(2811);
-  const [基础防御, set基础防御] = useState(882);
-  const [攻击倍率, set攻击倍率] = useState(0);
-  const [生命倍率, set生命倍率] = useState(245);
-  const [防御倍率, set防御倍率] = useState(0);
-  const [实际削韧值, set实际削韧值] = useState(0);
-  const [超击破倍率, set超击破倍率] = useState(0);
-  const [DOT倍率, setDOT倍率] = useState(0);
-  const [敌人等级, set敌人等级] = useState(95);
-  const [敌人抗性, set敌人抗性] = useState(0);
-  const [韧性上限, set韧性上限] = useState(0);
-  const [韧性状态, set韧性状态] = useState<"未击破" | "击破" | "已击破">(
-    "未击破",
-  );
-  /* eslint-enable react/hook-use-state */
-
-  const [buffs, setBuffs] = useState<{ [id: string]: Buffs }>(defaultBuffs);
+function calcDamage(
+  buffs: { [id: string]: Buffs },
+  {
+    角色等级,
+    属性击破倍率,
+    基础攻击,
+    基础生命,
+    基础防御,
+    攻击倍率,
+    生命倍率,
+    防御倍率,
+    实际削韧值,
+    超击破倍率,
+    DOT倍率,
+    敌人等级,
+    敌人抗性,
+    韧性上限,
+    韧性状态,
+  }: {
+    角色等级: number;
+    属性击破倍率: number;
+    基础攻击: number;
+    基础生命: number;
+    基础防御: number;
+    攻击倍率: number;
+    生命倍率: number;
+    防御倍率: number;
+    实际削韧值: number;
+    超击破倍率: number;
+    DOT倍率: number;
+    敌人等级: number;
+    敌人抗性: number;
+    韧性上限: number;
+    韧性状态: "未击破" | "击破" | "已击破";
+  },
+): number {
   const {
     百分比攻击,
     百分比生命,
@@ -334,6 +366,66 @@ export default function StarRailDamage(): ReactNode {
     (1 - 抗性 / 100) *
     (1 + 真伤 / 100) *
     (1 + 独立乘区 / 100);
+  return damage;
+}
+
+export default function StarRailDamage(): ReactNode {
+  /* eslint-disable react/hook-use-state */
+  const [角色等级, set角色等级] = useState(80);
+  const [属性击破倍率, set属性击破倍率] = useState(属性击破系数.冰);
+  const [基础攻击, set基础攻击] = useState(1155);
+  const [基础生命, set基础生命] = useState(2811);
+  const [基础防御, set基础防御] = useState(882);
+  const [攻击倍率, set攻击倍率] = useState(0);
+  const [生命倍率, set生命倍率] = useState(245);
+  const [防御倍率, set防御倍率] = useState(0);
+  const [实际削韧值, set实际削韧值] = useState(0);
+  const [超击破倍率, set超击破倍率] = useState(0);
+  const [DOT倍率, setDOT倍率] = useState(0);
+  const [敌人等级, set敌人等级] = useState(95);
+  const [敌人抗性, set敌人抗性] = useState(0);
+  const [韧性上限, set韧性上限] = useState(0);
+  const [韧性状态, set韧性状态] = useState<"未击破" | "击破" | "已击破">(
+    "未击破",
+  );
+  /* eslint-enable react/hook-use-state */
+
+  const [buffs, setBuffs] = useState<{ [id: string]: Buffs }>(defaultBuffs);
+  const {
+    百分比攻击,
+    百分比生命,
+    百分比防御,
+    固定攻击,
+    固定生命,
+    固定防御,
+    增伤,
+    暴击伤害,
+    击破特攻,
+    击破增伤,
+    易伤,
+    减防,
+    减抗,
+    真伤,
+    独立乘区,
+  } = aggregateBuffs(buffs);
+  const params = {
+    角色等级,
+    属性击破倍率,
+    基础攻击,
+    基础生命,
+    基础防御,
+    攻击倍率,
+    生命倍率,
+    防御倍率,
+    实际削韧值,
+    超击破倍率,
+    DOT倍率,
+    敌人等级,
+    敌人抗性,
+    韧性上限,
+    韧性状态,
+  };
+  const damage = calcDamage(buffs, params);
 
   return (
     <div>
@@ -358,7 +450,7 @@ export default function StarRailDamage(): ReactNode {
         <strong>注：</strong>
       </p>
       <ul>
-        <li>假设满暴击率</li>
+        <li>假设满暴击率。如果未满暴，可以按照 (暴击率×暴击伤害) 计算期望</li>
         <li>
           目前考虑不了角色打多种属性伤害，比如停云赐福雷属性附加伤害、海瑟音多颜色DOT等，这些会影响倍率区、增伤区、抗性区的计算
         </li>
@@ -757,6 +849,36 @@ export default function StarRailDamage(): ReactNode {
       <output>
         = <strong>{Math.round(damage)}</strong>
       </output>
+      <Heading level={2}>词条收益</Heading>
+      <table>
+        <thead>
+          <tr>
+            <th>属性</th>
+            <th>单词条数值</th>
+            <th>伤害提升</th>
+          </tr>
+        </thead>
+        <tbody>
+          {buffKind
+            .map((kind) => {
+              const deltaBuffs = { ...buffs };
+              deltaBuffs.测试 = [[kind, "测试", 词条[kind]]];
+              const deltaDamage =
+                ((calcDamage(deltaBuffs, params) - damage) / damage) * 100;
+              return [
+                deltaDamage,
+                <tr key={kind}>
+                  <th>{kind}</th>
+                  <td>{词条[kind]}</td>
+                  <td>{deltaDamage.toFixed(2)}%</td>
+                </tr>,
+              ] as const;
+            })
+            .filter((a) => a[0] > 0)
+            .sort((a, b) => b[0] - a[0])
+            .map((x) => x[1])}
+        </tbody>
+      </table>
     </div>
   );
 }
