@@ -8,6 +8,7 @@ import remarkMath from "remark-math";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMDXFrontmatter from "remark-mdx-frontmatter";
 import rehypeKatex from "rehype-katex";
+import { visualizer } from "rollup-plugin-visualizer";
 import mermaidPlugin from "./server/vite-plugin-mermaid.ts";
 import remarkAOC from "./server/markdown/remark-plugin-aoc.ts";
 import remarkBlog from "./server/markdown/remark-plugin-blog.ts";
@@ -50,6 +51,10 @@ export default defineConfig({
     mermaidPlugin(),
     react({ include: /\.(?:mmd|js|jsx|ts|tsx)$/u }),
     svgr(),
+    // @ts-expect-error: bad types
+    visualizer({
+      filename: "dist/static/bundle-map.html",
+    }),
   ],
   define: {
     "process.env": {
