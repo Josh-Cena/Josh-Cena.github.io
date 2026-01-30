@@ -19,6 +19,7 @@ casedness
 cena
 changefreq
 charis
+chartjs
 chsh
 closedness
 cmyk

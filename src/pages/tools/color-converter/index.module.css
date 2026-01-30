@@ -51,21 +51,6 @@
   gap: 0.5em;
 }
 
-.colorInputs {
-  width: 100%;
-  margin-top: 1em;
-}
-
-.colorInputs button {
-  color: var(--color-primary);
-  padding: 0.5em 1em;
-  margin-bottom: 1em;
-}
-
-.colorInputs button.selected {
-  border-bottom: 3px solid var(--color-primary);
-}
-
 .colorInputs label {
   display: block;
   width: 100%;

@@ -1,39 +1,9 @@
-import { useState, type ReactNode, type ReactElement } from "react";
+import { useState, type ReactNode } from "react";
 import Color, { type ColorInstance } from "color";
 import Link from "@/components/Link";
+import Tabs from "@/components/Tabs";
 import CopyButton from "@/components/CopyButton";
 import styles from "./index.module.css";
-
-function Tabs({
-  children,
-}: {
-  readonly children: ReactElement<{ label: string }>[];
-}) {
-  const [selected, setSelected] = useState(0);
-  return (
-    <div className={styles.colorInputs}>
-      {children.map((tab, i) => (
-        <button
-          className={i === selected ? styles.selected : ""}
-          key={tab.props.label}
-          onClick={() => setSelected(i)}
-          type="button">
-          {tab.props.label}
-        </button>
-      ))}
-      {children[selected]}
-    </div>
-  );
-}
-
-function TabItem({
-  children,
-}: {
-  readonly children: ReactNode;
-  readonly label: string;
-}) {
-  return <>{children}</>;
-}
 
 const r = (strings: TemplateStringsArray, ...args: unknown[]) =>
   String.raw(
@@ -200,8 +170,8 @@ export default function ColorConverter(): ReactNode {
             </span>
           </div>
         </div>
-        <Tabs>
-          <TabItem label="RGB">
+        <Tabs className={styles.colorInputs}>
+          <Tabs.Item label="RGB">
             {(["R", "G", "B"] as const).map((c) => (
               <ColorInput
                 key={c}
@@ -220,8 +190,8 @@ export default function ColorConverter(): ReactNode {
                 setColor={setColor}
               />
             ))}
-          </TabItem>
-          <TabItem label="HSL">
+          </Tabs.Item>
+          <Tabs.Item label="HSL">
             {(["H", "S", "L"] as const).map((c) => (
               <ColorInput
                 key={c}
@@ -240,8 +210,8 @@ export default function ColorConverter(): ReactNode {
                 setColor={setColor}
               />
             ))}
-          </TabItem>
-          <TabItem label="HWB">
+          </Tabs.Item>
+          <Tabs.Item label="HWB">
             {(["H", "W", "B"] as const).map((c) => (
               <ColorInput
                 key={c}
@@ -260,8 +230,8 @@ export default function ColorConverter(): ReactNode {
                 setColor={setColor}
               />
             ))}
-          </TabItem>
-          <TabItem label="CMYK">
+          </Tabs.Item>
+          <Tabs.Item label="CMYK">
             {(["C", "M", "Y", "K"] as const).map((c) => (
               <ColorInput
                 key={c}
@@ -281,8 +251,8 @@ export default function ColorConverter(): ReactNode {
                 setColor={setColor}
               />
             ))}
-          </TabItem>
-          <TabItem label="LAB">
+          </Tabs.Item>
+          <Tabs.Item label="LAB">
             {(["L", "A", "B"] as const).map((c) => (
               <ColorInput
                 key={c}
@@ -302,8 +272,8 @@ export default function ColorConverter(): ReactNode {
                 setColor={setColor}
               />
             ))}
-          </TabItem>
-          <TabItem label="LCH">
+          </Tabs.Item>
+          <Tabs.Item label="LCH">
             {(["L", "C", "H"] as const).map((c) => (
               <ColorInput
                 key={c}
@@ -322,7 +292,7 @@ export default function ColorConverter(): ReactNode {
                 setColor={setColor}
               />
             ))}
-          </TabItem>
+          </Tabs.Item>
         </Tabs>
       </div>
     </>

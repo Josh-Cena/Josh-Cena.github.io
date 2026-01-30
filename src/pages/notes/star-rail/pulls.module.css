@@ -1,0 +1,67 @@
+.charContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.charImg {
+  width: 40px;
+  height: auto;
+}
+
+.eidolon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: x-small;
+  padding: 4px;
+  width: 8px;
+  height: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gray {
+  filter: grayscale(100%) opacity(50%);
+}
+
+.pullBars {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.gap {
+  gap: 12px;
+}
+
+.pullBarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pullBar {
+  display: inline flex;
+  height: 20px;
+  background-color: var(--color-green);
+  border-radius: var(--border-radius-small);
+  margin: 2px;
+  align-items: center;
+  justify-content: center;
+}
+
+.offBanner {
+  background-color: var(--color-red);
+}
+
+.guaranteed {
+  background-color: var(--color-yellow);
+}
+
+.graphContainer {
+  width: 100%;
+  min-width: 800px;
+}
