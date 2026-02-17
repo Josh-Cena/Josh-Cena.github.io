@@ -77,6 +77,7 @@ export const sources = {
   遐蝶: "https://patchwiki.biligame.com/images/sr/e/e1/tos184s9j5zerllgte1mmm6kga5nwu8.png",
   阿格莱雅:
     "https://patchwiki.biligame.com/images/sr/0/0a/ivg2yhva7casg1ap5txx6fjbz8ewlgp.png",
+  爻光: "https://patchwiki.biligame.com/images/sr/c/cc/73yudj56bngt0ipyotsb81ggjx42mqh.png",
   没有回报的加冕:
     "https://patchwiki.biligame.com/images/sr/thumb/8/89/9dqp2rydhm9xg2bnzqdp4dzmqirwqge.png/120px-%E6%B2%A1%E6%9C%89%E5%9B%9E%E6%8A%A5%E7%9A%84%E5%8A%A0%E5%86%95-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   黎明恰如此燃烧:
@@ -183,6 +184,8 @@ export const sources = {
     "https://patchwiki.biligame.com/images/sr/thumb/8/8a/j5n87ml7x08jhu903ss0xt7fs4cbzv1.png/120px-%E8%AE%A9%E5%91%8A%E5%88%AB%EF%BC%8C%E6%9B%B4%E7%BE%8E%E4%B8%80%E4%BA%9B-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   将光阴织成黄金:
     "https://patchwiki.biligame.com/images/sr/thumb/8/8c/8wtgz98tx9qn2ezkmk2ohtgyhvwv1nk.png/120px-%E5%B0%86%E5%85%89%E9%98%B4%E7%BB%87%E6%88%90%E9%BB%84%E9%87%91-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  当她决定看见:
+    "https://patchwiki.biligame.com/images/sr/thumb/3/37/17xgxjsr42oril6n300q2h8q7gazu4n.png/120px-%E5%BD%93%E5%A5%B9%E5%86%B3%E5%AE%9A%E7%9C%8B%E8%A7%81-%E6%97%A0%E8%83%8C%E6%99%AF.png",
 };
 
 export const 专武: { [char: string]: string } = {
@@ -239,6 +242,7 @@ export const 专武: { [char: string]: string } = {
   风堇: "愿虹光永驻天空",
   遐蝶: "让告别，更美一些",
   阿格莱雅: "将光阴织成黄金",
+  爻光: "当她决定看见",
 };
 
 export type PullRecordData = {
@@ -344,6 +348,10 @@ export const 角色: { [version: string]: PullRecordData[] } = {
     { name: "希儿", offBanner: true, pulls: 81 },
     { name: "风堇", offBanner: false, pulls: 38 },
   ],
+  "4.0上": [
+    { name: "希儿", offBanner: true, pulls: 25 },
+    { name: "黑天鹅", offBanner: false, pulls: 77 },
+  ],
 };
 
 export const 光锥: { [version: string]: PullRecordData[] } = {
@@ -404,6 +412,7 @@ export const 赠送: (PullRecordData & { note: string })[] = [
   { name: "布洛妮娅", offBanner: false, pulls: 0, note: "金灵兑换" },
   { name: "烦恼着，幸福着", offBanner: false, pulls: 0, note: "碎忆兑换" },
   { name: "于夜色中", offBanner: false, pulls: 0, note: "碎忆兑换" },
+  { name: "卡芙卡", offBanner: false, pulls: 0, note: "4.0上赠送" },
 ];
 
 export const 卡池: { [version: string]: string[] } = {
@@ -456,4 +465,5 @@ export const 卡池: { [version: string]: string[] } = {
   "3.8上": ["大丽花", "流萤"],
   "3.8下": ["忘归人", "灵砂"],
   "3.8额外": ["阿格莱雅", "星期日"],
+  "4.0上": ["爻光", "长夜月", "海瑟音", "黑天鹅"],
 };

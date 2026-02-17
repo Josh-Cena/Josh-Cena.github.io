@@ -12,45 +12,6 @@ const 属性击破系数 = {
   虚数: 0.5,
 };
 
-const defaultBuffs: { [id: string]: Buffs } = {
-  角色: [
-    ["百分比生命", "行迹", 10],
-    ["百分比生命", "光锥", 18],
-    ["暴击伤害", "天赋+四魂", 68.4 * 5],
-    ["暴击伤害", "行迹", 37.3],
-    ["暴击伤害", "一魂", 36],
-    ["增伤", "光锥", 60],
-    ["减抗", "六魂", 30],
-  ],
-  遗器: [
-    ["固定生命", "头部", 705],
-    ["固定攻击", "手部", 352],
-    ["百分比生命", "衣服+12副词条", 90.7],
-    ["暴击伤害", "8副词条", 46.3],
-    ["增伤", "球", 38.4],
-    ["增伤", "学者套+行迹大招增伤", 40],
-  ],
-  辅助1: [
-    ["增伤", "战技", 72],
-    ["增伤", "行迹", 10],
-    ["增伤", "日专", 45],
-    ["暴击伤害", "大招覆盖率1/3", 18.4],
-  ],
-  辅助2: [
-    ["易伤", "大招", 30],
-    ["减抗", "战技", 24],
-    ["真伤", "一魂", 24],
-    ["暴击伤害", "缇专", 48],
-  ],
-  辅助3: [
-    ["固定生命", "大招", 600],
-    ["百分比生命", "大招", 30],
-    ["百分比生命", "一魂", 50],
-    ["易伤", "光锥", 18],
-    ["暴击伤害", "女武神套", 15],
-  ],
-};
-
 const buffKind = [
   "百分比攻击",
   "百分比生命",
@@ -67,9 +28,12 @@ const buffKind = [
   "减抗",
   "真伤",
   "独立乘区",
+  "速度（非伤害）",
+  "充能（非伤害）",
+  "充能效率（非伤害）",
 ] as const;
 
-const 词条: { [kind in (typeof buffKind)[number]]: number } = {
+const 词条: { [kind in BuffKind]: number } = {
   百分比攻击: 4.32,
   百分比生命: 4.32,
   百分比防御: 5.4,
@@ -85,11 +49,148 @@ const 词条: { [kind in (typeof buffKind)[number]]: number } = {
   减抗: 1,
   真伤: 1,
   独立乘区: 1,
+  "速度（非伤害）": 1,
+  "充能（非伤害）": 1,
+  "充能效率（非伤害）": 1,
 };
 
 type BuffKind = (typeof buffKind)[number];
 
 type Buffs = [BuffKind, string, number][];
+
+type BuffDB = {
+  角色: Buffs;
+  遗器属性: { [id: string]: Buffs };
+  遗器外圈: { [id: string]: Buffs };
+  遗器内圈: { [id: string]: Buffs };
+  辅助: { [id: string]: Buffs };
+};
+
+const defaultBuffs: BuffDB = {
+  角色: [
+    ["百分比生命", "行迹", 10],
+    ["百分比生命", "光锥", 18],
+    ["暴击伤害", "天赋+四魂", 68.4 * 5],
+    ["暴击伤害", "行迹", 37.3],
+    ["暴击伤害", "一魂", 36],
+    ["增伤", "光锥", 60],
+    ["增伤", "行迹终结技增伤", 20],
+    ["减抗", "六魂", 30],
+  ],
+  遗器属性: {
+    "生速冰充，12生+8暴": [
+      ["固定生命", "头部", 705],
+      ["固定攻击", "手部", 352],
+      ["百分比生命", "衣服+12副词条", 90.7],
+      ["暴击伤害", "8副词条", 46.3],
+      ["增伤", "球", 38.4],
+      ["速度（非伤害）", "鞋+8副词条", 45],
+      ["充能效率（非伤害）", "绳", 19.4],
+    ],
+    "生速生充，10生+10暴": [
+      ["固定生命", "头部", 705],
+      ["固定攻击", "手部", 352],
+      ["百分比生命", "衣服+球+10副词条", 125.3],
+      ["暴击伤害", "10副词条", 58],
+      ["速度（非伤害）", "鞋+8副词条", 45],
+      ["充能效率（非伤害）", "绳", 19.4],
+    ],
+    "生速冰生，10生+10暴": [
+      ["固定生命", "头部", 705],
+      ["固定攻击", "手部", 352],
+      ["百分比生命", "衣服+绳+10副词条", 125.3],
+      ["暴击伤害", "10副词条", 58],
+      ["增伤", "球", 38.4],
+      ["速度（非伤害）", "鞋+8副词条", 45],
+    ],
+    "生速生生，8生+12暴": [
+      ["固定生命", "头部", 705],
+      ["固定攻击", "手部", 352],
+      ["百分比生命", "衣服+球+绳+8副词条", 160],
+      ["暴击伤害", "12副词条", 71],
+      ["增伤", "学者套", 45],
+      ["速度（非伤害）", "鞋+8副词条", 45],
+    ],
+  },
+  遗器外圈: {
+    学者套: [
+      ["暴击伤害", "二件套折算", 16],
+      ["增伤", "四件套", 20],
+    ],
+    "天才套（一层）": [["减防", "四件套非量子弱点", 10]],
+    "天才套（两层）": [["减防", "四件套量子弱点", 20]],
+    冰套: [
+      ["增伤", "二件套", 10],
+      ["暴击伤害", "四件套", 25],
+    ],
+  },
+  遗器内圈: {
+    繁星: [["暴击伤害", "二件套暴击率折算", 16]],
+    拾骨地: [
+      ["百分比生命", "二件套", 12],
+      ["暴击伤害", "二件套", 28],
+    ],
+  },
+  辅助: {
+    "6+1日专布洛妮娅": [
+      ["增伤", "战技", 72],
+      ["增伤", "行迹", 10],
+      ["增伤", "光锥", 45],
+      ["百分比攻击", "大招（覆盖率1/3）", Math.round((59 / 3) * 100) / 100],
+      [
+        "暴击伤害",
+        "大招（180暴伤，覆盖率1/3）",
+        Math.round(((16.8 * 1.8 + 21.6) / 3) * 100) / 100,
+      ],
+      ["速度（非伤害）", "二魂", 28.8],
+    ],
+    "1+1缇宝": [
+      ["易伤", "大招", 30],
+      ["减抗", "战技", 24],
+      ["真伤", "一魂", 24],
+      ["暴击伤害", "光锥", 48],
+    ],
+    "2+1风堇": [
+      ["固定生命", "大招", 600],
+      ["百分比生命", "大招", 30],
+      ["百分比生命", "一魂", 50],
+      ["易伤", "光锥", 18],
+      ["暴击伤害", "女武神套", 15],
+      ["速度（非伤害）", "二魂", 28.8],
+    ],
+    "1+1星期日": [
+      ["增伤", "战技", 30],
+      ["暴击伤害", "大招（240暴伤）", 30 * 2.4 + 12],
+      ["暴击伤害", "天赋暴击率折算", 40],
+      ["减防", "一魂", 16],
+      ["增伤", "光锥", 45],
+      ["暴击伤害", "司铎套", 36],
+      ["充能（非伤害）", "大招", 40],
+    ],
+    "1+1阮梅": [
+      ["增伤", "战技+行迹", 32 + 36],
+      ["减抗", "大招", 25],
+      ["减防", "一魂", 20],
+      ["增伤", "光锥", 24],
+      ["速度（非伤害）", "天赋", 10],
+      ["充能（非伤害）", "光锥", 10],
+    ],
+    "2+0花火": [
+      ["百分比攻击", "行迹", 45],
+      ["百分比攻击", "一魂", 40],
+      ["暴击伤害", "战技（180暴伤）", 24 * 1.8 + 45],
+      ["易伤", "天赋+大招（满层）", (4 + 6) * 3],
+      ["减抗", "行迹", 10],
+      ["减防", "二魂（满层）", 10 * 3],
+    ],
+    "6+5记忆主": [
+      ["暴击伤害", "忆灵天赋（180暴伤）", 12 * 1.8 + 24],
+      ["暴击伤害", "一魂暴击率折算", 20],
+      ["真伤", "忆灵技（140能量）", 28 + 4 * 2],
+      ["增伤", "光锥", 16],
+    ],
+  },
+};
 
 // TODO: make safer
 const safeEval = (x: string) => {
@@ -99,13 +200,13 @@ const safeEval = (x: string) => {
   return res;
 };
 
-function aggregateBuffs(allBuffs: { [id: string]: Buffs }): {
+function aggregateBuffs(allBuffs: Buffs[]): {
   [kind in BuffKind]: number;
 } {
   const res = Object.fromEntries(buffKind.map((k) => [k, 0])) as {
     [kind in BuffKind]: number;
   };
-  for (const buffs of Object.values(allBuffs))
+  for (const buffs of allBuffs)
     for (const [kind, , value] of buffs) res[kind] += value;
   return res;
 }
@@ -139,11 +240,11 @@ function AnnotatedStat({
 }
 
 function BuffTable({
-  id,
+  title,
   buffs,
   setBuffs,
 }: {
-  readonly id: string;
+  readonly title: string;
   readonly buffs: Buffs;
   readonly setBuffs: (newValue: Buffs) => void;
 }) {
@@ -157,6 +258,9 @@ function BuffTable({
       <table>
         <thead>
           <tr>
+            <th colSpan={3}>{title}</th>
+          </tr>
+          <tr>
             <th>属性</th>
             <th>来源</th>
             <th>数值</th>
@@ -164,14 +268,14 @@ function BuffTable({
         </thead>
         <tbody>
           {buffs.map(([field, source, value], i) => (
-            <tr key={`${id}-${field}-${source}`}>
+            <tr key={`${title}-${field}-${source}`}>
               <th>
-                <label htmlFor={`${id}${field}-${i}`}>{field}</label>
+                <label htmlFor={`${title}${field}-${i}`}>{field}</label>
               </th>
               <td>{source}</td>
               <td>
                 <input
-                  id={`${id}${field}-${i}`}
+                  id={`${title}${field}-${i}`}
                   defaultValue={value}
                   onChange={(e) => {
                     try {
@@ -184,7 +288,9 @@ function BuffTable({
                     }
                   }}
                 />
-                {field.startsWith("固定") ? null : "%"}
+                {field.startsWith("固定") || field.endsWith("（非伤害）")
+                  ? null
+                  : "%"}
               </td>
               <td>
                 <button
@@ -283,7 +389,7 @@ function BuffTable({
 }
 
 function calcDamage(
-  buffs: { [id: string]: Buffs },
+  buffs: Buffs[],
   {
     角色等级,
     属性击破倍率,
@@ -377,7 +483,7 @@ export default function StarRailDamage(): ReactNode {
   const [基础生命, set基础生命] = useState(2811);
   const [基础防御, set基础防御] = useState(882);
   const [攻击倍率, set攻击倍率] = useState(0);
-  const [生命倍率, set生命倍率] = useState(245);
+  const [生命倍率, set生命倍率] = useState(278);
   const [防御倍率, set防御倍率] = useState(0);
   const [实际削韧值, set实际削韧值] = useState(0);
   const [超击破倍率, set超击破倍率] = useState(0);
@@ -389,25 +495,6 @@ export default function StarRailDamage(): ReactNode {
     "未击破",
   );
   /* eslint-enable react/hook-use-state */
-
-  const [buffs, setBuffs] = useState<{ [id: string]: Buffs }>(defaultBuffs);
-  const {
-    百分比攻击,
-    百分比生命,
-    百分比防御,
-    固定攻击,
-    固定生命,
-    固定防御,
-    增伤,
-    暴击伤害,
-    击破特攻,
-    击破增伤,
-    易伤,
-    减防,
-    减抗,
-    真伤,
-    独立乘区,
-  } = aggregateBuffs(buffs);
   const params = {
     角色等级,
     属性击破倍率,
@@ -425,7 +512,55 @@ export default function StarRailDamage(): ReactNode {
     韧性上限,
     韧性状态,
   };
+
+  const [buffDB, setBuffDB] = useState<BuffDB>(defaultBuffs);
+  const [selectedBuffs, setSelectedBuffs] = useState<{
+    遗器属性: string;
+    遗器外圈: string;
+    遗器内圈: string;
+    辅助: string[];
+  }>({
+    遗器属性: Object.keys(buffDB.遗器属性)[0]!,
+    遗器外圈: Object.keys(buffDB.遗器外圈)[0]!,
+    遗器内圈: Object.keys(buffDB.遗器内圈)[0]!,
+    辅助: Object.keys(buffDB.辅助).slice(0, 3),
+  });
+  const buffs = [
+    buffDB.角色,
+    buffDB.遗器属性[selectedBuffs.遗器属性]!,
+    buffDB.遗器外圈[selectedBuffs.遗器外圈]!,
+    buffDB.遗器内圈[selectedBuffs.遗器内圈]!,
+    ...selectedBuffs.辅助.map((id) => buffDB.辅助[id]!),
+  ];
+  const {
+    百分比攻击,
+    百分比生命,
+    百分比防御,
+    固定攻击,
+    固定生命,
+    固定防御,
+    增伤,
+    暴击伤害,
+    击破特攻,
+    击破增伤,
+    易伤,
+    减防,
+    减抗,
+    真伤,
+    独立乘区,
+  } = aggregateBuffs(buffs);
   const damage = calcDamage(buffs, params);
+  const updateBuffDB =
+    (buffType: keyof BuffDB, id: string) => (newBuffs: Buffs) => {
+      if (buffType === "角色") {
+        setBuffDB({ ...buffDB, 角色: newBuffs });
+      } else {
+        setBuffDB({
+          ...buffDB,
+          [buffType]: { ...buffDB[buffType], [id]: newBuffs },
+        });
+      }
+    };
 
   return (
     <div>
@@ -760,34 +895,84 @@ export default function StarRailDamage(): ReactNode {
       </table>
       <Heading level={2}>角色自拐</Heading>
       <BuffTable
-        id="角色"
-        buffs={buffs.角色!}
-        setBuffs={(value) => setBuffs({ ...buffs, 角色: value })}
+        title="角色"
+        buffs={buffDB.角色}
+        setBuffs={updateBuffDB("角色", "角色")}
       />
       <Heading level={2}>角色遗器方案</Heading>
+      <select
+        onChange={(e) =>
+          setSelectedBuffs((prev) => ({ ...prev, 遗器属性: e.target.value }))
+        }>
+        {Object.keys(buffDB.遗器外圈).map((id) => (
+          <option key={id} value={id} selected={selectedBuffs.遗器外圈 === id}>
+            {id}
+          </option>
+        ))}
+      </select>
+      <select
+        onChange={(e) =>
+          setSelectedBuffs((prev) => ({ ...prev, 遗器内圈: e.target.value }))
+        }>
+        {Object.keys(buffDB.遗器内圈).map((id) => (
+          <option key={id} value={id} selected={selectedBuffs.遗器内圈 === id}>
+            {id}
+          </option>
+        ))}
+      </select>
+      <select
+        onChange={(e) =>
+          setSelectedBuffs((prev) => ({ ...prev, 遗器属性: e.target.value }))
+        }>
+        {Object.keys(buffDB.遗器属性).map((id) => (
+          <option key={id} value={id} selected={selectedBuffs.遗器属性 === id}>
+            {id}
+          </option>
+        ))}
+      </select>
       <BuffTable
-        id="遗器"
-        buffs={buffs.遗器!}
-        setBuffs={(value) => setBuffs({ ...buffs, 遗器: value })}
+        title="遗器外圈"
+        buffs={buffDB.遗器外圈[selectedBuffs.遗器外圈]!}
+        setBuffs={updateBuffDB("遗器外圈", selectedBuffs.遗器外圈)}
       />
-      <Heading level={2}>辅助1</Heading>
       <BuffTable
-        id="辅助1"
-        buffs={buffs.辅助1!}
-        setBuffs={(value) => setBuffs({ ...buffs, 辅助1: value })}
+        title="遗器内圈"
+        buffs={buffDB.遗器内圈[selectedBuffs.遗器内圈]!}
+        setBuffs={updateBuffDB("遗器内圈", selectedBuffs.遗器内圈)}
       />
-      <Heading level={2}>辅助2</Heading>
       <BuffTable
-        id="辅助2"
-        buffs={buffs.辅助2!}
-        setBuffs={(value) => setBuffs({ ...buffs, 辅助2: value })}
+        title="遗器属性"
+        buffs={buffDB.遗器属性[selectedBuffs.遗器属性]!}
+        setBuffs={updateBuffDB("遗器属性", selectedBuffs.遗器属性)}
       />
-      <Heading level={2}>辅助3</Heading>
-      <BuffTable
-        id="辅助3"
-        buffs={buffs.辅助3!}
-        setBuffs={(value) => setBuffs({ ...buffs, 辅助3: value })}
-      />
+      <Heading level={2}>辅助</Heading>
+      <select
+        multiple
+        onChange={(e) =>
+          setSelectedBuffs((prev) => ({
+            ...prev,
+            辅助: Array.from(e.target.selectedOptions)
+              .map((o) => o.value)
+              .slice(0, 3),
+          }))
+        }>
+        {Object.keys(buffDB.辅助).map((id) => (
+          <option
+            key={id}
+            value={id}
+            selected={selectedBuffs.辅助.includes(id)}>
+            {id}
+          </option>
+        ))}
+      </select>
+      {selectedBuffs.辅助.map((id) => (
+        <BuffTable
+          key={id}
+          title={id}
+          buffs={buffDB.辅助[id]!}
+          setBuffs={updateBuffDB("辅助", id)}
+        />
+      ))}
       <Heading level={2}>最终伤害</Heading>
       <div>
         <StackedEquations>
@@ -861,8 +1046,7 @@ export default function StarRailDamage(): ReactNode {
         <tbody>
           {buffKind
             .map((kind) => {
-              const deltaBuffs = { ...buffs };
-              deltaBuffs.测试 = [[kind, "测试", 词条[kind]]];
+              const deltaBuffs: Buffs[] = [...buffs, [[kind, "", 词条[kind]]]];
               const deltaDamage =
                 ((calcDamage(deltaBuffs, params) - damage) / damage) * 100;
               return [
