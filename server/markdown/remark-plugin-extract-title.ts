@@ -13,7 +13,7 @@ const remarkExtractTitle: Plugin = () => (ast, vFile) => {
   if (!/notes\/aoc\/\d{4}\/\d/u.test(vFile.path)) {
     // AoC notes are handled by remark-plugin-aoc
     const title = children[firstHeading]!;
-    const titleText = toString(title);
+    const titleText = toString(title).replaceAll('"', '\\"');
     if (!frontMatter) {
       children.unshift({
         type: "yaml",

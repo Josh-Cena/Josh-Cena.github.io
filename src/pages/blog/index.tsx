@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "@/components/Link";
 import PostData, { type FrontMatter } from "@/components/PostData";
 import { normalizeRoute } from "@/normalize-route";
+import BlueskyLogo from "assets/bluesky-logo.svg?react";
 import styles from "./index.module.css";
 
 const modules = import.meta.glob<true, string, FrontMatter>("./**/*.mdx", {
@@ -31,7 +32,18 @@ const posts = Object.entries(modules)
 export default function Blog(): ReactNode {
   return (
     <>
-      <h1>Josh-Cena’s (secret) blog</h1>
+      <h1>Josh-Cena’s opinions</h1>
+      <p>
+        I have strong opinions on all sorts of things. I comment on things I
+        don't 100% understand. All opinions are my own.
+      </p>
+      <p>
+        Find my short ideas on{" "}
+        <Link href="https://bsky.app/profile/joshcena.com">
+          <BlueskyLogo style={{ width: "1em", height: "1em" }} /> Bluesky
+        </Link>
+        .
+      </p>
       {posts}
     </>
   );
