@@ -35,7 +35,8 @@ export default function Blog(): ReactNode {
       <h1>Josh-Cena’s opinions</h1>
       <p>
         I have strong opinions on all sorts of things. I comment on things I
-        don't 100% understand. All opinions are my own.
+        don't 100% understand (but probably more than your average yapper). All
+        opinions are my own.
       </p>
       <p>
         Find my short ideas on{" "}

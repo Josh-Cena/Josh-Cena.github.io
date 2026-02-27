@@ -1,9 +1,12 @@
+Abstand
 accum
 aeson
+agentic
 allowtransparency
 antinodes
 argmin
 aria-roledescription
+Ausbau
 backquote
 bigz
 bijective
@@ -62,6 +65,7 @@ eshost
 eslintcache
 estree
 esvu
+façade
 failwith
 fianchetto
 flattenable
@@ -81,6 +85,7 @@ gregexpr
 grepl
 gsub
 gsubfn
+Hanzi
 Hashtbl
 heapifying
 hlint
@@ -90,11 +95,13 @@ Honkai
 huayu
 igraph
 IMMC
+Indo-European
 inds
 infty
 injectivity
 Intcode
 interm
+interpretability
 isize
 iteri
 itertools
@@ -113,6 +120,7 @@ letterlike
 lext
 luo
 lxor
+malloc
 mapi
 márquez's
 mathbb
@@ -185,6 +193,9 @@ setdefault
 shellenv
 sida
 silw
+sinitic
+Sino-Tibetan
+Smolensky
 Sokoban
 starrail
 statsmodels
@@ -218,7 +229,9 @@ vapply
 vcount
 venv
 verdana
+volturi
 vsrocq
+Weinreich
 wfla
 Wikibooks
 wolframscript
@@ -226,6 +239,7 @@ wordcloud
 writeups
 xlink
 yada
+Yann
 yiwn
 ypogegrammeni
 zhihu
