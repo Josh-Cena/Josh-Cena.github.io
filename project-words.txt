@@ -15,6 +15,7 @@ bitmask
 bitmasks
 bitw
 bmatrix
+brainrot
 Bron
 buendía
 byrow
@@ -144,6 +145,7 @@ nchar
 ncol
 ndir
 neofetch
+nerfed
 networkx
 newdata
 newtype
@@ -224,6 +226,7 @@ tseslint
 uext
 unlines
 unlist
+userland
 usize
 vapply
 vcount
