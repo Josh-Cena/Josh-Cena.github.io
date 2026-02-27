@@ -1,6 +1,6 @@
 ---
 description: Please, make C die in a fire 🔥
-date: 2025-03-10
+date: 2024-11-23
 ---
 
 # In search for a good programming language: C
@@ -60,7 +60,7 @@ I believe that point 1 has been objectively proven irrelevant. Countless people 
 
 Point 2 is a façade of the many practices in education that I hate because they attempt to work against the students. They first presuppose that there are certain skills that students must have, and then they force students to acquire those skills by making them do things the hard way.[^1] But if students need to be "forced" into learning something by taking existing tools away from them, it's time to reconsider if said thing is worth learning at all. When was the last time someone working on real software had to implement their own array list, hash map, or quicksort? Demonstrating the implementation of these data structures and algorithms can be done in any language; why do we have to do it under the pretense of real-life necessity?
 
-[^1]: In 2026, I can add "forcing students to write code without AI" to this list (I will probably write a separate piece on this topic).
+[^1]: In 2026, I can add "forcing students to write code without AI" to this list (I will probably write a [separate piece](./2025-03-26-ai-usage.mdx) on this topic).
 
 There's another problem with point 2: the "reinvent the wheel" mindset is actively dangerous in today's programming world, because nothing actually works the way you are taught and have been trained to implement. For example, the state-of-the-art sorting algorithm is usually not quicksort, but usually a hybrid sort that guarantees (1) good performance on small arrays, (2) stability, (3) in-place, (4) good cache performance, and (5) good asymptotic performance. If you write quicksort from muscle memory, you just accidentally introduced overhead to both your code and your development process. The same goes for data structures: it's far too easy to write linked lists or hash maps with bugs.
 

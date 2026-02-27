@@ -22,7 +22,7 @@ const posts = Object.entries(modules)
     <section key={path}>
       <Link href={normalizeRoute(`blog/${path}`)}>
         {/* eslint-disable-next-line react/forbid-elements */}
-        <h2>{frontMatter.title}</h2>
+        <h2 className={styles.postTitle}>{frontMatter.title}</h2>
       </Link>
       <PostData frontMatter={frontMatter} />
       <p className={styles.description}>{frontMatter.description}</p>
