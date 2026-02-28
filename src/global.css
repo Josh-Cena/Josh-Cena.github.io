@@ -57,26 +57,26 @@
 
 @font-face {
   font-family: CharisSILW;
-  src: url(assets/CharisSIL-Regular.woff2);
+  src: url("assets/CharisSIL-Regular.woff2");
 }
 
 @font-face {
   font-family: CharisSILW;
   font-style: italic;
-  src: url(assets/CharisSIL-Italic.woff2);
+  src: url("assets/CharisSIL-Italic.woff2");
 }
 
 @font-face {
   font-family: CharisSILW;
   font-weight: bold;
-  src: url(assets/CharisSIL-Bold.woff2);
+  src: url("assets/CharisSIL-Bold.woff2");
 }
 
 @font-face {
   font-family: CharisSILW;
   font-weight: bold;
   font-style: italic;
-  src: url(assets/CharisSIL-BoldItalic.woff2);
+  src: url("assets/CharisSIL-BoldItalic.woff2");
 }
 
 #app {

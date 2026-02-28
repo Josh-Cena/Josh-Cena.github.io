@@ -134,11 +134,12 @@ export default function About(): ReactNode {
           className={styles.yale}
           href="https://www.yale.edu/"
           startDate="2022-08"
+          endDate="2026-05"
           organization="Yale University"
           position="Bachelor's of Science">
           <ul>
             <li>
-              BS in Statistics & Data Science, BA in Linguistics, Programming
+              Majors: Statistics & Data Science, Linguistics, Programming
               Certificate
             </li>
             <li>
@@ -173,6 +174,41 @@ export default function About(): ReactNode {
       <Heading level={2}>Experiences</Heading>
       <Timeline>
         <Timeline.Item
+          className={styles.bain}
+          href="https://www.bain.com/"
+          startDate="2025-06"
+          endDate="2025-08"
+          organization="Bain & Company"
+          position="Associate Consultant Intern">
+          <ul>
+            <li>
+              Support Appliance Co in AI-enabled organization transformation
+            </li>
+            <li>
+              Identify opportunity points, internal and external case studies of
+              corporate AI use cases, zero-base redesign various organizations
+              (marketing, finance, etc.) after AI adoption
+            </li>
+          </ul>
+        </Timeline.Item>
+        <Timeline.Item
+          className={styles.yaleULA}
+          href="https://engineering.yale.edu/academic-study/departments/computer-science/undergraduate-study"
+          startDate="2024-01"
+          endDate="2025-12"
+          organization="Yale University"
+          position="Undergraduate Learning Assistant (Teaching assistant)">
+          <ul>
+            <li>
+              For the course CPSC 223 Data structures and programming techniques
+            </li>
+            <li>
+              Tutor students on programming projects written in C/C++;
+              participate in designing course content
+            </li>
+          </ul>
+        </Timeline.Item>
+        <Timeline.Item
           className={styles.tseslint}
           href="https://typescript-eslint.io/"
           startDate="2022-10"
@@ -196,8 +232,9 @@ export default function About(): ReactNode {
           className={styles.coursetable}
           href="https://coursetable.com/"
           startDate="2022-10"
+          endDate="2025-05"
           organization="CourseTable"
-          position="Developer">
+          position="Team lead & Advisor">
           <ul>
             <li>
               Student-run project at Yale used by almost all Yale students

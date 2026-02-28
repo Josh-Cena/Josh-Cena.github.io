@@ -8,6 +8,7 @@ argmin
 aria-roledescription
 Ausbau
 backquote
+bain
 bigz
 bijective
 binom
@@ -38,6 +39,7 @@ counterplay
 coursetable
 cout
 cowsay
+CPSC
 cumsum
 dafny
 dataframe
@@ -134,6 +136,7 @@ matplotlib
 mdast
 mdxjs
 mediavalist
+metaprogramming
 metastring
 microlp
 mmdc

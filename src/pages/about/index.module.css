@@ -42,6 +42,7 @@
   --color-yale: #00356b;
   --color-wfla: #fa803d;
   --color-huayu: #ec6101;
+  --color-bain: #cc0000;
   --color-tseslint: #2656c7;
   --color-mdn: black;
   --color-coursetable: #468ff2;
@@ -94,25 +95,37 @@
 .yale {
   --color-current: var(--color-yale);
   --color-next: var(--color-wfla);
-  --src-background-image: url(assets/yale-logo.png);
+  --src-background-image: url("assets/yale-logo.png");
 }
 
 .wfla {
   --color-current: var(--color-wfla);
   --color-next: var(--color-huayu);
-  --src-background-image: url(assets/wfla-logo.png);
+  --src-background-image: url("assets/wfla-logo.png");
 }
 
 .huayu {
   --color-current: var(--color-huayu);
   --color-next: var(--color-background);
-  --src-background-image: url(assets/huayu-logo.png);
+  --src-background-image: url("assets/huayu-logo.png");
+}
+
+.bain {
+  --color-current: var(--color-bain);
+  --color-next: var(--color-yale);
+  --src-background-image: url("assets/bain-logo.png");
+}
+
+.yaleULA {
+  --color-current: var(--color-yale);
+  --color-next: var(--color-tseslint);
+  --src-background-image: url("assets/yale-logo.png");
 }
 
 .tseslint {
   --color-current: var(--color-tseslint);
   --color-next: var(--color-coursetable);
-  --src-background-image: url(https://github.com/typescript-eslint.png);
+  --src-background-image: url("https://github.com/typescript-eslint.png");
 }
 
 [data-color-mode="dark"] .tseslint {
@@ -122,7 +135,7 @@
 .coursetable {
   --color-current: var(--color-coursetable);
   --color-next: var(--color-mdn);
-  --src-background-image: url(https://github.com/coursetable.png);
+  --src-background-image: url("https://github.com/coursetable.png");
 }
 
 [data-color-mode="dark"] .coursetable {
@@ -132,7 +145,7 @@
 .mdn {
   --color-current: var(--color-mdn);
   --color-next: var(--color-docusaurus);
-  --src-background-image: url(https://github.com/mdn.png);
+  --src-background-image: url("https://github.com/mdn.png");
 }
 
 [data-color-mode="dark"] .mdn {
@@ -152,7 +165,7 @@
 .docusaurus {
   --color-current: var(--color-docusaurus);
   --color-next: var(--color-background);
-  --src-background-image: url(https://docusaurus.io/img/docusaurus_keytar.svg);
+  --src-background-image: url("https://docusaurus.io/img/docusaurus_keytar.svg");
 }
 
 [data-color-mode="dark"] .docusaurus {
