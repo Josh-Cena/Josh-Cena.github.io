@@ -1,0 +1,24 @@
+---
+description: A JavaScript snippet to make a function/class that can be applied infinitely.
+---
+
+# Infinite calls
+
+```js
+function f() {
+  return f;
+}
+
+f()()()()()()()()()()()();
+```
+
+```js
+class A {
+  constructor() {
+    return A;
+  }
+}
+
+// prettier-ignore
+new new new new new new new new new new new new new new new new A;
+```
