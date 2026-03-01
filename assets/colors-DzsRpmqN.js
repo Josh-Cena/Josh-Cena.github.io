@@ -1,0 +1,1 @@
+const c={red:"#ca393e",pink:"#ca3986",violet:"#c539ca",purple:"#7d39ca",indigo:"#393eca",blue:"#3986ca",primary:"#39cac4",seagreen:"#39ca7d",green:"#3eca39",yellowgreen:"#86ca39",yellow:"#cac539",orange:"#ca7d39"};export{c};
