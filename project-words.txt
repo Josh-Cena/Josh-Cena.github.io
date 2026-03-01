@@ -194,6 +194,7 @@ scikit
 scipy
 scrolly
 seaborn
+seagreen
 setdefault
 shellenv
 sida
@@ -246,6 +247,7 @@ writeups
 xlink
 yada
 Yann
+yellowgreen
 yiwn
 ypogegrammeni
 zhihu

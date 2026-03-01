@@ -1,9 +1,21 @@
-import { useState, type ReactNode } from "react";
+import { useState, useCallback, type ReactNode } from "react";
 import Color, { type ColorInstance } from "color";
+import makeNearestColor from "nearest-color";
+import colorNames from "color-name";
 import Link from "@/components/Link";
 import Tabs from "@/components/Tabs";
 import CopyButton from "@/components/CopyButton";
+import Palette from "./Palette";
 import styles from "./index.module.css";
+
+const cssColors = Object.fromEntries(
+  Object.entries(colorNames).map(([name, rgb]) => [
+    name,
+    Color.rgb(...rgb).hex(),
+  ]),
+);
+
+const nearestColor = makeNearestColor.from(cssColors);
 
 const r = (strings: TemplateStringsArray, ...args: unknown[]) =>
   String.raw(
@@ -75,7 +87,7 @@ function ColorInput({
 
 function CopiableColor({ colorString }: { readonly colorString: string }) {
   return (
-    <span style={{ display: "inline-block" }}>
+    <span className={styles.copiableColor}>
       <CopyButton string={colorString} className="show-copy-button">
         <code style={{ marginRight: "0.5em" }}>{colorString}</code>
       </CopyButton>
@@ -85,6 +97,14 @@ function CopiableColor({ colorString }: { readonly colorString: string }) {
 
 export default function ColorConverter(): ReactNode {
   const [color, setColor] = useState<ColorInstance>(new Color("#39cac4"));
+  const [inputValue, setInputValue] = useState("#39CAC4");
+  const setColorAndInput = useCallback((c: ColorInstance) => {
+    setColor(c);
+    // There isn't a good way to get the original input format,
+    // so just reset to blank
+    setInputValue("");
+  }, []);
+  const nearest = nearestColor(color.hex())!;
   return (
     <>
       <h1>Color converter</h1>
@@ -92,15 +112,19 @@ export default function ColorConverter(): ReactNode {
         <input
           className={styles.colorTextBox}
           onInput={(e) => {
+            setInputValue(e.currentTarget.value);
             try {
-              setColor(new Color(e.currentTarget.value));
+              const c = new Color(e.currentTarget.value);
+              // Don't use setColorAndInput because the input shouldn't change
+              // while editing
+              setColor(c.alpha(1));
               e.currentTarget.setCustomValidity("");
             } catch {
               e.currentTarget.setCustomValidity("Invalid color");
               e.currentTarget.reportValidity();
             }
           }}
-          defaultValue={color.hex().toString()}
+          value={inputValue}
         />
         <div className={styles.colorData}>
           <div
@@ -168,6 +192,17 @@ export default function ColorConverter(): ReactNode {
                 colorString={r`lch(${color.l()}% ${color.chroma()}% ${color.hue()})`}
               />
             </span>
+            <span>
+              <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/named_color">
+                Nearest named color
+              </Link>
+              : <CopiableColor colorString={nearest.name} /> ({nearest.value}{" "}
+              <span
+                className={styles.colorLittleDot}
+                style={{ backgroundColor: nearest.value }}
+              />
+              )
+            </span>
           </div>
         </div>
         <Tabs className={styles.colorInputs}>
@@ -177,17 +212,9 @@ export default function ColorConverter(): ReactNode {
                 key={c}
                 name={c}
                 color={color}
-                method={
-                  (
-                    {
-                      R: "red",
-                      G: "green",
-                      B: "blue",
-                    } as const
-                  )[c]
-                }
+                method={({ R: "red", G: "green", B: "blue" } as const)[c]}
                 max={255}
-                setColor={setColor}
+                setColor={setColorAndInput}
               />
             ))}
           </Tabs.Item>
@@ -198,16 +225,10 @@ export default function ColorConverter(): ReactNode {
                 name={c}
                 color={color}
                 method={
-                  (
-                    {
-                      H: "hue",
-                      S: "saturationl",
-                      L: "lightness",
-                    } as const
-                  )[c]
+                  ({ H: "hue", S: "saturationl", L: "lightness" } as const)[c]
                 }
                 max={c === "H" ? 359 : 100}
-                setColor={setColor}
+                setColor={setColorAndInput}
               />
             ))}
           </Tabs.Item>
@@ -217,17 +238,9 @@ export default function ColorConverter(): ReactNode {
                 key={c}
                 name={c}
                 color={color}
-                method={
-                  (
-                    {
-                      H: "hue",
-                      W: "white",
-                      B: "black",
-                    } as const
-                  )[c]
-                }
+                method={({ H: "hue", W: "white", B: "black" } as const)[c]}
                 max={c === "H" ? 359 : 100}
-                setColor={setColor}
+                setColor={setColorAndInput}
               />
             ))}
           </Tabs.Item>
@@ -248,7 +261,7 @@ export default function ColorConverter(): ReactNode {
                   )[c]
                 }
                 max={100}
-                setColor={setColor}
+                setColor={setColorAndInput}
               />
             ))}
           </Tabs.Item>
@@ -258,18 +271,10 @@ export default function ColorConverter(): ReactNode {
                 key={c}
                 name={c}
                 color={color}
-                method={
-                  (
-                    {
-                      L: "l",
-                      A: "a",
-                      B: "b",
-                    } as const
-                  )[c]
-                }
+                method={({ L: "l", A: "a", B: "b" } as const)[c]}
                 min={c === "L" ? 0 : -100}
                 max={100}
-                setColor={setColor}
+                setColor={setColorAndInput}
               />
             ))}
           </Tabs.Item>
@@ -279,21 +284,19 @@ export default function ColorConverter(): ReactNode {
                 key={c}
                 name={c}
                 color={color}
-                method={
-                  (
-                    {
-                      L: "l",
-                      C: "chroma",
-                      H: "hue",
-                    } as const
-                  )[c]
-                }
+                method={({ L: "l", C: "chroma", H: "hue" } as const)[c]}
                 max={c === "H" ? 360 : 100}
-                setColor={setColor}
+                setColor={setColorAndInput}
               />
             ))}
           </Tabs.Item>
         </Tabs>
+        <Palette
+          onSelect={(c) => {
+            setColor(new Color(c));
+            setInputValue(c);
+          }}
+        />
       </div>
     </>
   );

@@ -14,6 +14,7 @@ import {
   type ChartOptions,
 } from "chart.js";
 import { Line, Bar } from "react-chartjs-2";
+import { colors } from "@/colors";
 import Heading from "@/components/Heading";
 import Tabs from "@/components/Tabs";
 import {
@@ -38,11 +39,6 @@ Chart.register(
   ChartTooltip,
   Legend,
 );
-
-function getThemeColor(variable: string): string {
-  if (typeof window === "undefined") return "black";
-  return getComputedStyle(document.documentElement).getPropertyValue(variable);
-}
 
 function CharImg({
   name,
@@ -213,19 +209,19 @@ function StatsGraph(): ReactNode {
         {
           label: "五星总数",
           data: stats.totalFiveStar,
-          borderColor: getThemeColor("--color-pink"),
+          borderColor: colors.pink,
           yAxisID: "y",
         },
         {
           label: "限定五星数",
           data: stats.totalLimited,
-          borderColor: getThemeColor("--color-blue"),
+          borderColor: colors.blue,
           yAxisID: "y",
         },
         {
           label: "总抽数",
           data: stats.totalPulls,
-          borderColor: getThemeColor("--color-yellow"),
+          borderColor: colors.yellow,
           yAxisID: "y1",
         },
       ],
@@ -294,19 +290,19 @@ function StatsGraph(): ReactNode {
         {
           label: "平均五星抽数",
           data: stats.averagePulls,
-          borderColor: getThemeColor("--color-blue"),
+          borderColor: colors.blue,
           yAxisID: "y",
         },
         {
           label: "平均限定五星抽数",
           data: stats.averageLimitedPulls,
-          borderColor: getThemeColor("--color-pink"),
+          borderColor: colors.pink,
           yAxisID: "y",
         },
         {
           label: "小保底不歪率",
           data: stats.onBannerRate,
-          borderColor: getThemeColor("--color-yellow"),
+          borderColor: colors.yellow,
           yAxisID: "y1",
         },
       ],
@@ -385,7 +381,7 @@ function StatsGraph(): ReactNode {
               count += record.pulls;
             return { x: version, y: count };
           }),
-          borderColor: getThemeColor("--color-blue"),
+          borderColor: colors.blue,
         },
         {
           label: "版本金数",
@@ -396,7 +392,7 @@ function StatsGraph(): ReactNode {
               type === "角色" ? [] : (光锥[version as keyof typeof 光锥] ?? []);
             return { x: version, y: charRecords.length + lcRecords.length };
           }),
-          borderColor: getThemeColor("--color-red"),
+          borderColor: colors.red,
           yAxisID: "y1",
         },
         {
@@ -413,7 +409,7 @@ function StatsGraph(): ReactNode {
                 lcRecords.filter((x) => !x.offBanner).length,
             };
           }),
-          borderColor: getThemeColor("--color-yellow"),
+          borderColor: colors.yellow,
           yAxisID: "y1",
         },
       ],
@@ -585,12 +581,12 @@ function CharsGraph(): ReactNode {
       {
         label: "角色抽数",
         data: Array.from(labels).map((label) => charToPulls.get(label) ?? 0),
-        backgroundColor: getThemeColor("--color-blue"),
+        backgroundColor: colors.blue,
       },
       {
         label: "专武抽数",
         data: Array.from(labels).map((label) => charLCToPulls.get(label) ?? 0),
-        backgroundColor: getThemeColor("--color-red"),
+        backgroundColor: colors.red,
       },
     ],
   };

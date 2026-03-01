@@ -45,6 +45,13 @@
   border-radius: var(--border-radius-large);
 }
 
+.colorLittleDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
 .colorDataText {
   display: flex;
   flex-direction: column;
@@ -122,4 +129,9 @@
   width: 8px;
   background: transparent;
   border: 2px solid var(--color-current);
+}
+
+.copiableColor {
+  display: inline-block;
+  align-items: center;
 }
