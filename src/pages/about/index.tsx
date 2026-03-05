@@ -108,12 +108,11 @@ export default function About(): ReactNode {
           For those of you who are more familiar with IPA than pinyin, here's
           its IPA transcription in my pronunciation:
         </p>
-        {/* cSpell:ignore tʃɛ̌n sᵻdɐ̌ */}
-        <p style={{ textAlign: "center" }}>[tʃɛ̌n sᵻdɐ̌]</p>
+        {/* cSpell:ignore ʈʂʰə̌n sᵻtɐ̌ */}
+        <p style={{ textAlign: "center" }}>[ʈʂʰə̌n sᵻtɐ̌]</p>
         <p>
-          Granted, everyone seems to have a different theory about what vowels
-          Mandarin has, and I'm far from being a phonetician, so take it with a
-          grain of salt.
+          Granted, everyone seems to have a different theory about Mandarin
+          phonetic inventory, so take it with a grain of salt.
         </p>
       </Tooltip>
       <p>
