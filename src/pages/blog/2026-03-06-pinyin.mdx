@@ -1,0 +1,267 @@
+---
+description: "When you try to meet conflicting goals, you end up being perfect in none of them."
+date: 2026-03-06
+---
+
+# On pinyin and Chinese romanization systems
+
+import styles from "./2026-03-06-pinyin.module.css";
+
+I recently saw the following question one more time:
+
+> Why do Chinese people like making up new English names instead of using their real names?
+
+This question has been around for a few decades, and it was mostly taken as a cultural issue, but I recently had a new theory: this is the result of pinyin being such a damn bad system for phonetic transcription.
+
+When we say "romanization", there are three different goals it could fulfill:
+
+- Phonetic transcription: representing the pronunciation of Chinese words using orthography in some language (usually English) so foreigners can pronounce them correctly.
+- Phonological analysis: representing the underlying phonemic structure of Chinese words in a way that is useful for linguistic analysis and education, often disregarding phonological processes that give rise to allophonic variation.
+- Transliteration: just a systematic way to represent Chinese characters in the Latin alphabet, without much regard for pronunciation. It favors spelling brevity over everything else. This is the type of system you want for input methods, library catalogs, etc.
+
+I'm going to do a step-by-step breakdown of the different transcription systems and judge which one makes the best choice for each phone. My source is [Wikipedia Comparison of Standard Chinese transcription systems](https://en.wikipedia.org/wiki/Comparison_of_Standard_Chinese_transcription_systems) (excluding EFEO and Lessing-Othmer, which are based on French and German orthographies instead of English). If this section is too technical for you, jump to the [conclusion](#conclusion) at the end.
+
+## Consonants
+
+Let's start with the [standard Mandarin phonetic inventory](https://en.wikipedia.org/wiki/Standard_Chinese_phonology) and the [English phonetic inventory](https://en.wikipedia.org/wiki/English_phonology) for onset consonants:
+
+<table>
+  <tr>
+    <th></th>
+    <th>Labial</th>
+    <th>Dental</th>
+    <th>Alveolar[^1]</th>
+    <th>Post-alveolar</th>
+    <th>Retroflex</th>
+    <th>Palatal</th>
+    <th>Velar</th>
+    <th>Glottal</th>
+  </tr>
+  <tr>
+    <th scope="row">Nasal</th>
+    <td className={styles.green}>m🇨🇳🇺🇸[^2]</td>
+    <td></td>
+    <td className={styles.green}>n🇨🇳🇺🇸</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th scope="row">Plosive</th>
+    <td className={styles.green}>p/b🇨🇳🇺🇸[^3]</td>
+    <td></td>
+    <td className={styles.green}>t/d🇨🇳🇺🇸</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td className={styles.green}>k/g🇨🇳🇺🇸</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th scope="row">Affricate</th>
+    <td></td>
+    <td></td>
+    <td className={styles.red}>ts/dz🇨🇳</td>
+    <td className={styles.yellow}>tʃ/dʒ🇺🇸</td>
+    <td className={styles.yellow}>tʂ/dʐ🇨🇳</td>
+    <td className={styles.red}>tɕ/dʑ🇨🇳</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th scope="row">Fricative</th>
+    <td className={styles.green}>f🇨🇳🇺🇸/v🇺🇸</td>
+    <td>θ/ð🇺🇸</td>
+    <td className={styles.green}>s🇨🇳🇺🇸/z🇺🇸</td>
+    <td className={styles.yellow}>ʃ/ʒ🇺🇸</td>
+    <td rowSpan={2} className={styles.yellow}>
+      ʂ🇨🇳
+      <br />ʐ ~ ɻ🇨🇳
+    </td>
+    <td className={styles.red}>ɕ🇨🇳</td>
+    <td colSpan={2} className={styles.green}>
+      x🇨🇳 ~ h🇨🇳🇺🇸
+    </td>
+  </tr>
+  <tr>
+    <th scope="row">Approximant</th>
+    <td className={styles.green}>w🇨🇳🇺🇸</td>
+    <td></td>
+    <td className={styles.green}>l🇨🇳🇺🇸</td>
+    <td className={styles.yellow}>ɹ🇺🇸</td>
+    <td className={styles.green}>j🇨🇳🇺🇸</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+- <span
+    className={styles.green}
+    style={{
+      borderRadius: "50%",
+      width: "1em",
+      height: "1em",
+      display: "inline-block",
+    }}></span>
+  Phones that are shared between Mandarin and English.
+- <span
+    className={styles.yellow}
+    style={{
+      borderRadius: "50%",
+      width: "1em",
+      height: "1em",
+      display: "inline-block",
+    }}></span>
+  Retroflex phones are generally approximated as post-alveolar.
+- <span
+    className={styles.red}
+    style={{
+      borderRadius: "50%",
+      width: "1em",
+      height: "1em",
+      display: "inline-block",
+    }}></span>
+  Phones with no clear analog in English.
+
+[^1]: Wikipedia refers to the Mandarin alveolar consonants as "denti-alveolar" due to the tongue touching the lower teeth. Phonemically, I think they are insignificant.
+
+[^2]: It's another interesting question about what flag to use for each language. Especially English—there's an endless debate about whether to use the UK flag or the US flag. I don't think there's an ambiguity though; `new Intl.Locale("en").maximize().toString()` always returns `en-Latn-US` according to the Unicode Add Likely Subtags algorithm. But I digress.
+
+[^3]: The fortis/lenis distinction is implemented in Mandarin via aspiration and in English via voicing. I just consistently use voicing for simplicity.
+
+Many consonants are shared, so it's no wonder that basically no one does these differently:
+
+<details>
+  <summary>Consensus consonants</summary>
+
+| PY  | TY  | WG  | Yale | GR  | GR2 | IPA   |
+| --- | --- | --- | ---- | --- | --- | ----- |
+| m   | m   | m   | m    | m   | m   | m     |
+| n   | n   | n   | n    | n   | n   | n     |
+| p   | p   | p'  | p    | p   | p   | p     |
+| b   | b   | p   | b    | b   | b   | b     |
+| t   | t   | t'  | t    | t   | t   | t     |
+| d   | d   | t   | d    | d   | d   | d     |
+| k   | k   | k'  | k    | k   | k   | k     |
+| g   | g   | k   | g    | g   | g   | g     |
+| f   | f   | f   | f    | f   | f   | f     |
+| s   | s   | s   | s    | s   | s   | s     |
+| h   | h   | h   | h    | h   | h   | h     |
+| l   | l   | l   | l    | l   | l   | l     |
+| w   | w   | w   | w    | u   | w   | w ~ u |
+| y   | y   | y   | y    | i   | y   | j ~ i |
+
+</details>
+
+For the ones that are not shared, post-alveolar sounds sound really similar to retroflex ones, so everyone establishes the convention to approximate Chinese retroflexes as English post-alveolars: [tʂ] ≈ [tʃ] = `ch`, [ʂ] ≈ [ʃ] = `sh`, [ɻ] ≈ [ɹ] = `r` (WG uses [ʐ] ≈ [ʒ] = `j` instead, and since [ɻ] ~ [ʐ] is a free variation, this is not a bad choice either, although `j` is ambiguous in its pronunciation in English). However, this rule breaks down for [dʐ], which is supposed to be approximated as [dʒ]. I think it's English to blame for not having a canonical spelling for [dʒ] (`g` is already taken for "hard g", otherwise there are still `j` and `dg`). Yale and GR/GR2 still choose `j` in recognition of its [dʒ] pronunciation. WG chooses `ch` because it already picked `ch'` for [tʂ] and it keeps up with its principle of aspiration minimal pairs using the same spelling. Pinyin and Tongyong choose `zh` and `jh` respectively; I think both are jarring, but `jh` is marginally more pronounceable because it at least has a `j` in it.
+
+Pinyin is the only system that maintains internal consistency between alveolar and retroflex consonants, which is a nice principle to have, but it leads to some really awkward choices. Because we've decided that [s] = `s` and [ʂ] = `sh`, we've committed ourselves to the rule that "alveolar + `h` = retroflex". This gives us [ts] = `c` by virtue of [tʂ] = `ch`, and [dʐ] = `zh` by virtue of [dz] = `z`. But the results, `c` and `zh`, are both really jarring for English speakers.
+
+On the other hand, it gives up on maintaining internal consistency for fortis/lenis pairs, because `c` and `z` are not a fortis/lenis pair in English, but `s` and `z`, `ts` and `dz` are. Yale maintains this consistency at least for [ts]/[dz], but still gives up for retroflex/palatal pairs. WG maintains the consistency throughout, but at the cost of using apostrophes.
+
+The real chaos happens with the remaining phones: [ts], [dz], [tɕ], [dʑ], [ɕ], transcribed in pinyin as `c`, `z`, `q`, `j`, `x` respectively. These are also where my biggest problems are: I think none of these spellings (potentially except `z` and `j`) make sense.
+
+- Pinyin chooses [ts] = `c` by virtue of [tʂ] = `ch`. This is a totally bizarre choice though as mentioned above, because under no circumstance would `c` be pronounced as [ts] in English. There's one very natural transliteration for [ts], which is `ts`, which is used by every system except pinyin (and Tongyong pinyin).
+- [dz] diverges significantly among all systems, because no canonical transcription exists in English. Pinyin and Tongyong choose `z`, a respectable approximation, although the affricate nature is lost. WG naturally uses `ts`. Yale uses `dz` and GR/GR2 use `tz`, both reasonable choices in representing the affricate nature.
+- The palatal fricative/affricates [tɕ], [dʑ], [ɕ] (pinyin `q`, `j`, `x`), unlike retroflexes, (a) don't have a distinct English approximation (b) aren't clear if they are phonemic at all, because they occur in complementary distributions with the retroflex ([tʂ], [dʐ], [ʂ]; pinyin `ch`, `zh`, `sh`) and alveolar ([ts], [dz], [s]; pinyin `c`, `z`, `s`) counterparts (namely, palatals iff before high front vowels [i] or [y]). For this reason, Wade–Giles, Yale, and GR/GR2 all assign the palatal affricates the same spellings as the retroflex ones.
+
+  | System                | [tɕ]          | [dʑ]         | [ɕ]             |
+  | --------------------- | ------------- | ------------ | --------------- |
+  | Pinyin                | `q`           | `j`          | `x`             |
+  | Tongyong              | `c` (=[ts])   | `j`          | `s` (=[s])      |
+  | Wade–Giles            | `ch'` (=[tʂ]) | `ch` (=[dʐ]) | `hs` (like [ʂ]) |
+  | Yale                  | `ch` (=[tʂ])  | `j` (=[dʐ])  | `sy`            |
+  | Gwoyeu Romatzyh / GR2 | `ch` (=[tʂ])  | `j` (=[dʐ])  | `sh` (=[ʂ])     |
+
+  Again, `q` and `x` are completely bizarre choices for pinyin, because they have no relation whatsoever to the English pronunciation. `j` is at least somewhat reasonable for [dʑ], given its English pronunciation of [dʒ].
+
+## Rhymes
+
+Now let's look at rhyme transcription. The simple ones without medial glides and [y] are mostly consistent across all systems:
+
+<details>
+  <summary>Consensus rhymes</summary>
+
+| PY  | TY  | WG         | Yale | GR  | GR2 | IPA   | Note             |
+| --- | --- | ---------- | ---- | --- | --- | ----- | ---------------- |
+| a   | a   | a          | a    | a   | a   | a     |                  |
+| ai  | ai  | ai         | ai   | ai  | ai  | ai    |                  |
+| an  | an  | an         | an   | an  | an  | an    |                  |
+| aŋ  | ang | ang        | ang  | ang | ang | aŋ    |                  |
+| ao  | ao  | ao         | au   | au  | au  | au    |                  |
+| e   | e   | o/eh/ê[^4] | e    | e   | e   | ɤ ~ e |                  |
+| ei  | ei  | ei         | ei   | ei  | ei  | ei    |                  |
+| en  | en  | ên         | en   | en  | en  | ən    |                  |
+| eng | eng | êng        | eng  | eng | eng | əŋ    |                  |
+| i   | i   | i          | i    | i   | i   | i     |                  |
+| in  | in  | in         | in   | in  | in  | in    |                  |
+| ing | ing | ing        | ing  | ing | ing | iŋ    |                  |
+| o   | o   | o          | o    | o   | o   | o ~ ɔ | Rarely by itself |
+| ong | ong | ung        | ung  | ong | ung | ʊŋ    |                  |
+| ou  | ou  | ou         | ou   | ou  | ou  | ou    |                  |
+| u   | u   | u          | u    | u   | u   | u     |                  |
+
+</details>
+
+[^4]: `o` if onset is velar ([g], [k], [x]), `eh` if surface form is [e] (i.e., after `y`). WG in general uses `ê` for mid [ə]/[ɤ], `eh` for front [e], `e` for front [ɛ].
+
+[y] doesn't exist in English, so everyone uses some different notation. Pinyin and WG use `ü` (but pinyin has the rule to drop the umlaut with no ambiguity, i.e., after the palatals [tɕ] `q`, [dʑ] `j`, [ɕ] `x`, [j] `y`, which is confusing). Tongyong and Yale use `yu`. GR/GR2 use `iu`. Personally I think `ü` represents it best if you speak German, but `yu` is better for the average English speakers and also easier to type (and indeed, `lü` falls back to `lyu` if ASCII is required, like on passports). [yn] is derived by adding `n`.
+
+{/* cSpell:ignore iang iong guei kuei liou tuei tuen */}
+
+Now think about the rhymes with a medial glide: [j], [w], [ɥ] (pinyin `i`, `u`, `ü` respectively). Overall, [j] is represented as `i` and [w] as `u`, except Yale which uses `y` and `w` respectively, recognizing that they are glides instead of vowels. [ɥ] is again divergent just like [y] is. Pinyin and WG keep using `ü` (again, pinyin drops the umlaut after the palatals); Tongyong keeps using `yu`; Yale switches to `yw`; GR/GR2 keep using `iu`.
+
+- The following are simple combinations of the glide and the nucleus: [ja], [jaŋ], [jau], [wa], [wai], [wan], [waŋ].
+- The following have no phonological rewrite, but some systems do not simply combine the glide and the nucleus nonetheless:
+  - [jʊŋ]: Tongyong pinyin in their infinite wisdom decided to write `yong` instead of sticking to `iong`.
+  - [jou]: Pinyin and WG both drop the middle `o` and write `iu` instead of `iou`.
+  - [wei]: Pinyin and WG both drop the middle `e` and write `ui` instead of `uei`. WG keeps it for `g` and `k` (i.e., `guei`, `kuei`) only.
+  - [wən]: Pinyin, Tongyong, and WG all drop the middle `e` and write `un` instead of `uen`. Yale writes `wun` instead of `wen`.
+  - [wo]: _Only_ Yale consistently writes `wo`. Everyone drops the `u` when the onset is a labial ([b], [p], [m], [f]) and writes `o` instead. WG keeps using `o` unless the onset is a velar ([g], [k], [x]) or retroflex ([ʂ], sometimes [tʂ], but confusingly not [dʐ]).
+- The following have a phonological rewrite, but only WG reflects the rewrite in its orthography, because it has a richer system for representing different allophonic mid vowels:
+  - [j] + [an] = [jɛn]: WG switches to `ien` while everyone else sticks to `ian`/`yan`.
+  - [ɥ] + [an] = [ɥɛn]: this time everyone agrees to simply add the [ɥ] notation in front of `an` as usual—WG does not write `üen`, like it does for [j] + [an].
+  - [j] + [ɤ] = [je]: WG switches to `ieh` while everyone else sticks to `ie`/`ye`.
+  - [ɥ] + [ɤ] = [ɥe]: WG switches `üeh` while everyone else switches to `ue`/`üe`/`ywe`/`iue`.
+
+The seven alveolar and retroflex affricates and fricatives can all form syllables on their own: [ts], [dz], [s], [tʂ], [dʐ], [ʂ], [ɻ] (with a neutral [ɨ] nucleus). Everyone recognizes this syllabicity by using a spelling distinct from `i`, _except_ pinyin.
+
+| System | [ts], [dz], [s] | [tʂ], [dʐ], [ʂ] | [ɻ] |
+| --- | --- | --- | --- |
+| Pinyin | `i` | `i` | `i` |
+| Tongyong | `ih` | `ih` | `ih` |
+| Wade–Giles | `ŭ` (spells the consonant differently: `tz'`, `tz`, `ss`) | `ih` | `ih` |
+| Yale | `z` | `r` | `r` |
+| Gwoyeu Romatzyh | `y` | `y` | `y` |
+| GR2 | `z` | `r` | `r` |
+
+This part also explains why pinyin has to pick different consonants for the palatals: because it acknowledges the allomorphicity of [i] and [ɨ], it therefore can't conflate `j` with `zh`; otherwise there would be no way to tell [dʐɨ] (`zhi`) apart from [dʑi] (`ji`)!
+
+## Conclusion
+
+Now I've completed a run-through of all the different transcription systems. My takeaway is this: **when no clear analog exists, pinyin consistently makes the least intuitive choice**.
+
+- If pinyin is a phonetic transcription system for foreign language speakers, then it invents symbol correspondences that are opaque to English speakers: `c`, `zh`, `z`, `j`, `q`, `x` as consonants; [i] and [ɨ] both mapping to `i`.
+- If pinyin is a phonological analysis system, then it makes up ad-hoc simplifications in its orthography that obfuscate the underlying uniformity. On one hand, it doesn't acknowledge the allomorphicity of the palatal fricatives/affricates and the retroflex/alveolar ones and assigns them different spellings (which are, again, really bad choices anyway). On the other hand, it does acknowledge the allomorphicity of [i] and [ɨ], [an] and [ɛn], etc., and gives them the same spellings despite different pronunciations. Personally, I think orthography should reflect the surface form more closely, so each distinct phone should have a distinct spelling. It also randomly drops letters and diacritics where it thinks there's no ambiguity, creating inconsistencies like `liu`, `tui`, `tun`, `po`, and `ju` when really they should be `liou`, `tuei`, `tuen`, `puo`, and `jü`. Pedagogically, it's not an easy system to teach because of all these irregularities that reflect neither the composition nor the pronunciation. Remember the chants like:
+
+  > ü见j、q、x，脱帽行个礼  
+  > i、u在一起，调号标在后
+
+  It's hard to see why a completely modern and artificial orthography system needs to have these weird irregularities.
+
+- If pinyin is a transliteration system, then it does an okay job at brevity, especially because it uses every available character before inventing bigrams. However, if this is the case, then it should not make ASCII-unfriendly choices like `ü` and consistently use `yu`. It would also have numeric tone markers instead of diacritics for the same reason.
+
+In today's world, I would rank the three use cases in the order above by decreasing importance, and pinyin fails the most important one the hardest, which is to help English speakers pronounce Chinese words correctly. (At the time of its creation, pedagogy and literacy were more important, but that has gradually faded; and as I said, it also doesn't succeed as the neatest pedagogical tool.) I recall a period when [municipalities pushed really hard for naming all geographic landmarks in pinyin](https://zhuanlan.zhihu.com/p/598757124) (subway stations, street names, etc.), like (contrived example):
+
+{/* cSpell:ignore renmin gongyuan zhan */}
+
+1. 人民公园站
+2. People's Park Station (full meaning preserved)
+3. Renmin Gongyuan Station (proper nouns not translated)
+4. Renmin Gongyuan Zhan (full phrase transliterated)
+
+It received a lot of backlash from foreigners and locals alike, because virtually no one can figure out what it means. Locals have a hard time reading pinyin, and foreigners can't pronounce most of these. Of course, meaning-preserving translations may be better than transliterations, but if you want to transliterate, you should at least pick a system that people can pronounce. The awkward design of pinyin puts it in a situation where no one would gladly use it in full English contexts, let it be people's names, places' names, or quotes. Granted, its simplicity and rigor make it still apt for education and computer input methods, but I don't think it stands up to the purpose of communication with foreign language speakers.
+
+Worth noting that I think most other transcription systems also have their own quirks, although most of them are more foreign-language-friendly than pinyin. With our understanding of Chinese phonology developed over the past half-century, it might be time to smooth the rough edges and create a more rational transcription system for Chinese.

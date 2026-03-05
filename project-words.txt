@@ -2,6 +2,7 @@ Abstand
 accum
 aeson
 agentic
+allomorphicity
 allowtransparency
 antinodes
 argmin
@@ -9,6 +10,7 @@ aria-roledescription
 Ausbau
 backquote
 bain
+bigrams
 bigz
 bijective
 binom
@@ -49,6 +51,7 @@ decompressor
 dedup
 dedupe
 defaultdict
+denti
 deque
 dialytika
 Diffie
@@ -59,6 +62,7 @@ dopplerhq
 dotless
 downto
 edgelist
+EFEO
 elems
 elif
 emboard
@@ -88,6 +92,7 @@ gregexpr
 grepl
 gsub
 gsubfn
+Gwoyeu
 Hanzi
 Hashtbl
 heapifying
@@ -148,6 +153,7 @@ nchar
 ncol
 ndir
 neofetch
+nerdily
 nerfed
 networkx
 newdata
@@ -162,6 +168,7 @@ numpy
 nums
 ocamlformat
 opam
+Othmer
 overengineered
 pandoc
 peaceiris
@@ -182,7 +189,9 @@ randcolor
 rbind
 regmatches
 rehype
+retroflexes
 rocq
+Romatzyh
 Rscript
 rustc
 rustup
@@ -216,12 +225,14 @@ subcycles
 subdirs
 subplayer
 substack
+subtags
 surjectivity
 svgr
 Tetris
 texlive
 texttt
 tlsv
+tongyong
 tonos
 topo
 tqdm
