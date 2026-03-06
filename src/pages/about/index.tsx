@@ -120,12 +120,13 @@ export default function About(): ReactNode {
         JavaScript documentation. Contributor to impactful JavaScript
         infrastructure projects such as TypeScript and typescript-eslint. My
         main work focus is compilers and static analysis, but I am also
-        interested in computation models and functional programming.
+        interested in algorithms and functional programming.
       </p>
       <p>
-        My Yale undergraduate study is mostly around quantitative social
-        science, with a curriculum focused on statistics, data science, and the
-        syntax and semantics of natural languages.
+        My Yale undergraduate curriculum is focused on statistics, data science,
+        and the quantitative modeling of human speech production and perception.
+        I am also broadly interested in the computational model of syntax and
+        semantics.
       </p>
       <Heading level={2}>Education</Heading>
       <Timeline>

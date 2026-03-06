@@ -43,7 +43,7 @@ export default function Blog(): ReactNode {
         <Link href="https://bsky.app/profile/joshcena.com">
           <BlueskyLogo style={{ width: "1em", height: "1em" }} /> Bluesky
         </Link>
-        .
+        . If you have any thoughts on anything here, hit me up on Bluesky too!
       </p>
       {posts}
     </>
@@ -51,6 +51,7 @@ export default function Blog(): ReactNode {
 }
 
 export const meta = {
-  title: "Blog",
-  description: "The blog of Josh-Cena where I write my random thoughts",
+  title: "Opinions",
+  description:
+    "I have strong opinions on all sorts of things. I comment on things I don't 100% understand (but probably more than your average yapper). All opinions are my own.",
 };
