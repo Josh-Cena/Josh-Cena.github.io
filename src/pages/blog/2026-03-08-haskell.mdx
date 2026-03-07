@@ -1,0 +1,28 @@
+---
+description: The world of theorists and the world of practitioners—you can only please one.
+date: 2026-03-08
+---
+
+# In search for a good programming language: Haskell
+
+Haskell was my first introduction to "real" functional programming, and it opened a completely new world of programming language design to me. For a very long time, it was undoubtedly my favorite language. Today it may have its contenders, but it will always hold a special place in my heart.
+
+Admittedly, I don't write production-scale applications in Haskell. My real-life experience was [AoC 2022](../notes/aoc/2022/index.mdx) and two class projects. Therefore, I don't think I can make many comments regarding its ecosystem or tooling. However, its language design leaves a really strong impression on me.
+
+If I need to summarize Haskell in one word, it would be "mathematical". Everything has a strong sense of mathematical rigor more than any other language that I've written to this day. If I need to break it down into a few points:
+
+- **Purity**: Clear, single direction of data flow. Side effects are neatly wrapped in monads.
+- **Type system**: Strong and expressive. As my first ML-family language, I haven't seen HM type inference before, and it was a revelation.
+- **Lazy evaluation**: Truly nails the idea of "declarative programming"; nothing directly maps to execution order.
+- **Custom operators**: You can declare any punctuator sequence as an operator and give it a precedence. Any function can be applied infix; any operator can be applied prefix.
+- **Syntax**: Pattern matching in function definitions; guards; `where` and `let` clauses; etc. It really feels like writing mathematical formulas.
+
+Unlike [R](./2026-03-07-r.mdx) that I just commented on, Haskell is the exact opposite: designed by professionals with a clear vision and a strong sense of aesthetics. It's deeply infused with principles of category theory, lambda calculus, and type theory. Every line of code in it sparks joy.
+
+However, the joy of writing comes at the cost of reading and learning. I don't find Haskell's syntax intuitive, and all the operators and point-free style is not helping. Consider long chains like `foldl' (flip (uncurry insert)) empty $ filter (uncurry (<=)) $ toList someMap`. Nothing is brand new, but it's going to take a while to digest. Haskell also likes inventing little sugars for all operations, like `<$>`, `<*>`, `>>=`, etc., which aren't self-explanatory. I know that comprehension comes with experience, and overall I far favor conciseness over explicitness, but I admit that it has a steep learning curve, both in its theory and in its practice.
+
+Like most other <abbr title="Functional Programming">FP</abbr> languages, Haskell does not make it into mainstream attention. I know of companies that use Haskell in production, but they need to recruit specialists instead of some random CS college grad. This is also in stark contrast to R, which is (IMO) messily designed but has a much larger user base. Rust is perhaps the first time the PL community successfully ships a language infused with FP ideas (not as a C-like language with FP-inspired syntax sugar slapped on it) to the banal world. Haskell fills a very specific niche: being the pedagogical and research language—a language for developing languages. Many CS students learn Haskell as a segue into FP, category theory, and type theory. Contributions to GHC have resulted in many PhDs being awarded.
+
+There's a world of difference in the concerns of "mainstream engineering" and the CS academics. The former wants productivity, simplicity, performance, and maintainability, while the latter values consistency, elegance, rigor, and abstraction. I sympathize with the former, but I far prefer the latter. For this reason, it's probably a good idea for Haskell (and other FP languages) to stay niche, because the more public attention one language attracts, the more trolls also come and force their idea of "software engineering" on it, as in the [JavaScript](./2024-11-24-javascript.mdx) world. I've had enough hearing people complain about TypeScript types and Rust borrow checker being "unnecessary"; I don't want purity to be next on the target list. On the other hand, I sincerely believe more people should get into this mindset of algebraic and compositional thinking, and Haskell is a great way to get there.
+
+Haskell may never become a dominant production language, but its importance lies elsewhere. It demonstrates how far programming language design can push mathematical rigor, and many ideas pioneered there eventually trickle down into mainstream languages. The impression it left on me is equally left on million others who went on to bake the idea into their own languages, like Rust, Scala, Swift, TypeScript, etc. Haskell is truly the gospel of FP language design.

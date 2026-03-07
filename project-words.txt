@@ -244,6 +244,7 @@ tqdm
 triaging
 tseslint
 uext
+uncurry
 unlines
 unlist
 userland
