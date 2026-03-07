@@ -42,6 +42,7 @@ coursetable
 cout
 cowsay
 CPSC
+CRAN
 cumsum
 dafny
 dataframe
@@ -86,6 +87,7 @@ frozenset
 functools
 garcía
 getline
+ggplot
 ghcup
 graphviz
 gregexpr
@@ -189,6 +191,7 @@ randcolor
 rbind
 regmatches
 rehype
+renv
 retroflexes
 rocq
 Romatzyh
@@ -231,6 +234,8 @@ svgr
 Tetris
 texlive
 texttt
+Tidyverse
+TIOBE
 tlsv
 tongyong
 tonos
