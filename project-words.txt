@@ -43,6 +43,7 @@ cout
 cowsay
 CPSC
 CRAN
+crawlable
 cumsum
 dafny
 dataframe
@@ -189,6 +190,7 @@ quickselect
 raco
 randcolor
 rbind
+rebrands
 regmatches
 rehype
 renv
