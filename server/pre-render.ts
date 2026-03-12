@@ -1,13 +1,12 @@
 import FS from "node:fs/promises";
 import Path from "node:path";
 import { fileURLToPath } from "node:url";
-import { glob } from "glob";
+import { glob } from "tinyglobby";
 import { SitemapStream, streamToPromise } from "sitemap";
 import { normalizeRoute } from "@/normalize-route.ts";
 import type { SSRContextValue } from "@/context/SSRContext";
 
 const __dirname = Path.dirname(fileURLToPath(import.meta.url));
-const toAbsolute = (p: string) => Path.resolve(__dirname, p);
 const distPath = (...ps: string[]) => Path.join(__dirname, "../dist", ...ps);
 
 const template = await FS.readFile(distPath("static/index.html"), "utf-8");
@@ -19,14 +18,15 @@ const { render } = (await import(
 // Has leading slash and trailing slash except for 404
 // e.g. ["/", "/about/", "/404"]
 const routesToPrerender = (
-  await glob(toAbsolute("../src/pages/**/[!_]*.{tsx,mdx}"))
-).map((file) =>
-  normalizeRoute(Path.relative(toAbsolute("../src/pages"), file)),
-);
+  await glob([
+    "./src/pages/**/[!_]*.{tsx,mdx}",
+    "!./src/pages/**/_*/**/*.{tsx,mdx}",
+  ])
+).map((file) => normalizeRoute(file.slice("src/pages/".length)));
 
 async function renderSitemap(routes: string[]) {
   const sitemapStream = new SitemapStream({ hostname: "https://joshcena.com" });
-  routes.forEach((url) => {
+  routes.toSorted().forEach((url) => {
     if (url === "/404") return;
     sitemapStream.write({
       url,

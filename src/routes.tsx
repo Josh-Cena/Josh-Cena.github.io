@@ -6,12 +6,12 @@ import { normalizeRoute } from "./normalize-route";
 const { Helmet } = (H as unknown as { default?: typeof H }).default ?? H;
 
 // Auto generates routes from files under ./pages
-// https://vitejs.dev/guide/features.html#glob-import
+// https://vite.dev/guide/features.html#glob-import
 const pages = import.meta.glob<
   boolean,
   string,
   { default: React.ComponentType; [key: string]: unknown }
->("./pages/**/[!_]*.{tsx,mdx}");
+>(["./pages/**/[!_]*.{tsx,mdx}", "!./pages/**/_*/**/*.{tsx,mdx}"]);
 
 export const routes = Object.entries(pages)
   .map(([path, module]) => {

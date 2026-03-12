@@ -901,31 +901,34 @@ export default function StarRailDamage(): ReactNode {
       />
       <Heading level={2}>角色遗器方案</Heading>
       <select
+        value={selectedBuffs.遗器外圈}
         onChange={(e) =>
-          setSelectedBuffs((prev) => ({ ...prev, 遗器属性: e.target.value }))
+          setSelectedBuffs((prev) => ({ ...prev, 遗器外圈: e.target.value }))
         }>
         {Object.keys(buffDB.遗器外圈).map((id) => (
-          <option key={id} value={id} selected={selectedBuffs.遗器外圈 === id}>
+          <option key={id} value={id}>
             {id}
           </option>
         ))}
       </select>
       <select
+        value={selectedBuffs.遗器内圈}
         onChange={(e) =>
           setSelectedBuffs((prev) => ({ ...prev, 遗器内圈: e.target.value }))
         }>
         {Object.keys(buffDB.遗器内圈).map((id) => (
-          <option key={id} value={id} selected={selectedBuffs.遗器内圈 === id}>
+          <option key={id} value={id}>
             {id}
           </option>
         ))}
       </select>
       <select
+        value={selectedBuffs.遗器属性}
         onChange={(e) =>
           setSelectedBuffs((prev) => ({ ...prev, 遗器属性: e.target.value }))
         }>
         {Object.keys(buffDB.遗器属性).map((id) => (
-          <option key={id} value={id} selected={selectedBuffs.遗器属性 === id}>
+          <option key={id} value={id}>
             {id}
           </option>
         ))}
@@ -948,6 +951,7 @@ export default function StarRailDamage(): ReactNode {
       <Heading level={2}>辅助</Heading>
       <select
         multiple
+        value={selectedBuffs.辅助}
         onChange={(e) =>
           setSelectedBuffs((prev) => ({
             ...prev,
@@ -957,10 +961,7 @@ export default function StarRailDamage(): ReactNode {
           }))
         }>
         {Object.keys(buffDB.辅助).map((id) => (
-          <option
-            key={id}
-            value={id}
-            selected={selectedBuffs.辅助.includes(id)}>
+          <option key={id} value={id}>
             {id}
           </option>
         ))}

@@ -63,7 +63,7 @@ function ProblemPaginator({
           ← Previous
         </Link>
       )}{" "}
-      <Link href={`/notes/aoc/${frontMatter.year}/`}>Back to year Index</Link>{" "}
+      <Link href={`/notes/aoc/${frontMatter.year}/`}>Back to year index</Link>{" "}
       {frontMatter.day === maxDay(frontMatter.year) ? (
         <span className="phantom">→ Next</span>
       ) : (
