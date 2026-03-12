@@ -1,5 +1,6 @@
 Abstand
 accum
+adventofcode
 aeson
 agentic
 allomorphicity
@@ -171,6 +172,7 @@ numpy
 nums
 ocamlformat
 opam
+optimizability
 Othmer
 overengineered
 pandoc
@@ -243,6 +245,7 @@ tongyong
 tonos
 topo
 tqdm
+treemaps
 triaging
 tseslint
 uext
