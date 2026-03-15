@@ -1,5 +1,28 @@
+.tag {
+  display: inline-block;
+  border: 1px solid var(--color-text-subdued);
+  border-radius: var(--border-radius-small);
+  padding: 0 0.25em;
+  margin-right: 0.5em;
+  font-size: smaller;
+  white-space: nowrap;
+}
+
 .paginator {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.yearIndex {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+}
+
+.yearIndex li {
+  width: 1.5rem;
+  text-align: center;
 }

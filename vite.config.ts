@@ -17,6 +17,7 @@ import remarkExtractTitle from "./server/markdown/remark-plugin-extract-title.ts
 import remarkLocalImage from "./server/markdown/remark-plugin-local-image.ts";
 import remarkMDLink from "./server/markdown/remark-plugin-md-link.ts";
 import remarkMermaid from "./server/markdown/remark-plugin-mermaid.ts";
+import remarkNACLO from "./server/markdown/remark-plugin-naclo.ts";
 
 export default defineConfig({
   plugins: [
@@ -34,6 +35,7 @@ export default defineConfig({
           remarkLocalImage,
           remarkMDLink,
           remarkMermaid,
+          remarkNACLO,
           [remarkMDXFrontmatter, { name: "frontMatter" }],
         ],
         rehypePlugins: [
