@@ -1,7 +1,34 @@
 ---
-tags: []
+tags:
+  - Computational
 ---
 
 # Going By the Numbers
 
-TODO
+K1 is straightforward: past tense.
+
+K2 is basic vector product:
+
+$$
+\begin{bmatrix} 0 & 0 & 0 & 0 & 1 & 1 & 2 \end{bmatrix}\cdot \begin{bmatrix} 7 & 2 & -2 & -5 & -10 & 1 & 4 \end{bmatrix} = 0 + 0 + 0 + 0 - 10 + 1 + 8 = -1
+$$
+
+K3 is a bit tedious, but we don't have to do literally every multiplication. Observe:
+
+- w1 returns positive iff the first component is negative, which are all plural nouns.
+- w2 returns positive iff the fourth component is positive, which are all past tense verbs.
+- w3 returns positive iff the second component is positive, which are all animate objects.
+- w4 returns positive iff x5 + x6 + 2 \* x7 > 0, containing: apple, oranges, pizza, salads — all food items.
+- w5 returns positive iff the fourth component is negative, which are all nouns.
+- w6 returns positive iff x1 - 2 \* x7 > 0, containing: apple, electrician, interpreter. These are all singular nouns starting with a vowel (i.e., uses "an" instead of "a").
+- w7 returns positive iff the third component is positive, containing: mug, plates, sticks, television. These are all fragile items.
+- w8 returns positive iff x1 - x7 > 0, containing: apple, book, electrician, interpreter, mug, pizza, purse, squirrel, restaurant, television. These are all singular nouns.
+- w9 returns positive iff the sixth component is negative, containing: book, envelopes, purse, restaurant. These are things you can "open" (but not "put in" because "book" is not a container).
+
+For (a), (b), (c), we need to choose from w2, w3, w4. (a) selects an animate object, so w3. (b) selects a food, so w4. (c) selects a past tense verb, so w2. For (d), any noun should work, so for example: "I like the \_\_\_\_". For (e), as already said, we need the context of "an \_\_\_\_". For (f), it should select a fragile item: "I broke the \_\_\_\_". For (g), it should select a singular noun, so for example: "I like this \_\_\_\_". For (h), as already said, the only viable context is "I opened the \_\_\_\_".
+
+K4 is again very tedious:
+
+1. Positive: w5, w7, w8, w9. So it's a singular noun, inanimate, not food, doesn't start with a vowel, can be opened, and is fragile. For example: cupboard.
+2. Positive: w1, w5. So it's a plural noun, inanimate, not food, doesn't start with a vowel, can't be opened or broken. For example: planets.
+3. Positive: w4, w5, w7, w8. So it's a singular noun, inanimate, food, doesn't start with a vowel, can't be opened, and is fragile. For example: cookie.

@@ -1,7 +1,89 @@
 ---
-tags: []
+tags:
+  - Writing system
 ---
 
 # Around the World in Armenian
 
-TODO
+{/* cSpell:ignore Ֆրանսիա Գերմանիա Կանադա Իտալիա Իսրայել Բուլղարիա Արգենտինա Ավստրալիա Ֆինլանդիա Ռուսաստան Անգլիա Պերու Ամերիկա Լիբիա Ռումինիա */}
+
+The Armenian font used on this site is slightly different from the problem statement, so let me restate the problem:
+
+1. Ֆրանսիա
+2. Գերմանիա
+3. Կանադա
+4. Իտալիա
+5. Իսրայել
+6. Բուլղարիա
+7. Արգենտինա
+8. Ավստրալիա
+9. Ֆինլանդիա
+10. Ռուսաստան
+11. Անգլիա
+12. Պերու
+13. Ամերիկա
+14. Լիբիա
+15. Ռումինիա
+
+Like all writing system problems, the first step is to understand the writing direction and whether it's alphabetic, syllabic, or abjad.
+
+To understand whether it's alphabetic, just count the number of characters and see if they more or less match the number of letters in the English translations. A rough counting shows that most of the words are 7–9 characters long, and the English ones are also 7–9 letters long, suggesting that this is alphabetic, which greatly simplifies our matching process (indeed, the problem already states that the Armenian script descended from the Greek alphabet).
+
+As for writing direction, we look at boundary glyphs and count their frequencies. Here, notice that word-final -ա occurs extremely frequently: 12 out of 15 times! Even if Armenian names are different from their English names, we should expect the leading consonant to be the same, and obviously there's no such common leading consonant in English, so the only conclusion is that Armenian is written left-to-right, and **ա = [a]** ([-a] occurs 8 times in English, so the remaining 4 occurrences are where the Armenian pronunciation differs from the English one). Looking one more character: -իա occurs 9 times, -դա, -նա, and -կա each 1 time. In the English names, we have one case of [-da], one [-ka], and one [-na], while all remaining ones are [-ia], so -իա must be [-ia], with **ի = [i]**.
+
+The other three words that don't end in -ա have -ել, -ան, and -ու. We already identified ն as a consonant, so -ան is [-an], [-ad], or [-ak]. Unfortunately, we don't have an occurrence of any of these three endings in the English names, so this lead stops here.
+
+Now we turn to the first character. We still see some repetitions: 2 Ֆ, 2 Ի, 4 Ա, 2 Ռ. In the English names, the only initial segment that occurs more than twice is [A-] (it only occurs 3 times, but one can hypothesize that the remaining one is "England", which, if translated from "land of the Anglos", should begin with [A-], as in French "Angleterre"), so **Ա = [A]** (the difference from ա is probably capitalization). Other than that, we have 2 [I-], 2 [F-], and 2 [R-]:
+
+- Same Armenian initial segment: (Ֆրանսիա, Ֆինլանդիա), (Իտալիա, Իսրայել), (Ռուսաստան, Ռումինիա)
+- Same English initial segment: (Israel, Italy), (Russia, Romania), (France, Finland)
+
+Notice the Ֆի- prefix. ի is [i], and among the six English names, only Finland has [i] in the second position, so **Ֆ = [F]**. Therefore, the other one is France. We can assume that in Armenian, Finland and France still start with [Fin-] and [Fran-] ("land of the Finns" and "land of the Franks"), giving **ր = [r]**, **ն = [n]**.
+
+Once we have ր = [r], notice that it also occurs in Իսրայել in the third place, so this is Israel, telling us that **Ի = [I]**, **ս = [s]**. The other one is Italy, so **տ = [t]**, **լ = [l]** (this is also verified by the "l" in Finland).
+
+The remaining pair must therefore be Russia and Romania, so **Ռ = [R]**.
+
+Let's replace the identified letters:
+
+{/* cSpell:ignore Fransia Գեrմania Կanaդa Italia Israյեl Բուlղaria Arգեntina Aվstralia Finlanդia Rուsastan Anգlia Պեrու Aմեriկa Լiբia Rումinia */}
+
+1. Fransia
+2. Գեrմania
+3. Կanaդa
+4. Italia
+5. Israյեl
+6. Բուlղaria
+7. Arգեntina
+8. Aվstralia
+9. Finlanդia
+10. Rուsastan
+11. Anգlia
+12. Պեrու
+13. Aմեriկa
+14. Լiբia
+15. Rումinia
+
+{/* cSpell:ignore Finlandia Kanada Amerika Germania Israյel Rusastan Ruminia Kamerun */}
+
+Filling in the remaining letters should be straightforward, because we can already make out a lot of the names. From 9, **դ = [d]** (giving "Finlandia"). From 3, **Կ = [K]** (giving "Kanada"). From 11, **գ = [g]** (giving "Anglia"). From 14, **Լ = [L]**, **բ = [b]** (giving "Libia"). From 7, **ե = [e]** (giving "Argentina"). From 12, **Պ = [P]**, **ու = [u]** (giving "Peru"). From 6, **Բ = [B]**, **ղ = [g]** (giving "Bulgaria"). From 13, **մ = [m]**, **կ = [k]** (giving "Amerika"). Finally, from 2, **Գ = [G]** (giving "Germania").
+
+I'm not sure what յ (as in Israյel) and վ (as in Aվstralia, since [u] is already taken) are, but they don't occur in any other words, so they don't affect the solution. Anyway, the final transcriptions are:
+
+1. Fransia = France
+2. Germania = Germany
+3. Kanada = Canada
+4. Italia = Italy
+5. Israյel = Israel
+6. Bulgaria = Bulgaria
+7. Argentina = Argentina
+8. Aվstralia = Australia
+9. Finlandia = Finland
+10. Rusastan = Russia
+11. Anglia = England
+12. Peru = Peru
+13. Amerika = America
+14. Libia = Libya
+15. Ruminia = Romania
+
+For E3, just replace the letters one-by-one. "Cameroon" should be transcribed as "Kamerun".

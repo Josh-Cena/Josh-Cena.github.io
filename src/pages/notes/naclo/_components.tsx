@@ -94,7 +94,7 @@ export function ProblemHeader({
   const officialSolutionLink =
     frontMatter.year === 2024
       ? `https://naclo.org/resources/problems/2024/NACLO2024ROUND${frontMatter.prob <= "H" ? "1" : "2"}SOL.pdf`
-      : `https://naclo.org/resources/problems/${frontMatter.year}/N${frontMatter.year}-${frontMatter.prob}.pdf`;
+      : `https://naclo.org/resources/problems/${frontMatter.year}/N${frontMatter.year}-${frontMatter.prob}S.pdf`;
   const row = tableByProb.get(`${frontMatter.year}${frontMatter.prob}`);
   return (
     <>

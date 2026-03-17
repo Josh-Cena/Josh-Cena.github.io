@@ -1,7 +1,139 @@
 ---
-tags: []
+tags:
+  - Phrase translation
+  - Semantics
 ---
 
 # Fox out of the Box
 
-TODO
+{/* cSpell:ignore Totonac kchiki chiki ktaqalhwaxni tanu akpu tukuta taxtiyi lakpa tuju tampi */}
+
+The only Totonac word that repeats among all sentences is [wa:qni’], so it has to mean "the fox", which means all our responses have to end with [wa:qni’] as well.
+
+The next pattern is that the word before [wa:qni’] is one of three things: [kchiki], [n chiki], or [ktaqalhwaxni]. Namely:
+
+- \[kchiki]: 1 "into the house through the front door"
+- \[n chiki]: 2 "out of the chimney", 3 "into the house through a hole in the roof", 4 "out the back door", 5 "into a flower box on the side of the house", 6 "under the house", 7 "out from under the house"
+- \[ktaqalhwaxni]: 8 "into a hole", 9 "out of a hole"
+
+It's not clear what the commonality within each group is, so let's focus on the first word instead. It's very obvious that there are a few morphemes that repeat, so I've broken them down into the prefix and suffix.
+
+<table>
+  <tr>
+    <td></td>
+    <th>[-tanu:yi]</th>
+    <th>[-taxtiyi]</th>
+    <th>[-tuju:yi]</th>
+    <th>[-tukuta]</th>
+  </tr>
+  <tr>
+    <th>∅-</th>
+    <td>
+      1 "into the house through the front door"
+      <br />
+      [kchiki]
+    </td>
+    <td></td>
+    <td>
+      8 "into a hole"
+      <br />
+      [ktaqalhwaxni]
+    </td>
+    <td>
+      9 "out of a hole"
+      <br />
+      [ktaqalhwaxni]
+    </td>
+  </tr>
+  <tr>
+    <th>[akpu:-]</th>
+    <td>
+      3 "into the house through a hole in the roof"
+      <br />
+      [n chiki]
+    </td>
+    <td></td>
+    <td></td>
+    <td>
+      2 "out of the chimney"
+      <br />
+      [n chiki]
+    </td>
+  </tr>
+  <tr>
+    <th>[cha:qe:-]</th>
+    <td></td>
+    <td>
+      4 "out the back door"
+      <br />
+      [n chiki]
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>[lakpa:-]</th>
+    <td></td>
+    <td></td>
+    <td>
+      5 "into a flower box on the side of the house"
+      <br />
+      [n chiki]
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>[tampi:-]</th>
+    <td>
+      6 "under the house"
+      <br />
+      [n chiki]
+    </td>
+    <td>
+      7 "out from under the house"
+      <br />
+      [n chiki]
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+Evidently, [-taxtiyi] and [-tukuta] are associated with "out of", while [-tanu:yi] and [-tuju:yi] are associated with "into". How do they differ? Notice that [-tanu:yi] and [-taxtiyi] are used for entering/exiting the house (through a door, a hole, whatever) or the region beneath the house, while [-tuju:yi] and [-tukuta] are used for entering/exiting a hole (not the hole in the roof, which is just a passageway and not the destination), chimney, or flower box. This suggests that the former pair of suffixes is associated with entering/exiting a large area, while the latter pair is associated with entering/exiting a small area.
+
+For what the prefixes mean, we refer back to the cute diagram. Notice that [akpu:-] is associated with the roof, [cha:qe:-] with the back door, [lakpa:-] with the side of the house, and [tampi:-] with the bottom of the house. This suggests that the prefixes are associated with the location relative to the house. The [∅-] prefix may mean "front" or "general", since the hole is also in front of the house.
+
+Furthermore, note the pattern for the second word: [n chiki] is used for all cases except with the [∅-] prefix, and the only cases of [ktaqalhwaxni] are with a hole not directly associated with the house. This suggests that [kchiki]/[n chiki] designates the house, while [ktaqalhwaxni] designates a hole. (Another way to analyze this is that [chiki] means the house, and the [k-] prefix is used for the front/general location, since we know that [n] has no meaning. But this isn't important for the translation.)
+
+Putting everything together, we have the following template:
+
+```plain
+[location][manner] [place] wa:qni’
+
+[location] =
+    ∅- (front/general)
+    akpu:- (top)
+    cha:qe:- (back)
+    lakpa:- (side)
+    tampi:- (bottom)
+[matter] =
+    -tanu:yi (into large area)
+    -taxtiyi (out of large area)
+    -tuju:yi (into small area)
+    -tukuta (out of small area)
+[place] =
+    kchiki (house, front/general)
+    n chiki (house)
+    ktaqalhwaxni (hole)
+```
+
+Note how certain words in the English translations are lost: the passageway such as the roof hole, the chimney, or the door, or specific destinations such as the flower box, are not explicitly mentioned. The only relevant thing is the location relative to the house and whether it's a large area or a small area.
+
+A1 answers:
+
+10\. The fox comes out the front door. = \[front][out of large area] [house] = **taxtiyi kchiki wa:qni’**  
+11\. The fox goes into the chimney. = \[top][into small area] [hole] = **akpu:tuju:yi n chiki wa:qni’**  
+12\. The fox comes out a hole in the roof. = \[top][out of large area] [house] = **akpu:taxtiyi n chiki wa:qni’**  
+13\. The fox comes in the back door. = \[back][into large area] [house] = **cha:qe:tanu:yi n chiki wa:qni’**  
+14\. The fox goes into a window on the side of the house. = \[side][into large area] [house] = **lakpa:tanu:yi n chiki wa:qni’**  
+15\. The fox comes out of a flower box on the back of the house. = \[back][out of small area] [house] = **cha:qe:tukuta n chiki wa:qni’**

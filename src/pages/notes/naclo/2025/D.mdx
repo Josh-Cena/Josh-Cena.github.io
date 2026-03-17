@@ -1,7 +1,47 @@
 ---
-tags: []
+tags:
+  - Computational
 ---
 
 # Let's Pivot!
 
-TODO
+{/* cSpell:ignore Bassa Bété Ejagham Karajá Matsés Apinaye Tsafiki Seri Guambiano Teribe Tlapanec Yakan paban ilyby */}
+
+The basic idea with this problem is that when translating, we do the following:
+
+- Look up word X in the row for language A, getting a list of meanings M1, M2, ...
+- Look up (B, M1), (B, M2), ..., corresponding to their translations Y1, Y2, ...
+
+If a pivot C is inserted, then we do the following:
+
+- Look up word X in the row for language A, getting a list of meanings M1, M2, ...
+- Look up (C, M1), (C, M2), ..., corresponding to their translations Z1, Z2, ...
+- Then, for each translation Yi, look up Yi in the row for language C, getting a list of meanings M1', M2', ... (this is a superset of M1, M2, ... because Yi may have multiple meanings in C)
+- Look up (B, M1'), (B, M2'), ..., corresponding to their translations Y1', Y2', ...
+
+This is how the pivot language allows us to reach more meanings in B.
+
+D1 answers:
+
+- No pivot needed: M = \{ ocean }.
+- Pivot needed: M = \{ crow }, M' = \{ grass }. Need a language where "crow" and "grass" share a word, which is any of Bassa, Bété, Ejagham.
+- No pivot needed: M = \{ ocean }.
+
+D2 answers:
+
+a. M = \{ ocean, crow }, which map to "blue" and "black" in English respectively.  
+b. M = \{ ocean, crow }, Z = \{ tyre, ilyby }, M' = \{ ocean, crow, sky, grass, banana }, which map to "blue", "black", "green", and "yellow" in English.  
+c. M = \{ ocean, crow }, M' = \{ ocean, crow, sky, grass }. Need a language where "sky" and "grass" share a word with either "ocean" or "crow", but all others (plum, strawberry, banana, snow) are distinguished from "ocean" and "crow". This leaves Ejagham, Matsés, Seri. See [problem C](./C.mdx) for visualization; we want the union of the "ocean" and "crow" components to only contain the additional colors "sky" and "grass".
+
+As for D3, we need to figure out all the constraints, and then find the assignments that satisfy all of them.
+
+1. M = \{ plum, strawberry }, M' = \{ crow }. Need a language where "crow" shares a word with "plum" and/or "strawberry": Bassa, Bété.
+2. M = \{ plum, ocean }, M' = \{ sky }. Need a language where "sky" shares a word with "plum" and/or "ocean": Apinaye, Bassa, Bété, English, Teribe (only Tsafiki doesn't work).
+3. M = \{ plum, strawberry }, M' = \{ plum }. This is a direct translation, so any pivot will do.
+4. M = \{ plum, strawberry, banana }, M' = \{ grass, sky, ocean }. Need any language that doesn't distinguish one of "grass", "sky", or "ocean" from one of "plum", "strawberry", or "banana": Apinaye, Bassa, Bété, Teribe.
+5. M = \{ banana }, M' = \{ snow }. Need a language where "snow" shares a word with "banana": only Bassa.
+6. M = \{ grass }, M' = \{ plum, strawberry }. Need a language where "plum" and/or "strawberry" share a word with "grass": Apinaye, Bassa, Bété.
+
+It happens that these constraints contain 1, 2, 3, 4, 5, 6 candidates, respectively! So we can satisfy them in the order of their restrictiveness:
+
+5\. B → 1. C → 6. A → 4. E → 2. D → 3. F

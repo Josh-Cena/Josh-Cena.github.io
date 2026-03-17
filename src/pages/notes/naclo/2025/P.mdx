@@ -1,7 +1,135 @@
 ---
-tags: []
+tags:
+  - Phrase translation
+  - Syntax
 ---
 
 # The Greatest Thing Since Boiled Breadfruit
 
-TODO
+{/* cSpell:ignore Meli blulu nelabe nelalee Nibie nefomefe Nalime nafomelee Meneme naomeie Menele naolane Nalile natemefe Melife walafe Nali Nibiefe walabe */}
+
+There are only 8 sentences, which is a good sign because the fewer sentences (with more repetitions of lexical items), the simpler the pattern.
+
+Indeed, these 8 sentences only involve 3 verbs: boil, tell a story, and go. They only involve 4 tenses: past (far), present, near future, and far future. All of them are progressive. So we can make a table:
+
+<table>
+  <tr>
+    <th></th>
+    <th>(Far) Past</th>
+    <th>Present</th>
+    <th>Near future</th>
+    <th>Far future</th>
+  </tr>
+  <tr>
+    <th>Boil</th>
+    <td></td>
+    <td>
+      <strong>Meli blulu nelalee.</strong>
+      <br />
+      <em>The water</em>
+    </td>
+    <td>
+      <strong>Meli blulu nelabe.</strong>
+      <br />
+      <em>The water</em>
+    </td>
+    <td>
+      <strong>Nibie blulu nefomefe.</strong>
+      <br />
+      <em>I - the breadfruit</em>
+    </td>
+  </tr>
+  <tr>
+    <th>Tell a story</th>
+    <td>
+      <strong>Nalime nafomelee.</strong>
+      <br />
+      <em>He - to himself</em>
+      <br />
+      <strong>Meneme naomeie.</strong>
+      <br />
+      <em>I - to myself</em>
+    </td>
+    <td>
+      <strong>Menele naolane.</strong>
+      <br />
+      <em>They - to me</em>
+    </td>
+    <td></td>
+    <td>
+      <strong>Nalile natemefe.</strong>
+      <br />
+      <em>I - to them</em>
+    </td>
+  </tr>
+  <tr>
+    <th>Go</th>
+    <td></td>
+    <td></td>
+    <td>
+      <strong>Melife walafe.</strong>
+      <br />
+      <em>I - for water</em>
+    </td>
+    <td></td>
+  </tr>
+</table>
+
+To begin, we should always look for concrete lexical items such as "to boil" or "to tell a story", because pronouns may be merged into the inflection of the verb. Compare all "to tell a story" sentences. The _only_ commonality is the "na" at the start of the second word, so "na" must be the morpheme for "to tell a story". (It's often striking how short these morphemes are, which is a common feature of polysynthetic languages, which are quite popular in contests.) Similarly, all "to boil" sentences contain "blulu" and the last word begins with "ne", so "blulu ne" means "to boil".
+
+Now compare vertically. Although the last syllable has no obvious common pattern across columns, the penultimate one one is consistently "me" for past and far future, and "la" for present and near future, implying that they mark the near/far distinction. This strongly suggests that the last syllable marks the future/past distinction. Indeed, there are two past/present sentences ending with "lee" and 3 future sentences ending with "fe". The commonality within each group is the phi-feature of the subject: the "lee" group all have 3rd singular person subjects, while the "fe" group all have 1st person subjects. This means that the tense marker agrees with the subject in person and number:
+
+| Tense                | 1st singular | 3rd singular | 3rd plural |
+| -------------------- | ------------ | ------------ | ---------- |
+| Past (incl. present) | -ie          | -lee         | -ne        |
+| Future               | -fe          | -be          | ?          |
+
+This distinction seems logical because [f] and [b] are both labials, while [i], [l], and [n] are all coronal sonorants, so they are articulatorily similar.
+
+We've now completely determined the composition of tense and verb morphemes, but for sentences involving an object, there's one morpheme in the middle (such as the -o- in "naolane") that we haven't accounted for, which likely has something to do with the subject or object. So we now turn to the nouns. Concerning this morpheme in the middle:
+
+- -o-: _They - to me_, _I - to myself_
+- -fo-: _He - to himself_, _I - the breadfruit_
+- -te-: _I - to them_
+
+It's pretty clear that this is an object agreement marker, with -o- for 1st person singular object, -fo- for 3rd person singular object, and -te- for 3rd person plural object. This makes sense given that the subject agreement is already on the tense marker.
+
+Only the first word remains to be analyzed. Note that the whole second word already contains both object and subject agreement, which means for pronoun objects/subjects, the information is already fully contained in the second word, so the first word may not contain any pronoun.
+
+- Meli: _The water_
+- Melife: _I - for water_
+- Nibie: _I - the breadfruit_
+- Nalime: _He - to himself_
+- Nalile: _I - to them_
+- Meneme: _I - to myself_
+- Menele: _They - to me_
+
+Meli must stand for "the water" because it's the only morpheme left in the sentence "Meli blulu nelalee". Therefore "-fe" is "for". There are two sentences that begin with "Nali-" and two that begin with "Mene-"; the former both have 3rd person objects and the latter both have 1st person objects, so they are pronouns for the object. "-me" and "-le" mark whether the action is reflexive or not, because the only two sentences with "-me" are reflexive ("to myself" and "to himself"). This also leaves "Nibie" to mean "the breadfruit".
+
+Therefore we can summarize the grammar as follows:
+
+- Each sentence consists of a noun followed by a verb complex.
+- If one of the arguments is a concrete noun, then it appears in the noun slot. (We don't know the word order if both of them are concrete nouns.) Otherwise, if both arguments are pronouns, then the object appears in the noun slot. The noun slot has the structure \[object][suffix] where [object] is "Mene-" for 1st person and "Nali-" for 3rd person, and the suffix is:
+  - -me for reflexive
+  - -le for non-reflexive
+  - -fe for "for"
+
+- The verb complex has the structure \[verb root]\[object]\[timeframe][tense/subject agreement]. The verb root is "blulu ne" for "to boil", "na" for "to tell a story", and "wa" for "to go". The object is:
+  - -o- for 1st person singular object
+  - -fo- for 3rd person singular object
+  - -te- for 3rd person plural object
+
+  (This particle is only present if the object is a pronoun.) The timeframe marker is:
+  - -la- for near (incl. present)
+  - -me- for far
+
+  The tense/subject agreement is given in the table above.
+
+Once the grammar has been thoroughly dissected, translation is straightforward.
+
+- Mene-le na-o-me-lee = Me tell-me-far-past.3s = He was telling me a story a while ago.
+- Nali-me na-te-la-ne = He/they-reflexive tell-them-near-past.3p = They are telling themselves a story.
+- Wa-me-ie = Go-far-past.1s = I was going a while ago.
+- He will be going for breadfruit soon = breadfruit-for go-near-future.3s = Nibie-fe wa-la-be
+- He was going to him a while ago = Him go-him-far-past.3s = Nali-le wa-fo-me-lee (note: -le not -me because the object is "him" not "himself")
+- The breadfruit will be boiling in a while = breadfruit boil-far-future.3s = Nibie blulu ne-me-be

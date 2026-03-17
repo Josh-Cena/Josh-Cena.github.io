@@ -1,7 +1,203 @@
 ---
-tags: []
+tags:
+  - Puzzle
 ---
 
 # Color Me Confused
 
-TODO
+{/* cSpell:ignore Bassa Bété Ejagham Karajá Matsés Apinaye Tsafiki Seri Guambiano Teribe Tlapanec Yakan Kwerba Lele Ocaina Waorani Yucuna sõa'ro ya'saro butiro likañ minj kimemb */}
+
+First, tally all the groups of colors:
+
+```js canvas width=700 height=700
+const colors = {
+  plum: "#A000A0",
+  strawberry: "#FF0000",
+  banana: "#FFFF00",
+  grass: "#008000",
+  sky: "#80A0FF",
+  ocean: "#0000FF",
+  crow: "#000000",
+  snow: "#FFFFFF",
+};
+
+function drawColor(color, x, y) {
+  if (color === "snow" && colorMode === "light") {
+    ctx.strokeRect(x, y, 50, 20);
+  }
+  ctx.fillStyle = colors[color];
+  ctx.fillRect(x, y, 50, 20);
+  ctx.fillStyle = textColor;
+  ctx.font = "16px sans-serif";
+  ctx.textAlign = "left";
+  ctx.fillText(color, x + 65, y + 10);
+}
+
+ctx.textBaseline = "middle";
+ctx.textAlign = "center";
+ctx.font = "20px sans-serif";
+ctx.fillText("Bassa", 45, 25);
+drawColor("crow", 20, 50);
+drawColor("ocean", 20, 70);
+drawColor("sky", 20, 90);
+drawColor("grass", 20, 110);
+drawColor("plum", 20, 130);
+ctx.strokeRect(10, 40, 70, 120);
+drawColor("strawberry", 20, 170);
+drawColor("banana", 20, 190);
+drawColor("snow", 20, 210);
+ctx.strokeRect(10, 160, 70, 80);
+
+ctx.textAlign = "center";
+ctx.font = "20px sans-serif";
+ctx.fillText("Bété/Ejagham", 195, 25);
+drawColor("crow", 170, 50);
+drawColor("ocean", 170, 70);
+drawColor("sky", 170, 90);
+drawColor("grass", 170, 110);
+ctx.strokeRect(160, 40, 70, 110);
+drawColor("plum", 170, 140);
+drawColor("strawberry", 170, 170);
+drawColor("banana", 170, 190);
+ctx.strokeRect(160, 150, 70, 70);
+drawColor("snow", 170, 230);
+ctx.strokeRect(160, 220, 70, 40);
+
+ctx.textAlign = "center";
+ctx.font = "20px sans-serif";
+ctx.fillText("Karajá/Matsés", 345, 25);
+drawColor("crow", 320, 50);
+ctx.strokeRect(310, 40, 70, 40);
+drawColor("ocean", 320, 90);
+drawColor("sky", 320, 110);
+drawColor("grass", 320, 130);
+ctx.strokeRect(310, 80, 70, 90);
+drawColor("banana", 320, 160);
+drawColor("plum", 320, 190);
+drawColor("strawberry", 320, 210);
+ctx.strokeRect(310, 170, 70, 70);
+drawColor("snow", 320, 250);
+ctx.strokeRect(310, 240, 70, 40);
+
+ctx.textAlign = "center";
+ctx.font = "20px sans-serif";
+ctx.fillText("Apinaye/Seri", 495, 25);
+drawColor("crow", 470, 50);
+ctx.strokeRect(460, 40, 70, 40);
+drawColor("ocean", 470, 90);
+drawColor("sky", 470, 110);
+drawColor("grass", 470, 130);
+drawColor("plum", 470, 160);
+ctx.strokeRect(460, 80, 70, 90);
+drawColor("strawberry", 470, 190);
+ctx.strokeRect(460, 170, 70, 50);
+drawColor("banana", 470, 230);
+ctx.strokeRect(460, 220, 70, 40);
+drawColor("snow", 470, 270);
+ctx.strokeRect(460, 260, 70, 40);
+
+ctx.textAlign = "center";
+ctx.font = "20px sans-serif";
+ctx.fillText("Tsafiki", 45, 325);
+drawColor("crow", 20, 350);
+drawColor("ocean", 20, 370);
+ctx.strokeRect(10, 340, 70, 60);
+drawColor("grass", 20, 410);
+ctx.strokeRect(10, 400, 70, 40);
+drawColor("plum", 20, 450);
+drawColor("strawberry", 20, 470);
+ctx.strokeRect(10, 440, 70, 60);
+drawColor("banana", 20, 510);
+ctx.strokeRect(10, 500, 70, 40);
+drawColor("sky", 20, 550);
+drawColor("snow", 20, 570);
+ctx.strokeRect(10, 540, 70, 60);
+
+ctx.textAlign = "center";
+ctx.font = "20px sans-serif";
+ctx.fillText("Guambiano/Teribe", 195, 325);
+drawColor("crow", 170, 350);
+ctx.strokeRect(160, 340, 70, 40);
+drawColor("ocean", 170, 390);
+drawColor("sky", 170, 410);
+ctx.strokeRect(160, 380, 70, 70);
+drawColor("plum", 170, 440);
+drawColor("strawberry", 170, 470);
+ctx.strokeRect(160, 450, 70, 50);
+drawColor("grass", 170, 510);
+ctx.strokeRect(160, 500, 70, 40);
+drawColor("banana", 170, 550);
+ctx.strokeRect(160, 540, 70, 40);
+drawColor("snow", 170, 590);
+ctx.strokeRect(160, 580, 70, 40);
+
+ctx.textAlign = "center";
+ctx.font = "20px sans-serif";
+ctx.fillText("Tlapanec", 345, 325);
+drawColor("crow", 320, 350);
+ctx.strokeRect(310, 340, 70, 40);
+drawColor("ocean", 320, 390);
+drawColor("plum", 320, 410);
+ctx.strokeRect(310, 380, 70, 60);
+drawColor("sky", 320, 450);
+drawColor("grass", 320, 470);
+ctx.strokeRect(310, 440, 70, 60);
+drawColor("strawberry", 320, 510);
+ctx.strokeRect(310, 500, 70, 40);
+drawColor("banana", 320, 550);
+ctx.strokeRect(310, 540, 70, 40);
+drawColor("snow", 320, 590);
+ctx.strokeRect(310, 580, 70, 40);
+
+ctx.textAlign = "center";
+ctx.font = "20px sans-serif";
+ctx.fillText("English/Yakan", 495, 325);
+drawColor("crow", 470, 350);
+ctx.strokeRect(460, 340, 70, 40);
+drawColor("ocean", 470, 390);
+drawColor("sky", 470, 410);
+ctx.strokeRect(460, 380, 70, 60);
+drawColor("plum", 470, 450);
+ctx.strokeRect(460, 440, 70, 40);
+drawColor("grass", 470, 490);
+ctx.strokeRect(460, 480, 70, 40);
+drawColor("strawberry", 470, 530);
+ctx.strokeRect(460, 520, 70, 40);
+drawColor("banana", 470, 570);
+ctx.strokeRect(460, 560, 70, 40);
+drawColor("snow", 470, 610);
+ctx.strokeRect(460, 600, 70, 40);
+```
+
+The Berlin–Kay formulation in the problem states that the order of color acquisition is: A, B → C → D (from B) → E → F (from D) → H → G (from A, D, or F). Of course, one can exercise discretion and realize that certain colors are more fundamental than others, but let's do it via pure logic.
+
+- From rule 3: 5-and-above languages have a _unique_ word for E. Looking at the diagram, the only color that is always unique from Apinaye/Seri and above is "banana", so **E = banana**.
+- From rule 5: The last two acquired words are H and G. 7-color languages English/Yakan, compared to the 6-color languages Guambiano/Teribe, developed the additional unique word for "plum", so **H = plum**. 8-color languages additionally separate "sky" vs. "ocean", so **G ∈ \{ sky, ocean }**.
+- From rule 5: 6-and-below languages merge G with one of A, D, or F. If G is "ocean", then among all 6-color languages (Guambiano/Teribe/Tlapanec), other than "plum", it only ever shares the same name with "crow" and "sky/grass". If G is "sky", then it only ever shares the same name with "snow" and "ocean/grass". It seems safe to assume that A, D, and F map to these three colors.
+- From rule 4: 6-and-above languages always distinguish all of A, D, and F, but Tlapanec doesn't between sky and grass, we can conclude that **G = sky**, **\{ A, D, F } = \{ snow, ocean, grass }**.
+- From rule 2: "Snow" must be either A, B, or C, because by 3 colors it already gets a unique name. Therefore **A = snow**, **\{ D, F } = \{ ocean, grass }**, **\{ B, C } = \{ crow, strawberry }**.
+- From rule 1: A and B must be distinguished from the beginning. Bassa does not distinguish "strawberry" from "snow", so B cannot be "strawberry". Therefore **B = crow**, **C = strawberry**.
+- From rule 3: 5-and-above language distinguish B "crow" and D. Tsafiki does not distinguish "crow" and "ocean", so **D = grass**, **F = ocean**.
+
+So let's restate Berlin–Kay:
+
+1. Every language has at least two basic color terms, which distinguish between "snow" and "crow".
+2. If it has at least three, it uses different words for each of "snow", "crow", and "strawberry". If it has only three, the same word is used for both "crow" and "grass".
+3. If it has at least five, it distinguishes between "crow" and "grass", and also has a unique word for "banana".
+4. If it has at least six, it distinguishes between "grass" and "ocean".
+5. A language only has a unique word for "sky" if it also has one for "plum". If it does not have a unique word for "plum", "sky" will share a word with at least one of "snow", "grass", or "ocean".
+
+C2 answers:
+
+- Kwerba: 4 colors, so rules 3 and 4 are moot. "snow", "crow", and "strawberry" are distinguished, satisfying rule 2. No unique word for "plum", and "sky" shares with "snow", satisfying rule 5. — **YES**
+- Lele: 4 colors, so rules 3 and 4 are moot. "snow", "crow", and "strawberry" are distinguished, satisfying rule 2. No unique word for "plum", and "sky" shares with "grass", satisfying rule 5. — **YES**
+- Ocaina: 6 colors, but "grass" and "ocean" are not distinguished, violating rule 4. — **NO**
+- Waorani: 4 colors, so rules 3 and 4 are moot. "snow", "crow", and "strawberry" are distinguished, satisfying rule 2. No unique word for "plum", and "sky" shares with "ocean", satisfying rule 5. — **YES**
+- Yucuna: exact same case as Ocaina. — **NO**
+- Zapotec: 7 colors. Has a unique word for "plum", satisfying rule 5 (the rule doesn't require a unique word for "sky" in the presence of a unique word for "plum"). No other rule requires the distinction between "grass" and "sky". — **YES**
+
+C3 answers:
+
+a. There are 3 unique words, so only rules 1, 2, and 5 apply. Nothing is said about "banana", so all three options are possible.  
+b. There are 5 unique words, so rules 1, 2, 3, and 5 apply. Only rule 3 pertains to "grass", stating that it must be distinguished from "crow", and cannot share a word with "banana". So the answer is all except "crow" and "banana": sõa'ro, ya'saro, butiro.  
+c. There are 6 unique words. Rule 2 requires "strawberry" to be distinguished from "snow" and "crow". Rule 3 requires "banana" to be unique. Because "sky" shares with "ocean", rule 5 is satisfied regardless of whether "plum" is unique or not. So the answer is all except "snow", "crow", and "banana": likañ, minj-kimemb, muk.

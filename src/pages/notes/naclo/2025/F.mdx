@@ -1,7 +1,43 @@
 ---
-tags: []
+tags:
+  - Computational
 ---
 
 # Not Quite Right
 
-TODO
+Originally I did it the hard way. But now I realize that the "NacloChat's answer" is literally the cipher text deciphered, just with one letter off. This very quickly leads to the following cipher:
+
+| Cipher | Plain |
+| ------ | ----- |
+| B      | C     |
+| D      | L     |
+| E      | B     |
+| F      | A     |
+| G      | D     |
+| I      | F     |
+| J      | E     |
+| L      | O     |
+| N      | Y     |
+| P      | I     |
+| Q      | M     |
+| S      | H     |
+| T      | S     |
+| U      | P     |
+| V      | N     |
+| W      | R     |
+| Y      | U     |
+| Z      | T     |
+
+Applying this cipher to the given text, we get:
+
+a. finally the lime has come  
+b. they chanted the official policy  
+c. he stuffed the poster inside a tuba  
+d. they sailed away in a boot  
+f. we must be kind to each otter
+
+Looking at the mistakes of NacloChat's answer, it's apparent that NacloChat substitutes "surprising" words with more common ones. So this means (e) is "they sailed away in a boat" and (g) is "we must be kind to each other".
+
+In F2, again notice how NacloChat uses existing and common words over rare or non-existing ones, despite being asked to assemble the acronyms character-by-character. "VERB" and "WITS" are existing words, but by far less common than "FROM", so "FROM" is the one we should keep, and change the other ones to more common words: "AFTER", "VERY", "PEACE", and "WITH".
+
+For F3, I'm not sure how one is supposed to come up with it independently, but obviously we also want to select for "common" numerals. Common numerals are often multiples of 5 (but more sources say 10), so we always select the multiple of 5: 90, 60, and 75.
