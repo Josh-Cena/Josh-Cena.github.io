@@ -1,7 +1,28 @@
 ---
-tags: []
+tags:
+  - Puzzle
 ---
 
 # Happy Birthday!
 
-TODO
+{/* cSpell:ignore Kɔsi Kɔbla Yawa Kwasi Kɔdzo Kwami Abla Akosua Kwamla Adzoa Kofi Kwadzo */}
+
+Observation: all male names start with "K" and all female names start with "A". The only except is "Y" for which "Yao" is male but "Yawa" is female. This makes C1 trivial.
+
+For C2, use the calendar given.
+
+| Sun    | Mon   | Tue    | Wed | Thu  | Fri | Sat   |
+| ------ | ----- | ------ | --- | ---- | --- | ----- |
+|        |       |        |     |      |     |       |
+| Kɔsi   |       | Kɔbla  |     | Yawa |     |       |
+| Kwasi  | Kɔdzo |        |     |      |     | Ami   |
+|        |       |        | Aku |      |     | Kwami |
+|        |       |        |     |      |     |       |
+|        |       | Abla   |     |      |     |       |
+| Akosua |       | Kwamla |     |      |     |       |
+|        |       |        |     | Yao  |     |       |
+|        | Adzoa |        |     |      |     |       |
+
+Therefore, the rule is that the last syllable's consonant depends on the day of the week: Sun = s, Mon = dz, Tue = bl/ml, Wed = k, Thu = ∅, Fri = ?, Sat = m. This gives us the matching for C2, which also reveals that Fri = f. Therefore in C3, "Kofi" must be born on a Friday, which is Jan 12. For C4, because Feb 5 is a Monday, the name must contain "dz", so "Kwadzo".
+
+Finally for C5, i starts with "dz", so it's Monday. ii starts with "f", so it's Friday.

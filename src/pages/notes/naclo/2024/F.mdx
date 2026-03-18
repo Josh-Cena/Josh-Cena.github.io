@@ -1,9 +1,51 @@
 ---
-tags: []
+tags:
+  - Phonology
 ---
 
 # Paiwan in Progress
 
-{/* cSpell:ignore Paiwan */}
+{/* cSpell:ignore Paiwan keman kema kivata vata lemumay lemuma luma temekel temeke teke kalidjikidj kalidjiki djiki paderua pade semutjiray semu semutjira tjira kemesa kesa muma meke temulu mulu tulu djemavac mava djava djemava lemenguaq ngua lemengua mikerekel reke mikereke takalava masasevalit vali masasevali */}
 
-TODO
+Compare the two forms, and pull out the longest common prefix:
+
+| Root        | Progressive          |
+| ----------- | -------------------- |
+| keman       | kema**ka**n          |
+| ivu         | ivu**ivu**           |
+| kivata      | kivata**vata**       |
+| lemumay     | lemuma**luma**y      |
+| temekel     | temeke**teke**l      |
+| kalidjikidj | kalidjiki**djiki**dj |
+| paderua     | paderua**rua**       |
+| semutjiray  | semutjira**tjira**y  |
+| kemesa      | kemesa**kesa**       |
+
+So, in the data points given, the progressive is always formed by the root plus some affix. The affix is either appended at the end, or before the last consonant (if the root ends with a consonant). The next question is how this affix is derived from the root.
+
+| Root            | Affix |
+| --------------- | ----- |
+| **k**em**a**n   | ka    |
+| **ivu**         | ivu   |
+| ki**vata**      | vata  |
+| **l**em**uma**y | luma  |
+| **t**em**eke**l | teke  |
+| kali**djiki**dj | djiki |
+| pade**rua**     | rua   |
+| semu**tjira**y  | tjira |
+| **k**em**esa**  | kesa  |
+
+The immediate observation is that the affix contains the last two syllables (dropping the final consonant), which explains ivu, kivata, kalidjikidj, paderua, semutjiray. However, the remaining ones: keman, lemumay, temekel, kemesa challenge this theory, because their last two syllables are: kema, muma, meke, mesa, respectively. Instead, all of them skipped an "-em-" segment and picked the consonant before it if one exists, generating k(em)a, l(em)uma, t(em)eke, k(em)esa instead. Note how the deleted segment is always "em" and never "um" or "am", such as in "luma"—it doesn't become "la". So the affix is formed as follows:
+
+1. Drop the last consonant of the root if it exists.
+2. Take the last syllable. If it starts with "m" and is preceded by "e", drop "em" and pick the consonant before it.
+3. If there are more syllables to the left, take the next syllable, also dropping an "em" if it exists.
+
+Therefore:
+
+a. "temulu" has last two syllables "mulu" but "m" is preceded by "e", so the affix is "tulu" instead, forming "temulu**tulu**".  
+b. "djemavac" has last two syllables "mava" but "m" is preceded by "e", so the affix is "djava" instead, forming "djemava**djava**c".  
+c. "lemenguaq" has last two syllables "ngua" (it's not at all clear whether "ng" is a single nasal consonant or just the nasal coda of the previous syllable plus a "g" onset of the second syllable, but we need to guess based on the lack of nasal codas in the language), which contains no "m", so it forms "lemengua**ngua**q".  
+d. "mikerekel" has last two syllables "reke" which contains no "m", so it forms "mikereke**reke**l".  
+e. "takalava" has last two syllables "lava" which contains no "m", so it forms "takalava**lava**".  
+f. "masasevalit" has last two syllables "vali" which contains no "m", so it forms "masasevali**vali**t".

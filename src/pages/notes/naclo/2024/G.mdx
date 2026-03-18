@@ -1,7 +1,100 @@
 ---
-tags: []
+tags:
+  - Computational
 ---
 
 # At a Loss for Words
 
-TODO
+{/* cSpell:ignore Identylizer Descriptron */}
+
+G1: if the other person wants me to pick the filled circle, they would have said "filled", so "circle" has to mean the unfilled circle. This becomes the premise for all subproblems to follow: if one shape is already picked out by another attribute, then the other unused attribute can now uniquely identify another shape.
+
+In G2, there are two dimensions of classification: shape and filling.
+
+<table>
+  <tr>
+    <td></td>
+    <th>Circle</th>
+    <th>Triangle</th>
+    <th>Square</th>
+  </tr>
+  <tr>
+    <th>Filled</th>
+    <td>(b)</td>
+    <td>(a)</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Unfilled</th>
+    <td>(c)</td>
+    <td></td>
+    <td>(d)</td>
+  </tr>
+  <tr>
+    <th>Striped</th>
+    <td></td>
+    <td></td>
+    <td>(e)</td>
+  </tr>
+</table>
+
+(e) can be specified with just "striped" and (a) is just "triangle". Once these two are out of the table, (b) is uniquely specified by "filled" and (d) uniquely by "square". Finally that leaves (c) as "unfilled" or "circle".
+
+G3 doesn't change the dimensions of classification.
+
+<table>
+  <tr>
+    <td></td>
+    <th>Triangle</th>
+    <th>Square</th>
+    <th>Circle</th>
+    <th>Pentagon</th>
+    <th>Hexagon</th>
+  </tr>
+  <tr>
+    <th>Filled</th>
+    <td>(a)</td>
+    <td>(e)</td>
+    <td></td>
+    <td>(g)</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Unfilled</th>
+    <td>(b)</td>
+    <td>(d)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Striped</th>
+    <td></td>
+    <td>(c)</td>
+    <td>(f)</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Spotted</th>
+    <td></td>
+    <td>(h)</td>
+    <td></td>
+    <td></td>
+    <td>(i)</td>
+  </tr>
+</table>
+
+First (f) is "circle", (g) is "pentagon", and (i) is "hexagon". Removing these three, (c) is "striped" and (h) is "spotted". Unfortunately, (a)(b)(d)(e) form a 2x2 block and cannot be uniquely identified, so they must use two words.
+
+In G4, the Identylizer just picks randomly any shape that satisfies the description, without considering Rational Speech Acts. There's only one "Unfilled Circle", so its error rate is 0.00; saying nothing reduces to random guessing, so the error rate is always 0.67; just saying "Unfilled" leaves two choices, so the error rate is 0.50.
+
+G5 can be determined just by brute-forcing all three possible variable names for the (a) slot (since (b) and (c) are equivalent), and then substituting values from the table to verify each one's consistency.
+
+$$
+\text{Loss} = \text{error rate} + (\text{weight} \times \text{cost})
+$$
+
+The greater the weight, the more the Descriptron cares about the cost, and the more it prefers shorter phrases at the expense of higher error rate. We want to switch Descriptron from saying nothing to saying one word, so we should decrease the weight of the cost. Specifically, to prevent the 0-word option from winning, we want $\text{error rate of 0 words} > \text{min error rate of 1 word} + \text{weight}$. Substituting 0.67 and 0.00, we get $\text{weight} < 0.67$.
+
+However, if the weight is too low, then error rate dominates and Descriptron starts saying two words, so we want $\text{error rate of 2 words} + 2 \times \text{weight} > \text{min error rate of 1 word} + \text{weight}$ to prevent the 2-word option from winning. Substituting 0.00 and 0.00, we get $\text{weight} > 0.00$. Therefore, the weight must be between 0.00 and 0.67. This means 0.1 and 0.5 are both valid answers.

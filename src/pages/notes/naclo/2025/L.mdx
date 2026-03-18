@@ -5,89 +5,55 @@ tags:
 
 # Whistle While You Work
 
-{/* cSpell:ignore kwée skwaa hkwe twáa mwaa hwáa swáa hkwa htii hkoo mwáa hkwée */}
+{/* cSpell:ignore kwée skwaa hkwe twáa mwaa hwáa swáa hkwa htii hkoo mwáa hkwée θwóò hkwò swóó óqóòhóò òòhóóqóqòqóò óqòhóò óóqóqòòhóò mwóó óhòqòhóqòhóò óhóqóhóqòhóò óqòòqòòhóhóòqóò òòhóóhòqóò mwòò òhóòhóóqòhóqóòhóò óhóóqóóhòòqóò óqóóhóhóò òhòhòòhóòhóò hkòò */}
 
-It's quite obvious that the words are aligned by syllables: the initial consonant is dropped, while every subsequent onset consonant is aligned to a [h] or [q]. Let's write out the alignment:
+This is all in all a very, very tedious, eye straining, and honestly not much fun problem. It's quite obvious that the words are aligned by syllables: the initial consonant is dropped, while every subsequent onset consonant is aligned to a [h] or [q]. Let's write out the alignment:
 
 ```plain
 né ko ti             ne no htá wee wa
- ó qò qóò             ó hò qó  hòò hóò
+ ó qò qóò             ó hò  qó hòò hóò
 
 níi swi              ái kaa θo nía ni
- óò hóò              óò qòò hó hóò hóò
+ óò  hóò             óò qòò hó hóò hóò
 
-né θwi hi            ne sía naa te θi kwée ni
- ó hò  hóò           (e)
+né θwi hi
+ ó  hò hóò
 
 níe wi               o θáa skwaa né hkwe ya
- óò hóò              ò hóò qóó   hó qò  hóò
+ óò hóò              ò hóò   qóó hó   qò hóò
 
 nía na nwi           ne mii náa ki
  óó hò hóò            ó hóó hóò qóò
 
 ne ko twáa si ka     a si ká θoo na
- ó qó qóó  hò qóò    ò hó qó hòò hóò
+ ó qó  qóó hò qóò    ò hó qó hòò hóò
 
-nóo hi ka            ke moo píi mwaa ki
- óó hò qóò           (f)
+nóo hi ka
+ óó hò qóò
 
-ne swáa si ka        pa káa na ni
- ò hóó  hò qóò       (g)
+ne swáa si ka
+ ò  hóó hò qóò
 
-sáa ka               o θe θee hwáa hi
- óò qóò              (h)
+sáa ka
+ óò qóò
 
-me táa θwi           ne sáe θí pe na
-(a)                   ò hóò hó qò hóò
-
-nii swaa pí ta ki    ne me sko θí pe na
-(b)                  (i)
-
-má hkwa ha           ne na ka mó pe na
-(c)                  (j)
+                     ne sáe θí pe na
+                      ò hóò hó qò hóò
 
 níi htii θe          ne ne ma θó pe na
  óó qòò  hóò          ó hó hò hó qò hóò
 
-pii tí kee no        ke koo hkoo se mwáa ki
-(d)                  (k)
-
 ee hka tái naa hkwée ki
-òò qó  qóò hòò qóò  qóò
+òò  qó qóò hòò   qóò qóò
 ```
 
-The consonant rewrite rule is straightforward: if the consonant cluster contains [k, t, p], then it becomes [q]; otherwise it becomes [h]. Now we focus on the vowel rewrite.
+The consonant rewrite rule is straightforward: if the consonant cluster contains \{k, t, p} (i.e., voiceless stops), then it becomes [q]; otherwise it becomes [h]. Now we focus on the vowel rewrite.
 
-```plain
-é o i              e o á ee a
-ó ò óò             ó ò ó òò óò
+Based on my careful character alignment above, it appears that the last vowel always becomes [óò]:
 
-íi i               ái aa o ía i
-óò óò              óò òò ó óò óò
+1. V → óò / \_\_ #
 
-é i i              ee a ái aa ée i
-ó ò óò             òò ó óò òò óò óò
-
-íe i               o áa aa é e a
-óò óò              ò óò óó ó ò óò
-
-ía a i             e ii áa i
-óó ò óò            ó óó óò óò
-
-e o áa i a         a i á oo a
-ó ó óó ò óò        ò ó ó òò óò
-
-óo i a             e áa i a
-óó ò óò            ò óó ò óò
-
-áa a               e áe í e a
-óò óò              ò óò ó ò óò
-
-íi ii e            e e a ó e a
-óó òò óò           ó ó ò ó ò óò
-```
-
-It appears that the last vowel always becomes [óò], and V́ always becomes ó. Otherwise, single vowels turn into single mora, and double vowels turn into double mora, but their stress patterns are not preserved. To understand how stress patterns are rewritten, we need to list out all contexts of each vowel.
+All other single vowels turn into single mora, and double vowels turn into double mora. To understand how stress patterns are rewritten, we need to list out all contexts of each vowel (like we do in actual phonological analysis). Here I assume that the vowel rewrite can at most depend on the syllables before and after its syllable (in exams this needs to be by trial-and-error: first try the neighboring consonant; if it doesn't work then neighboring syllables).
 
 <table>
   <thead>
@@ -100,15 +66,138 @@ It appears that the last vowel always becomes [óò], and V́ always becomes ó.
     </tr>
   </thead>
   <tbody>
+    {/* prettier-ignore */}
     <tr>
-      <td>
-        nék
-        <br />
-      </td>
-      <td>
-        kot
-        <br />
-      </td>
+      <td># **né** ko<br /># **ne** no<br />no **htá** wee<br />kaa **θo** nía<br /># **né** θwi<br />skwaa **né** hkwe<br /># **ne** mii<br /># **ne** ko<br />ne **ko** twáa<br />a **si** ká<br />si **ká** θoo<br />sáe **θí** pe<br /># **ne** ne<br />ne **ne** ma<br />ma **θó** pe<br />ee **hka** tái</td>
+      <td>né **ko** ti <br />ne **no** htá<br />né **θwi** hi <br /># **o** θáa<br />né **hkwe** ya <br />nía **na** nwi <br />twáa **si** ka <br /># **a** si<br />nóo **hi** ka <br /># **ne** swáa<br />swáa **si** ka <br /># **ne** sáe<br />θí **pe** na <br />ne **ma** θó<br />θó **pe** na </td>
+      <td>θáa **skwaa** né<br /># **nía** na<br />ne **mii** náa<br />ko **twáa** si<br /># **nóo** hi<br />ne **swáa** si<br /># **níi** htii</td>
+      <td># **níi** swi<br /># **ái** kaa<br />θo **nía** ni<br /># **níe** wi<br />o **θáa** skwaa<br />mii **náa** ki<br /># **sáa** ka<br />ne **sáe** θí<br />hka **tái** naa<br />naa **hkwée** ki</td>
+      <td>htá **wee** wa<br />ái **kaa** θo<br />ká **θoo** na<br />níi **htii** θe<br /># **ee** hka<br />tái **naa** hkwée</td>
     </tr>
   </tbody>
 </table>
+
+Notice how stressed monophthongs only show up in the [ó] column. Complementary distribution is nice because it gives us a clear rule:
+
+2. V́ → ó
+
+Unfortunately, there still doesn't seem to be sufficient context for determining what unstressed single vowels turn into. We look ahead at one more syllable and only mark if it's the end of the word:
+
+<table>
+  <thead>
+    <tr>
+      <th>ó</th>
+      <th>ò</th>
+      <th>óó</th>
+      <th>óò</th>
+      <th>òò</th>
+    </tr>
+  </thead>
+  <tbody>
+    {/* prettier-ignore */}
+    <tr>
+      <td># **ne** no<br />kaa **θo** nía<br /># **ne** mii<br /># **ne** ko<br />ne **ko** twáa<br />a **si** ká<br /># **ne** ne<br />ne **ne** ma<br />ee **hka** tái</td>
+      <td>né **ko** ti #<br />ne **no** htá<br />né **θwi** hi #<br /># **o** θáa<br />né **hkwe** ya #<br />nía **na** nwi #<br />twáa **si** ka #<br /># **a** si<br />nóo **hi** ka #<br /># **ne** swáa<br />swáa **si** ka #<br /># **ne** sáe<br />θí **pe** na #<br />ne **ma** θó<br />θó **pe** na #</td>
+      <td>θáa **skwaa** né<br /># **nía** na<br />ne **mii** náa<br />ko **twáa** si<br /># **nóo** hi<br />ne **swáa** si<br /># **níi** htii</td>
+      <td># **níi** swi #<br /># **ái** kaa<br />θo **nía** ni #<br /># **níe** wi #<br />o **θáa** skwaa<br />mii **náa** ki #<br /># **sáa** ka #<br />ne **sáe** θí<br />hka **tái** naa<br />naa **hkwée** ki #</td>
+      <td>htá **wee** wa #<br />ái **kaa** θo<br />ká **θoo** na #<br />níi **htii** θe #<br /># **ee** hka<br />tái **naa** hkwée</td>
+    </tr>
+  </tbody>
+</table>
+
+Notice how this additional word-end boundary marker only appears in certain categories, so there come our rules:
+
+3. V → ò / \_\_ σ # (penultimate unstressed monophthong syllable turns into ò)
+4. V́V → óò / \_\_ σ # (penultimate stressed diphthong syllable turns into óò)
+5. VV → òò / \_\_ σ # (penultimate unstressed diphthong syllable turns into òò)
+
+<table>
+  <thead>
+    <tr>
+      <th>ó</th>
+      <th>ò</th>
+      <th>óó</th>
+      <th>óò</th>
+      <th>òò</th>
+    </tr>
+  </thead>
+  <tbody>
+    {/* prettier-ignore */}
+    <tr>
+      <td># **ne** no<br />kaa **θo** nía<br /># **ne** mii<br /># **ne** ko<br />ne **ko** twáa<br />a **si** ká<br /># **ne** ne<br />ne **ne** ma<br />ee **hka** tái</td>
+      <td>ne **no** htá<br /># **o** θáa<br /># **a** si<br /># **ne** swáa<br /># **ne** sáe<br />ne **ma** θó</td>
+      <td>θáa **skwaa** né<br /># **nía** na<br />ne **mii** náa<br />ko **twáa** si<br /># **nóo** hi<br />ne **swáa** si<br /># **níi** htii</td>
+      <td># **ái** kaa<br />o **θáa** skwaa<br />ne **sáe** θí<br />hka **tái** naa</td>
+      <td>ái **kaa** θo<br /># **ee** hka<br />tái **naa** hkwée</td>
+    </tr>
+  </tbody>
+</table>
+
+Notice how in the [ò] column, the immediately following syllable always begins with \{s, θ, h} (i.e., a voiceless fricative), and none of those in the [ó] column do. The same observation holds in the [òò] column—these are all unstressed diphthongs, and the unstressed diphthongs in [óó] are never followed by a voiceless fricative. This gives us a few more rules which fully determine monophthong rewrite and unstressed diphthong rewrite:
+
+6. V → ò / \_\_ \{s, θ, h}
+7. V → ó / otherwise
+8. VV → òò / \_\_ \{s, θ, h}
+9. VV → óó / otherwise
+
+As for the stressed diphthongs, no obvious rule holds. This is kind of crazy but at this point we need to look ahead _one more syllable_ and mark if it's the antepenultimate syllable (who even thought it's a good idea??).
+
+<table>
+  <thead>
+    <tr>
+      <th>óó</th>
+      <th>óò</th>
+    </tr>
+  </thead>
+  <tbody>
+    {/* prettier-ignore */}
+    <tr>
+      <td># **nía** na \_\_ #<br />ko **twáa** si \_\_ #<br /># **nóo** hi \_\_ #<br />ne **swáa** si \_\_ #<br /># **níi** htii \_\_ #</td>
+      <td># **ái** kaa \_\_ \_\_<br />o **θáa** skwaa \_\_ \_\_<br />ne **sáe** θí \_\_ \_\_<br />hka **tái** naa \_\_ \_\_</td>
+    </tr>
+  </tbody>
+</table>
+
+Yes, I do expect to need to lookahead one syllable instead of one consonant; even two syllables sound reasonable, but 3 syllables is definitely too much. Anyway, once you do this, the rule is straightforward:
+
+10. V́V → óó / \_\_ σ σ # (stressed diphthongs in the antepenultimate syllable turn into óó)
+11. V́V → óò / otherwise
+
+To recap, I've reordered the rules and merged them:
+
+1. V → óò / \_\_ #
+2. V́ → ó
+3. V(V) → ò(ò) / \_\_ σ #
+4. V(V) → ò(ò) / \_\_ \{s, θ, h}
+5. V(V) → ó(ó) / otherwise
+6. V́V → óó / \_\_ σ σ #
+7. V́V → óò / otherwise
+8. C → ∅ / # \_\_ (i.e., initial consonant is dropped)
+9. C…C → q / contains \{k, t, p}
+10. C…C → h / otherwise
+
+Once we have these, the problem is straightforward:
+
+| Rule | (a) me táa θwi | (b) nii swaa pí ta ki | (c) má hkwa ha | (d) pii tí kee no |
+| --- | --- | --- | --- | --- |
+| 1–2 | me táa θw**óò** | nii swaa p**ó** ta k**óò** | m**ó** hkwa h**óò** | pii t**ó** kee n**óò** |
+| 3–5 | m**ó** táa θwóò | n**òò** sw**óó** pó t**ò** kóò | mó hkw**ò** hóò | p**óó** tó k**òò** nóò |
+| 6–7 | mó t**óò** θwóò | nòò swóó pó tò kóò | mó hkwò hóò | póó tó kòò nóò |
+| 8–10 | ó qóò hóò | òò hóó qó qò qóò | ó qò hóò | óó qó qòò hóò |
+| Final | óqóòhóò | òòhóóqóqòqóò | óqòhóò | óóqóqòòhóò |
+
+| Rule | (e) ne sía naa te θi kwée ni | (f) ke moo píi mwaa ki | (g) pa káa na ni | (h) o θe θee hwáa hi |
+| --- | --- | --- | --- | --- |
+| 1–2 | ne sía naa te θi kwée n**óò** | ke moo píi mwaa k**óò** | pa káa na n**óò** | o θe θee hwáa h**óò** |
+| 3–5 | n**ò** sía n**óó** t**ò** θ**ó** kwée nóò | k**ó** m**óó** píi mw**òò** kóò | p**ó** káa n**ó** nóò | **ò** θ**ò** θ**òò** hwáa hóò |
+| 6–7 | nò s**óò** nóó tò θó kw**óò** nóò | kó móó p**óó** mwòò kóò | pó k**óó** nó nóò | ò θò θòò hw**óò** hóò |
+| 8–10 | ò hóò hóó qò hó qóò hóò | ó hóó qóó hòò qóò | ó qóó hó hóò | ò hò hòò hóò hóò |
+| Final | òhóòhóóqòhóqóòhóò | óhóóqóóhòòqóò | óqóóhóhóò | òhòhòòhóòhóò |
+
+| Rule | (i) ne me sko θí pe na | (j) ne na ka mó pe na | (k) ke koo hkoo se mwáa ki | (L2) nii swáa si ka |
+| --- | --- | --- | --- | --- |
+| 1–2 | ne me sko θ**ó** pe n**óò** | ne na ka m**ó** pe n**óò** | ke koo hkoo se mwáa k**óò** | nii swáa si k**óò** |
+| 3–5 | n**ó** m**ò** sk**ò** θó p**ò** nóò | n**ó** n**ó** k**ó** mó p**ò** nóò | k**ó** k**òò** hk**òò** s**ó** mwáa kóò | n**òò** swáa s**ò** kóò |
+| 6–7 | nó mò skò θó pò nóò | nó nó kó mó pò nóò | kó kòò hkòò só mw**óò** kóò | nòò swóó s**ò** kóò |
+| 8–10 | ó hò qò hó qò hóò | ó hó qó hó qò hóò | ó qòò qòò hó hóò qóò | òò hóó hò qóò |
+| Final | óhòqòhóqòhóò | óhóqóhóqòhóò | óqòòqòòhóhóòqóò | òòhóóhòqóò |
