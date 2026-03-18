@@ -294,6 +294,23 @@ export default function About(): ReactNode {
           </ul>
         </Timeline.Item>
       </Timeline>
+      <Heading level={2}>Writeups</Heading>
+      <p>
+        I do competition problems and publish detailed writeups. (By the way,
+        have you tried the little command line at the bottom right? You may just
+        have seen the tip of the iceberg of the content this site hosts.)
+      </p>
+      <ul>
+        <li>
+          <Link href="/notes/naclo/">
+            NACLO (North American Computational Linguistics Open Competition)
+            since 2022
+          </Link>
+        </li>
+        <li>
+          <Link href="/notes/aoc/">AoC (Advent of Code) since 2019</Link>
+        </li>
+      </ul>
       <aside style={{ textAlign: "right", fontStyle: "italic" }}>
         Design ideas from: Nina Liu
       </aside>
