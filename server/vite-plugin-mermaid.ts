@@ -1,4 +1,4 @@
-import { type Plugin, transformWithEsbuild } from "vite";
+import { type Plugin, transformWithOxc } from "vite";
 import FS from "node:fs/promises";
 import Path from "node:path";
 import puppeteer from "puppeteer";
@@ -26,7 +26,7 @@ async function diagramCode({
   lightSVG: string;
   darkSVG: string;
 }): Promise<string> {
-  const result = await transformWithEsbuild(
+  const result = await transformWithOxc(
     `import { useColorMode } from "@/context/ColorMode";
 
 export default function Diagram() {
@@ -36,7 +36,7 @@ export default function Diagram() {
 }
 `,
     id,
-    { loader: "tsx", target: "esnext" },
+    { lang: "tsx", sourceType: "module" },
   );
   return result.code;
 }
