@@ -1,9 +1,64 @@
 ---
-tags: []
+tags:
+  - Phonology
 ---
 
 # I Know a Szpőt
 
-{/* cSpell:ignore Szpőt */}
+{/* cSpell:ignore Szpőt Munkács Temesvár Nyíregyháza Csíkfalva Nagybánya Nagyszombat Győr Elyüs Harkány Banja Luka Poszony Sopron Hajdúböszörmény Ploiesti Mukachevo Ploiești Kecskemét Eisenstadt Kismarton Martfű Romá Eperjes Prešov Kragujevac Kutyfalva Cuci Kutyfalvá Brailá Brăila Búzaháza Grâuşorul Búzaházá Galati Galaţi Galași Nyíregyházá Locsmánd Lutzmannsburg */}
 
-TODO
+Obviously there's alternation in the pattern of the locative suffix, but generally the suffix is directly attached to the root. List out each possibility and all corresponding roots:
+
+<table>
+  <tr>
+    <th>-ra</th>
+    <th>-re</th>
+    <th>-ba</th>
+    <th>-be</th>
+  </tr>
+  {/* prettier-ignore */}
+  <tr>
+    <td>Munkács<br />Temesvár<br />Nyíregyháza (a# → á)<br />Csíkfalva (a# → á)<br />Szabadka (a# → á)<br />Nagybánya (a# → á)<br />Nagyszombat</td>
+    <td>Budapest<br />Szeged<br />Győr<br />Elyüs</td>
+    <td>Harkány<br />Banja Luka (a# → á)<br />Poszony<br />Sopron<br />Ottawa (a# → á)</td>
+    <td>Hajdúböszörmény<br />Nis<br />Ploiesti<br />Miami</td>
+  </tr>
+</table>
+
+The first pattern is clear: if the root ends with "a", then it changes to "á".
+
+Then we see if the four suffixes have complementary distributions. The final consonant doesn't work, because -s is in "-ra", "-re", and "-be". The final vowel also doesn't work, because á is present in both -ra and -ba. Beyond that, the rule would become unnatural. However, we are at least partially on the right track with last vowel. Note that -ra and -ba all co-occur with "á", "a", "o", while -re and -be all co-occur with "e", "ő", "ü", "é", "i". The former group are all back vowels, while the latter group are all non-back vowels ("ő" and "ü", as the problem states, are also fronted versions of "o" and "u"). So the vowel part of the suffix is determined by the backness of the last vowel in the root.
+
+Determination of the consonant really needs a bit more squinting. Notice how the right two columns have remarkably fewer diacritics than the left two columns. Indeed, looking closer, the -ra and -re columns all contain Hungarian cities—there are other countries like Ukraine, Romania, Serbia, and Slovakia in this list, but as the problem states:
+
+> Hungary historically controlled many lands in Central and Southeastern Europe, including many parts of what are now modern Slovakia, Romania, Croatia, Bosnia and Herzegovina, Serbia, Austria, and Ukraine; consequently, Hungarian is spoken as a minority language in all of these countries.
+
+So it turns out that this historical factoid isn't useless :)
+
+However, we have three _Hungarian_ cities in the -ba/-be columns: Harkány, Hajdúböszörmény, and Sopron. These names all end in a nasal, while none of the -ra/-re cities end in a nasal. So the -ra/-re suffixes are only used for Hungarian cities that end in a non-nasal, while the -ba/-be suffixes are used for all other cities. (Very weird rule that combines both semantics and phonology.)
+
+To recap, we've found three rules:
+
+1. If the root ends in "a", change it to "á".
+2. If the city is Hungarian and ends in a non-nasal, add -r. Otherwise, add -b.
+3. If the last vowel in the root is back, add -a. Otherwise, add -e.
+
+Determination of a city's ethnicity is hard, but any country not in the list above (Hungary, Slovakia, Romania, Croatia, Bosnia and Herzegovina, Serbia, Austria, and Ukraine) is definitely not Hungarian; for the remaining non-Hungarian cities, one could claim that -ra and -re are used for names that are natively in Hungarian, while -ba and -be are used for names translated from other languages. Therefore, a good rule of thumb is to look at the English name, which is always translated from the local language. If the English name matches the Hungarian name (for non-Hungarian cities), then it's a translated name and gets -ba/-be; otherwise, it's a native name and gets -ra/-re. For example, "Munkács" is very different from "Mukachevo", so the former is a Hungarian name while the latter is a Ukrainian name. "Ploiesti" looks similar enough to "Ploiești" that it's probably a name translated from Romanian, so it gets -be.
+
+Since there aren't official solutions, I have to verify these answers with Google Translate.
+
+a. Kecskemét (Kecskemét, Hungary) → Kecskemét**re** (Hungarian and not nasal, "é" is non-back)  
+b. Kismarton (Eisenstadt, Austria) → Kismarton**ba** (nasal, "o" is back)  
+c. Debrecen (Debrecen, Hungary) → Debrecen**be** (nasal, "e" is non-back)  
+d. Martfű (Martfű, Hungary) → Martfű**re** (Hungarian and not nasal, "ű" is non-back)  
+e. Lviv (Lviv, Ukraine) → Lviv**be** (not Hungarian, "i" is non-back)  
+f. Roma (Rome, Italy) → Romá**ba** (not Hungarian, "a" is back, ending "a" changes)  
+g. Eperjes (Prešov, Slovakia) → Eperjes**re** (Hungarian and not nasal, "e" is non-back)  
+h. Kragujevac (Kragujevac, Slovakia) → Kragujevac**ba** (not Hungarian, "a" is back)  
+i. London (London, UK) → London**ba** (not Hungarian, "o" is back)  
+j. Kutyfalva (Cuci, Romania) → Kutyfalvá**ra** (Hungarian and not nasal, "a" is back, ending "a" changes)  
+k. Braila (Brăila, Romania) → Brailá**ba** (not Hungarian, "a" is back, ending "a" changes)  
+l. Búzaháza (Grâuşorul, Romania) → Búzaházá**ra** (Hungarian and not nasal, "a" is back, ending "a" changes)  
+m. Galati (Galaţi, Romania) → Galati**be** (not Hungarian, "i" is non-back) - but Google translate says "Galati**ra**", and also "Galași**ba**" if I put in "Galaţi" instead of "Galati", so this is all very confusing.  
+n. Nyíregyháza (Nyíregyháza, Hungary) → Nyíregyházá**ra** (Hungarian and not nasal, "a" is back, ending "a" changes)  
+o. Locsmánd (Lutzmannsburg, Austria) → Locsmánd**ra** (Hungarian and not nasal, "a" is back)

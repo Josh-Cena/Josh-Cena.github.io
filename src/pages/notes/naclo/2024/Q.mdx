@@ -1,7 +1,101 @@
 ---
-tags: []
+tags:
+  - Number system
 ---
 
 # From 1 to 276
 
-TODO
+{/* cSpell:ignore hune’ lahunh yox hunlahunh sb’alunh kanh skab’lahunh huj shuj kanhlahunh swaj ox slahunh wajlahunh skanhlahunh hunlahunh b’alunh yoxk’al lahun yoxlahunhk’al */}
+
+First look at the phrases. All of the phrases are 1 or 2 words, and all words end with either "k’al" or "eb’" ("hune’" is "eb’" with "b" dropped), and the latter comes before the former if there are 2 words. This suggests that we are dealing with three kinds of phrases:
+
+- $a\cdot x + b$
+- $a\cdot x$
+- $b$
+
+where $x$ is the base. Now we need to figure out the base system. The numbers go up to 276, so it's probably not base 10, since we would need 3 words to represent numbers greater than 100. The default to try is base 20 (bases 5, 10, 20 are the most common). If base 20, then 1, 4, 7, 9, 16 would be $b$ and 20, 60, 220 would be $a\cdot x$. Indeed we have 5 words ending with "eb’" and 3 words ending with "k’al". So "k’al" marks the twenties digit and "eb’" marks the units digit. Also note the other two morphological patterns:
+
+- In the two-word phrases, the second word always begins with "s" _except_ for "yoxk’al".
+- There are some number words after which we can add "-lahunh" to get another number word, such as "hun" + "lahunh" = "hunlahunh".
+
+This means "-lahunh" is probably a subbase, because in base 20 systems, it's often intractable to have 19 distinct words for the digits, so each digit is further represented using a subbase.
+
+Now let's group the phrases by the three types and decompose the numbers:
+
+<table>
+  <thead>
+    <tr>
+      <th colSpan="2">$a\cdot x + b$</th>
+      <th colSpan="2">$a\cdot x$</th>
+      <th colSpan="2">$b$</th>
+    </tr>
+    <tr>
+      <th>Phrases</th>
+      <th>Values</th>
+      <th>Phrases</th>
+      <th>Values</th>
+      <th>Phrases</th>
+      <th>Values</th>
+    </tr>
+  </thead>
+  {/* prettier-ignore */}
+  <tr>
+    <td>lahunh-eb’ yox-k’al<br />hun-lahunh-eb’ s-b’alunh-k’al<br />kanh-eb’ s-kab’-lahunh-k’al<br />huj-eb’ s-huj-k’al<br />kanh-lahunh-eb’ s-waj-k’al<br />ox-eb’ s-lahunh-k’al<br />waj-lahunh-eb’ s-kanh-lahunh-k’al</td>
+    <td>50 = 2×20+10<br />114 = 5×20+14<br />127 = 6×20+7<br />171 = 8×20+11<br />183 = 9×20+3<br />224 = 11×20+4<br />276 = 13×20+16</td>
+    <td>ox-k’al<br />hun-k’al<br />hun-lahunh-k’al</td>
+    <td>20 = 1×20<br />60 = 3×20<br />220 = 11×20</td>
+    <td>b’alunh-eb’<br />huj-eb’<br />hun-e’<br />waj-lahunh-eb’<br />kanh-eb’</td>
+    <td>1<br />4<br />7<br />9<br />16</td>
+  </tr>
+</table>
+
+A trick is that whenever you see a special case, it's probably 1 (or 0, but we don't have 0 here). So "hun-e’" is 1. In the $a\cdot x + b$ column, we have three phrases with b = 4, 7, 16, and indeed we see "huj-eb’", "waj-lahunh-eb’", and "kanh-eb’" from the $b$ column here as well. So these three phrases mean 4, 7, and 16 in some order, leaving "b’alunh-eb’" to be 9. Because "waj-lahunh-eb’" is the only one in this column that uses a subbase, it's the largest number—16. So the subbase "-lahunh" is 10 (like bases, subbases are commonly 5 or 10), with "waj" being 6.
+
+Notice how in the $a\cdot x + b$ column, the morphemes before "eb’" closely resemble the morphemes before "k’al", so the digit morphemes are consistent. However, there are two problems with saying that words are just _b_-eb’ s-_a_-k’al:
+
+1. The _a_ values in $a\cdot x + b$ have a single overlap (9) with the $b$ column. However in fact, we see b’alunh and huj, two overlapping morphemes.
+2. There's a word called "huj-eb’ s-huj-k’al", but we have no number for which _a_ = _b_.
+
+Therefore, it suggests that at least one of _a_ and _b_ isn't represented by the same morpheme as when it appears alone (or we got the base wrong, but we've done well so far, so we'd rather not redo the whole thing). Because 4, 7, 16 do match between $a\cdot x + b$ and $b$, it's more likely that _a_ is represented by a different morpheme, which means we can still trust the $b$ digits to match.
+
+If "hun" is 1 and "-lahunh" is 10, then "hun-lahunh" is 11. So "hun-lahunh-k’al" is 220 while "hun-k’al" is 20, which leaves "ox-k’al" as 60. So "ox" is 3. That means "ox-eb’ s-lahunh-k’al" is 183 = 9×20+3, so "s-lahunh-k’al" is 9. We already know that "lahunh" is 10, so s-_a_-k’al = (_a_ - 1)×20. Indeed, this theory works, because "huj-eb’ s-huj-k’al" would correspond to 127 = 6×20+7, with "huj" = 7.
+
+If "hun-lahunh" is 11, then "hun-lahunh-eb’ s-b’alunh-k’al" is 171 = 8×20+11, so "b’alunh" = 9. Now go back to the $b$ column. The only remaining number is 4, which must be "kanh-eb’", so "kanh" = 4. Therefore "kanh-eb’ s-kab’-lahunh-k’al" = 224 = 11×20+4, giving "kab’" = 2. "kanh-lahunh-eb’ s-waj-k’al" and "waj-lahunh-eb’ s-kanh-lahunh-k’al" are also fully decoded to be 114 = 5×20+14 and 276 = 13×20+16, which are consistent with previous conclusions. The last phrase, "lahunh-eb’ yox-k’al", must be 50 = 2×20+10, so "yox" is just "s-ox".
+
+To recap:
+
+- Digits: hun = 1, kab’ = 2, ox = 3, kanh = 4, ? = 5, waj = 6, huj = 7, ? = 8, b’alunh = 9
+- From 1 to 9: _a_ = _a_-eb’ (for example 4 = kanh-eb’). Special: 1 = hun-e’ instead of hun-eb’.
+- lahunh = 10
+- From 11 to 19: 10+_a_ = _a_-lahunh (for example 11 = hun-lahunh)
+- Multiples from 20 to 380: *a*×20 = _a_-k’al (for example 60 = ox-k’al)
+- Other numbers above 20 and below 380: *a*×20+_b_ = _b_-eb’ s-(_a_+1)-k’al (for example 183 = ox-eb’ s-lahunh-k’al). We don't know what happens when _a_ = 19 because there's no digit for 20. Special: when _a_ = 2, "yox-k’al" is used instead of "s-ox-k’al".
+
+1. G
+2. D
+3. K
+4. C
+5. N
+6. J
+7. H
+8. I
+9. L
+10. A
+11. E
+12. F
+13. M
+14. O
+15. B
+
+For Q2:
+
+- kab’-eb’ = 2
+- ox-lahun-k’al = (10+3)×20 = 260
+- ox-lahunh-eb’ s-waj-lahunh-k’al = (10+3) + (6+10-1)×20 = 313
+
+For Q3:
+
+- 14 = 10+4 = kanh-lahunh-eb’
+- 137 = (10+7) + (7-1)×20 = huj-lahunh-eb’ s-huj-k’al
+- 162 = 2 + (9-1)×20 = kab’-eb’ s-b’alunh-k’al
+- 241 = 1 + (13-1)×20 = hun-eb’ s-ox-lahunh-k’al = hune’ yoxlahunhk’al

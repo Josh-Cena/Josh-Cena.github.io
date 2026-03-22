@@ -1,7 +1,49 @@
 ---
-tags: []
+tags:
+  - Computational
 ---
 
 # aLLMost, but not quite
 
-TODO
+For J1, just match the two sides based on the keywords' topics. I did 2, 3, 5, 7, and 8 first:
+
+2\. Mentioned "stock", so categorized as "financial". **A**  
+3\. Mentioned "stitch", so categorized as "medical". **C**  
+5\. Mentioned "Will". **B**  
+7\. Mentioned "play", so categorized as "music streaming". **G**  
+8\. Mentioned "parties" and "speaker", so categorized as "political". **D**
+
+Now we have 1, 4, 6 left, and D, E unused. 1 mentions "date", so it's categorized as "relationship". **F**. 4 mentions "free trial" and "expire" which seems sufficiently like legal domain, so **E** (because the other one is even less like legal). However I'm not sure about 6. It mentioned "cold" and "summer", so perhaps "medical" again. **C**
+
+J2 is also straightforward.
+
+(ab) "bee made of honey" = N1 MAKE N2. Correct: "bee that makes honey" = N2 MAKE N1  
+(cd) "video that is music" (can't be "have" because the response says "audio-only") = N2 BE N1. Correct: "video that has music" = N2 HAVE N1  
+(ef) "engine that is part of steam" = "steam has engine" = N1 HAVE N2 (can't be "be" because the response says "part of" not "is"). Correct: "engine that uses steam" = N2 USE N1. Might also be "engine that produces steam" = N2 MAKE N1.  
+(gh) "oil that makes olives" = N2 MAKE N1. Correct: "oil made of olives" = N1 MAKE N2
+
+Solutions:
+
+J1:
+
+1. F
+2. A
+3. C
+4. E
+5. B
+6. C
+7. G
+8. D
+
+(Other possibilities may work as well)
+
+J2:
+
+a. N1 MAKE N2  
+b. N2 MAKE N1  
+c. N2 BE N1  
+d. N2 HAVE N1  
+e. N1 HAVE N2  
+f. N2 MAKE N1; N2 USE N1  
+g. N2 MAKE N1  
+h. N1 MAKE N2

@@ -12,6 +12,7 @@ argmin
 aria-roledescription
 articulatorily
 Ausbau
+backness
 backquote
 bain
 bigrams
@@ -73,11 +74,15 @@ elems
 elif
 emboard
 endl
+endonym
+endonyms
 envir
 eshost
 eslintcache
 estree
 esvu
+exonym
+exonyms
 façade
 failwith
 fianchetto
@@ -117,6 +122,7 @@ injectivity
 Intcode
 interm
 interpretability
+intervocalicly
 isize
 iteri
 itertools
@@ -165,6 +171,8 @@ nerfed
 networkx
 newdata
 newtype
+nominalized
+nominalizer
 noninteractive
 noreply
 nowrap
@@ -181,6 +189,7 @@ overengineered
 pandoc
 peaceiris
 perlbrew
+phonotactics
 pipeable
 pmax
 popleft

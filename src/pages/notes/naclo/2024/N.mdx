@@ -1,7 +1,91 @@
 ---
-tags: []
+tags:
+  - Computational
+  - Puzzle
 ---
 
 # A Trip Down Memory Lane
 
-TODO
+The 4th unit increases monotonically to the right, and it increases by the number of letters in each word it just saw, so it's a letter-counting unit. I don't know why an RNN would encode this information, though.
+
+Now we are matching 9 plots. We can tabulate all words:
+
+| # | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | The | dog | and | the | ravens | support | the | happy | yaks |
+| 2 | The | American | knows | the | very | energetic | dog | is | smart |
+| 3 | The | raven | that | the | crows | admire | visits | the | poet |
+| 4 | This | surprised | the | tall | ostriches | that | supported | the | horse |
+| 5 | The | dogs | near | the | owl | that | sings | are | Canadian |
+| 6 | The | happy | penguins | support | the | zebras | that | invented | this |
+| 7 | She | supports | the | horse | that | the | fast | zebra | entertains |
+| 8 | The | speedy | sloth | knows | the | dog | and | the | yak |
+| 9 | The | impressive | yaks | meet | the | dog | and | the | gazelles |
+
+Start with U4 because most of the curves are flat; only D has a rise at the end and I has a rise at the very beginning. 7 out of 9 sentences start with "the", so U4 must track something about the other two words: "this" and "she". It happens that "this" appears once at the beginning and once at the end, so U4 probably records whether the word is "this", and **4 = I**, **6 = D**.
+
+Now turn to U3. It is flat for 4 sentences. G and I have a single peak at the 6th word, D has a single peak at the 7th word, A has a plateau from 3 to 7, and C has a rise from 5 to the end (remember that a rise or fall from the nth to the (n+1)-th word is caused by the (n+1)-th word, because at the nth word the RNN doesn't know that a change is coming yet).
+
+Look at words that appeared in the 6th, 7th, 3rd, and 5th positions. "that" matches all these positions and even the number of appearances, and it never appears anywhere else, so U3 must rise when the word is "that". This allows us to match **3 = A**, **4 = I**, **5 = G**, **6 = D**, **7 = C** (4 and 5 are distinguished because of U4). Unlike U4 though, U3 doesn't fall immediately, so we need to explain why for sentence 3, it only falls until the 7th word, and for sentence 7, it stays high until the end. Notice that in the other three sentences, "that" is immediately followed by a verb, i.e., the subject is the gap replaced by "that"; in sentences 3 and 7, the object is replaced instead, and the fall comes exactly after the verb, just when the clause is closed and a missing object is detected. Therefore, U3 rises on "that" and falls when the dependency is closed (i.e., the gap has been detected).
+
+U1 and U2 are more difficult—for one, they can take 3 values instead of just 0 and 1. For U2, note that once it moves away from 0, it never returns. We can use our existing matches to figure out what may be causing each change. Below, I use CAPITAL for words with U2 = 1, lowercase for words with U2 = -1, and (parentheses) for words with U2 = 0.
+
+| # | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 3 | (The) | RAVEN | THAT | THE | crows | admire | VISITS | THE | POET |
+| 4 | THIS | SURPRISED | THE | TALL | ostriches | that | supported | the | HORSE |
+| 5 | (The) | dogs | near | the | OWL | THAT | SINGS | are | canadian |
+| 6 | (The) | (happy) | penguins | support | the | zebras | that | invented | THIS |
+| 7 | SHE | SUPPORTS | THE | HORSE | THAT | THE | FAST | ZEBRA | ENTERTAINS |
+
+Notice how the level only changes when a noun or verb is reached. For example, 3 and 5 rise on the second word because the first word is "the"; 6 rises on the third word because the first two words are "the happy"; 4 and 7 directly start with a noun, so the level rises immediately. Therefore, this level encodes something about the noun—naturally, we think about subject-verb agreement. Indeed, the value is 1 for 3rd singular subjects ("raven", "this", "she", etc.) and -1 for others ("crows", "dogs", etc.). Therefore, this unit remembers whether the verb needs "-s" or not. 1 means that the verb needs "-s", -1 means that it doesn't, and 0 means that no noun has been seen yet. It updates whenever it sees a verb or noun. In the remaining sentences, 1 has a singular noun at 2nd position followed by a plural noun at 5th position (the subject is eventually plural, but the RNN can't know that yet on the 2nd word); 2 has a singular noun at 2nd position; 8 has a singular noun at 3rd position; and 9 has a plural noun at 3rd position. Therefore **1 = B**, **2 = E**, **8 = F**, **9 = H**. We have already matched all pairs:
+
+1. B
+2. E
+3. A
+4. I
+5. G
+6. D
+7. C
+8. F
+9. H
+
+We still have U1 left to explain, which isn't necessary for N2 but helps for N3. If U2 is for subject-verb agreement, then we have one important problem to solve: what about embedded clauses? For example, in 3 "The raven that the crows admire visits the poet", by the time "visits" is reached, U2 is already turned to -1 by "crows", so we can't possibly retain information about "raven" to know that we need a "-s" here. So very naturally, U1 must be a "backup memory" that retains agreement information for the matrix clause if U2 must be overwritten by an embedded clause. Here we only have two slots: U1 and U2, so we can at most process one level of clause embedding. If we have more (as in "the boy [that the dog [that has yellow fur] chases] cries"), we would need more units to store each level because they all need to be remembered at the same time.
+
+Indeed, this hypothesis explains the behavior of U1. Its first level change is always synchronized with U2, and upon seeing an embedded subject, U2 changes but U1 remains the same, therefore allowing memory about the matrix subject to be retained. To be more precise, we do what we did for U2:
+
+| # | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | (The) | DOG | AND | THE | ravens | (support) | (the) | (happy) | (yaks) |
+| 2 | (The) | AMERICAN | (knows) | (the) | (very) | (energetic) | DOG | (is) | (smart) |
+| 3 | (The) | RAVEN | THAT | THE | CROWS | ADMIRE | (visits) | (the) | (poet) |
+| 4 | THIS | (surprised) | (the) | (tall) | (ostriches) | (that) | (supported) | (the) | (horse) |
+| 5 | (The) | dogs | near | the | owl | that | sings | (are) | (Canadian) |
+| 6 | (The) | (happy) | penguins | (support) | (the) | (zebras) | (that) | (invented) | (this) |
+| 7 | SHE | (supports) | (the) | (horse) | (that) | (the) | (fast) | (zebra) | (entertains) |
+| 8 | (The) | (speedy) | SLOTH | (knows) | (the) | DOG | AND | THE | YAK |
+| 9 | (The) | (impressive) | yaks | (meet) | (the) | (dog) | (and) | (the) | (gazelles) |
+
+So, without thinking about it too deeply, U1 starts at 0, and when it's 0, it changes to 1 or -1 upon the first noun encountered, and may update later due to "and" but not due to "that". It persists the value for the whole noun phrase, including any embedded clauses. When it sees the _matching_ verb, it restores to 0, allowing it to track the next subject.
+
+Now for N3.
+
+a. U4 never changes, so no "this". U3 never changes, so no "that". This means U1 and U2 are equivalent. U1 is (0, 1, -1, 0, 0), so the subject agreement happens at the 4th word and is plural. So at least we can be sure that the sentence looks like "The \_\_\_\_ [plural noun] [plural verb] [something]", but we need something in the second position that can cause U1 and U2 to both change to 1, but still be immediately followed by a noun. This would be a noun-noun compound. Remember in [J](./J.mdx) we already talked about them. For example, one answer: "The honey bees dance around".
+
+b. U4 never changes, so no "this". U3 rises at the 3rd word and falls at the 7th, so we have "\_\_\_\_ \_\_\_\_ [that \_\_\_\_ \_\_\_\_ \_\_\_\_] \_\_\_\_ \_\_\_\_ \_\_\_\_" where the embedded clause is missing the object (other structures may work, for example the three blanks may continue to be in the embedded clause just after the object, but I've picked the simpler construction). U2 tells us that the matrix subject is at position 2 and is singular, matrix verb is at position 7, embedded subject is at position 5 and is plural, and embedded verb is at position 6. There's also another plural noun at the very end. Therefore, the sentence looks like "The [singular noun] that the [plural noun] [plural verb] [singular verb] the [plural noun]", and one answer is "The dog that the students admire chases the cat".
+
+c. U4 is negative at the beginning, which we've never seen. There's another peak at position 8. U3 has a single peak at 5, so 5 is "that" immediately followed by a verb. U1 and U2 tell us that the matrix and embedded subjects are both plural, and the matrix subject is at position 1, matrix verb at position 7. U2 also tells us that there's another singular noun beginning at position 8. The template is: "[plural noun 4 words] that [plural verb] [plural verb] this [singular noun]". I hypothesize that U4 = -1 means a plural determiner (just like U4 = 1 is the singular determiner "this"), so the first word should be "these" or "those". One answer is "These big white cats that sleep ignore this dog".
+
+In N4, we already know that U3 is for "that" and the gap.
+
+a. The story that she told my cousin was exciting = (0, 0, 1, 1, 1, 1, 1, 0, 0) (gap comes immediately after "my cousin", because "she told my cousin the story")  
+b. The story that she told to my cousin was exciting = (0, 0, 1, 1, 0, 0, 0, 0, 0) (gap comes immediately after "told", because "she told the story to my cousin")
+
+In N5, we've already analyzed the roles of U1 and U2, with U1 acting as a backup memory for the matrix subject when an embedded clause is encountered, and U2 tracking the current subject-verb agreement. Therefore, with both off, the performance is always by chance: (d) = 50%/50%. With only U2 on, the agreement always happens with the closest noun: (b) = 0%/100%. With only U1 on, performance already reduces to chance on seeing "that" (I don't know why, but evident from the other two examples): (c) = 50%/50%. With both on, the agreement should be "correct", but there's no single correct answer here, and our RNN is definitely not smart enough to understand structural ambiguity: it just picks one parsing. Looking at "The dogs near the owl that sings are Canadian", we see that the RNN considers "that" to attach to the second noun, so here the agreement is with "zebras": (a) = 0%/100%.
+
+a. 0% 100%  
+b. 0% 100%  
+c. 50% 50%  
+d. 50% 50%
+
+In (e), we need the closest noun to be singular but the actual agreement to be plural, without invoking embedding (which can still be captured by U1) and without using too many words (only 5 permitted). One easy way out is **"The cat and the dog"**, because we've seen that each part of "and" is able to influence U1 and U2 in "The dog and the ravens", but we've never seen its capability to deduce that two singulars joined with "and" make a plural (otherwise U1 and U2 should already have changed to -1 upon seeing "and", instead of only changing on "ravens"), so presumably, using two singulars can trick the RNN.
