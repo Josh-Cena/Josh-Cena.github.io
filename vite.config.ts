@@ -10,8 +10,10 @@ import remarkMDXFrontmatter from "remark-mdx-frontmatter";
 import rehypeKatex from "rehype-katex";
 import { visualizer } from "rollup-plugin-visualizer";
 import mermaidPlugin from "./server/vite-plugin-mermaid.ts";
+import rehypeAOC from "./server/markdown/rehype-plugin-aoc.ts";
+import rehypeBlog from "./server/markdown/rehype-plugin-blog.ts";
+import rehypeNACLO from "./server/markdown/rehype-plugin-naclo.ts";
 import remarkAOC from "./server/markdown/remark-plugin-aoc.ts";
-import remarkBlog from "./server/markdown/remark-plugin-blog.ts";
 import remarkCanvas from "./server/markdown/remark-plugin-canvas.ts";
 import remarkExtractTitle from "./server/markdown/remark-plugin-extract-title.ts";
 import remarkLocalImage from "./server/markdown/remark-plugin-local-image.ts";
@@ -29,7 +31,6 @@ export default defineConfig({
           remarkMath,
           remarkFrontmatter,
           remarkAOC,
-          remarkBlog,
           remarkCanvas,
           remarkExtractTitle,
           remarkLocalImage,
@@ -46,6 +47,9 @@ export default defineConfig({
                 errorCode === "unicodeTextInMathMode" ? "ignore" : "warn",
             },
           ],
+          rehypeAOC,
+          rehypeBlog,
+          rehypeNACLO,
         ],
         providerImportSource: "@mdx-js/react",
       }),

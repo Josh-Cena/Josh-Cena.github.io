@@ -1,11 +1,12 @@
 import type { RootContent } from "mdast";
+import type { RootContent as HastRootContent } from "hast";
 import * as Acorn from "acorn";
 import type { Program } from "estree";
 
 export function createImportDeclaration(
   localName: string,
   sourceValue: string,
-): RootContent {
+): RootContent & HastRootContent {
   const code = `import ${localName} from "${sourceValue}";`;
   return {
     type: "mdxjsEsm",
@@ -22,7 +23,7 @@ export function createImportDeclaration(
 export function createJSXElement(
   name: string,
   attributes: { name: string; value: string }[],
-): RootContent {
+): RootContent & HastRootContent {
   return {
     type: "mdxJsxFlowElement",
     name,

@@ -4,7 +4,6 @@ import { toString } from "mdast-util-to-string";
 import * as Acorn from "acorn";
 import Yaml from "yaml";
 import type { Program } from "estree";
-import { createImportDeclaration, createJSXElement } from "./utils.ts";
 
 const remarkNACLO: Plugin = () => (ast, vFile) => {
   if (!/notes\/naclo\/\d{4}\/[A-Z]/u.test(vFile.path)) return;
@@ -60,22 +59,6 @@ description: "${problemCode}: ${titleText}, a problem that involves ${new Intl.L
 year: ${year}
 prob: ${prob}
 `;
-  children.splice(
-    firstHeading + 1,
-    0,
-    createImportDeclaration(
-      "{ ProblemHeader, ProblemFooter }",
-      "../_components",
-    ),
-    createJSXElement("ProblemHeader", [
-      { name: "frontMatter", value: "frontMatter" },
-    ]),
-  );
-  children.push(
-    createJSXElement("ProblemFooter", [
-      { name: "frontMatter", value: "frontMatter" },
-    ]),
-  );
 };
 
 export default remarkNACLO;
