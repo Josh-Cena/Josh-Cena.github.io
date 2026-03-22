@@ -1,4 +1,0 @@
-import{t as e}from"./jsx-runtime-D57Vegw5.js";import{n as t}from"./lib-rxHYdfSX.js";import"./Link-CMtnWkhd.js";import"./chroma-js-C4qMxh81.js";import{a as n}from"./_components-C7gV7D0M.js";var r=e(),i={description:`Detailed solutions and walkthroughs of each NACLO 2023 problem.`,title:`NACLO 2023 writeups`};function a(e){let i={a:`a`,h1:`h1`,p:`p`,...t(),...e.components};return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsx)(i.h1,{children:`NACLO 2023 writeups`}),`
-`,`
-`,(0,r.jsx)(n,{year:2023}),`
-`,(0,r.jsxs)(i.p,{children:[`Looking for the 2023 Yale Linguistics NACLO coaching session problems? `,(0,r.jsx)(i.a,{href:`/notes/yale/naclo/2023/`,children:`They've moved`}),`.`]})]})}function o(e={}){let{wrapper:n}={...t(),...e.components};return n?(0,r.jsx)(n,{...e,children:(0,r.jsx)(a,{...e})}):a(e)}export{o as default,i as frontMatter};

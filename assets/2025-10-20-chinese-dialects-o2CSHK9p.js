@@ -1,1 +1,0 @@
-import"./jsx-runtime-D57Vegw5.js";import"./PostData-C7AhLmw1.js";import{n as e,t}from"./2025-10-20-chinese-dialects-D8c64Hk0.js";export{t as default,e as frontMatter};

@@ -1,0 +1,1 @@
+import"./jsx-runtime-xty2or4m.js";import{t as e}from"./Palette-BuDzpBBp.js";export{e as default};

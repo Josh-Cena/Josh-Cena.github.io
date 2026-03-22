@@ -1,0 +1,3 @@
+import{t as e}from"./jsx-runtime-xty2or4m.js";import{n as t}from"./lib-zKnO7aGa.js";import"./Link-CRriRIhd.js";import"./chroma-js-C4qMxh81.js";import{a as n}from"./_components-HoMgm76e.js";var r=e(),i={description:`Detailed solutions and walkthroughs of each NACLO 2026 problem.`,title:`NACLO 2026 writeups`};function a(e){return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsx)({h1:`h1`,...t(),...e.components}.h1,{children:`NACLO 2026 writeups`}),`
+`,`
+`,(0,r.jsx)(n,{year:2026})]})}function o(e={}){let{wrapper:n}={...t(),...e.components};return n?(0,r.jsx)(n,{...e,children:(0,r.jsx)(a,{...e})}):a(e)}export{o as default,i as frontMatter};

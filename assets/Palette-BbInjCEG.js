@@ -1,1 +1,0 @@
-import"./jsx-runtime-D57Vegw5.js";import{t as e}from"./Palette-D8A7WOdW.js";export{e as default};
