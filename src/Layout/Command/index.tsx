@@ -1,5 +1,5 @@
 import React, { type ReactNode, useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import clsx from "clsx";
 import { handleCommand, cd, type Env } from "./commandHandler";
 import CommandButton from "./CommandButton";
@@ -132,7 +132,7 @@ export default function Command(): ReactNode {
                     env,
                     setEnv,
                     lastExit,
-                    navigate,
+                    navigate: navigate as (url: string) => void,
                   });
                   setChildren((c) => [
                     ...c,

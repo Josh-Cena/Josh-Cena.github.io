@@ -1,6 +1,6 @@
 import React from "react";
 import { renderToPipeableStream } from "react-dom/server";
-import { StaticRouter } from "react-router-dom/server";
+import { StaticRouter } from "react-router";
 import { Writable } from "node:stream";
 import * as H from "react-helmet-async";
 import App from "./App";

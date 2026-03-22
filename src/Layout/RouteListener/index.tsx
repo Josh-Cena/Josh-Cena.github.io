@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useLocation, type Location } from "react-router-dom";
+import { useLocation, type Location } from "react-router";
 
 export default function RouteListener(): null {
   const location = useLocation();

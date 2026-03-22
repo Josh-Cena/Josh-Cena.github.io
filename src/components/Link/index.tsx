@@ -1,5 +1,5 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { Link as RRLink } from "react-router-dom";
+import { Link as RRLink } from "react-router";
 
 export default function Link({
   href,

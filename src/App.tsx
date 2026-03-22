@@ -3,7 +3,7 @@ import "core-js/proposals/iterator-helpers";
 
 import React, { type ReactNode } from "react";
 import { Prism } from "prism-react-renderer";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router";
 import { routes } from "./routes";
 import Layout from "./Layout";
 
