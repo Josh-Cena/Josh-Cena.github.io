@@ -135,7 +135,7 @@ function YearPaginator({ year }: { readonly year: number }): ReactNode {
         <Link href={`/notes/naclo/${year - 1}/`}>← Previous year</Link>
       )}{" "}
       <Link href="/notes/naclo/">Back to NACLO index</Link>{" "}
-      {year === 2025 ? (
+      {year === 2026 ? (
         <span className="phantom">→ Next year</span>
       ) : (
         <Link href={`/notes/naclo/${year + 1}/`}>→ Next year</Link>

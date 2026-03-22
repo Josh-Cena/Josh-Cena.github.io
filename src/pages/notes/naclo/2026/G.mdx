@@ -1,0 +1,100 @@
+---
+tags:
+  - Puzzle
+---
+
+# A Manam Family
+
+{/* cSpell:ignore Manam ngau tari Tsedam Lakia Mamboti Kakodo Baliau Aibobe */}
+
+Obviously "ngau" means "myself" because it appears nowhere except the diagonal, so (5) = (6) = ngau. Other than these, we have 3 other names: a’o, to’a, tari. Since all of these people are siblings, the only differentiating factors are age and gender (since parents are the same).
+
+When a name depends on gender, it can take two factors into account: the gender of the person being referred to, and the gender of the speaker. If just the former, then we would expect to see the oldest and youngest person being referred to by the same name by everyone. Although we don't know how others refer to Lakia, no other column contains the same name, so this is impossible. Therefore, the name must depend on the speaker's gender as well, so the same oldest sibling would be referred to by different names by brothers and sisters.
+
+If the name depends on both the speaker and the referred person's gender, then there's the following hypothetical 4-way split:
+
+- Speaker male, refer to male
+- Speaker male, refer to female
+- Speaker female, refer to male
+- Speaker female, refer to female
+
+However, this predicts that the same speaker only uses 2 names for all siblings. Tsedam uses 3 different names, so this is impossible. Therefore, the name must depend on age as well, giving the following 4-way split:
+
+- Older, same gender
+- Older, different gender
+- Younger, same gender
+- Younger, different gender
+
+where either one option is entirely omitted or two options share the same name, because we only see 3 names throughout.
+
+If the name depends on age, then there must be an oldest and youngest person for which only 2 names are used; for others, 3 names are used. Unfortunately, with the sparse data, we can only see 2 names in each column. So holding the age difference constant doesn't work. On the other hand, we can hold the gender difference constant: just look at how two people refer to each other.
+
+- Mamboti and Tsedam refer to each other by "to’a" and "a’o"
+- Kakodo and Tsedam refer to each other by "to’a" and "tari"
+- Baliau and Tsedam refer to each other by "a’o" and "to’a"
+- Kakodo and Mamboti refer to each other by "tari" and "to’a"
+- Baliau and Kakodo refer to each other by "tari" and "to’a"
+- Aibobe and Kakodo refer to each other by "to’a" and "a’o"
+
+Since we've never seen "a’o" and "tari" co-occur in a pair, these two must denote the same age difference but different gender difference; the other two pairs both denote the same gender difference but different age difference. Both of these pairs contain "to’a", so "to’a" must be used by all "older" siblings, while the other two names are used by "younger" siblings depending on the gender difference. In other words, we have the following structure:
+
+<table>
+  <tr>
+    <td></td>
+    <th>Older</th>
+    <th>Younger</th>
+  </tr>
+  <tr>
+    <th>Same gender</th>
+    <td rowSpan={2}>to’a</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Different gender</th>
+    <td></td>
+  </tr>
+</table>
+
+The roles of "older" and "younger" are interchangeable, since we don't have information about who's the oldest or youngest here; we can only generate an ordering of their ages.
+
+Knowing that "to’a" is used for older siblings, we look at which pairs use "to’a" to generate ordered pairs of their ages.
+
+- Mamboti/Kakodo/Aibobe < Tsedam < Baliau
+- Baliau/Aibobe < Lakia
+- Mamboti < Tsedam/Kakodo
+- Mamboti/Aibobe < Kakodo < Tsedam/Baliau
+- Tsedam/Kakodo < Baliau
+- Aibobe < Kakodo
+
+The total order: Mamboti/Aibobe < Kakodo < Tsedam < Baliau < Lakia.
+
+And we can know the gender differences by looking at which pairs use "a’o" and "tari".
+
+{/* prettier-ignore */}
+<table>
+  <tr><td></td><th>Tsedam</th><th>Lakia</th><th>Mamboti</th><th>Kakodo</th><th>Baliau</th><th>Aibobe</th></tr>
+  <tr><th>Tsedam</th><td></td><td></td><td>a’o</td><td>tari</td><td></td><td>tari</td></tr>
+  <tr><th>Lakia</th><td></td><td></td><td></td><td></td><td>tari</td><td>a’o</td></tr>
+  <tr><th>Mamboti</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <tr><th>Kakodo</th><td></td><td></td><td>tari</td><td></td><td></td><td>a’o</td></tr>
+  <tr><th>Baliau</th><td>a’o</td><td></td><td></td><td>tari</td><td></td><td></td></tr>
+  <tr><th>Aibobe</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+Assume "tari" means same-gender. Tsedam calls Kakodo and Aibobe "tari", so they are the same gender. Kakodo calls Mamboti "tari", so they are also the same gender. However, we only have 3 brothers and 3 sisters, so we can't have 4 people of the same gender. (And Tsedam calls Mamboti "a’o".) Therefore, "tari" must mean different-gender, and "a’o" means same-gender.
+
+- Gender 1: Tsedam, Mamboti, Baliau
+- Gender 2: Kakodo, Aibobe, Lakia
+
+Now we can fill in the rest:
+
+(1) Tsedam→Lakia: older = to’a  
+(2) Lakia→Tsedam: younger, different = tari  
+(3) Lakia→Mamboti: younger, different = tari  
+(4) Lakia→Kakodo: younger, same = a’o  
+(7) Baliau→Lakia: older = to’a  
+(8) Baliau→Mamboti: younger, same = a’o  
+(9) Baliau→Aibobe: younger, different = tari  
+(10) Aibobe→Tsedam: older = to’a  
+(11) Aibobe→Lakia: older = to’a  
+(12) Aibobe→Baliau: older = to’a

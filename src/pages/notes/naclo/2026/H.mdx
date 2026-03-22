@@ -1,0 +1,85 @@
+---
+tags:
+  - Writing system
+---
+
+# A Tale of Three Scripts
+
+{/* cSpell:ignore Elbasan 𐔀𐔚𐔍𐔎𐔓𐔈 𐗎𐗒𐗇𐗉𐗢 mbasi njeriu është gëzojnë kohën përsa njohja lindur kundër shtetet burrave gjithë 𐔁𐔟𐔚𐔀𐔠𐔇 𐔐𐔍𐔅𐔟𐔙 𐔒𐔁𐔙𐔖𐔌𐔇𐔓 𐔓𐔡𐔍𐔝𐔇𐔝 𐔕𐔇𐔙𐔍𐔟 𐔊𐔈𐔣𐔖𐔎𐔓𐔈 𐔏𐔖𐔒𐔁𐔇𐔠𐔇 𐔈𐔜𐔝𐔈 𐗔𐗚𐗃𐗉𐗥𐗉 𐗔𐗤𐗇𐗊𐗝 𐗎𐗒𐗣𐗊 𐗙𐗚𐗑𐗀 𐗧𐗒𐗢𐗉𐗢 𐗡𐗉𐗢𐗉𐗢 𐗃𐗁𐗒 𐗃𐗝𐗚𐗐𐗉𐗘 𐗔𐗚𐗐𐗊𐗘 𐗛𐗊𐗝𐗟𐗀 𐗝𐗚𐗐𐗉𐗘 rohen itet intet etet n𐔡𐔍tet ko𐗃e𐗥e 𐔏o𐔒𐔁e𐔠e 𐗧itet 𐗡etet eriu 𐗎𐗒𐗇𐗉𐗢 */}
+
+It's relatively easy to tell the three scripts apart. From H3, we know that "𐔀𐔚𐔍𐔎𐔓𐔈" is Elbasan. From H4, we know that "𐗎𐗒𐗇𐗉𐗢" is Todhri[^1]. Just look for similar letters, especially "𐔚" and "𐔓".
+
+[^1]: The Todhri script was added to Unicode in Unicode 16 (2024), so at the time of writing, very few fonts support it. I had to use Noto Serif's Todhri font.
+
+{/* prettier-ignore */}
+<table>
+  <tr>
+    <th>Latin</th>
+    <td>1. mbasi<br />3. njeriu<br />10. është<br />13. gëzojnë<br />14. kohën<br />15. përsa</td>
+    <td>A. njohja<br />C. lindur<br />D. kundër<br />E. shtetet<br />I. burrave<br />L. gjithë</td>
+  </tr>
+  <tr>
+    <th>Elbasan</th>
+    <td>2. 𐔁𐔟𐔚𐔀𐔠𐔇<br />4. 𐔐𐔍𐔅𐔟𐔙<br />8. 𐔒𐔁𐔙𐔖𐔌𐔇𐔓</td>
+    <td>B. 𐔓𐔡𐔍𐔝𐔇𐔝<br />F. 𐔕𐔇𐔙𐔍𐔟<br />G. 𐔊𐔈𐔣𐔖𐔎𐔓𐔈<br />M. 𐔏𐔖𐔒𐔁𐔇𐔠𐔇<br />O. 𐔈𐔜𐔝𐔈</td>
+  </tr>
+  <tr>
+    <th>Todhri</th>
+    <td>5. 𐗔𐗚𐗃𐗉𐗥𐗉<br />6. 𐗔𐗤𐗇𐗊𐗝<br />7. 𐗎𐗒𐗣𐗊<br />9. 𐗙𐗚𐗑𐗀<br />11. 𐗧𐗒𐗢𐗉𐗢<br />12. 𐗡𐗉𐗢𐗉𐗢</td>
+    <td>H. 𐗃𐗁𐗒<br />J. 𐗃𐗝𐗚𐗐𐗉𐗘<br />K. 𐗔𐗚𐗐𐗊𐗘<br />N. 𐗛𐗊𐗝𐗟𐗀</td>
+  </tr>
+</table>
+
+The scripts look more or less all alphabetic, although they probably don't correspond glyph-to-glyph, because we have H. 𐗃𐗁𐗒 but no word on the left hand side has only 3 glyphs. However this still means we can match letter by letter. (Remember [Armenian](../2025/E.mdx)?)
+
+First notice 10. është and O. 𐔈𐔜𐔝𐔈. These are the only two words that start and end with the same glyph, so they must match. So in Elbasan: 𐔈 = ë, 𐔜 = sh, 𐔝 = t (I'm assuming left-to-right; it will be justified very soon). Therefore, 13. gëzojnë = G. 𐔊𐔈𐔣𐔖𐔎𐔓𐔈, giving us 𐔊 = g, 𐔣 = z, 𐔖 = o, 𐔎 = j, 𐔓 = n. It's reassuring seeing how many of these glyphs look similar—this means we are on the right track. No other Latin-Elbasan correspondences are apparent.
+
+In the left column we have two other Latin words containing "ë": 14. kohën and 15. përsa, but no other Elbasan words in the right column contain 𐔈, so these two words have to match to Todhri. One has "ë" in the penultimate place, the other in the second place. We quickly locate K. 𐗔𐗚𐗐𐗊𐗘 and N. 𐗛𐗊𐗝𐗟𐗀. Therefore, in Todhri, 𐗛 = p, 𐗊 = ë, 𐗝 = r, 𐗟 = s, 𐗀 = a, 𐗔 = k, 𐗚 = o, 𐗐 = h, 𐗘 = n (again, assuming left-to-right).
+
+In the right column we have two other Latin words containing "ë": D. kundër and L. gjithë, but again no other Elbasan words in the left column contain 𐔈, so again look in Todhri for 𐗊. We find 6. 𐗔𐗤𐗇𐗊𐗝 and 7. 𐗎𐗒𐗣𐗊—one with 𐗊 in the penultimate position and the other in the last position, and with 6 beginning with "k" and ending with "r"; everything is very nicely consistent. This tells us that in Todhri, 𐗤 = un, 𐗇 = d, 𐗎 = gj, 𐗒 = i, 𐗣 = th.
+
+Now we've exploited all the "ë" correspondences. We go back to finding similar glyph sequences. Notice we have three words that end with "ABA" on both sides: 5. 𐗔𐗚𐗃𐗉𐗥𐗉, 11. 𐗧𐗒𐗢𐗉𐗢, 12. 𐗡𐗉𐗢𐗉𐗢; E. shtetet, B. 𐔓𐔡𐔍𐔝𐔇𐔝, M. 𐔏𐔖𐔒𐔁𐔇𐔠𐔇. Because in B "𐔝𐔇𐔝" and M "𐔇𐔠𐔇", we have "𐔇" occurring either as "A" or "B", they must correspond to "𐗉𐗥𐗉" and "𐗢𐗉𐗢" in some other order. This leaves E "tet" to correspond to "𐗢𐗉𐗢" (one of 11 or 12). Therefore in Todhri, 𐗢 = t, 𐗉 = e.
+
+In J. 𐗃𐗝𐗚𐗐𐗉𐗘, we have a word ending in "n". We know that "n" is "𐔓" in Elbasan, and no other Latin word on the left ends in "n", so 8. 𐔒𐔁𐔙𐔖𐔌𐔇𐔓 = J. 𐗃𐗝𐗚𐗐𐗉𐗘. We already know that 𐗝𐗚𐗐𐗉𐗘 = "rohen" by all the work above, so in Elbasan, 𐔙 = r, 𐔌 = h, 𐔇 = e.
+
+Now go back to the three "ABA" words. They have now become: 5. ko𐗃e𐗥e, 11. 𐗧itet, 12. 𐗡etet; E. shtetet, B. n𐔡𐔍tet, M. 𐔏o𐔒𐔁e𐔠e. Therefore 5 = M, 11 = B, 12 = E. In Elbasan, 𐔍 = i, 𐔏 = k. In Todhri, 𐗡 = sht. (We try not to make Elbasan-Todhri correspondences to avoid complicating things.)
+
+In 4. 𐔐𐔍𐔅𐔟𐔙, the word ends in "r". The only word on the right ending in "r" is C. lindur. So in Elbasan, 𐔐 = l, 𐔅 = nd, 𐔟 = u.
+
+Now we don't have many words left and most of the vowels figured out, so we can match them based on vowel sequences.
+
+- 9\. 𐗙𐗚𐗑𐗀 = A. njohja because we recognize "o" and "a". In Todhri, 𐗙 = nj, 𐗑 = hj.
+- 3\. njeriu = F. 𐔕𐔇𐔙𐔍𐔟 because we recognize "eriu". In Elbasan, 𐔕 = nj.
+- 2\. 𐔁𐔟𐔚𐔀𐔠𐔇 = I. burrave because of "u" and "e". In Elbasan, 𐔁 = b, 𐔚 = rr, 𐔀 = a, 𐔠 = v.
+- 1\. mbasi = H. 𐗃𐗁𐗒 as the only word ending with "i". In Todhri, 𐗃 = mb, 𐗁 = as.
+- 5\. 𐗔𐗚𐗃𐗉𐗥𐗉 = M. 𐔏𐔖𐔒𐔁𐔇𐔠𐔇. In Todhri, 𐗥 = v.
+- 8\. 𐔒𐔁𐔙𐔖𐔌𐔇𐔓 = J. 𐗃𐗝𐗚𐗐𐗉𐗘.
+- 11\. 𐗧𐗒𐗢𐗉𐗢 = B. 𐔓𐔡𐔍𐔝𐔇𐔝. In Todhri, 𐗧 = 𐔓𐔡, but we don't know what the Elbasan 𐔡 is.
+
+Let's list out the alphabet we have so far:
+
+| Latin | Elbasan | Todhri | Latin | Elbasan | Todhri |
+| ----- | ------- | ------ | ----- | ------- | ------ |
+| a     | 𐔀       | 𐗀      | as    |         | 𐗁      |
+| b     | 𐔁       |        | gj    |         | 𐗎      |
+| e     | 𐔇       | 𐗉      | hj    |         | 𐗑      |
+| ë     | 𐔈       | 𐗊      | mb    |         | 𐗃      |
+| g     | 𐔊       |        | nd    | 𐔅       | 𐗇      |
+| h     | 𐔌       |        | nj    | 𐔕       | 𐗙      |
+| i     | 𐔍       | 𐗒      | n?    | 𐔓𐔡      | 𐗧      |
+| j     | 𐔎       |        | rr    | 𐔚       |        |
+| k     | 𐔏       | 𐗔      | sh    | 𐔜       |        |
+| l     | 𐔐       |        | sht   |         | 𐗡      |
+| n     | 𐔓       | 𐗘      | th    |         | 𐗣      |
+| o     | 𐔖       | 𐗚      |       |         |        |
+| p     |         | 𐗛      |       |         |        |
+| r     | 𐔙       | 𐗝      |       |         |        |
+| s     |         | 𐗟      |       |         |        |
+| t     | 𐔝       | 𐗢      |       |         |        |
+| u     | 𐔟       | 𐗤      |       |         |        |
+| v     | 𐔠       | 𐗥      |       |         |        |
+| z     | 𐔣       |        |       |         |        |
+
+(I've reanalyzed "𐗔𐗤𐗇𐗊𐗝" as "k-u-nd-ë-r" instead of "k-un-d-ë-r". Although both are compatible with the data since "𐗤" and "𐗇" only appeared once, we have Elbasan for "nd" but not "un", so the "nd" bigram seems more justified.)
+
+E2, E3, E4 are just table lookup. Note that "𐗎𐗒𐗇𐗉𐗢" contains the "𐗇" character which I've revised to be "nd" instead of just "d". I don't know if treating it as just "d" is allowed, since it's also compatible with the input data.

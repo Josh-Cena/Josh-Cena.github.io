@@ -15,6 +15,7 @@ Ausbau
 backness
 backquote
 bain
+bigram
 bigrams
 bigz
 bijective
@@ -175,6 +176,7 @@ nominalized
 nominalizer
 noninteractive
 noreply
+Noto
 nowrap
 npos
 nrow
@@ -242,6 +244,8 @@ subarrays
 subcircuit
 subcycles
 subdirs
+subgrid
+subgrids
 subplayer
 subproblems
 substack
@@ -254,6 +258,7 @@ texttt
 Tidyverse
 TIOBE
 tlsv
+Todhri
 tongyong
 tonos
 topo

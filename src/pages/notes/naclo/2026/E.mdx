@@ -1,0 +1,214 @@
+---
+tags:
+  - Computational
+---
+
+# A Typical Problem
+
+E1:
+
+- (a) gives "no" to snake, snail, clam, and eel; all 4 don't have legs, so (a) = has legs.
+- (b) gives "no" to snail, but snail has a shell, so (b) = underwater.
+- That leaves (c) = has a shell.
+
+E2:
+
+- clam has a shell, so (1) = Y
+- eel is underwater and has no shell, so (2) = Y, (3) = N
+- lizard is not underwater and has no shell, so (4) = N, (5) = N
+- axolotl is underwater, so (6) = Y
+
+In E3, we have an animal underwater with legs and shell, so it's believed to be a hermit crab.
+
+The second half of the problem is IMO not very clear about the procedure and would make background knowledge about OCR very helpful. When it says "nine regions of this grid", it actually means dividing the 6x6 grid into 9 2x2 subgrids. All we need to figure out is how to turn each 2x2 subgrid into a Y/N answer that matches the given result.
+
+We need to understand the algorithm of each feature, one by one. Start with the first one.
+
+export const canvasResources = {};
+
+```js canvas width=570 height=140
+canvasResources.grids = {
+  R: `
+#####.
+#....#
+#####.
+#..#..
+#...#.
+#....#`,
+  A: `
+..##..
+.#..#.
+.#..#.
+.####.
+#....#
+#....#`,
+  F: `
+######
+#.....
+#####.
+#.....
+#.....
+#.....`,
+  Z: `
+######
+....#.
+...#..
+..#...
+.#....
+######`,
+  M: `
+#....#
+##..##
+#.##.#
+#....#
+#....#
+#....#`,
+  Q: `
+.####.
+#....#
+#....#
+#..#.#
+#...#.
+.###.#`,
+};
+
+canvasResources.plotGrid = function (ctx, x, y, char, answer) {
+  const grid = this.grids[char]
+    .trim()
+    .split("\n")
+    .map((line) => line.split(""));
+
+  ctx.fillStyle = "#39cac480";
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j] === "#") {
+        ctx.fillRect(j * 20 + x, i * 20 + y, 20, 20);
+      }
+    }
+  }
+
+  ctx.strokeStyle = "#80808060";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  for (let i = 0; i <= grid.length; i++) {
+    ctx.moveTo(x, i * 20 + y);
+    ctx.lineTo(grid[0].length * 20 + x, i * 20 + y);
+    ctx.moveTo(i * 20 + x, y);
+    ctx.lineTo(i * 20 + x, grid.length * 20 + y);
+  }
+  ctx.stroke();
+
+  ctx.strokeStyle = textColor;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x, y, grid[0].length * 20, grid.length * 20);
+  ctx.beginPath();
+  for (let i = 2; i <= 4; i += 2) {
+    ctx.moveTo(x, i * 20 + y);
+    ctx.lineTo(grid[0].length * 20 + x, i * 20 + y);
+    ctx.moveTo(i * 20 + x, y);
+    ctx.lineTo(i * 20 + x, grid.length * 20 + y);
+  }
+  ctx.stroke();
+
+  if (!answer) return;
+  const answers = answer.split("/").map((part) => part.split(""));
+  ctx.fillStyle = textColor;
+  ctx.font = "24px monospace";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  for (let i = 0; i < answers.length; i++) {
+    for (let j = 0; j < answers[i].length; j++) {
+      ctx.fillText(answers[i][j], j * 40 + x + 20, i * 40 + y + 20);
+    }
+  }
+};
+
+canvasResources.plotGrid(ctx, 10, 10, "R", "YNN/YYN/NNN");
+canvasResources.plotGrid(ctx, 150, 10, "A", "NNN/NNN/NNN");
+canvasResources.plotGrid(ctx, 290, 10, "Z");
+canvasResources.plotGrid(ctx, 430, 10, "M");
+```
+
+One algorithm compatible with what we see with "R" and "A" is that "Y" is returned if there are 3 or more filled squares in the 2x2 subgrid (we don't know what happens with 4 filled squares, but it doesn't matter since we don't have any of those in the input). Therefore for "Z", we get (8) = `NNY/NNN/YNN`, and for "M", we get (9) = `YNY/NNN/NNN`.
+
+Next for feature 2:
+
+```js canvas width=570 height=140
+canvasResources.plotGrid(ctx, 10, 10, "R", "YYY/YYY/YNY");
+canvasResources.plotGrid(ctx, 150, 10, "F", "YYY/YYY/YNN");
+canvasResources.plotGrid(ctx, 290, 10, "Z", "YYY/NYN/YYY");
+canvasResources.plotGrid(ctx, 430, 10, "M");
+```
+
+"Y" is returned whenever the subgrid is not empty. Therefore for "M", we get (10) = `YNY/YYY/YNY`.
+
+For feature 3:
+
+```js canvas width=570 height=140
+canvasResources.plotGrid(ctx, 10, 10, "R", "NYN/NNN/YNN");
+canvasResources.plotGrid(ctx, 150, 10, "A", "NYN/YYY/YNY");
+canvasResources.plotGrid(ctx, 290, 10, "F");
+canvasResources.plotGrid(ctx, 430, 10, "Q");
+```
+
+"Y" is returned when the subgrid has only 2 filled squares in the same row or column. Therefore "F": (7) = `NYY/NYN/YNN`; "Q": (11) = `NYN/YNY/NYN`.
+
+Finally, for feature 4:
+
+```js canvas width=570 height=140
+canvasResources.plotGrid(ctx, 10, 10, "R", "NNY/NNN/NNY");
+canvasResources.plotGrid(ctx, 150, 10, "Z", "NNN/NYN/NNN");
+canvasResources.plotGrid(ctx, 290, 10, "Q");
+```
+
+"Y" is returned when the subgrid has only 2 filled squares in the same diagonal. Therefore for "Q", we get (12) = `YNY/NNN/YNY`.
+
+Now we can apply this algorithm to the 2 given grids.
+
+```js canvas width=570 height=140
+canvasResources.grids.P = `
+#####.
+#...#.
+#####.
+#.....
+#.....
+#.....`;
+canvasResources.plotGrid(ctx, 10, 10, "P", "YNN/YNN/NNN");
+canvasResources.plotGrid(ctx, 150, 10, "P", "YYY/YYY/YNN");
+canvasResources.plotGrid(ctx, 290, 10, "P", "NYY/NYN/YNN");
+canvasResources.plotGrid(ctx, 430, 10, "P", "NNN/NNN/NNN");
+```
+
+Features 2 and 3 exactly match those of "F", so this returns "F".
+
+```js canvas width=570 height=140
+canvasResources.grids.X = `
+.#..#.
+##..#.
+##.###
+..#...
+....#.
+##..##`;
+canvasResources.plotGrid(ctx, 10, 10, "X", "YNN/NNN/NNY");
+canvasResources.plotGrid(ctx, 150, 10, "X", "YNY/YYY/YNY");
+canvasResources.plotGrid(ctx, 290, 10, "X", "NNY/YNY/YNN");
+canvasResources.plotGrid(ctx, 430, 10, "X", "NNN/NYN/NNN");
+```
+
+I'm not sure how exactly one is supposed to see this, but these 4 features all match those of "N" (a diagonal in the middle; straight lines in bottom left and top right; top and bottom two subgrids empty).
+
+```js canvas width=570 height=140
+canvasResources.grids.GQ = `
+#...#.
+.###.#
+...##.
+##..#.
+.##.#.
+#.#..#`;
+canvasResources.plotGrid(ctx, 10, 10, "GQ", "NNN/NNN/NNN");
+canvasResources.plotGrid(ctx, 150, 10, "GQ", "YYY/YYY/YYY");
+canvasResources.plotGrid(ctx, 290, 10, "GQ", "NYN/YNY/NYN");
+canvasResources.plotGrid(ctx, 430, 10, "GQ", "YNY/NNN/YNY");
+```
+
+If one bites the bullet and at least calculate the feature responses for all 7 input grids given, then these 4 features all match both those of "G" and "Q" (their only differences are in the right and bottom right subgrids, but one always contains a straight edge and the other always contains a diagonal, so they have the same feature responses).

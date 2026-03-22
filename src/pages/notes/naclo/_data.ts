@@ -6,6 +6,15 @@
 
 // cSpell:ignore stdev
 const data = `Year,Index,Mean ± Stdev,Median,Max,Median Solve %,Round
+2026,A,N/A,N/A,10,N/A,Open
+2026,B,N/A,N/A,10,N/A,Open
+2026,C,N/A,N/A,10,N/A,Open
+2026,D,N/A,N/A,10,N/A,Open
+2026,E,N/A,N/A,15,N/A,Open
+2026,F,N/A,N/A,15,N/A,Open
+2026,G,N/A,N/A,10,N/A,Open
+2026,H,N/A,N/A,15,N/A,Open
+2026,I,N/A,N/A,5,N/A,Open
 2025,A,5.882 ± 3.091,5.882,10,58.82%,Open
 2025,B,6.364 ± 2.562,6.364,10,63.64%,Open
 2025,C,4.839 ± 4.554,4.839,15,32.26%,Open

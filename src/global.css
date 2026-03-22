@@ -26,7 +26,8 @@
   --margin-main-h: 2rem;
   --margin-main-v: 0;
   --margin-paragraph: 1rem;
-  --font-main: "CharisSILW", Georgia, "Times New Roman", Times, serif;
+  --font-main:
+    "Charis SIL", "Noto Serif Todhri", Georgia, "Times New Roman", serif;
   --font-code: Menlo, Consolas, Monaco, monospace;
   --border-radius-small: 0.25em;
   --border-radius-medium: 0.5em;
@@ -56,27 +57,34 @@
 }
 
 @font-face {
-  font-family: CharisSILW;
-  src: url("assets/CharisSIL-Regular.woff2");
+  font-family: "Charis SIL";
+  src: url("assets/CharisSIL-Regular.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: CharisSILW;
+  font-family: "Charis SIL";
   font-style: italic;
-  src: url("assets/CharisSIL-Italic.woff2");
+  src: url("assets/CharisSIL-Italic.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: CharisSILW;
+  font-family: "Charis SIL";
   font-weight: bold;
-  src: url("assets/CharisSIL-Bold.woff2");
+  src: url("assets/CharisSIL-Bold.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: CharisSILW;
+  font-family: "Charis SIL";
   font-weight: bold;
   font-style: italic;
-  src: url("assets/CharisSIL-BoldItalic.woff2");
+  src: url("assets/CharisSIL-BoldItalic.woff2") format("woff2");
+}
+
+@font-face {
+  /* Todhri is added in Unicode 16, so we need to "polyfill" it */
+  font-family: "Noto Serif Todhri";
+  src: url("assets/NotoSerifTodhri-Regular.woff2") format("woff2");
+  unicode-range: U+105C0-105FF;
 }
 
 #app {

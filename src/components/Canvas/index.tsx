@@ -39,6 +39,7 @@ export default function Canvas({
       ctx.fillStyle = "red";
       ctx.font = "16px sans-serif";
       ctx.fillText(`Error: ${(e as Error).message}`, 10, 30);
+      console.error(e);
     }
     return () => ctx.reset();
   }, [code, width, height, colorMode]);
