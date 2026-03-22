@@ -1,0 +1,79 @@
+import{t as e}from"./jsx-runtime-D57Vegw5.js";import{n as t}from"./lib-rxHYdfSX.js";import{n,t as r}from"./_components-BHKTFOi1.js";var i=e(),a={tags:[`String manipulation`],title:`Advent of Code 2025 - Day 6: Trash Compactor`,description:`Advent of Code 2025 - Day 6: Trash Compactor, a problem that involves String manipulation. Solution written in Rust, with detailed walkthrough and proof.`,year:2025,day:6};function o(e){let o={code:`code`,h1:`h1`,h2:`h2`,p:`p`,pre:`pre`,span:`span`,...t(),...e.components};return(0,i.jsxs)(i.Fragment,{children:[(0,i.jsxs)(o.h1,{children:[`Advent of Code 2025 - Day 6`,(0,i.jsx)(o.span,{className:`subtitle`,children:`Trash Compactor`})]}),(0,i.jsx)(n,{frontMatter:a}),`
+`,(0,i.jsx)(o.h2,{children:`Part 1`}),`
+`,(0,i.jsxs)(o.p,{children:[`If we have a list of operators and a matrix of numbers, then for each operator, its result is just the `,(0,i.jsx)(o.code,{children:`sum()`}),`/`,(0,i.jsx)(o.code,{children:`product()`}),` of the numbers in the corresponding column: `,(0,i.jsx)(o.code,{children:`numbers.iter().map(|nums| nums[i]).sum()`}),`.`]}),`
+`,(0,i.jsx)(o.pre,{children:(0,i.jsx)(o.code,{className:`language-rust`,children:`let operators = operators.split_whitespace().collect::<Vec<&str>>();
+let numbers = numbers
+    .iter()
+    .map(|s| {
+        s.split_whitespace()
+            .map(|s| s.parse::<i64>().unwrap())
+            .collect::<Vec<i64>>()
+    })
+    .collect::<Vec<_>>();
+let total = operators
+    .iter()
+    .enumerate()
+    .map(|(i, &op)| match op {
+        "+" => numbers.iter().map(|nums| nums[i]).sum(),
+        "*" => numbers.iter().map(|nums| nums[i]).product(),
+        _ => 0,
+    })
+    .sum::<i64>();
+`})}),`
+`,(0,i.jsx)(o.h2,{children:`Part 2`}),`
+`,(0,i.jsx)(o.p,{children:`The intractable part is that each number is scattered across columns; if each one is in a row, the problem would be trivial. So we can simply transpose the input from:`}),`
+`,(0,i.jsx)(o.pre,{children:(0,i.jsx)(o.code,{className:`language-plain`,children:`123 328  51 64
+ 45 64  387 23
+  6 98  215 314
+*   +   *   +
+`})}),`
+`,(0,i.jsx)(o.p,{children:`To:`}),`
+`,(0,i.jsx)(o.pre,{children:(0,i.jsx)(o.code,{className:`language-plain`,children:`1  *
+24
+356
+
+369+
+248
+8
+
+ 32*
+581
+175
+
+623+
+431
+  4
+`})}),`
+`,(0,i.jsx)(o.pre,{children:(0,i.jsx)(o.code,{className:`language-rust`,children:`let mut transposed: Vec<Vec<char>> = vec![Vec::new(); data[0].chars().count()];
+for line in data.iter() {
+    for (i, c) in line.chars().enumerate() {
+        transposed[i].push(c);
+    }
+}
+
+let transposed = transposed
+    .into_iter()
+    .map(|col| col.into_iter().collect::<String>())
+    .collect::<Vec<String>>()
+    .join("\\n");
+`})}),`
+`,(0,i.jsx)(o.p,{children:`Now we can just go chunk by chunk to collect the operators and respective numbers. I start a new chunk whenever I encounter an operator, and push the numbers into the current chunk.`}),`
+`,(0,i.jsx)(o.pre,{children:(0,i.jsx)(o.code,{className:`language-rust`,children:`let mut operators = Vec::new();
+let mut numbers = Vec::new();
+for col in transposed.iter_mut() {
+    let last = *col.last().unwrap();
+    if matches!(last, '+' | '*') {
+        operators.push(last);
+        col.pop();
+        numbers.push(Vec::new());
+    }
+    let line = col.iter().collect::<String>();
+    let line = line.trim();
+    if line.is_empty() {
+        continue;
+    }
+    let val: i64 = col.iter().collect::<String>().trim().parse().unwrap();
+    numbers.last_mut().unwrap().push(val);
+}
+`})}),`
+`,(0,i.jsx)(o.p,{children:`The arithmetic is the same as before.`}),(0,i.jsx)(r,{frontMatter:a})]})}function s(e={}){let{wrapper:n}={...t(),...e.components};return n?(0,i.jsx)(n,{...e,children:(0,i.jsx)(o,{...e})}):o(e)}export{a as n,s as t};

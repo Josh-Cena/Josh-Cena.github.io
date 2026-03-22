@@ -1,0 +1,1 @@
+function e(e){let t=e.toLowerCase().replace(/(?:\/?index)?\.(?:tsx|mdx)$/u,``).replace(/\d{4}-\d{2}-\d{2}-/u,``);return t===``?`/`:t===`404`?`/404`:`/${t}/`}export{e as t};
