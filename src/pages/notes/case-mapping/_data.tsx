@@ -4,7 +4,7 @@ export function toLowerCase(
   char: string | Iterable<string>,
 ): string | Set<string> {
   if (typeof char === "string") return char.toLowerCase().normalize("NFC");
-  return new Set(Iterator.from(char).map(toLowerCase));
+  return new Set([...char].map(toLowerCase));
 }
 
 export function toUpperCase(char: string): string;
@@ -13,7 +13,7 @@ export function toUpperCase(
   char: string | Iterable<string>,
 ): string | Set<string> {
   if (typeof char === "string") return char.toUpperCase().normalize("NFC");
-  return new Set(Iterator.from(char).map(toUpperCase));
+  return new Set([...char].map(toUpperCase));
 }
 
 export function isChar(char: string): boolean {

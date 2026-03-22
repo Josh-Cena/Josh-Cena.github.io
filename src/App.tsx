@@ -1,6 +1,3 @@
-import "core-js/proposals/set-methods-v2";
-import "core-js/proposals/iterator-helpers";
-
 import React, { type ReactNode } from "react";
 import { Prism } from "prism-react-renderer";
 import { Route, Routes } from "react-router";

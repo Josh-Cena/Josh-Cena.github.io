@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import clsx from "clsx";
-import copy from "copy-text-to-clipboard";
 import styles from "./index.module.css";
 
 export default function CopyButton({
@@ -25,11 +24,13 @@ export default function CopyButton({
     <button
       className={clsx(styles.copyButton, className)}
       onClick={() => {
-        copy(string);
-        setCopied(true);
-        timeout.current = window.setTimeout(() => {
-          setCopied(false);
-        }, 1000);
+        void navigator.clipboard.writeText(string).then(() => {
+          setCopied(true);
+          if (timeout.current) clearTimeout(timeout.current);
+          timeout.current = window.setTimeout(() => {
+            setCopied(false);
+          }, 1000);
+        });
       }}
       aria-label={title}
       title={title}
