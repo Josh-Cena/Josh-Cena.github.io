@@ -1,1 +1,0 @@
-import{t as e}from"./jsx-runtime-xty2or4m.js";var t=e(),n=new Intl.DateTimeFormat(`en-US`,{year:`numeric`,month:`long`,day:`numeric`});function r({frontMatter:e}){let r=new Date(e.date),i=r.valueOf()+r.getTimezoneOffset()*60*1e3;return(0,t.jsx)(`div`,{children:(0,t.jsx)(`time`,{dateTime:e.date,children:n.format(new Date(i))})})}export{r as t};

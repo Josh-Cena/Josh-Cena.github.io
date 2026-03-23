@@ -1,0 +1,4 @@
+import{t as e}from"./jsx-runtime-DAs1UGHr.js";import"./react-BRPyh-lz.js";import{n as t}from"./lib-T-nEWGuF.js";var n=e(),r={description:`How to execute code in a top-down fashion (entry module first) in a module graph instead of bottom-up (leaf modules first).`,title:`Executing code in a module graph top-down`};function i(e){let r={a:`a`,code:`code`,h1:`h1`,p:`p`,pre:`pre`,...t(),...e.components};return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(r.h1,{children:`Executing code in a module graph top-down`}),`
+`,(0,n.jsx)(r.p,{children:(0,n.jsx)(r.a,{href:`https://x.com/NicoloRibaudo/status/1579863078761803777`,children:`Source`})}),`
+`,(0,n.jsx)(r.pre,{children:(0,n.jsx)(r.code,{className:`language-js`,children:`import "data:text/javascript,console.log('Hi!')";
+`})})]})}function a(e={}){let{wrapper:r}={...t(),...e.components};return r?(0,n.jsx)(r,{...e,children:(0,n.jsx)(i,{...e})}):i(e)}export{a as default,r as frontMatter};
