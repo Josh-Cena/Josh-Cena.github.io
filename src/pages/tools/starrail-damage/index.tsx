@@ -610,288 +610,292 @@ export default function StarRailDamage(): ReactNode {
       </ul>
       <Heading level={2}>敌人基础数值</Heading>
       <table>
-        <tr>
-          <th>
-            <label htmlFor="敌人等级">等级</label>
-          </th>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <td>
-            <input
-              id="敌人等级"
-              defaultValue={敌人等级}
-              onChange={(e) => {
-                try {
-                  set敌人等级(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-          </td>
-          <th>
-            <label htmlFor="敌人抗性">抗性</label>
-          </th>
-          <td>
-            <input
-              id="敌人抗性"
-              defaultValue={敌人抗性}
-              onChange={(e) => {
-                try {
-                  set敌人抗性(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-            %
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <label htmlFor="韧性上限">韧性上限</label>
-          </th>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <td>
-            <input
-              id="韧性上限"
-              defaultValue={韧性上限}
-              onChange={(e) => {
-                try {
-                  set韧性上限(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-          </td>
-          <th>
-            <label htmlFor="韧性状态">韧性状态</label>
-          </th>
-          <td>
-            <select
-              id="韧性状态"
-              defaultValue={韧性状态}
-              onChange={(e) => {
-                set韧性状态(
-                  e.target.selectedOptions[0]!.value as
-                    | "未击破"
-                    | "击破"
-                    | "已击破",
-                );
-              }}>
-              <option>未击破</option>
-              <option>击破</option>
-              <option>已击破</option>
-            </select>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>
+              <label htmlFor="敌人等级">等级</label>
+            </th>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <td>
+              <input
+                id="敌人等级"
+                defaultValue={敌人等级}
+                onChange={(e) => {
+                  try {
+                    set敌人等级(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+            </td>
+            <th>
+              <label htmlFor="敌人抗性">抗性</label>
+            </th>
+            <td>
+              <input
+                id="敌人抗性"
+                defaultValue={敌人抗性}
+                onChange={(e) => {
+                  try {
+                    set敌人抗性(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+              %
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label htmlFor="韧性上限">韧性上限</label>
+            </th>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <td>
+              <input
+                id="韧性上限"
+                defaultValue={韧性上限}
+                onChange={(e) => {
+                  try {
+                    set韧性上限(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+            </td>
+            <th>
+              <label htmlFor="韧性状态">韧性状态</label>
+            </th>
+            <td>
+              <select
+                id="韧性状态"
+                defaultValue={韧性状态}
+                onChange={(e) => {
+                  set韧性状态(
+                    e.target.selectedOptions[0]!.value as
+                      | "未击破"
+                      | "击破"
+                      | "已击破",
+                  );
+                }}>
+                <option>未击破</option>
+                <option>击破</option>
+                <option>已击破</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <Heading level={2}>角色基础数值</Heading>
       <table>
-        <tr>
-          <th>
-            <label htmlFor="等级">等级</label>
-          </th>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <td>
-            <input
-              id="等级"
-              defaultValue={角色等级}
-              onChange={(e) => {
-                try {
-                  set角色等级(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-          </td>
-          <th>
-            <label htmlFor="属性">属性</label>
-          </th>
-          <td>
-            <select
-              id="属性"
-              defaultValue="冰"
-              onChange={(e) => {
-                set属性击破倍率(
-                  属性击破系数[
-                    e.target.selectedOptions[0]!
-                      .value as keyof typeof 属性击破系数
-                  ],
-                );
-              }}>
-              {Object.keys(属性击破系数).map((x) => (
-                <option key={x} value={x}>
-                  {x}
-                </option>
-              ))}
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <label htmlFor="基础攻击">基础攻击</label>
-          </th>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <td>
-            <input
-              id="基础攻击"
-              defaultValue={基础攻击}
-              onChange={(e) => {
-                try {
-                  set基础攻击(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-          </td>
-          <th>
-            <label htmlFor="直伤攻击倍率">直伤攻击倍率</label>
-          </th>
-          <td>
-            <input
-              id="直伤攻击倍率"
-              defaultValue={攻击倍率}
-              onChange={(e) => {
-                try {
-                  set攻击倍率(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-            %
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <label htmlFor="基础生命">基础生命</label>
-          </th>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <td>
-            <input
-              id="基础生命"
-              defaultValue={基础生命}
-              onChange={(e) => {
-                try {
-                  set基础生命(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-          </td>
-          <th>
-            <label htmlFor="直伤生命倍率">直伤生命倍率</label>
-          </th>
-          <td>
-            <input
-              id="直伤生命倍率"
-              defaultValue={生命倍率}
-              onChange={(e) => {
-                try {
-                  set生命倍率(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-            %
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <label htmlFor="基础防御">基础防御</label>
-          </th>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <td>
-            <input
-              id="基础防御"
-              defaultValue={基础防御}
-              onChange={(e) => {
-                try {
-                  set基础防御(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-          </td>
-          <th>
-            <label htmlFor="直伤防御倍率">直伤防御倍率</label>
-          </th>
-          <td>
-            <input
-              id="直伤防御倍率"
-              defaultValue={防御倍率}
-              onChange={(e) => {
-                try {
-                  set防御倍率(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-            %
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <label htmlFor="实际削韧值">实际削韧值</label>
-          </th>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <td>
-            <input
-              id="实际削韧值"
-              defaultValue={实际削韧值}
-              onChange={(e) => {
-                try {
-                  set实际削韧值(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-          </td>
-          <th>
-            <label htmlFor="超击破倍率">超击破倍率</label>
-          </th>
-          <td>
-            <input
-              id="超击破倍率"
-              defaultValue={超击破倍率}
-              onChange={(e) => {
-                try {
-                  set超击破倍率(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-            %
-          </td>
-        </tr>
-        <tr>
-          <th>
-            <label htmlFor="DOT倍率">DOT倍率</label>
-          </th>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <td>
-            <input
-              id="DOT倍率"
-              defaultValue={DOT倍率}
-              onChange={(e) => {
-                try {
-                  setDOT倍率(safeEval(e.target.value));
-                } catch (err) {
-                  e.target.setCustomValidity((err as Error).message);
-                }
-              }}
-            />
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>
+              <label htmlFor="等级">等级</label>
+            </th>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <td>
+              <input
+                id="等级"
+                defaultValue={角色等级}
+                onChange={(e) => {
+                  try {
+                    set角色等级(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+            </td>
+            <th>
+              <label htmlFor="属性">属性</label>
+            </th>
+            <td>
+              <select
+                id="属性"
+                defaultValue="冰"
+                onChange={(e) => {
+                  set属性击破倍率(
+                    属性击破系数[
+                      e.target.selectedOptions[0]!
+                        .value as keyof typeof 属性击破系数
+                    ],
+                  );
+                }}>
+                {Object.keys(属性击破系数).map((x) => (
+                  <option key={x} value={x}>
+                    {x}
+                  </option>
+                ))}
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label htmlFor="基础攻击">基础攻击</label>
+            </th>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <td>
+              <input
+                id="基础攻击"
+                defaultValue={基础攻击}
+                onChange={(e) => {
+                  try {
+                    set基础攻击(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+            </td>
+            <th>
+              <label htmlFor="直伤攻击倍率">直伤攻击倍率</label>
+            </th>
+            <td>
+              <input
+                id="直伤攻击倍率"
+                defaultValue={攻击倍率}
+                onChange={(e) => {
+                  try {
+                    set攻击倍率(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+              %
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label htmlFor="基础生命">基础生命</label>
+            </th>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <td>
+              <input
+                id="基础生命"
+                defaultValue={基础生命}
+                onChange={(e) => {
+                  try {
+                    set基础生命(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+            </td>
+            <th>
+              <label htmlFor="直伤生命倍率">直伤生命倍率</label>
+            </th>
+            <td>
+              <input
+                id="直伤生命倍率"
+                defaultValue={生命倍率}
+                onChange={(e) => {
+                  try {
+                    set生命倍率(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+              %
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label htmlFor="基础防御">基础防御</label>
+            </th>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <td>
+              <input
+                id="基础防御"
+                defaultValue={基础防御}
+                onChange={(e) => {
+                  try {
+                    set基础防御(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+            </td>
+            <th>
+              <label htmlFor="直伤防御倍率">直伤防御倍率</label>
+            </th>
+            <td>
+              <input
+                id="直伤防御倍率"
+                defaultValue={防御倍率}
+                onChange={(e) => {
+                  try {
+                    set防御倍率(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+              %
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label htmlFor="实际削韧值">实际削韧值</label>
+            </th>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <td>
+              <input
+                id="实际削韧值"
+                defaultValue={实际削韧值}
+                onChange={(e) => {
+                  try {
+                    set实际削韧值(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+            </td>
+            <th>
+              <label htmlFor="超击破倍率">超击破倍率</label>
+            </th>
+            <td>
+              <input
+                id="超击破倍率"
+                defaultValue={超击破倍率}
+                onChange={(e) => {
+                  try {
+                    set超击破倍率(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+              %
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label htmlFor="DOT倍率">DOT倍率</label>
+            </th>
+            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+            <td>
+              <input
+                id="DOT倍率"
+                defaultValue={DOT倍率}
+                onChange={(e) => {
+                  try {
+                    setDOT倍率(safeEval(e.target.value));
+                  } catch (err) {
+                    e.target.setCustomValidity((err as Error).message);
+                  }
+                }}
+              />
+            </td>
+          </tr>
+        </tbody>
       </table>
       <Heading level={2}>角色自拐</Heading>
       <BuffTable

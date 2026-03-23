@@ -39,20 +39,24 @@ If the name depends on age, then there must be an oldest and youngest person for
 Since we've never seen "a’o" and "tari" co-occur in a pair, these two must denote the same age difference but different gender difference; the other two pairs both denote the same gender difference but different age difference. Both of these pairs contain "to’a", so "to’a" must be used by all "older" siblings, while the other two names are used by "younger" siblings depending on the gender difference. In other words, we have the following structure:
 
 <table>
-  <tr>
-    <td></td>
-    <th>Older</th>
-    <th>Younger</th>
-  </tr>
-  <tr>
-    <th>Same gender</th>
-    <td rowSpan={2}>to’a</td>
-    <td></td>
-  </tr>
-  <tr>
-    <th>Different gender</th>
-    <td></td>
-  </tr>
+  <thead>
+    <tr>
+      <td></td>
+      <th>Older</th>
+      <th>Younger</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Same gender</th>
+      <td rowSpan={2}>to’a</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Different gender</th>
+      <td></td>
+    </tr>
+  </tbody>
 </table>
 
 The roles of "older" and "younger" are interchangeable, since we don't have information about who's the oldest or youngest here; we can only generate an ordering of their ages.
@@ -72,13 +76,17 @@ And we can know the gender differences by looking at which pairs use "a’o" and
 
 {/* prettier-ignore */}
 <table>
-  <tr><td></td><th>Tsedam</th><th>Lakia</th><th>Mamboti</th><th>Kakodo</th><th>Baliau</th><th>Aibobe</th></tr>
-  <tr><th>Tsedam</th><td></td><td></td><td>a’o</td><td>tari</td><td></td><td>tari</td></tr>
-  <tr><th>Lakia</th><td></td><td></td><td></td><td></td><td>tari</td><td>a’o</td></tr>
-  <tr><th>Mamboti</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-  <tr><th>Kakodo</th><td></td><td></td><td>tari</td><td></td><td></td><td>a’o</td></tr>
-  <tr><th>Baliau</th><td>a’o</td><td></td><td></td><td>tari</td><td></td><td></td></tr>
-  <tr><th>Aibobe</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  <thead>
+    <tr><td></td><th>Tsedam</th><th>Lakia</th><th>Mamboti</th><th>Kakodo</th><th>Baliau</th><th>Aibobe</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>Tsedam</th><td></td><td></td><td>a’o</td><td>tari</td><td></td><td>tari</td></tr>
+    <tr><th>Lakia</th><td></td><td></td><td></td><td></td><td>tari</td><td>a’o</td></tr>
+    <tr><th>Mamboti</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>Kakodo</th><td></td><td></td><td>tari</td><td></td><td></td><td>a’o</td></tr>
+    <tr><th>Baliau</th><td>a’o</td><td></td><td></td><td>tari</td><td></td><td></td></tr>
+    <tr><th>Aibobe</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  </tbody>
 </table>
 
 Assume "tari" means same-gender. Tsedam calls Kakodo and Aibobe "tari", so they are the same gender. Kakodo calls Mamboti "tari", so they are also the same gender. However, we only have 3 brothers and 3 sisters, so we can't have 4 people of the same gender. (And Tsedam calls Mamboti "a’o".) Therefore, "tari" must mean different-gender, and "a’o" means same-gender.

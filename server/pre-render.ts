@@ -20,9 +20,8 @@ const manifest = JSON.parse(
   await FS.readFile(distPath("static/.vite/manifest.json"), "utf-8"),
 ) as { [key: string]: ManifestChunk };
 
-const clientEntry = manifest["src/client-entry.tsx"]!;
 const assets: AssetMap = {
-  bootstrapModules: [`/${clientEntry.file}`],
+  bootstrapModules: [`/${manifest["src/client-entry.tsx"]!.file}`],
   // We don't do CSS code splitting
   stylesheets: [`/${manifest["style.css"]!.file}`],
 };
