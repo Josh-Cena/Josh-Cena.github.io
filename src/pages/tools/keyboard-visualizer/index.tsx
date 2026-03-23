@@ -290,7 +290,6 @@ export default function Keyboard(): ReactNode {
   const deleteMap = useCallback(
     (s: string) => {
       setCurrentMap((c) => {
-        console.log(c, s);
         if (c !== s) return c;
         const [firstMap, secondMap] = Object.keys(keyboardMaps);
         if (firstMap === c) return secondMap;

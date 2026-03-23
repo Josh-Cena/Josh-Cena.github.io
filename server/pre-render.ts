@@ -5,15 +5,31 @@ import { glob } from "tinyglobby";
 import { SitemapStream, streamToPromise } from "sitemap";
 import { normalizeRoute } from "@/normalize-route.ts";
 import type { SSRContextValue } from "@/context/SSRContext";
+import type { AssetMap } from "@/Document";
 
 const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 const distPath = (...ps: string[]) => Path.join(__dirname, "../dist", ...ps);
 
-const template = await FS.readFile(distPath("static/index.html"), "utf-8");
-const { render } = (await import(
+type ManifestChunk = {
+  file: string;
+  css?: string[];
+  imports?: string[];
+};
+
+const manifest = JSON.parse(
+  await FS.readFile(distPath("static/.vite/manifest.json"), "utf-8"),
+) as { [key: string]: ManifestChunk };
+
+const clientEntry = manifest["src/client-entry.tsx"]!;
+const assets: AssetMap = {
+  bootstrapModules: [`/${clientEntry.file}`],
+  // We don't do CSS code splitting
+  stylesheets: [`/${manifest["style.css"]!.file}`],
+};
+
+const { render } =
   // @ts-expect-error: no declaration
-  "../dist/server/server-entry.js"
-)) as typeof import("../src/server-entry");
+  (await import("../dist/server/server-entry.js")) as typeof import("../src/server-entry");
 
 // Has leading slash and trailing slash except for 404
 // e.g. ["/", "/about/", "/404"]
@@ -42,14 +58,7 @@ async function renderSitemap(routes: string[]) {
 const promises = routesToPrerender.map(async (url) => {
   try {
     const context: SSRContextValue = {};
-    const appHTML = await render(url, context);
-
-    const html = template
-      // The HTML may contain dollar signs, which should not be special!
-      .replace("<!--body-->", () => appHTML.body)
-      .replace("<!--metaTags-->", () => appHTML.metaTags)
-      .replace(/<head[^>]+/u, () => `$& ${appHTML.htmlAttributes}`)
-      .replace(/<body[^>]+/u, () => `$& ${appHTML.bodyAttributes}`);
+    const html = await render(url, context, assets);
 
     const filePath = distPath(
       "static",

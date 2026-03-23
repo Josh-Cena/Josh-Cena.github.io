@@ -1,5 +1,4 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
 import { normalizeRoute } from "./normalize-route";
 
 // Auto generates routes from files under ./pages
@@ -32,18 +31,13 @@ export const routes = Object.entries(pages)
         return {
           default: () => (
             <>
-              <Helmet>
-                <title>
-                  {metadata.title
-                    ? `${metadata.title} | Joshua Chen`
-                    : "Joshua Chen"}
-                </title>
-                <meta name="description" content={metadata.description} />
-                <link
-                  rel="canonical"
-                  href={`https://joshcena.com${canonical}`}
-                />
-              </Helmet>
+              <title>
+                {metadata.title
+                  ? `${metadata.title} | Joshua Chen`
+                  : "Joshua Chen"}
+              </title>
+              <meta name="description" content={metadata.description} />
+              <link rel="canonical" href={`https://joshcena.com${canonical}`} />
               <Comp {...rest} />
             </>
           ),

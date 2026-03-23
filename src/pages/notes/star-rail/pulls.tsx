@@ -242,7 +242,6 @@ function StatsGraph(): ReactNode {
             return `${context[0]!.label}: ${卡池[context[0]!.label as keyof typeof 卡池]!.join("/")}`;
           },
           label(context) {
-            console.log(context);
             return `${context.dataset.label!}: ${context.parsed.y!}`;
           },
         },
@@ -323,7 +322,6 @@ function StatsGraph(): ReactNode {
             return `${context[0]!.label}: ${卡池[context[0]!.label as keyof typeof 卡池]!.join("/")}`;
           },
           label(context) {
-            console.log(context);
             return `${context.dataset.label!}: ${context.parsed.y!.toFixed(2)}`;
           },
         },
@@ -430,7 +428,6 @@ function StatsGraph(): ReactNode {
             return `${context[0]!.label}: ${卡池[context[0]!.label as keyof typeof 卡池]!.join("/")}`;
           },
           label(context) {
-            console.log(context);
             return `${context.dataset.label!}: ${context.parsed.y!}`;
           },
         },

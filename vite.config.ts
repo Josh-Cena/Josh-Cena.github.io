@@ -57,7 +57,6 @@ export default defineConfig({
     mermaidPlugin(),
     react({ include: /\.(?:mmd|js|jsx|ts|tsx)$/u }),
     svgr(),
-    // @ts-expect-error: bad types
     visualizer({
       filename: "dist/static/bundle-map.html",
     }),
@@ -70,6 +69,10 @@ export default defineConfig({
   build: {
     cssCodeSplit: false,
     target: "es2022",
+    manifest: true,
+    rolldownOptions: {
+      input: fileURLToPath(new URL("./src/client-entry.tsx", import.meta.url)),
+    },
   },
   resolve: {
     mainFields: ["main"],

@@ -1,102 +1,46 @@
 import React from "react";
-import { renderToPipeableStream } from "react-dom/server";
+import { prerender } from "react-dom/static";
 import { StaticRouter } from "react-router";
-import { Writable } from "node:stream";
-import { HelmetProvider, type HelmetServerState } from "react-helmet-async";
 import App from "./App";
+import Document, { type AssetMap } from "./Document";
 import { SSRContextProvider, type SSRContextValue } from "./context/SSRContext";
 
-// Inspired by https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/server-utils/writable-as-promise.js
-class WritableAsPromise extends Writable {
-  #output: string;
-  #deferred: {
-    promise: Promise<string> | null;
-    resolve: (value: string) => void;
-    reject: (reason: Error) => void;
-  };
+async function readableStreamToString(stream: ReadableStream<Uint8Array>) {
+  const reader = stream.getReader();
+  const decoder = new TextDecoder();
+  let out = "";
 
-  constructor() {
-    super();
-    this.#output = ``;
-    this.#deferred = {
-      promise: null,
-      resolve: () => null,
-      reject: () => null,
-    };
-    this.#deferred.promise = new Promise((resolve, reject) => {
-      this.#deferred.resolve = resolve;
-      this.#deferred.reject = reject;
-    });
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    out += decoder.decode(value, { stream: true });
   }
-
-  override _write(chunk: unknown, enc: unknown, next: () => void) {
-    this.#output += String(chunk);
-    next();
-  }
-
-  override _destroy(error: Error | null, next: (err?: Error | null) => void) {
-    if (error instanceof Error) this.#deferred.reject(error);
-    else next();
-  }
-
-  override end() {
-    this.#deferred.resolve(this.#output);
-    return this.destroy();
-  }
-
-  getPromise(): Promise<string> {
-    return this.#deferred.promise!;
-  }
+  out += decoder.decode();
+  return out;
 }
 
 export async function render(
   url: string,
   context: SSRContextValue,
-): Promise<{
-  body: string;
-  htmlAttributes: string;
-  bodyAttributes: string;
-  metaTags: string;
-}> {
-  const helmetContext = {};
+  assets: AssetMap,
+): Promise<string> {
   const app = (
     <React.StrictMode>
-      <SSRContextProvider context={context}>
-        <StaticRouter location={url}>
-          <HelmetProvider context={helmetContext}>
+      <Document assets={assets}>
+        <SSRContextProvider context={context}>
+          <StaticRouter location={url}>
             <App />
-          </HelmetProvider>
-        </StaticRouter>
-      </SSRContextProvider>
+          </StaticRouter>
+        </SSRContextProvider>
+      </Document>
     </React.StrictMode>
   );
-  // Inspired from
-  // https://react.dev/reference/react-dom/server/renderToPipeableStream#waiting-for-all-content-to-load-for-crawlers-and-static-generation
-  // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js
-  const writableStream = new WritableAsPromise();
 
-  const { pipe } = renderToPipeableStream(app, {
-    onError(error) {
-      writableStream.destroy(error as Error);
-    },
-    onAllReady() {
-      pipe(writableStream);
-    },
+  const { prelude } = await prerender(app, {
+    bootstrapModules: assets.bootstrapModules,
+    bootstrapScriptContent: `window.__ASSET_MAP__ = ${JSON.stringify(assets)};`,
   });
 
-  const body = await writableStream.getPromise();
-  const { helmet } = helmetContext as {
-    helmet: HelmetServerState;
-  };
-
-  const htmlAttributes = helmet.htmlAttributes.toString();
-  const bodyAttributes = helmet.bodyAttributes.toString();
-  const metaStrings = [
-    helmet.title.toString(),
-    helmet.meta.toString(),
-    helmet.link.toString(),
-    helmet.script.toString(),
-  ];
-  const metaTags = metaStrings.filter(Boolean).join("\n");
-  return { body, htmlAttributes, bodyAttributes, metaTags };
+  return await readableStreamToString(prelude);
 }

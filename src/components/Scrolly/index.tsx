@@ -27,7 +27,6 @@ function ScrollyClient() {
       if (!frameRef.current) return;
       const { top, height } = frameRef.current.getBoundingClientRect();
       const newPercentage = Math.min(1, Math.max(0, (height - top) / height));
-      console.log(newPercentage);
       setPercentage(newPercentage);
     }
     window.addEventListener("scroll", onScroll);
