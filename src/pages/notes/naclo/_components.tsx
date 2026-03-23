@@ -65,7 +65,7 @@ function ProblemPaginator({
         <span className="phantom">← Previous</span>
       ) : (
         <Link
-          href={`/notes/naclo/${frontMatter.year}/${String.fromCharCode(curProbCode - 1)}/`}>
+          href={`/notes/naclo/${frontMatter.year}/${String.fromCharCode(curProbCode - 1)}/`.toLowerCase()}>
           ← Previous
         </Link>
       )}{" "}
@@ -74,7 +74,7 @@ function ProblemPaginator({
         <span className="phantom">→ Next</span>
       ) : (
         <Link
-          href={`/notes/naclo/${frontMatter.year}/${String.fromCharCode(curProbCode + 1)}/`}>
+          href={`/notes/naclo/${frontMatter.year}/${String.fromCharCode(curProbCode + 1)}/`.toLowerCase()}>
           Next →
         </Link>
       )}
@@ -155,7 +155,7 @@ function YearIndex({ year }: { readonly year: number }): ReactNode {
         ).map((prob) => (
           <li key={prob}>
             <Link
-              href={`/notes/naclo/${year}/${String.fromCharCode(base + prob)}/`}>
+              href={`/notes/naclo/${year}/${String.fromCharCode(base + prob)}/`.toLowerCase()}>
               {String.fromCharCode(base + prob)}
             </Link>
           </li>

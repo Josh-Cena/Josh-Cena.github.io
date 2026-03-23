@@ -12,7 +12,7 @@
     "format": "prettier -w .",
     "lint": "eslint .",
     "spellcheck": "cspell \"**\" --no-progress",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^11.12.0",
