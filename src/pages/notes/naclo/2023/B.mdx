@@ -1,7 +1,32 @@
 ---
-tags: []
+tags:
+  - Phonology
 ---
 
 # Don't Stress
 
-TODO
+{/* cSpell:ignore hokewe wanįǧįgra hokiwaroke hakirujikgaja waakit’e hąąhere bookągają hipirak xorojike waiperesga waaporoporo hirakorohonira */}
+
+Stress usually depends on both the position and the type of the syllable. Here, among the 7 words given, we have:
+
+- 4 words with primary stress on the 3rd syllable: hokewe, wanįǧįgra, hokiwaroke, hakirujikgaja
+- 3 words with primary stress on the 2nd syllable: waakit’e, hąąhere, bookągają
+
+And the secondary stress, if it exists, is always the second syllable after the primary one. Short words don't have secondary stress. So the only remaining question is how we choose between 3rd and 2nd for primary stress. Usually, the stress shifts because the default position cannot be stressed, or something else attracts stress.
+
+If it's because the default position cannot be stressed: let's see what each word's second and third syllables are.
+
+- Unstressed: ke, nį, ki, ki; t’e, re, ga
+- Stressed: we, ǧį, wa, ru; ki, he, ką
+
+Unfortunately, there does not exist a clear complementary distribution in either the vowels or the consonants. So we can rule out this possibility.
+
+If it's because something else attracts stress, we look for the context of the stress—i.e., the syllables around P. We immediately notice that for the second group, all syllables before P contain a long vowel, while in the first group, no syllable contains a long vowel. So the hypothesis is that the long vowel attracts stress, which by default is the 3rd syllable.
+
+Following this:
+
+- hipirak: no long vowels; stress on 3rd syllable — N-N-P
+- xorojike: no long vowels; stress on 3rd syllable — N-N-P-N
+- waiperesga: diphthong in 1st syllable; stress on 2nd syllable — N-P-N-S (we've never seen diphthongs in the dataset, so we don't know if the attraction condition is based on long vowels or double vowels, so I believe N-N-P-N is also acceptable)
+- waaporoporo: long vowel; stress on 2nd syllable — N-P-N-S-N
+- hirakorohonira: no long vowels; stress on 3rd syllable — N-N-P-N-S-N-N (the answer says N-N-P-N-S-N-S because the segment after P alternates between N and S, but this is never observed in the dataset, so I believe both are acceptable)

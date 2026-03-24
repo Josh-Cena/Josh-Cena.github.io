@@ -87,6 +87,7 @@ exonyms
 façade
 failwith
 fianchetto
+figsize
 flattenable
 fliplr
 flipud
@@ -100,6 +101,7 @@ garcía
 getline
 ggplot
 ghcup
+glottalization
 graphviz
 gregexpr
 grepl
@@ -201,6 +203,7 @@ println
 prismjs
 probs
 prosgegrammeni
+pyplot
 queenside
 quickselect
 raco
@@ -218,6 +221,7 @@ rustc
 rustup
 sapply
 saturationl
+savefig
 scanl
 scanr
 scikit
@@ -285,9 +289,11 @@ wolframscript
 wordcloud
 writeups
 xlink
+xticklabels
 yada
 Yann
 yellowgreen
 yiwn
 ypogegrammeni
+yticklabels
 zhihu

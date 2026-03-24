@@ -1,9 +1,45 @@
 ---
-tags: []
+tags:
+  - Semantics
+  - Puzzle
 ---
 
 # Vloxes
 
-{/* cSpell:ignore Vloxes */}
+{/* cSpell:ignore vlox vloxes imxo mellivu qliqli zuff kibb tezz ravv womm zuffish kibbish tezzish ravvish wommish zlorvitude azeltorf mellovu */}
 
-TODO
+(The official solution already has a very detailed explanation, so this is just a paraphrase.)
+
+We have the following differentiating factors of vloxes:
+
+- Has horn: A, I
+- Small: B, F; big: I
+- Where the stripe on the body is pointing to:
+  - Top corner, slightly right: I
+  - Top right corner, slightly up: C
+  - Top right corner: A, H
+  - Top right corner, slightly down: B
+  - Bottom right corner, slightly left: D
+  - Top left corner: E, F, G
+- How much of the feet is black:
+  - All: A, G
+  - Most: C, F, I
+  - Some: B, E, H
+  - None: D
+
+In the encyclopedia, the following words are important:
+
+- imxo: comparable as more/less
+- mellivu: comparable as more/less
+- qliqli: comparable as more/less, has an absolute "completely"
+- zuff, kibb, tezz, ravv, womm: not compared, but can be graded and combined using "-ish". Collectively referred to as "zlorvitude".
+- azeltorf: has an absolute "nearly"
+- mellovu: absolute, cannot be compared
+
+Based on whether the adjectives are comparable or absolute and how many vloxes have each trait, we can match the list above to the list of traits:
+
+- There's only one absolute adjective, and among the traits, only "has horn" is incomparable. Since there are only two mellovu vloxes and two vloxes with horn, we conclude that "mellovu" = "has horn".
+- Since the zlorvitude adjectives can be combined but they are never compared, these are most likely the direction of the body stripe. For example, suppose pointing to the top corner is "tezz" and top right corner is "zuff", then "top, slightly right" would be "zuffish tezz", while "right, slightly up" would be "tezzish zuff". Only two neighboring corners can be joined by "-ish". There are one zuffish-kibb, one kibbish-zuff, and two kibb, so "kibb" = "top right", "zuff" = "top". There are three ravv, so "ravv" = "top left". One can say "ravvish-womm", so "womm" is next to "ravv" and must be "bottom left", leaving "tezz" = "bottom right".
+- That leaves "imxo", "mellivu", "qliqli", and "azeltorf" to refer to size and leg color. Since "azeltorf" and "qliqli" both have an absolute (one can say "completely filled" but not "completely large"), these two refer to the leg color, while "imxo" and "mellivu" refer to size. There is one imxo vlox but two mellivu vloxes, so "imxo" = "big" and "mellivu" = "small". There is one qliqli vlox but two azeltorf vloxes, so "qliqli" = "not filled" and "azeltorf" = "filled".
+
+Since vloxes are born completely qliqli and qliqli means "not filled", the youngest vlox is D. This one has the stripe pointing to the bottom right corner, slightly towards bottom left, so it's "wommish tezz".

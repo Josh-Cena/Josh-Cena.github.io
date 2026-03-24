@@ -1,7 +1,108 @@
 ---
-tags: []
+tags:
+  - Syntax
+  - Puzzle
 ---
 
 # The Way We Were
 
-TODO
+{/* cSpell:ignore arcebisceop cyning Eadweard menn weras Æþelwine Wulfstan gesawon Athelwine gretton Nereþ bisceop þone hine Hwæt cweþe cumaþ hiere wifmen hieraþ hierdest hierde hierdon ridon þære byrig gesawe geseah fremest Fremede fremedon nerede grette Swithun */}
+
+Most words here are identical or very close, so word matching is easy.
+
+a. "Archbishop" is in sentence 3: arcebisceop.  
+b. From 12, we know that "King Alfred" = "Alfred cyning"; from 13, we know that "Edward" = "Eadweard", so combine these two to get "King Edward" = "Eadweard cyning".  
+c. "menn" is from sentence 1; "þas menn" = "these men".  
+d. "weras" is from sentence 8; "þas weras" = "these men".
+
+Next we want to understand a bit about Old English syntax, or at least the ways in which it differs from Modern English.
+
+- Æþelwine and Wulfstan gesawon þas menn. = Athelwine and Wulfstan saw these men.
+- Hi hi gretton. = They them greeted. (object pronoun before verb)
+- Nereþ hit us? = Saves it us? (verb lifted instead of do-support)
+- Se cyning and se bisceop and ic gesawon þone arcebisceop. = The king and the bishop and I saw the archbishop.
+- We hine gretton. = We him greeted. (object pronoun before verb)
+- Hwæt cweþe we? = What say we? (verb lifted instead of do-support)
+- Seo lar eow nereþ. = The teaching you saves. (object pronoun before verb)
+- We cumaþ. = We come.
+- Ne hiere we þas wifmen. = No hear we these women. (verb at second position, before subject and after negation)
+- Þas weras hieraþ þas wifmen. = These men hear these women.
+- Ne gesawon hi hi. = No saw they them. (verb at second position, before subject and after negation)
+- Þu hierdest þas menn. = You heard these men.
+- Þa hierde we þe. = Then heard we you. (verb at second position, before subject and after adverb)
+- Þu þe hierdest, and we us hierdon. = You you heard, and we us heard. (object pronoun before verb)
+- Alfred cyning and se bisceop ridon into þære byrig. = Alfred king and the bishop rode into the town.
+- Þa gesawe we hi. = Then saw we them. (verb at second position, before subject and after adverb)
+- Eadweard hine geseah. = Edward himself saw. (object pronoun before verb)
+- Gesawe ge us? = Saw you us? (verb lifted instead of do-support)
+- Hwæt fremest þu? = What perform you? (verb lifted instead of do-support)
+- Fremede we hit? = Perform we it? (verb lifted instead of do-support)
+
+Therefore, we observed three main differences: in simple and wh questions, the verb is lifted without any do-support; in normal sentences with a pronoun object, the pronoun comes before the verb (like French "je le mange"); in sentences starting with negation "ne" or adverb "þa", the verb is in the second position, lifted before the subject. These suggest that Old English has V-to-T movement as well as V2 word order (no need to worry what these terms mean).
+
+It may be helpful to list out all the pronouns:
+
+- 1st sg: subject = ic
+- 1st pl: subject = we; object = us
+- 2nd sg/pl: subject = þu/ge; object = þe/eow
+- 3rd sg: subject = hit; object = hine/hit
+- 3rd pl: hi
+
+And all the verbs:
+
+- saw: gesawon (Athelwine and Wulfstan; the king and the bishop and I; they), gesawe (we; you), geseah (Edward)
+- greeted: gretton (they; we)
+- save: Nereþ (it; the teaching)
+- say: cweþe (we)
+- come: cumaþ (we)
+- hear: hiere (we), hieraþ (these men); heard: hierdest (you), hierde (we), hierdon (we)
+- rode: ridon (Alfred king and the bishop)
+- perform: fremest (you), fremede (we)
+
+There's rich inflection: at least three variants per word. "-on" is always used for "we/they" past tense: "gesawon", "gretton", "hierdon", "ridon"; while "-est" for "you" past tense: "hierdest", "fremest". "We heard" has two forms: "hierde" and "hierdon". Similarly "we saw" can be either "gesawe" or "gesawon". Which one to choose? Note that "hierde" is used when it comes before "we" and "hierdon" when it's after. Similarly, "gesawe", "hiere", "fremede", and "cweþe" are all used when the verb comes before the subject "we". So the suffix is just "-e" when the verb comes before the "we" and inflected normally otherwise. However, this rule doesn't apply to "hi" pronoun, which still uses "gesawon hi" instead of "gesawe hi". We don't have to figure out the inflection 100%: just enough to get us through the translations.
+
+e. Ne hierde ge hi. = No heard you them. = You did not hear them.  
+f. Ne gesawon hi þe. = No saw they you. = They did not see you.  
+g. Hi hit fremedon. = They it performed. = They performed it.  
+h. Ne nerede we þe. = No saved we you. = We did not save you.
+
+In A2, we just find out which parts are missing.
+
+a. them = hi  
+b. saves = nereþ  
+c. (you) it heard = hit hierdest  
+d. heard they us = hierdon hi us
+
+In A3, based on how the problem is set up, we need to focus on the two pronouns: "we" and "you". "We" can be either "we" or "wit", and "you" can be either "eow", "inc", or "þe". Because all these sentences have the same structure, the selection is not a syntactic choice, but a semantic one. Look at the right hand side. The distinction is based on what the pronouns refer to. Look for commonalities in the referents of "we" and "you":
+
+- A "my people and I", C "all the bishops", E "he and his men": more than 2 people
+- B "she and my father", D "my mother and I", F "he and his queen": 2 people
+- A "your people", F "the people": more than 2 people
+- D "my sister and brother", E "Swithun and Edmund": 2 people
+- B "me", C "the arch-bishop": 1 people
+
+So it has to do with the number of people, and we just need to find sentences that tell us the number of people.
+
+- "we" is not used in 28–32, but we have 3 "The king and the bishop and I". So "we" is 3 or more people: A, C, E.
+- "wit" is used in 29 "The king and I". So "wit" is 2 people: B, D, F.
+- "inc" is used in 32 "Edmund and Swithun". So "inc" is 2 people: D, E.
+- "þe" is used in 11 to mean "yourself", so it's singular: B, C.
+- That leaves "eow" to be plural "you": A, F.
+
+Therefore:
+
+i. Wit-eow = F  
+ii. Wit-inc = D  
+iii. We-eow = A  
+iv. We-inc = E  
+v. We-þe = C  
+vi. Wit-þe = B
+
+Finally in A4, we do the same thing: find the referent of "you" and count the number of people. However, here we also need to be careful with subject/object: eow/inc/þe are object pronouns, while the subjects, as previously analyzed, are ge/git/þu. "git" is 2-people per 32; "þu" is singular per 11.
+
+a. Paul (subject) = þu  
+b. Alfred & Edmund (subject) = git  
+c. Athelwine & Wulfstan (object) = inc  
+d. Crowd (subject) = ge  
+e. Paul (object) = þe  
+f. Alfred, Athelwine, and Paul (object) = eow

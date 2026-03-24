@@ -1,7 +1,136 @@
 ---
-tags: []
+tags:
+  - Semantics
 ---
 
 # My Grandmother and I
 
-TODO
+{/* cSpell:ignore bili bilmu birri kili kilmu kirri niinki nyaanki nyali nyalmu nyarri nyiinki anki bianki kianki ngaku */}
+
+We have 11 pronouns shown here, including the table and H1:
+
+- bili
+- birri
+- kili
+- kilmu
+- kirri
+- niinki
+- nyaanki
+- nyali
+- nyalmu
+- nyarri
+- nyiinki
+
+Except niinki, nyaanki, nyiinki, the other 8 form a clear prefix-suffix combination grid (technically, nyaanki = nya + anki as well, but we don't have "bianki" or "kianki", so this split is unattested, and we leave it out for now).
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>bi-</th>
+      <th>ki-</th>
+      <th>nya-</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>-li</th>
+      <td>bili</td>
+      <td>kili</td>
+      <td>nyali</td>
+    </tr>
+    <tr>
+      <th>-rri</th>
+      <td>birri</td>
+      <td>kirri</td>
+      <td>nyarri</td>
+    </tr>
+    <tr>
+      <th>-lmu</th>
+      <td>(bilmu)</td>
+      <td>kilmu</td>
+      <td>nyalmu</td>
+    </tr>
+  </tbody>
+</table>
+
+Fill in the cases in which each one is used:
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>bi-</th>
+      <th>ki-</th>
+      <th>nya-</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>-li</th>
+      <td>
+        he, his brother, and his sister
+        <br />
+        she and her grandparents
+      </td>
+      <td>you, your sister, and your grandson</td>
+      <td>
+        my grandparents and I<br />
+        my sister, my grandson, and I
+      </td>
+    </tr>
+    <tr>
+      <th>-rri</th>
+      <td></td>
+      <td>you and your brother</td>
+      <td>my grandmother and I</td>
+    </tr>
+    <tr>
+      <th>-lmu</th>
+      <td></td>
+      <td>you, your father, and your mother</td>
+      <td>my son, my mother, and I</td>
+    </tr>
+  </tbody>
+</table>
+
+- niinki: she and her great-granddaughter
+- nyaanki: my great-grandfather and I
+- nyiinki: you and your aunt
+
+Obviously, the prefix determines the person: bi- = 3rd person, ki- = 2nd person, nya- = 1st person. In this sense, niinki is also bi- prefix, nyaanki is also nya- prefix, and nyiinki is also ki- prefix. We may claim that niinki = bi-anki, nyaanki = nya-anki, and nyiinki = ki-anki.
+
+The suffix is more involved. Obviously it isn't just about number, because -li and -lmu both have 3 people, while -rri and -anki both have 2 people, but this is a good starting point nonetheless, because we managed to group the suffixes into two groups. Squint a bit harder and see that all "grand-" relatives are in the -li/-rri rows, and the other relatives are "brother" and "sister", which are same-generation. On the other hand, in the -lmu/-anki rows, we have all "great-grand-" relatives and father/mother/aunt/son etc., which are 1 or 3 generations away. So the suffix is also determined by how many generations away the relatives are, with -li/-rri for 0 or 2 generations away, and -lmu/-anki for 1 or 3 generations away.
+
+To recap:
+
+- Prefix:
+  - bi-: 3rd person
+  - ki-: 2nd person
+  - nya-: 1st person
+- Suffix:
+  - -li: 3 people, 0 or 2 generations away ("same moiety" as per the solution)
+  - -rri: 2 people, 0 or 2 generations away
+  - -lmu: 3 people, 1 or 3 generations away ("different moiety")
+  - -anki: 2 people, 1 or 3 generations away
+- Special cases:
+  - niinki = bi-anki
+  - nyiinki = ki-anki
+
+a. you and your parents: ki-lmu = 3  
+b. my grandfather and I: nya-rri = 5  
+c. you and your grandchildren: ki-li = 4  
+d. she, her grandmother, and her brother: bi-li = 2  
+e. he and his sister = bi-rri = 6  
+f. my daughter, my mother, and I = nya-lmu = 1
+
+a. my father and I: nya-anki  
+b. you and your granddaughter: ki-rri  
+c. my uncle, my aunt, and I: nya-lmu  
+d. he and his parents: bi-lmu  
+e. she and her mother: bi-anki = niinki  
+f. you and your cousin: ki-rri
+
+_birri_ is 3rd person, 2 people, same moiety. "She and her sister" fits all of these.
+
+"ngaku-li" and "ngaku-lmu" use the same suffixes, so they are still 3 people with same and different moieties respectively, just now that the group includes both "you" and "I", so the person is mixed. "You, I, and our grandfather" is same moiety, so it's ngaku-li, while "You, I, and our aunt" is different moiety, so it's ngaku-lmu. "You and I" where "you" is the speaker's sister would be 2 people in the same moiety, so it's ngaku-rri.
