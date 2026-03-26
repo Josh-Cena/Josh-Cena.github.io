@@ -30,5 +30,6 @@ export default function Home(): ReactNode {
 
 export const meta = {
   title: "",
-  description: "Welcome to Josh-Cena’s personal website!",
+  description:
+    "Programmer, linguist, data scientist, programming language enthusiast, and more. Maintainer of all sorts of open source projects. I care about languages!",
 };
