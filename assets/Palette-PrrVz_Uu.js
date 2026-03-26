@@ -1,1 +1,0 @@
-import"./jsx-runtime-DAs1UGHr.js";import{t as e}from"./Palette-8NgpYV7I.js";export{e as default};

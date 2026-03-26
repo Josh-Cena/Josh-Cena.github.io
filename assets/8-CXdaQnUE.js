@@ -1,0 +1,13 @@
+import{t as e}from"./jsx-runtime-BnxRlLMJ.js";import{n as t}from"./lib-8Y9jQ4sF.js";import{n,t as r}from"./_components-Bk2TMGF4.js";var i=e(),a={tags:[`Image processing`,`Manual inspection`],title:`Advent of Code 2019 - Day 8: Space Image Format`,description:`Advent of Code 2019 - Day 8: Space Image Format, a problem that involves Image processing and Manual inspection. Solution written in C++, with detailed walkthrough and proof.`,year:2019,day:8};function o(e){let o={code:`code`,h1:`h1`,h2:`h2`,p:`p`,pre:`pre`,span:`span`,...t(),...e.components};return(0,i.jsxs)(i.Fragment,{children:[(0,i.jsxs)(o.h1,{children:[`Advent of Code 2019 - Day 8`,(0,i.jsx)(o.span,{className:`subtitle`,children:`Space Image Format`})]}),(0,i.jsx)(n,{frontMatter:a}),`
+`,(0,i.jsx)(o.h2,{children:`Part 1`}),`
+`,(0,i.jsxs)(o.p,{children:[`I don't even need to build an actual 3D array representing the image. I know that `,(0,i.jsx)(o.code,{children:`width = 25`}),` and `,(0,i.jsx)(o.code,{children:`height = 6`}),`, so I have `,(0,i.jsx)(o.code,{children:`layer_size = width * height`}),` and `,(0,i.jsx)(o.code,{children:`num_layers = input.size() / layer_size`}),`. Then I can iterate over `,(0,i.jsx)(o.code,{children:`layer`}),` and `,(0,i.jsx)(o.code,{children:`i`}),` and index into `,(0,i.jsx)(o.code,{children:`input[layer * layer_size + i]`}),`.`]}),`
+`,(0,i.jsx)(o.h2,{children:`Part 2`}),`
+`,(0,i.jsxs)(o.p,{children:[`I built the image as a `,(0,i.jsx)(o.code,{children:`vector<int>`}),`, where each element is `,(0,i.jsx)(o.code,{children:`2`}),` (transparent) initially. Then I iterate over each layer and update the pixel in the image if it is still transparent. Finally I print it out by iterating over `,(0,i.jsx)(o.code,{children:`0..height`}),` and `,(0,i.jsx)(o.code,{children:`0..width`}),`. Originally I printed them backwards (`,(0,i.jsx)(o.code,{children:`0`}),` as `,(0,i.jsx)(o.code,{children:`#`}),` since it's "black"), but then I realized it's easier to read with `,(0,i.jsx)(o.code,{children:`1`}),` as `,(0,i.jsx)(o.code,{children:`#`}),` since the console background is black.`]}),`
+`,(0,i.jsx)(o.p,{children:`I take a second to admire the ASCII art:`}),`
+`,(0,i.jsx)(o.pre,{children:(0,i.jsx)(o.code,{className:`language-plain`,children:`#     ##  #   ##  # ###
+#    #  # #   ##  # #  #
+#    #     # # #### ###
+#    # ##   #  #  # #  #
+#    #  #   #  #  # #  #
+####  ###   #  #  # ###
+`})}),(0,i.jsx)(r,{frontMatter:a})]})}function s(e={}){let{wrapper:n}={...t(),...e.components};return n?(0,i.jsx)(n,{...e,children:(0,i.jsx)(o,{...e})}):o(e)}export{a as n,s as t};

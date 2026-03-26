@@ -1,0 +1,1 @@
+import"./jsx-runtime-BnxRlLMJ.js";import"./PostData-CkAvNoVQ.js";import{n as e,t}from"./2025-10-20-chinese-dialects-Cf82xvKy.js";export{t as default,e as frontMatter};
