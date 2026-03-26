@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import clsx from "clsx";
 import Color from "color";
 import { colors } from "@/colors";
-import styles from "./Palette.module.css";
+import styles from "./_Palette.module.css";
 
 export default function Palette({
   onSelect,

@@ -5,7 +5,7 @@ import colorNames from "color-name";
 import Link from "@/components/Link";
 import Tabs from "@/components/Tabs";
 import CopyButton from "@/components/CopyButton";
-import Palette from "./Palette";
+import Palette from "./_Palette";
 import styles from "./index.module.css";
 
 const cssColors = Object.fromEntries(
