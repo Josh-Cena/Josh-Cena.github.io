@@ -1,9 +1,164 @@
 ---
-tags: []
+tags:
+  - Phonology
 ---
 
 # Marshallese Phonoloji
 
-{/* cSpell:ignore Phonoloji */}
+{/* cSpell:ignore Phonoloji eoui kuuj eakeak pio̧ bo̧jet M̧ajeļ puwaļ jouj O̧kwōj eo̧tōk naaj pˠɑrˠ lˠɑæbˠʌlˠ tʲɔːk kʌɛwɒɑ jeorʷ */}
 
-TODO
+Like any phonology problem, we just want to understand the context in which one underlying form becomes each of its surface forms. Here we start with the vowels, ignoring consonants. For each underlying vowel, I list all the contexts (in the underlying form) in which it becomes a different surface vowel. For example, the first item says that the underlying vowel represented by ⚽️ becomes [ɒɑ] when, in the underlying form, it's preceded by kʷ and followed by rˠ, or preceded by w and followed by lˠ, or preceded by w and followed by ɰ (but in this case the ɰ is deleted, so we only see the surface form [ɒɑ] with no trace of the following consonant).
+
+- ⚽️
+  - ⚽️ → [ɒɑ] / kʷ \_\_ rˠ, w \_\_ lˠ, w \_\_ ɰ (ɰ deleted)
+  - ⚽️ → [æɑ] / mʲ \_\_ k, j \_\_ k
+  - ⚽️ → [ɑɒ] / lˠ \_\_ rʷ, lˠ \_\_ kʷ, pˠ \_\_ w
+  - ⚽️ → [ɑ] / tˠ \_\_ k, mˠ \_\_ ɰ, pˠ \_\_ rˠ
+  - ⚽️ → [ɑæ] / rˠ \_\_ tʲ, lˠ \_\_ pʲ
+  - ⚽️ → [æ] / pʲ \_\_ nʲ
+  - ⚽️ → [ɒ] / w \_\_ kʷ (w deleted)
+  - ⚽️ → [æɒ] / j \_\_ w (w deleted)
+  - ⚽️ɰ⚽️ → [ɑː] / nʲ \_\_ tʲ
+- ☕️
+  - ☕️ → [iu] / nʲ \_\_ kʷ, pʲ \_\_ w
+  - ☕️ → [uɯ] / kʷ \_\_ tˠ
+  - ☕️w☕️ → [uː] / k \_\_ tʲ
+  - ☕️ → [i] / pʲ \_\_ lʲ
+  - ☕️ → [iɯ] / lʲ \_\_ mˠ
+- ☯️
+  - ☯️ → [ɛʌ] / mʲ \_\_ ɰ (ɰ deleted), mʲ \_\_ lˠ, zʲ \_\_ tˠ, zʲ \_\_ lˠ, pʲ \_\_ lˠ, nʲ \_\_ pˠ
+  - ☯️ → [ʌɛ] / tˠ \_\_ mʲ
+  - ☯️ → [ʌɔ] / tˠ \_\_ lʷ
+  - ☯️ → [ɔɛ] / kʷ \_\_ tʲ
+- ☎️
+  - ☎️ → [eo] / rʲ \_\_ ŋʷ
+  - ☎️ → [oɣ] / kʷ \_\_ rˠ
+  - ☎️ → [ɣe] / k \_\_ j (j deleted)
+  - ☎️j☎️ → [eː] / k \_\_ k
+  - ☎️ → [oe] / rʷ \_\_ mʲ
+  - ☎️ → [ɣo] / pˠ \_\_ kʷ
+  - ☎️ → [eɣ] / tʲ \_\_ k
+
+We also have two cases where two different vowels seem to merge into a complex segment:
+
+- ☕️j⚽️w → [iæɒ] / pʲ \_\_ #
+- ☎️w☕️ → [eoui] / tʲ \_\_ tʲ
+
+First, notice that these contexts more or less divide consonants into three classes: labial (Cʷ; w included), velar (Cˠ; k and ɰ included), and palatal (Cʲ; j included). You can tell which class the glides should belong to by (a) knowing the IPA (b) reading the pronunciation notes and inferring from there (c) looking at what other consonants each glide can co-occur with while considered the same type of context. Let's see what happens when we categorize the contexts like that. Below, I've moved a few items around, particularly those that contain glides (w, j, and ɰ), to bring out a pattern.
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>Cʷ \_\_</th>
+      <th>Cˠ \_\_</th>
+      <th>Cʲ \_\_</th>
+    </tr>
+  </thead>
+  {/* prettier-ignore */}
+  <tbody>
+    <tr>
+      <th>\_\_ Cʷ</th>
+      <td>⚽️ → [ɒ]<br />☕️w☕️ → [uː] (/ k \_\_ tʲ)</td>
+      <td>⚽️ → [ɑɒ]<br />☯️ → [ʌɔ]<br />☎️ → [ɣo]</td>
+      <td>⚽️ → [æɒ]<br />☕️ → [iu]<br />☎️ → [eo]</td>
+    </tr>
+    <tr>
+      <th>\_\_ Cˠ</th>
+      <td>⚽️ → [ɒɑ]<br />☕️ → [uɯ]<br />☎️ → [oɣ]</td>
+      <td>⚽️ → [ɑ]<br />⚽️ɰ⚽️ → [ɑː] (/ nʲ \_\_ tʲ)</td>
+      <td>⚽️ → [æɑ]<br />☕️ → [iɯ]<br />☯️ → [ɛʌ]<br />☎️ → [eɣ]</td>
+    </tr>
+    <tr>
+      <th>\_\_ Cʲ</th>
+      <td>☯️ → [ɔɛ]<br />☎️ → [oe]</td>
+      <td>⚽️ → [ɑæ]<br />☯️ → [ʌɛ]<br />☎️ → [ɣe]</td>
+      <td>⚽️ → [æ]<br />☕️ → [i]<br />☎️j☎️ → [eː] (/ k \_\_ k)</td>
+    </tr>
+  </tbody>
+</table>
+
+The way I moved these data points with glides is not arbitrary: if the pattern is "vowel + glide + vowel becomes something", then I ignore the flanking consonants and only use the context of the intervening glide.
+
+Now it's apparent that if you look column-wise, the same emoji always turns into the same first vowel. If you look row-wise, the same emoji always turns into the same second vowel. When the first vowel and second vowel are identical, we get a monophthong; when they're different, we get a diphthong. When we have a VCV sequence where the C is a glide, the two vowels merge into a long vowel. More precisely:
+
+<table>
+  <thead>
+    <tr>
+      <td rowSpan={2}></td>
+      <th colSpan={3}>Nearby consonant</th>
+    </tr>
+    <tr>
+      <th>Cʷ</th>
+      <th>Cˠ</th>
+      <th>Cʲ</th>
+    </tr>
+  </thead>
+  {/* prettier-ignore */}
+  <tbody>
+    <tr>
+      <th>☕️</th>
+      <td>[u]</td>
+      <td>[ɯ]</td>
+      <td>[i]</td>
+    </tr>
+    <tr>
+      <th>☎️</th>
+      <td>[o]</td>
+      <td>[ɣ]</td>
+      <td>[e]</td>
+    </tr>
+    <tr>
+      <th>☯️</th>
+      <td>[ɔ]</td>
+      <td>[ʌ]</td>
+      <td>[ɛ]</td>
+    </tr>
+    <tr>
+      <th>⚽️</th>
+      <td>[ɒ]</td>
+      <td>[ɑ]</td>
+      <td>[æ]</td>
+    </tr>
+  </tbody>
+</table>
+
+This table is not arbitrary: if one looks at [IPA](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet_chart), the rows correspond to high, high-mid, low-mid, and low vowels, while the columns correspond to back rounded, back unrounded, and front unrounded vowels. So the emojis encode height, while the nearby consonants modify backness and rounding.
+
+Now we try to understand the consonant changes. Start with the glides, which were already briefly analyzed above. All glides between a pair of the same vowel are deleted; but otherwise, we have glides that are deleted, and glides that are not:
+
+- kuuj: /w/ deleted in ☕️w☕️
+- mō: /ɰ/ deleted in ☯️ɰ
+- eakeak: /j/ preserved in j⚽️kj⚽️k
+- keek: /j/ deleted in ☎️j☎️
+- pio̧: /j/ deleted in ☕️j⚽️, /w/ deleted in ⚽️w
+- bo̧jet: /w/ deleted in ⚽️wtʲ
+- M̧ajeļ: /ɰ/ deleted in ⚽️ɰtʲ
+- puwaļ: /w/ preserved in ☕️w⚽️
+- wa: /w/ preserved in w⚽️, /ɰ/ deleted in ⚽️ɰ
+- jouj: /w/ deleted in ☎️w☕️
+- O̧kwōj: /w/ deleted in w⚽️
+- eo̧tōk: /j/ preserved in j⚽️, /w/ deleted in ⚽️wtʲ
+- naaj: /ɰ/ deleted in ⚽️ɰ⚽️
+
+Notice how the exact same context of ☕️\_\_⚽️ causes /w/ in puwaļ to be preserved but /j/ in pio̧ to be deleted. This means it probably doesn't have anything to do with the phonological environment. Looking more closely: the glide is only preserved when it's included in the orthography, as "w" (for /w/) or "e" (for /j/; single "e" in the spelling is a vowel; "e" before another vowel is a glide).
+
+Most other consonants stay the same. The variations we see:
+
+- kʷ → gʷ / rˠ \_\_ ☎️, ☕️ \_\_ nʲ, ⚽️ \_\_ ☯️, ☎️ \_\_ lˠ
+- k → g / ɑ \_\_ ɣ, ⚽️ \_\_ j
+- tˠ → dˠ / ☕️ \_\_ ⚽️
+- tʲ → zʲ / ɰ \_\_ ☯️, w \_\_ ☎️
+- pˠ → bˠ / ☯️ \_\_ ⚽️
+
+All of these changes happen iff the consonant is voiceless and is in the middle of the word. So consonants become voiced intervocalicly.
+
+Now we have all three sound changes (vowels, glides, intervocalic stops) that we need.
+
+a. /pˠ⚽️rˠ/ → [pˠɑrˠ]: /⚽️/ becomes [ɑ] between two velars.  
+b. [lˠɑæbˠʌlˠ] ← /lˠ⚽️jpˠ☯️lˠ/: [ʌ] is formed from /☯️/ between two velars, but how can a single underlying vowel become a diphthong [ɑæ] between two velars [lˠ] and [bˠ]? It means there must be a glide that was deleted. [ɑ] and [æ] are formed from /⚽️/ next to velars and palatals respectively, so the next sound should be the palatal glide /j/. Finally, [bˠ] is formed from /pˠ/ between two vowels.  
+c. [tʲɔːk] ← /tʲ☯️w☯️k/: we need two vowels with an intervening glide to get the long vowel. [ɔ] corresponds to /☯️/ next to a labial, so the glide should be /w/.  
+d. /k☯️jw⚽️ɰ/ → [kʌɛwɒɑ]: /☯️/ becomes [ʌɛ] in between a velar and a palatal; /⚽️/ becomes [ɒɑ] between a labial and a velar. The /j/ and /ɰ/ are both deleted because they aren't in the spelling, while the "w" is, so it still exists.  
+e. /j☎️rʷ/ → [jeorʷ]: /☎️/ becomes [eo] between a palatal and a labial, and the /j/ is preserved because it's in the spelling as "e".
+
+At this point, it's clear why we want the existence of /ɰ/: first because it's theoretically consistent with the fact that there are three sound classes and two of them already have a glide; second is that empirically there are certain surface forms that need a velar there, but we only have a rule to delete glides, so there must be a velar glide.

@@ -1,7 +1,91 @@
 ---
-tags: []
+tags:
+  - Writing system
 ---
 
 # A Saharan Sensation
 
-TODO
+{/* cSpell:ignore 𐦠𐦧𐦡𐦷𐦡𐦨𐦲 𐦠𐦧𐦣𐦵 𐦵𐦥𐦢𐦱𐦴𐦢 𐦲𐦪𐦢𐦵 𐦳𐦣𐦫𐦡 𐦧𐦡𐦬𐦨𐦣𐦯 𐦧𐦬𐦯𐦩 Meroitic anata apote apedemaka pelamosa palasana paqara sema qore tewiseti kadite 𐦧𐦡𐦫𐦢𐦵 𐦧𐦢𐦬𐦡𐦳𐦡 𐦠𐦴𐦫𐦢 𐦨𐦡𐦷𐦡𐦥𐦢 */}
+
+This script actually has Unicode: I'm not sure why the problem uses images for them. Here's the word inventory, typed up nicely[^1]:
+
+[^1]: This script being RTL made it a huge pain to type.
+
+1. 𐦠𐦧𐦡𐦷𐦡𐦨𐦲
+2. 𐦠𐦧𐦣𐦵
+3. 𐦵𐦥𐦢𐦱𐦴𐦢
+4. 𐦲𐦪𐦢𐦵
+5. 𐦱𐦨
+6. 𐦳𐦣𐦫𐦡
+7. 𐦠𐦩𐦴
+8. 𐦧𐦡𐦬𐦨𐦣𐦯
+9. 𐦧𐦬𐦯𐦩
+10. 𐦠𐦴
+11. 𐦯𐦵
+12. 𐦧𐦳𐦫
+
+First thing is to figure out the writing direction. In the English translations, we have 4 words beginning with "a" and 3 beginning with "p". In the Meroitic column, it suffices to say that the left ends of the words vary a lot, while we have 4 words with 𐦠 on the right hand, and 3 with 𐦧. (Even if you treated 𐦠 as two distinct glyphs, the conclusion still holds.) Therefore this language is RTL. We can group the words and translations by the first letter.
+
+<table>
+  <thead>
+    <tr>
+      <th colSpan={2}>𐦠 - a</th>
+      <th colSpan={2}>𐦧 - p</th>
+      <th colSpan={2}>others</th>
+    </tr>
+    <tr>
+      <th>Meroitic</th>
+      <th>English</th>
+      <th>Meroitic</th>
+      <th>English</th>
+      <th>Meroitic</th>
+      <th>English</th>
+    </tr>
+  </thead>
+  {/* prettier-ignore */}
+  <tbody>
+    <tr>
+      <td>1. 𐦠𐦧𐦡𐦷𐦡𐦨𐦲<br />2. 𐦠𐦧𐦣𐦵<br />7. 𐦠𐦩𐦴<br />10. 𐦠𐦴</td>
+      <td>A. anata<br />C. apote<br />F. ata<br />G. apedemaka</td>
+      <td>8. 𐦧𐦡𐦬𐦨𐦣𐦯<br />9. 𐦧𐦬𐦯𐦩<br />12. 𐦧𐦳𐦫</td>
+      <td>D. pelamosa<br />I. palasana<br />J. paqara</td>
+      <td>3. 𐦵𐦥𐦢𐦱𐦴𐦢<br />4. 𐦲𐦪𐦢𐦵<br />5. 𐦱𐦨<br />6. 𐦳𐦣𐦫𐦡<br />11. 𐦯𐦵</td>
+      <td>B. sema<br />E. qore<br />H. sate<br />K. tewiseti<br />L. kadite</td>
+    </tr>
+  </tbody>
+</table>
+
+(Again, okay if you treat 𐦠 as two distinct glyphs here.)
+
+Next we want to figure out if the script is alphabetic or syllabic. Notice how 𐦠 never appears again elsewhere, despite "a" being everywhere. (If you treat 𐦠 as two glyphs, then the right half never appears again. However, at this point you should realize that the right half never exists without the left half, so they should be one glyph.) That's a strong hint that it's not purely alphabetic—either syllabic, abjad, or a mix.
+
+- In the "A" column, the shortest one, 10. 𐦠𐦴, should match to the shortest translation, F. ata. Therefore 𐦴 = ta. Therefore 7. 𐦠𐦩𐦴 = A. anata, and 𐦩 = na.
+- 𐦩 appears again in 9, so 9. 𐦧𐦬𐦯𐦩 = I. palasana, giving 𐦯 = sa, 𐦬 = la, and 𐦧 = pa.
+- 𐦯 appears again in 8 and 11, so these are 8. 𐦧𐦡𐦬𐦨𐦣𐦯 = D. pelamosa and 11. 𐦯𐦵 = H. sate. Aligning the glyphs and the syllables (since glyphs map more or less to syllables), we have 𐦨𐦣 = mo, 𐦧𐦡 = pe, 𐦵 = te.
+- 𐦵 pops up everywhere: 2. <bdo dir="rtl">𐦠𐦧𐦣𐦵</bdo>, 3. <bdo dir="rtl">𐦵𐦥𐦢𐦱𐦴𐦢</bdo>, and 4. <bdo dir="rtl">𐦲𐦪𐦢𐦵</bdo>. They would match C. apote, K. tewiseti, and L. kadite, respectively, based on whether the "te" is at the beginning or end. This gives 𐦧𐦣 = po, 𐦴𐦢 = ti, 𐦱 = se, 𐦥𐦢 = wi, 𐦪𐦢 = di, 𐦲 = ka. Why do I know where to cut off the glyph boundaries? Because this makes all -o syllables end with 𐦣 (in RTL scripts, "end" means "left"), and all -i syllables end with 𐦢. Also, we already know 𐦴 = ta, so 𐦴𐦢 = ti for sure.
+- Finally, in the "A" column, 1. 𐦠𐦧𐦡𐦷𐦡𐦨𐦲 = G. apedemaka. So 𐦨 = ma, 𐦷𐦡 = de. In the "P" column, 12. 𐦧𐦳𐦫 = J. paqara. So 𐦫 = ra, 𐦳 = qa. In the "others" column, 5. 𐦱𐦨 = B. sema (both glyphs are known), leaving 6. 𐦳𐦣𐦫𐦡 = E. qore, so 𐦫𐦡 = re, 𐦳𐦣 = qo.
+
+Recap all the syllable values we have:
+
+| Glyph | Syllable | Glyph | Syllable |
+| ----- | -------- | ----- | -------- |
+| 𐦠     | a        | 𐦳     | qa       |
+| 𐦷𐦡    | de       | 𐦳𐦣    | qo       |
+| 𐦪𐦢    | di       | 𐦫     | ra       |
+| 𐦲     | ka       | 𐦫𐦡    | re       |
+| 𐦬     | la       | 𐦯     | sa       |
+| 𐦨     | ma       | 𐦱     | se       |
+| 𐦨𐦣    | mo       | 𐦴     | ta       |
+| 𐦩     | na       | 𐦵     | te       |
+| 𐦧     | pa       | 𐦴𐦢    | ti       |
+| 𐦧𐦡    | pe       | 𐦥𐦢    | wi       |
+| 𐦧𐦣    | po       |       |          |
+
+It's obvious that for most syllables, "a" is the default vowel, and "e", "i", "o" are formed by adding <bdo dir="rtl">𐦡</bdo>, <bdo dir="rtl">𐦢</bdo>, and <bdo dir="rtl">𐦣</bdo>, respectively. The exceptions are "se" and "te" for which we have specialized glyphs 𐦱 and 𐦵 instead of the standard combinations.
+
+Therefore:
+
+a. <bdo dir="rtl">𐦧𐦡𐦫𐦢𐦵</bdo> = <bdo dir="rtl">𐦧𐦡</bdo> + <bdo dir="rtl">𐦫𐦢</bdo> + <bdo dir="rtl">𐦵</bdo> = pe + ri + te  
+b. <bdo dir="rtl">𐦧𐦢𐦬𐦡𐦳𐦡</bdo> = <bdo dir="rtl">𐦧𐦢</bdo> + <bdo dir="rtl">𐦬𐦡</bdo> + <bdo dir="rtl">𐦳𐦡</bdo> = pi + le + qe  
+c. <bdo dir="rtl">𐦠𐦴𐦫𐦢</bdo> = <bdo dir="rtl">𐦠</bdo> + <bdo dir="rtl">𐦴</bdo> + <bdo dir="rtl">𐦫𐦢</bdo> = a + ta + ri  
+d. <bdo dir="rtl">𐦨𐦡𐦷𐦡𐦥𐦢</bdo> = <bdo dir="rtl">𐦨𐦡</bdo> + <bdo dir="rtl">𐦷𐦡</bdo> + <bdo dir="rtl">𐦥𐦢</bdo> = me + de + wi

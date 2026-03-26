@@ -1,7 +1,64 @@
 ---
-tags: []
+tags:
+  - Historical
 ---
 
 # Show That One for the People
 
-TODO
+{/* cSpell:ignore sisto pro Petronia tibi Sanctam tris rubra catulum iuvencam ovis auctor canito ostento istum pro populo ferto Petroniaper populoper sistu Petruniaper uvis auctur canitu ustentu pupuluper fertu sestu tebe uves canetu estum tefe rufra Sanktam katulum iuvenkam auktur kanetu uvef Sankta katulu iuvenka estu katlu pupluper Sakta iuveka ustetu Sahta auhtur iveka uhtur frictum tauros inito reper furum initu frectum enetu frektum tauruf frektu furu frehtu turuf */}
+
+We want to understand the rewrite rules for turning Latin into Umbrian. Let's maintain the list of Latin words and apply a set of rewrite rules to approach the Umbrian words. (Theoretically, we have to worry about the order in which we apply these rules, because an earlier rule may collapse certain differentiating contexts and cause later rules to be impossible to write out, but we start by being sloppy.)
+
+We find out what rewrite rules we need by comparing the Latin and Umbrian words and seeing how they differ systematically. For example, if we see that Umbrian words never have the letter "o", and all "o"s in Latin correspond to "u"s in Umbrian, then we can write a rewrite rule that says "o → u". However, sometimes a Latin letter corresponds to a different Umbrian letter in some cases but the same Umbrian letter in others; in this case we need a selective rewrite rule, such as "s → f at the end of the word", so we target "tres → tref" but not "Sanktam" or "ustentu".
+
+- Beginning:
+  - sisto, pro Petronia, tibi, Sanctam, tris, rubra, catulum, iuvencam, ovis, auctor, canito, ostento, istum, pro populo, ferto
+- pro → -per
+  - sisto, **Petroniaper**, tibi, Sanctam, tris, rubra, catulum, iuvencam, ovis, auctor, canito, ostento, istum, **populoper**, ferto
+- o → u
+  - **sistu**, **Petruniaper**, tibi, Sanctam, tris, rubra, catulum, iuvencam, **uvis**, **auctur**, **canitu**, **ustentu**, istum, **pupuluper**, **fertu**
+- i → e, except in diphthongs
+  - **sestu**, Petruniaper, **tebe**, Sanctam, **tres**, rubra, catulum, iuvencam, **uves**, auctur, **canetu**, ustentu, **estum**, pupuluper, fertu
+- b → f
+  - sestu, Petruniaper, **tefe**, Sanctam, tres, **rufra**, catulum, iuvencam, uves, auctur, canetu, ustentu, estum, pupuluper, fertu
+- c → k
+  - sestu, Petruniaper, tefe, **Sanktam**, tres, rufra, **katulum**, **iuvenkam**, uves, **auktur**, **kanetu**, ustentu, estum, pupuluper, fertu
+- s → f at the end of the word
+  - sestu, Petruniaper, tefe, Sanktam, **tref**, rufra, katulum, iuvenkam, **uvef**, auktur, kanetu, ustentu, estum, pupuluper, fertu
+- Delete m at the end of the word
+  - sestu, Petruniaper, tefe, **Sankta**, tref, rufra, **katulu**, **iuvenka**, uvef, auktur, kanetu, ustentu, **estu**, pupuluper, fertu
+- Delete u before l
+  - sestu, Petruniaper, tefe, Sankta, tref, rufra, **katlu**, iuvenka, uvef, auktur, kanetu, ustentu, estu, **pupluper**, fertu
+- Delete n before a consonant
+  - sestu, Petruniaper, tefe, **Sakta**, tref, rufra, katlu, **iuveka**, uvef, auktur, kanetu, **ustetu**, estu, pupluper, fertu
+- k → h before t
+  - sestu, Petruniaper, tefe, **Sahta**, tref, rufra, katlu, iuveka, uvef, **auhtur**, kanetu, ustetu, estu, pupluper, fertu
+- Finally just some random rewrites to close off the gaps: iu → i, au → u
+  - sestu, Petruniaper, tefe, Sahta, tref, rufra, katlu, **iveka**, uvef, **uhtur**, kanetu, ustetu, estu, pupluper, fertu
+
+And we've arrived at the list of Umbrian words. Using these rules to rewrite the given words:
+
+- Beginning:
+  - ito, frictum, pro re, tauros, forum, inito
+- pro → -per
+  - ito, frictum, **reper**, tauros, forum, inito
+- o → u
+  - **itu**, frictum, reper, **taurus**, **furum**, **initu**
+- i → e, except in diphthongs
+  - **etu**, **frectum**, reper, taurus, furum, **enetu**
+- b → f
+  - etu, frectum, reper, taurus, furum, enetu
+- c → k
+  - etu, **frektum**, reper, taurus, furum, enetu
+- s → f at the end of the word
+  - etu, frektum, reper, **tauruf**, furum, enetu
+- Delete m at the end of the word
+  - etu, **frektu**, reper, tauruf, **furu**, enetu
+- Delete u before l
+  - etu, frektu, reper, tauruf, furu, enetu
+- Delete n before a consonant
+  - etu, frektu, reper, tauruf, furu, enetu
+- k → h before t
+  - etu, **frehtu**, reper, tauruf, furu, enetu
+- iu → i, au → u
+  - etu, frehtu, reper, **turuf**, furu, enetu

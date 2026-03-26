@@ -1,9 +1,372 @@
 ---
-tags: []
+tags:
+  - Semantics
+  - Puzzle
 ---
 
 # Wordnet Battleship
 
-{/* cSpell:ignore Wordnet */}
+{/* cSpell:ignore Wordnet containerful */}
 
-TODO
+By the end of the 9th round, the board of player 1 looks like this (cross means "hit", circle means "miss"):
+
+export const canvasResources = {};
+
+```js canvas width=600 height=300
+canvasResources.treeSimple = {
+  position: [300, 20],
+  create: {
+    position: [100, 100],
+    produce: {
+      position: [100, 180],
+      generate: { position: [40, 260] },
+      print: { position: [100, 260] },
+      breed: { position: [160, 260] },
+    },
+  },
+  modify: {
+    position: [300, 100],
+    dry: { position: [250, 180] },
+    mark: {
+      position: [350, 180],
+      copy: { position: [290, 260] },
+      print: { position: [350, 260] },
+      scribble: { position: [410, 260] },
+    },
+  },
+  perform: {
+    position: [500, 100],
+    serenade: { position: [450, 180] },
+    improvise: { position: [550, 180] },
+  },
+};
+
+canvasResources.drawNode = function drawNode(ctx, node, label, depth = 0) {
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = "16px sans-serif";
+
+  const [x, y] = node.position;
+  ctx.fillText(label, x, y);
+  ctx.strokeStyle = colorMode === "light" ? "#08827e" : "#39cac4";
+  ctx.lineWidth = 3;
+  if (node.status === "hit") {
+    ctx.beginPath();
+    ctx.moveTo(x - 10, y - 10);
+    ctx.lineTo(x + 10, y + 10);
+    ctx.moveTo(x + 10, y - 10);
+    ctx.lineTo(x - 10, y + 10);
+    ctx.stroke();
+  } else if (node.status === "miss") {
+    ctx.beginPath();
+    ctx.arc(x, y, 15, 0, Math.PI * 2);
+    ctx.stroke();
+  } else if (node.status === "unknown") {
+    ctx.fillStyle = colorMode === "light" ? "#08827e" : "#39cac4";
+    ctx.font = "bold 22px sans-serif";
+    ctx.fillText("?", x, y);
+    ctx.font = "16px sans-serif";
+    ctx.fillStyle = textColor;
+  }
+  ctx.strokeStyle = textColor;
+  ctx.lineWidth = 1;
+
+  for (const [childLabel, child] of Object.entries(node)) {
+    if (childLabel === "position" || childLabel === "status") continue;
+    ctx.beginPath();
+    ctx.moveTo(x, y + (child.position[1] > y ? 20 : -20));
+    ctx.lineTo(
+      child.position[0],
+      child.position[1] + (child.position[1] > y ? -20 : 20),
+    );
+    ctx.stroke();
+    drawNode(ctx, child, childLabel, depth + 1);
+  }
+};
+
+canvasResources.copyNode = function copyNode(node) {
+  const newNode = { ...node };
+  for (const [childLabel, child] of Object.entries(node)) {
+    if (childLabel === "position" || childLabel === "status") continue;
+    newNode[childLabel] = copyNode(child);
+  }
+  return newNode;
+};
+
+const tree = canvasResources.copyNode(canvasResources.treeSimple);
+tree.create.produce.generate.status = "miss";
+tree.modify.status = "hit";
+tree.modify.mark.status = "hit";
+tree.status = "miss";
+tree.modify.mark.scribble.status = "hit";
+tree.perform.status = "miss";
+tree.create.produce.status = "hit";
+tree.create.produce.breed.status = "miss";
+tree.create.status = "hit";
+
+canvasResources.drawNode(ctx, tree, "do");
+```
+
+We know that hitting "scribble" shrinks a rowboat, so this rowboat must be at scribble-mark. Therefore, the boat at "modify" must run from "modify" to "dry" and be a yacht. The frigate runs create-produce-print. So to sink the frigate, call "print" meaning "produce" (as opposed to as a manner of writing): "The teacher will print all exam papers". To sink the yacht, call "dry" as a verb: "The sun will dry the clothes".
+
+Now for player 2's board:
+
+```js canvas width=600 height=300
+const tree = canvasResources.copyNode(canvasResources.treeSimple);
+tree.modify.dry.status = "miss";
+tree.modify.mark.print.status = "miss";
+tree.modify.status = "hit";
+tree.status = "hit";
+tree.modify.mark.status = "hit";
+tree.create.produce.print.status = "miss";
+tree.create.produce.status = "hit";
+tree.perform.status = "hit";
+tree.perform.serenade.status = "hit";
+tree.create.status = "miss";
+tree.create.produce.breed.status = "miss";
+
+canvasResources.drawNode(ctx, tree, "do");
+```
+
+Calling do-modify-mark sinks a frigate; calling "serenade" sinks a yacht, so the yacht is at perform-serenade; that leaves the rowboat at produce-generate.
+
+In the advanced setup, we have a bunch of nouns. We can't necessarily construct the whole tree, but we can do as much as we can. For example, the one-noun-to-rule-them-all is obviously "entity" (the very definition of "noun"), from which we have "physical entity" and "abstract entity". Under "physical entity" we have "person" and "object". Under "abstract entity" we have "quantity", "event", and "communication". All it takes is to sort the remaining nouns under one of these buckets. The nouns with blank sentences are left out for now, because we don't know what exactly the intended meaning is.
+
+- object
+  - publication
+  - magazine
+  - ball
+  - instrument
+  - book
+  - envelope
+  - pitcher
+  - container
+  - microscope
+  - equipment
+- person
+  - scientist
+  - queen
+  - thrower
+  - prime minister
+  - pitcher
+- quantity
+  - containerful
+  - spoonful
+  - centimeter
+  - length
+- event
+  - social event
+  - ball
+  - business event
+  - construction
+  - concert
+  - feast
+  - show
+- communication
+  - written communication
+
+The blanked ones are: ruler (2 meanings), play, publication (distinct from the object one), pitcher (distinct from the object one), book (distinct from the publication one).
+
+Just take out the more general nouns and put the more concrete ones under them, and get a tree like this:
+
+```js canvas width=800 height=750
+canvasResources.treeAdvanced = {
+  position: [400, 400],
+  "physical entity": {
+    position: [400, 480],
+    object: {
+      position: [200, 560],
+      publication: {
+        position: [50, 640],
+        magazine: { position: [25, 720] },
+        book: { position: [100, 720] },
+      },
+      equipment: {
+        position: [150, 640],
+        ball: { position: [150, 720] },
+      },
+      container: {
+        position: [250, 640],
+        envelope: { position: [220, 720] },
+        pitcher: { position: [280, 720] },
+      },
+      instrument: {
+        position: [350, 640],
+        microscope: { position: [350, 720] },
+      },
+    },
+    person: {
+      position: [600, 560],
+      scientist: { position: [440, 640] },
+      queen: { position: [520, 640] },
+      thrower: { position: [600, 640] },
+      "prime minister": { position: [680, 640] },
+      pitcher: { position: [760, 640] },
+    },
+  },
+  "abstract entity": {
+    position: [400, 320],
+    quantity: {
+      position: [100, 240],
+      containerful: {
+        position: [50, 160],
+        spoonful: { position: [50, 80] },
+      },
+      length: {
+        position: [150, 160],
+        centimeter: { position: [150, 80] },
+      },
+    },
+    event: {
+      position: [400, 240],
+      "social event": {
+        position: [300, 160],
+        ball: { position: [250, 80] },
+        feast: { position: [300, 80] },
+        show: {
+          position: [350, 80],
+          concert: { position: [350, 10] },
+        },
+      },
+      "business event": {
+        position: [500, 160],
+        construction: { position: [500, 80] },
+      },
+    },
+    communication: {
+      position: [700, 240],
+      "written communication": { position: [700, 160] },
+    },
+  },
+};
+
+canvasResources.drawNode(ctx, canvasResources.treeAdvanced, "entity");
+```
+
+Now we look at the game record.
+
+- object-publication-magazine sinks a cruiser—as we'd expect.
+- containerful-spoonful sinks a destroyer—as we'd expect.
+- When we get to "ruler", we've sunk a battleship. The previous ones—queen, physical entity, thrower, prime minister (miss), person, centimeter—must have hit 3 positions. Unfortunately! In the diagram, there are at most 3 layers from "physical entity" to the leaves, so the battleship with length 4 could not have possibly been parked here. The conclusion is that we've missed a layer. Also, the word "ruler" has to be under "person" because we've always been targeting around this area. So the missing layer is "ruler" as in a type of person, with descendants "queen" and "prime minister": (f) The president met with the ruler of the neighboring country. Now a battleship is admitted at physical entity-person-ruler-queen. This also means there can be no boat at "thrower". We don't know the status of "centimeter" yet.
+- When we get to "submarine", we've sunk a submarine. But we don't know where "play" is; let's leave it aside for just one moment because there are lower hanging fruits.
+- When we get to "ruler", we've sunk a patrol boat. The only other meaning of "ruler" is a measuring stick, which must be under "instrument": (j) This ruler is great at measuring small objects. Indeed, we've previously hit "instrument", so the patrol boat is at instrument-ruler.
+
+At the end of the game, the board looks like:
+
+```js canvas width=800 height=750
+canvasResources.treeAdvanced["physical entity"].person = {
+  position: [600, 560],
+  scientist: { position: [450, 640] },
+  ruler: {
+    position: [550, 640],
+    queen: { position: [500, 720] },
+    "prime minister": { position: [600, 720] },
+  },
+  thrower: { position: [650, 640] },
+  pitcher: { position: [750, 640] },
+};
+
+canvasResources.treeAdvanced["physical entity"].object.instrument = {
+  position: [350, 640],
+  microscope: { position: [320, 720] },
+  ruler: { position: [380, 720] },
+};
+
+const tree = canvasResources.copyNode(canvasResources.treeAdvanced);
+tree["physical entity"].object.status = "hit";
+tree["physical entity"].object.publication.status = "hit";
+tree["physical entity"].object.publication.magazine.status = "hit";
+tree["physical entity"].person.scientist.status = "miss";
+tree["abstract entity"].quantity.containerful.status = "hit";
+tree["abstract entity"].quantity.containerful.spoonful.status = "hit";
+tree["physical entity"].person.ruler.queen.status = "hit";
+tree["physical entity"].status = "hit";
+tree["physical entity"].person.thrower.status = "miss";
+tree["physical entity"].person.ruler["prime minister"].status = "miss";
+tree["abstract entity"].quantity.length.centimeter.status = "unknown";
+tree["physical entity"].person.ruler.status = "hit";
+tree["physical entity"].object.equipment.ball.status = "miss";
+tree["physical entity"].person.pitcher.status = "miss";
+tree["physical entity"].object.instrument.status = "hit";
+tree["physical entity"].object.publication.book.status = "miss";
+tree["abstract entity"].communication["written communication"].status =
+  "unknown";
+tree["abstract entity"].communication.status = "unknown";
+tree["abstract entity"].event.status = "hit";
+tree["abstract entity"].event["social event"].status = "hit";
+tree["physical entity"].object.instrument.ruler.status = "hit";
+tree["abstract entity"].event["social event"].ball.status = "hit";
+tree["abstract entity"].status = "hit";
+
+canvasResources.drawNode(ctx, tree, "entity");
+```
+
+We have an aircraft carrier of length 5 and a submarine of length 3 left. The remaining hits we can use are: abstract entity, event, social event, ball (the event), (k), play (position unknown), communication (status unknown), written communication (status unknown). (I've left out "centimeter" because it's so far from everything else so it's obviously a miss.) These add up to exactly 8 hits, so they must all be hits.
+
+abstract entity-event-social event-ball already forms a length 4 path, so the aircraft carrier should use it. However, the last hit at (k) cannot be "entity", because player 4 hit "entity" earlier, and we want the two players to have matching last hit. Therefore, the last hit must be something under "abstract entity" along this path, but we don't know what yet.
+
+communication-written communication is a length 2 path, so the submarine should use it. "Play" is last hit for this submarine—and it kind of fits under "written communication" as a type of written work: (i) The play was written in the playwright's early years.
+
+Now onto the board of player 4.
+
+- event-business event-publication sinks a submarine, so they need to form a path. This means the "publication" here needs to be a different meaning from the one under "object": (l) The publication of _The Catcher in the Rye_ was an instant success.
+- abstract entity-quantity-containerful forms a path, but nothing is sunken yet, so this is a long boat.
+- container-pitcher sinks a destroyer—as we'd expect.
+- The next "pitcher" immediately sinks a battleship, so this needs to be connected to the "containerful" path. The only way to connect it is to interpret "pitcher" as a quantity here: (m) I drink a pitcher of milk every day.
+- Among "social event", "feast", "show", and "play", 3 of the 4 sunk a cruiser. The only way is to make "play" come under "show": (n) A lot of famous celebrities attended the play.
+
+Here's the final board, where the only two unmarked hits are "book" and (k), and all known hits except "feast" have been accounted for:
+
+```js canvas width=800 height=750
+canvasResources.treeAdvanced["abstract entity"].communication[
+  "written communication"
+].play = { position: [700, 80] };
+canvasResources.treeAdvanced["abstract entity"].event["business event"] = {
+  position: [500, 160],
+  construction: { position: [450, 80] },
+  publication: { position: [550, 80] },
+};
+canvasResources.treeAdvanced["abstract entity"].quantity.containerful = {
+  position: [50, 160],
+  spoonful: { position: [20, 80] },
+  pitcher: { position: [80, 80] },
+};
+canvasResources.treeAdvanced["abstract entity"].event["social event"].show = {
+  position: [350, 80],
+  concert: { position: [320, 10] },
+  play: { position: [380, 10] },
+};
+
+const tree = canvasResources.copyNode(canvasResources.treeAdvanced);
+tree["abstract entity"].event.status = "hit";
+tree["abstract entity"].event["business event"].status = "hit";
+tree["abstract entity"].event["business event"].construction.status = "miss";
+tree["abstract entity"].event["business event"].publication.status = "hit";
+tree["abstract entity"].quantity.status = "hit";
+tree["abstract entity"].status = "hit";
+tree["abstract entity"].quantity.containerful.status = "hit";
+tree["physical entity"].object.container.envelope.status = "miss";
+tree["physical entity"].object.publication.magazine.status = "miss";
+tree["physical entity"].object.container.pitcher.status = "hit";
+tree["physical entity"].object.container.status = "hit";
+tree["abstract entity"].quantity.containerful.pitcher.status = "hit";
+tree["abstract entity"].event["social event"].status = "hit";
+tree["abstract entity"].event["social event"].feast.status = "hit";
+tree["abstract entity"].event["social event"].show.status = "hit";
+tree["abstract entity"].event["social event"].show.play.status = "hit";
+tree["physical entity"].object.publication.status = "unknown";
+tree.status = "unknown";
+tree["abstract entity"].quantity.length.status = "unknown";
+tree["physical entity"].status = "unknown";
+tree["physical entity"].object.status = "unknown";
+tree["physical entity"].object.instrument.microscope.status = "unknown";
+tree["physical entity"].object.equipment.status = "unknown";
+
+canvasResources.drawNode(ctx, tree, "entity");
+```
+
+Finally, we have a long list of unknown results that eventually sunk an aircraft carrier and a patrol boat. These two boats have total length 7, and we still have 3 known hits: "feast", "book", and (k) to use, so 4 out of the 7 unknown results were hits. The aircraft carrier can only fit if it starts from "entity" and goes down the "physical entity" branch: entity-physical entity-object-publication-book. So the book here is the ordinary "physical object" meaning: (v) The book is very heavy.[^1]
+
+That leaves the patrol boat to use "feast" and (k). Previously, we also known that (k) is along the path of abstract entity-event-social event-ball. How can something both touch "feast" and "ball"? It means (k) needs to be a parent of both these items and also be under "social event". The solution suggests "party": (k) Everyone had a good time at the party.
+
+[^1]: I realized that the solution separates the physical book from the abstract written "book", and the "every book by Charles Dickens" sentence is meant to refer to the abstract meaning. But even if the two meanings are conflated, the problem can still be solved. Also, the solution wants "pitcher" under "thrower", which makes sense but is again not important for solving the problem.

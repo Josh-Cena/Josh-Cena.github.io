@@ -1,9 +1,141 @@
 ---
-tags: []
+tags:
+  - Computational
+  - Syntax
+  - Puzzle
 ---
 
 # Camp Not-So-Pleasanthill
 
-{/* cSpell:ignore Pleasanthill */}
+{/* cSpell:ignore Pleasanthill Wari’ Querec Quep ’inain temem’ hwam Hatem taram ’inon nain ’inam tarapa’ Orowao nonon onon Topa’ */}
 
-TODO
+If we look up "canoeing", "the campfire", "tennis" in the table, we get: "food", "delicious", "is". How do we order the words? It must depend on the number: 2443. It's saying that the first word, when decrypted, goes in position 2, the second and third go in position 4, and the fourth goes in position 3. So we get: \_\_\_\_ food is delicious. The missing word is "the". The "delicious" is then interpreted in the opposite meaning: "disgusting".
+
+Knowing this, look up "cabins", "food", "basketball": "home", "take", "me". They go in positions 3, 1, 2, so we get "take me home".
+
+To encrypt, first take the number and read off the corresponding positions in the translation. Then for each translation word, look up for the code word in the right column.
+
+a. "my counselor is mean" (12443) → my, counselor, mean-mean, is → postcards, archery, the lake, tennis (again we have two words going into position 4, so add "the" before "lake". "mean" is reversed to "kind".)  
+b. "someone stole my favorite shirt" (21453) → stole, someone, favorite, shirt, my → soccer, friends, turtle, crafts, postcards  
+c. "take me home" (2213) → me-me, take, home → rope course, food, cabins (we want two words that both go into position 2, and "rope course" are two words and translate to "me".)
+
+In L3, obviously the "mystery sequence" also tells us "for each Wari’ word, upon translation, which English words does it correspond to".
+
+- Querec napa’ 2,[1,2,3] → "He saw me": "Querec" contributes to "saw"; "napa’" contributes to "he", "saw", _and_ "me". It contributes to 3 positions, so it's probably a combination of agreement (with subject and object) and tense (so it contributes to the verb "saw").
+- Quep ’inain temem’ 2,[1,2,4],4 → "I made a bow": "Quep" contributes to "made"; "’inain" contributes to "I", "made", and "bow"; "temem’" contributes to "bow".
+- Querec taram Hatem 3,[1,2,4],4 → "He will see Hatem": the key here is that "taram" contributes to "he", "will", and "Hatem", but not "see", further confirming that it contributes tense.
+
+So, with this knowledge, we just need to translate word-by-word (by looking at previous sentences containing the same word and which English positions each word contributed to), and then put their meanings into the respective English positions.
+
+First consider "Mi’ ram con hwam Hatem":
+
+- "Mi’" previously contributed to: "gave", "give", "gave", so it means "give"
+- "ram" has never appeared, but it contributes to multiple positions, so it's probably agreement + tense, like "napa’".
+- "con" previously contributed to: "fish", "dress", "fish", "fish". However, note that every time "con" appears, the word following it also contributes to the same noun. So perhaps "con" is some noun marker that's not overt in English.
+- "hwam" previously contributed to: "fish", "fish", "fish". So this is the real "fish" word.
+- "Hatem" as stated is just "Hatem".
+
+Putting these together: \_\_\_\_ \_\_\_\_ give the fish \_\_\_\_ Hatem. The last blank is probably just "to". But the first two blanks mark the subject and the tense and must be understood by fully analyzing the syntax of "ram". We list out the correspondences of all other such sentence markers:
+
+- ’inain: I/bow/past
+- ’inam: I/woman/past
+- ’inon: I/fish/past, I/man/past
+- nain: jaguar/house/past
+- napa’: he/me/past
+- non: he/fish/past, she/fish/past
+- nonon: she/children/past
+- ron: you(sg)/him/future
+- taram: he/Hatem/future
+- tarapa’: Orowao/me/future
+
+Obviously there's also a prefix/suffix combination here:
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>’in-</th>
+      <th>n-</th>
+      <th>r-</th>
+      <th>tar-</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>-ain</th>
+      <td>I/bow/past</td>
+      <td>jaguar/house/past</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>-am</th>
+      <td>I/woman/past</td>
+      <td></td>
+      <td></td>
+      <td>he/Hatem/future</td>
+    </tr>
+    <tr>
+      <th>-apa’</th>
+      <td></td>
+      <td>he/me/past</td>
+      <td></td>
+      <td>Orowao/me/future</td>
+    </tr>
+    <tr>
+      <th>-on</th>
+      <td>
+        I/fish/past
+        <br />
+        I/man/past
+      </td>
+      <td>
+        he/fish/past
+        <br />
+        she/fish/past
+      </td>
+      <td>you(sg)/him/future</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>-onon</th>
+      <td></td>
+      <td>she/children/past</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+So the conclusion is:
+
+- Prefix:
+  - ’in- = 1st person subject, past
+  - n- = 3rd person subject, past
+  - r- = 2nd person subject, future
+  - tar- = 3rd person subject, future
+- Suffix:
+  - -ain = inanimate object
+  - -am = feminine object
+  - -apa’ = 1st person object
+  - -on = masculine object (including "fish")
+  - -onon = plural object
+
+"ram" = r-am, so it's 2nd person subject, future, feminine object. So the sentence is "You will give the fish to Hatem".
+
+"Mi’ ram con hwam Topa’" has highly similar words, but the correspondences are different. Doing the same mapping, and putting the words into their designated positions, we get \_\_\_\_ \_\_\_\_ give Topa’ the fish. And again, the blanks should be "You will". So the sentence is "You will give Topa’ the fish".
+
+Finally, we have "Topa’ made Hatem a dress" and we are translating back. Use the same principle as L2 and read the English word at each position to get the following list of Wari’ words:
+
+made, made, Topa’/Hatem/past, dress, dress, Hatem, Topa’
+
+- "made" is "Quep" per "I made a bow".
+- Topa’/Hatem/past is 3rd person, feminine, past, so it's "nam".
+- "dress" is "con wom" per "'Orowao' will give me a dress". We have two words as desired.
+
+However we need an extra word that maps to "made". We only have a few cases where two words map to a single verb:
+
+- pa’ mi’ = open (something for someone)
+- hoc mi’ = cook (something for someone)
+
+Especially compare "She cooked fish for her children" to "he cooked the fish". In the latter, "cook" is represented by "hoc"; in the former, we have "hoc mi’" both mapping to "cook". The difference is that the two sentences with "mi’" both have an indirect object, so "mi’" is the indirect object marker. We also have an indirect object here: "make something for someone", so the full sentence is "Quep mi’ nam con wom Hatem Topa’".

@@ -1,9 +1,105 @@
 ---
-tags: []
+tags:
+  - Number system
+  - Historical
 ---
 
 # Counting in Roon
 
-{/* cSpell:ignore Roon */}
+{/* cSpell:ignore Roon nuru arzus safur aresoyosier kior beberin onemerim onemenuru onem ŋokor yosier iŋokor fiak yoser areso wonem */}
 
-TODO
+In 1855, we see "nuru" = 2, "arzus safur nuru" = 32; the knee-jerk reaction is that "arzus safur" = 30. Similarly, "aresoyosier safur" (1955) and "ares kior beberin" (2012) are all 30. Furthermore "safur" (1955) = 10, so naturally "arzus" (1855) and "aresoyosier" (1955) are 3... or 20! This depends on whether the language is base 10 or base 20. I'm leaning towards the latter, because later we have "aresoyosier rim", in which if "aresoyosier" = 3, then "rim" would have to be some other base, which is unlikely. Anyway, we know that the system is at least somewhat base 10, because 2 and 32 have the same ending.
+
+Another observation is that we have some compounds. For example, "onemerim" (1855) = 10, "onemenuru" (1855) = 7 are "onem-e-rim" and "onem-e-nuru" respectively, since we see "onem", "rim", and "nuru" in the data as well. So let's try to break down all the number phrases we see:
+
+| Number | 1855 | 1955 | 2012 |
+| --- | --- | --- | --- |
+| 2 | nuru | nuru | nuru |
+| 10 | onem-e-rim | safur | safur |
+| 7 | onem-e-nuru | rim-e-nuru | fik |
+| 32 | arzus safur nuru | areso-yosier safur nuru | ares kior beberin nuru |
+| a. | nuru × ŋokor | rim-e-yosier | yosier + rim |
+| b. | onem × fak | iŋokor × rim-iŋokor | ares nuru beberin fiak |
+| c. | safur onem + onem-e-fak | areso-yosier rim | (siu × nuru) + fik |
+| d. | arzus di nuru yoser + safur lim | safur nuru + areso-nuru fak | ares rim beberin wonem |
+| e. | fak | fak | fiak |
+
+The key observation is "rim-e-yosier" (1955) = "yosier + rim" (2012). This means that the "A-e-B" construction is A + B—and we can naturally extend this to the 1855 system. Therefore, from "onem-e-nuru" (1855) = "rim-e-nuru" (1955) = 7, we know that "onem-e-X" (1855) = "rim-e-X" (1955) = 5 + X. From "onem-e-rim" (1855) = 10, we know that "rim" (1855) = 5. We have a minor problem though: "onem" (1855) can also appear on its own, but "rim" (1855) and "onem" (1855) cannot both be 5, so "onem" (1855) must be something else, which only becomes "5+X" when it's in the "onem-e-X" construction.
+
+If "rim-e-X" (1955) = 5 + X, then X should be between 1 and 4 (per our usual understanding of the base system). In a. "rim-e-yosier" (1955) = "2 × ŋokor" (1855), we only have two possibilities:
+
+- If "yosier" (1955) = 1, then "rim-e-yosier" (1955) = 6, and "ŋokor" (1855) = 3.
+- If "yosier" (1955) = 3, then "rim-e-yosier" (1955) = 8, and "ŋokor" (1855) = 4.
+
+In b, we have "onem × fak" (1855) = "iŋokor × rim-iŋokor" (1955). Substituting in things we know, we get "onem × fak" = "iŋokor × (5 + iŋokor)". We know the following:
+
+- Because "iŋokor" (1955) looks very like "ŋokor" (1855), the former should also be either 3 or 4, depending on which alternative we choose above for "yosier" (1955).
+- "fak" (1855) must be no larger than 4, because in c we see "onem-e-fak" (1855).
+- We already know "nuru" (1855) = 2, so the factorization on the left-hand side cannot involve 2.
+- "onem" (1855) is less than 10, because in c we have "safur onem", so "onem" should be smaller than "safur" (1855) = 10. (This is not a 100% fool-proof logic, but it's very rare for a base word to be followed by a digit that's _larger_ than the base, unless subtraction is performed.)
+
+Let's test all possible values of "iŋokor" (1955):
+
+- If "iŋokor" (1955) = 3, then "onem × fak" (1855) = 24. This case is when "ŋokor" (1855) = 3, so "fak" (1855) cannot be 3, so the only factorization is "onem" (1855) = 6, "fak" (1855) = 4.
+- If "iŋokor" (1955) = 4, then "onem × fak" (1855) = 36. This case is when "ŋokor" (1855) = 4, so "fak" (1855) cannot be 4, so the only factorization is "onem" (1855) = 12, "fak" (1855) = 3. But "onem" (1855) should be less than 10, so this case is impossible.
+
+Therefore, we arrive at the conclusion that "yosier" (1955) = 1, "ŋokor" (1855) = "iŋokor" (1955) = 3, "onem" (1855) = 6, and "fak" (1855) = 4.
+
+In c, "safur onem + onem-e-fak" (1855) = "areso-yosier rim" (1955). Substituting in what we know, we get "16 + 9" = "areso-yosier + 5". This means that "areso-yosier" (1955) = 20. So this language is indeed base 20.
+
+In d, "arzus di nuru yoser + safur lim" (1855) = "safur nuru + areso-nuru fak" (1955). Substituting in what we know, we get "arzus di nuru yoser" + 10 + "lim" (1855) = 12 + 44 (since "areso-yosier" (1955) = 20, presumably "areso-nuru" (1955) = 40, like "two-twenties"). We can hypothesize that "arzus di nuru" (1855) = 40 as well ("twenty of two"), and "yoser" (1855) = "yosier" (1955) = 1. So 41 + 10 + "lim" (1855) = 12 + 44, giving us "lim" (1855) = 5. So "rim" (1855) and "lim" (1855) are identical—this is okay, because they look so similar. The former is used in "onem-e-rim" while the latter is used standalone.
+
+At this point, let's recap the number system for 1855 and 1955:
+
+| Number                          | 1855         | 1955           |
+| ------------------------------- | ------------ | -------------- |
+| 1                               | yoser        | yosier         |
+| 2                               | nuru         | nuru           |
+| 3                               | ŋokor        | iŋokor         |
+| 4                               | fak          | fak            |
+| 5                               | lim          | rim            |
+| 6                               | onem         | rim-e-yosier   |
+| 7                               | onem-e-nuru  | rim-e-nuru     |
+| 8                               | onem-e-ŋokor | rim-iŋokor     |
+| 9                               | onem-e-fak   | rim-e-fak      |
+| 10                              | onem-e-rim   | safur          |
+| 10 + X (1 ≤ X ≤ 9)              | safur X      | safur X        |
+| 20                              | arzus        | areso-yosier   |
+| 20 + X (1 ≤ X ≤ 19)             | arzus X      | areso-yosier X |
+| 20Y + X (1 ≤ X ≤ 19, 1 ≤ Y ≤ 5) | arzus di Y X | areso-Y X      |
+
+Now we can turn to 2012.
+
+| Number | 2012                   |
+| ------ | ---------------------- |
+| 2      | nuru                   |
+| 10     | safur                  |
+| 7      | fik                    |
+| 32     | ares kior beberin nuru |
+| 6      | yosier + rim           |
+| 24     | ares nuru beberin fiak |
+| 25     | (siu × nuru) + fik     |
+| 56     | ares rim beberin wonem |
+| 4      | fiak                   |
+| 3      | kior                   |
+| 8      | war                    |
+| j.     | safur fik              |
+
+We have "(siu × nuru) + fik" = "(siu × 2) + 7" = 25, so "siu" (2012) = 9. The three large numbers tell us that "ares kior beberin" (2012) = 30, "ares nuru beberin" (2012) = 20, and "ares rim beberin" (2012) = 50. Knowing that "nuru" = 2, "kior" = 3, and "rim" = 5 (based on 1955), we deduce that "ares X beberin" (2012) = 10X, and the language has changed to base 10. Here are the numbers for 2012:
+
+| Number                          | 2012             |
+| ------------------------------- | ---------------- |
+| 1                               | yosier           |
+| 2                               | nuru             |
+| 3                               | kior             |
+| 4                               | fiak             |
+| 5                               | rim              |
+| 6                               | wonem            |
+| 7                               | fik              |
+| 8                               | war              |
+| 9                               | siu              |
+| 10                              | safur            |
+| 10 + X (1 ≤ X ≤ 9)              | safur X          |
+| 10Y + X (1 ≤ X ≤ 9, 1 ≤ Y ≤ 10) | ares Y beberin X |
+
+To fill in the table, just apply the system above.
