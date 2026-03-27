@@ -1,7 +1,60 @@
 ---
-tags: []
+tags:
+  - Number system
 ---
 
 # Real Numbers
 
-TODO
+{/* cSpell:ignore Iñupiaq atausiq tallimat piŋasut qulit malġuk akimiaġutaiḷaq akimiaq iñuiññaq akimiaġ utaiḷaq iñuiññaġ siqiññaatchiaq tallimaagliaq agliaq quli */}
+
+First we shall understand the numeral system, which looks much simpler than the number words.[^1]
+
+[^1]: The Kaktovik numerals were added to Unicode in Unicode 15 (2022), so at the time of writing, very few fonts support it. I had to use a specialized font recommended by Unicode Consortium.
+
+- 𝋄 － 𝋃 = 𝋁 tells us that these vertical lines are units: 5 units － 4 units = 1 unit. But we don't know what that unit is.
+- 𝋄 + 𝋈 = 𝋌 is more informative. If the vertical and horizontal lines represent two lines of units, call them $x$ and $y$ respectively, then we have $4x + y + 3x = 2y + 2x$, and $y = 5x$.
+- In 𝋁𝋀 － 𝋄 = 𝋐, we have a numeral with two digits. 𝋁𝋀 = 𝋄 + 𝋐 = $4x + 3y + x = 20x$, which is represented as $kx + z$ where $z$ is 𝋀 and $k$ is base. (This is not totally fool-proof, because two numerals juxtaposed may also be subtraction, but we take the simpler path first.) So $k = 20 - z/x$.
+- To understand what $x$ is, we look at a non-addition. In 𝋂𝋐 ÷ 𝋇 = 𝋈, we have $(2k + 3y + x) ÷ (y + 2x) = y + 3x$, or $40 - 2z/x + 16x = 56x^2$. When $x = 1$, $z = 0$; when $x = 2$, $z = -152$, and then $z$ keeps becoming more negative. Obviously we want non-negative digits, so we take the obvious solution of $x = 1$, $z = 0$.
+
+Therefore, we can summarize the numeral system as follows: the numbers are base-20. 0 = 𝋀. Then, digits from 1 to 19 are formed with a subbase of 5: that is, each horizontal bar represents 5, and each vertical bar represents 1.
+
+This allows us to fully translate the numerals:
+
+| Kaktovik       | Arabic                              |
+| -------------- | ----------------------------------- |
+| 𝋄 － 𝋃 = 𝋁     | 4 － 3 = 1                          |
+| 𝋂 × (a) 𝋄 = 𝋈  | 2 × 4 = 8                           |
+| 𝋄 + 𝋈 = 𝋌      | 4 + 8 = 12                          |
+| (b) 𝋏 － 𝋁 = 𝋎 | 15 － 1 = 14                        |
+| 𝋁𝋀 － 𝋄 = 𝋐    | 20 － 4 = 16                        |
+| 𝋂𝋐 ÷ 𝋇 = 𝋈     | 56 ÷ 7 = 8                          |
+| 𝋅 × (c) 𝋆 = 𝋁𝋊 | 5 × 6 = 30                          |
+| 𝋅𝋁𝋂–𝋁–𝋁𝋇       | (D4a) 2022–1–27 (2022 = 5×400+20+2) |
+
+Since this numeral system is specifically designed for Iñupiaq, this suggests that the Iñupiaq number system is also base-20 with a subbase of 5. Look at the words given:
+
+- 1 = atausiq
+- 8 = tallimat piŋasut
+- 12 = qulit malġuk
+- 14 = akimiaġutaiḷaq
+- 16 = akimiaq atausiq
+- 30 = iñuiññaq qulit
+
+Indeed: 16 contains the word for 1. Therefore, because 8 = 5 + 3, "tallimat" = 5 and "piŋasut" = 3. Because 12 = 2×5 + 2, "qulit" = 10 and "malġuk" = 2. Because 16 = 3×5 + 1, "akimiaq" = 15. Because 30 = 20 + 10, "iñuiññaq" = 20. However, 14 is not simply 2×5 + 4: it has the prefix "akimiaġ" that looks like "akimiaq", so it's probably 15-1, with "-utaiḷaq" = -1. We can fill in D2 and D3:
+
+- 3 = piŋasut
+- 11 = 10 + 1 = qulit atausiq
+- 22 = 20 + 2 = iñuiññaq malġuk
+- 1 = atausiq
+- 5 = tallimat
+- 19 = iñuiññaġ-utaiḷaq
+
+Finally, only D4b is left. The number phrase is as follows:
+
+> siqiññaatchiaq iñuiññaq tallimat malġuk, tallimaagliaq iñuiññaq malġuk
+
+Taking what we know:
+
+> siqiññaatchiaq + 27, tallimaagliaq + 22
+
+Since the date is 2022–1–27, most likely that siqiññaatchiaq = "January" and tallimaagliaq = 2000 (which is 5×400). So "-agliaq" = 400. Therefore, quli-agliaq = 10×400 = 4000.

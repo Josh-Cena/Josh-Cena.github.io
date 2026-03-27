@@ -1,7 +1,194 @@
 ---
-tags: []
+tags:
+  - Phrase translation
+  - Syntax
 ---
 
 # From Soup to Nuts
 
-TODO
+{/* cSpell:ignore achab achik’ aloʔ atiʔ awajanik aweʔ awich chab chenek’ jchik’tik jk’uxtik jloʔ jloʔbaltik jtiʔ jwajtik jweʔ jweʔtik kajan kajpe kalwanextik kaxlan k’oxox manko mankoe sejkub sloʔ sloʔik sp’olik stiʔ stiʔik stsalub sweʔik tiʔbal tsukum waje wakax xchaʔ yaskal yaʔlel yonik yoʔtan ʔich ʔone panela chik’ ʔajan awonik ixim */}
+
+This problem originally appeared to me as approachable, but it turned out to be quite intractable 😅
+
+Excluding the starting "la", phrases here are mostly two or three words long. But the translation needs at least three elements: subject, verb, and object. The subject is always a pronoun, so the conclusion is that the subject has been subsumed into the verb. Let's first group the phrases by subject, since the verbs are all identical ("ate") anyway:
+
+- I
+  - jtiʔ te stsalub mute _the chicken comb_
+  - jweʔ kaxlan waj _bread_
+  - jk’ux te mankoe _the unripe mango_
+  - jtiʔ awich _your (sg.) chili peppers_
+  - jloʔ te ʔone _the avocados_
+- You (sg.)
+  - achik’ kaxlan waj ta kajpe _bread soaked in coffee_
+  - atiʔ ʔich _chili peppers_
+  - ak’ux kajan _my corn_
+  - atiʔ te xchaʔ mute _the chicken gizzard_
+  - ak’ux kalwanextik _our radishes_
+  - aweʔ te waje _the tortillas_
+  - aloʔ achab _your (sg.) honey_
+- She
+  - sk’ux chenek’ _beans_
+  - sloʔ manko _a ripe mango_
+  - sk’ux yaskal _her panela chunks_
+  - sk’ux bok _raw greens_
+  - sloʔ yonik _their avocados_
+  - stiʔ sejkub wakax _cow liver_
+  - sk’ux sp’olik _their popcorn_
+- We
+  - jweʔtik jwajtik _our tortillas_
+  - jchik’tik yaʔlel tiʔbal _meat soup_
+  - jk’uxtik awajanik _your (pl.) corn_
+- They
+  - sloʔik chab _honey_
+  - sloʔik jloʔbaltik _our bananas_
+  - sweʔik te pats’e _the tamales_
+  - stiʔik te yoʔtan mute _the chicken heart_
+
+The second word obviously has common prefixes and suffixes depending on the subject. Let's do that:
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>I<br />j-</th>
+      <th>You (sg.)<br />a-</th>
+      <th>She<br />s-</th>
+      <th>We<br />j- + -tik</th>
+      <th>They<br />s- + -ik</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>tiʔ</th>
+      <td>jtiʔ te stsalub mute _the chicken comb_<br />jtiʔ awich _your (sg.) chili peppers_</td>
+      <td>atiʔ ʔich _chili peppers_<br />atiʔ te xchaʔ mute _the chicken gizzard_</td>
+      <td>stiʔ sejkub wakax _cow liver_</td>
+      <td></td>
+      <td>stiʔik te yoʔtan mute _the chicken heart_</td>
+    </tr>
+    <tr>
+      <th>weʔ</th>
+      <td>jweʔ kaxlan waj _bread_</td>
+      <td>aweʔ te waje _the tortillas_</td>
+      <td></td>
+      <td>jweʔtik jwajtik _our tortillas_</td>
+      <td>sweʔik te pats’e _the tamales_</td>
+    </tr>
+    <tr>
+      <th>k’ux</th>
+      <td>jk’ux te mankoe _the unripe mango_</td>
+      <td>ak’ux kajan _my corn_<br />ak’ux kalwanextik _our radishes_</td>
+      <td>sk’ux chenek’ _beans_<br />sk’ux yaskal _her panela chunks_<br />sk’ux bok _raw greens_<br />sk’ux sp’olik _their popcorn_</td>
+      <td>jk’uxtik awajanik _your (pl.) corn_</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>loʔ</th>
+      <td>jloʔ te ʔone _the avocados_</td>
+      <td>aloʔ achab _your (sg.) honey_</td>
+      <td>sloʔ manko _a ripe mango_<br />sloʔ yonik _their avocados_</td>
+      <td></td>
+      <td>sloʔik chab _honey_<br />sloʔik jloʔbaltik _our bananas_</td>
+    </tr>
+    <tr>
+      <th>chik’</th>
+      <td></td>
+      <td>achik’ kaxlan waj ta kajpe _bread soaked in coffee_</td>
+      <td></td>
+      <td>jchik’tik yaʔlel tiʔbal _meat soup_</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+Since agreement with the subject happens on the second word, this is likely the verb "ate". What follows is therefore the object. Furthermore, we have different forms of "ate" that pair with different kinds of foods; we need to figure out what the classes of foods are.
+
+- tiʔ: chicken comb, chili peppers, chicken gizzard, cow liver, chicken heart
+- weʔ: bread, tortillas, tamales
+- k’ux: unripe mango, corn, radishes, beans, panela chunks, raw greens, popcorn
+- loʔ: avocados, honey, ripe mango, avocados, honey, bananas
+- chik’: bread soaked in coffee, meat soup
+
+There's really not a single way to do this, but this may make the most sense:
+
+- tiʔ: meat and chili peppers - chili peppers are the exception in a class that's otherwise all meat.
+- weʔ: grain products
+- k’ux: granular things and crunchy things (note that "vegetables and fruits" doesn't work because we also have "ripe mango" and "bananas" in the "loʔ" class, so we need something that can tell "unripe mango" and "ripe mango" apart)
+- loʔ: mushy things
+- chik’: liquids and soaked things
+
+Therefore, concerning the extra foods provided:
+
+- k’in = kidney: tiʔ
+- kaxlan chenek’ = peanuts: k’ux
+- tsukum = stomach: tiʔ
+- chin bak = marrow: loʔ (H4 explicitly says it's not tiʔ; it's also mushy)
+- k’oxox = toasted tortillas: k’ux (H5 explicitly says it's not weʔ; it's also crunchy)
+
+So the answers for H4 and H5 are jloʔ and sk’ux respectively.
+
+Going back to the phrases. We still have the noun phrase structure left to figure out. First are the possessives:
+
+- achab _your (sg.) honey_
+- awajanik _your (pl.) corn_
+- awich _your (sg.) chili peppers_
+- jloʔbaltik _our bananas_
+- jwajtik _our tortillas_
+- kajan _my corn_
+- kalwanextik _our radishes_
+- sp’olik _their popcorn_
+- yaskal _her panela chunks_
+- yonik _their avocados_
+
+...notice the thing? They reuse the same prefix/suffix as the verb! a- = your (sg.), j- + -tik = our, s- + -ik = their, a- + -ik = your (pl.). However we have a few exceptions:
+
+- kajan _my corn_ and kalwanextik _our radishes_ start with k- instead of j-
+- yaskal _her panela chunks_ and yonik _their avocados_ start with y- instead of s-
+
+These are probably sound changes. We can take a look at the non-possessive noun phrases:
+
+- singular
+  - chab _honey_
+  - kaxlan waj _bread_
+  - kaxlan waj ta kajpe _bread soaked in coffee_
+  - manko _a ripe mango_
+  - sejkub wakax _cow liver_
+  - yaʔlel tiʔbal _meat soup_
+  - te mankoe _the unripe mango_
+  - te stsalub mute _the chicken comb_
+  - te xchaʔ mute _the chicken gizzard_
+  - te yoʔtan mute _the chicken heart_
+- plural
+  - bok _raw greens_
+  - chenek’ _beans_
+  - ʔich _chili peppers_
+  - te pats’e _the tamales_
+  - te waje _the tortillas_
+  - te ʔone _the avocados_
+
+Observations:
+
+- "jwajtik" = "our tortillas", so "waj" = "tortillas". Combine with "te waje" = "the tortillas", we know that the definite construction is "te X-e".
+- "ʔich" = "chili peppers". Combine with "awich" = "your (sg.) chili peppers", we know that "aʔ" becomes "aw".
+- "te ʔone" = "the avocados", so "ʔon" = "avocados". Combine with "yonik" = "their avocados", we know that "sʔ" becomes "y".
+- "awajanik" = "your (pl.) corn", so "ʔajan" = "core". Combine with "kajan" = "my corn", we know that "jʔ" becomes "k".
+- All "chicken something" end with "mut", so "mut" = "chicken". Similarly "wakax" would mean "cow". Similarly in "yaʔlel tiʔbal" = "meat soup", "tiʔbal" = "meat" (the language is head-initial).
+
+Now translation:
+
+- la j-tiʔ s-k’in wakax = 1sg-ate(meat) 3sg-kidney cow = I ate her cow kidney.
+- We ate the peanuts. = 1pl-ate(granular) the-peanuts = la j-k’ux-tik te kaxlan chenek’-e
+- You (pl.) ate cow stomach. = 2pl-ate(meat) stomach cow = la a-k’ux-ik tsukum wakax
+- They ate meat. = 3pl-ate(meat) meat = la s-tiʔ-ik tiʔbal
+- You (sg.) ate your (pl.) avocados. = 2sg-ate(mushy) 2pl-avocados = la a-loʔ a-ʔon-ik = la aloʔ awonik
+- I ate my honey. = 1sg-ate(mushy) 1sg-honey = la j-loʔ j-chab (solution has a typo)
+- She ate cooked greens. = 3sg-ate(mushy) greens = la s-loʔ bok (this is like "ripe mango" vs. "unripe mango" - the noun is always just "mango", but the verb changes to indicate whether it's mushy or crunchy)
+- She ate bean soup. = 3sg-ate(liquid) soup beans = la s-chik’ yaʔlel chenek’
+
+H6 is mostly unrelated. We want to know what the "kaxlan" word does. Compare:
+
+- kaxlan waj _bread_ vs. waj _tortillas_
+- ? vs. ixim _corn_
+
+Not 100% rigorous, but just based on semantic relations, this should be "wheat". (ixim makes waj; kaxlan ixim makes kaxlan waj).

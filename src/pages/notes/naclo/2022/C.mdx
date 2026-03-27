@@ -1,7 +1,61 @@
 ---
-tags: []
+tags:
+  - Computational
 ---
 
 # To Make a Long Story Short
 
-TODO
+We are counting a bunch of things here. We don't have to count each thing because for a lot of things we don't know how to count exactly (for example, what are exactly "capitalized words"? In "was found", do we have 1 or 2 past tense verbs?). Instead, let's look at the features.
+
+- F3: all except two unidentified sentences give 0; those two give -1 and -2. This means there are two short sentences for which $\ell - x = -1\text{ or }{-2}$ where $\ell$ is the number of words and $x$ is the blank. All other sentences have a non-negative result. The two shortest sentences are SS5 and SS6, with 9 and 8 words respectively, so $x = 10$, i = SS5, and k = SS6.
+- F4: SS1 = 1, SS2 = 2, SS3 = 2, SS5 = SS6 = 0. We are counting something here. "Number" is the only one that works, with number words also considered numbers. We also have j = 0, h = 1; we have a number in SS4 but not SS7, so j = SS7, h = SS4. Now we have all rows identified with the corresponding sentences.
+- F1: all except SS3 and SS7 give 0; those two give 1. We want something that's only contained in these two sentences. This has to be "italicized word".
+- F5: we are looking for something that repeats in more than 1 sentence, and appears at least 0–2 times in each sentence. So "underlined word", "hyphenated word", "plural noun", and "abbreviation" are out because they are too rare. Our remaining choices are: capitalized word, common noun, past-tense verb, adjective, verb, noun referring to candy or gum. The repeated ones:
+  - capitalized word: McBubble, Bigger, Bubble
+  - common noun: gum, incident
+  - past-tense verb: was (?)
+  - adjective: sticky
+  - verb: was (?), has (?)
+
+  Just count the appearances of each one in each sentence, and find two categories that sum up to the given numbers. The two that work are "common noun" and "adjective".
+
+- F6: SS1 and SS7 give 1. So "first" and "last" one of the story.
+
+Now, given these features, we can apply them to the other articles.
+
+In Hot Water:
+
+- F1: HW4 has no italicized word, so (c) = 0.
+- F2: HW6 has only 1 proper noun ("Hot Water Village"), so (i) = 1 (we know that it counts _phrases_ and not _words_ based on that "_USA Today_" and "Bigger Bubble" together only gave SS3 a score of 2 instead of 4.)
+- F5: repeated common nouns: soup, restaurant, bowls, customers, accusations; repeated adjectives: last. Counting the scores: HW1 = 3 (soup, restaurant, last), HW2 = 4 (restaurant, soup, bowls, customers), HW3 = 1 (bowls), HW4 = 2 (last, customers; "bowl" is different from "bowls"), HW5 = 4 (accusations, bowls, restaurant, soup), HW6 = 1 (accusations). So (f) = HW3, (k) = HW1 by matching scores.
+- F3: the shortest sentence is HW3 with length 9; all other sentences have length at least 10, for which F3 is 0. So (g) = -1, (b) = 0.
+- F4: HW2, HW3, HW4, HW5 each contain 1 number. So (h) = 1, (o) = 1.
+- F6: HW1 is the first sentence, so (l) = 1; HW4 is neither the first nor the last, so (d) = 0.
+
+We still have (a) and (n) left—one is HW2, the other is HW5. Go back to F1: HW2 has an italicized word while HW5 doesn't, so (a) = HW5 and (n) = HW2.
+
+Now just sum up the scores for each sentence, and we get the top 3 as HW1 (7), HW2 (7), HW5 (6).
+
+The Sticky Saga Continues:
+
+- F3: the shortest sentence is SSC2 with 9 words, so (s) = SSC2.
+- F4: SSC4 and SSC5 each have 1 number. So they are (q) and (u) in some order.
+- F6: (q) and (t) are SSC1 and SSC5 in some order. Combine with the previous one: (q) = SSC5, (t) = SSC1, (u) = SSC4. That leaves (r) = SSC3.
+
+The top 3 scores are SSC1, SSC4, SSC5, all with 2 points.
+
+C5 is pure reading comprehension. The _president_, not _vice president_, was found chewing, so "vice" should be deleted. The president belongs to _Bigger Bubble_, which needs to be swapped with the rival _Made to Stick_. Finally, the incident happened in _January_, not _February_.
+
+The three extractive summaries we generated:
+
+1. On January 22, Ronald McBubble, president of the Bigger Bubble corporation, was found chewing a stick of gum from rival company Made to Stick.  
+   The incident set off an uproar among Bigger Bubble faithfuls, with over 10,000 gum enthusiasts in just one week signing a petition for McBubble to step down.  
+   According to USA Today, the nine-year-long "great gum war" may soon be over, as Bigger Bubble's stock price has fallen 50 percent since that fateful day.
+2. Specialty soup restaurant Hot Water Village came under scrutiny last week, after an exposé was published in The Wall Street Journal.  
+   No fewer than three sources (including WikiLeaks) accused the restaurant of re-serving unfinished soup, salvaged from the bowls of previous customers.  
+   Hot Water Village firmly denies any such wrongdoing, with one spokesperson noting that "these blatantly false accusations degrade our bowls, restaurant, and very soup" and "cause the hot water to flow from my eyes."
+3. After suffering a PR disaster and a sorbitol shortage, Ronald McBubble faces tough times ahead.  
+   Perhaps most seriously, he is being investigated by the government’s Bubble Safety Bureau on two counts of alleged wrapper forgery.  
+   One thing is for certain: it’s a difficult time to be in the bubblegum business.
+
+The error is easy to spot: in the third summary, "he" is now referring to the wrong person, because the sentence introducing "Chicle "Colonel" Sanders" has been removed. So to fix it, we need to replace "he" with "Chicle "Colonel" Sanders".

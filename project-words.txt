@@ -12,6 +12,7 @@ argmin
 aria-roledescription
 articulatorily
 Ausbau
+Avoiuli
 backness
 backquote
 bain
@@ -84,6 +85,7 @@ estree
 esvu
 exonym
 exonyms
+exposé
 façade
 failwith
 fianchetto
@@ -133,6 +135,7 @@ joltage
 joltages
 joshcena
 juliaup
+Kaktovik
 katex
 Kerbosch
 kitchensink

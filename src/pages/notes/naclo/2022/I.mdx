@@ -1,7 +1,185 @@
 ---
-tags: []
+tags:
+  - Morphology
 ---
 
 # A Cornish Conundrum
 
-TODO
+{/* cSpell:ignore badh badhes banow banowes benenes benn benyn berfydh bluven bogh boghes bollek byhan dama damyow daras dasow davas dehen dehennow desen desennow deves devesigyon dharas dhas dhavas dronek droos drosek duwes gasek glas glasrudh grogen gwarier gwariores gwarioryon gweli gweliow gwynn kares karesow kasegi kasek krogen kulyek kulyoges kwilkyn kwilkynyow maw mebyon melyn mowes mowysi myghtern myghternedh myghternes myghternesow pennsevigyon pennsevik perfydh pluven pluvennow pons ponsyow rudh rudhvelyn tarow tasow terewi tesen tesennow tevesigyon tevesik tiek tiogow tronek troos vanow vebyon vyghternedh vyghternes vyhan weliow wynnrudh */}
+
+One might be tempted to analyze the relationship between the singular and plural forms, but it will not go very far because the endings are so random. Indeed, it's not necessary to do this, because we are never asked to derive the plural from the singular or vice versa. Instead, we can just treat them as separate words and look for patterns between each pair of indefinite and definite forms.
+
+First, obviously definite forms have the "an" article. The more interesting part is how the base noun changes.
+
+<table>
+  <thead>
+    <tr>
+      <th>Doesn't change</th>
+      <th>Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    {/* prettier-ignore */}
+    <tr>
+      <td>badh<br />benenes<br />dehen<br />dehennow<br />deves<br />gwarier<br />gweli<br />gweliow<br />karesow<br />kulyek<br />kwilkyn<br />kwilkynyow<br />maw<br />mowysi<br />pennsevik<br />pluvennow<br />pons<br />terewi<br />tesennow<br />tiek</td>
+      <td>benyn (b > v)<br />dama (d > dh)<br />davas (d > dh)<br />gwarioryon (gw > w)<br />kares (k > g)<br />mowes (m > v)<br />myghternedh (m > v)<br />pennsevigyon (p > b)<br />pluven (p > b)<br />tiogow (t > d)</td>
+    </tr>
+  </tbody>
+</table>
+
+So the _change_ itself is predictable, but _when_ the change happens seems pretty problematic. "benenes" and "benyn" have identical starts (ben-), but the former doesn't change while the latter does. Worse is "pluvennow" and "pluven", which are identical except for a plural suffix, yet one changes and the other doesn't. The reasonable conclusion is that this is not a phonological change, but rather a morphological one, which means it depends on the _meaning_ of the word instead of its _pronunciation_. Let's replace the words with their translations instead.
+
+<table>
+  <thead>
+    <tr>
+      <th>Doesn't change</th>
+      <th>Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    {/* prettier-ignore */}
+    <tr>
+      <td>male pig (sg.; pl.?)<br />woman (pl.)<br />cream (sg. & pl.)<br />sheep (pl.)<br />male actor (sg.)<br />bed (sg. & pl.)<br />girlfriend (pl.)<br />young male chicken (sg.; pl.?)<br />frog (sg. & pl.)<br />boy (sg.; pl.?)<br />girl (pl.)<br />prince (sg.)<br />pen (pl.)<br />bridge (sg.; pl.?)<br />male cow (pl.; sg.?)<br />cake (pl.; sg.?)<br />male farmer (sg.)</td>
+      <td>woman (sg.)<br />mother (sg.; pl.?)<br />sheep (sg.)<br />male actor (pl.)<br />girlfriend (sg.)<br />girl (sg.)<br />king (pl.; sg.?)<br />prince (pl.)<br />pen (sg.)<br />male farmer (pl.)</td>
+    </tr>
+  </tbody>
+</table>
+
+To make the pattern clearer, for those for which we only know one of the singular/plural morphologies, I've put the other one with a question mark to say it's not because it's not in this column, but just because we don't know it.
+
+See it? If not, we can separate the nouns into masculine, feminine, and "unsure", since most nouns here are obviously gendered (and probably deliberately so).
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>Doesn't change</th>
+      <th>Change</th>
+    </tr>
+  </thead>
+  {/* prettier-ignore */}
+  <tbody>
+    <tr>
+      <th>Masculine</th>
+      <td>male pig (sg.; pl.?)<br />male actor (sg.)<br />young male chicken (sg.; pl.?)<br />boy (sg.; pl.?)<br />prince (sg.)<br />male cow (pl.; sg.?)<br />male farmer (sg.)</td>
+      <td>male actor (pl.)<br />king (pl.; sg.?)<br />prince (pl.)<br />male farmer (pl.)</td>
+    </tr>
+    <tr>
+      <th>Feminine</th>
+      <td>woman (pl.)<br />girlfriend (pl.)<br />girl (pl.)</td>
+      <td>woman (sg.)<br />mother (sg.; pl.?)<br />girlfriend (sg.)<br />girl (sg.)</td>
+    </tr>
+    <tr>
+      <th>Unsure</th>
+      <td>cream (sg. & pl.)<br />sheep (pl.)<br />bed (sg. & pl.)<br />frog (sg. & pl.)<br />pen (pl.)<br />bridge (sg.; pl.?)<br />cake (pl.; sg.?)</td>
+      <td>sheep (sg.)<br />pen (sg.)</td>
+    </tr>
+  </tbody>
+</table>
+
+For feminine ones, the pattern is clear: all singulars have changed; all plurals haven't. For masculine ones, the pattern is generally that singulars haven't changed but plurals have, _except_ we have one exception: male cow, for which the plural doesn't change and we don't know about the singular. Looking more closely, in this row, only the human nouns appear to the right. So only plural masculine _human_ nouns change.
+
+Although we can also claim that only singular feminine _human_ nouns change because here all feminine nouns are human, we actually don't want to do that, because "sheep" and "pen" have the same change pattern yet are not human. By splitting into three classes instead of four, we can successfully separate all possible singular/plural patterns:
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>Doesn't change</th>
+      <th>Change</th>
+    </tr>
+  </thead>
+  {/* prettier-ignore */}
+  <tbody>
+    <tr>
+      <th>Masculine human<br />(plural change)</th>
+      <td>male actor (sg.)<br />boy (sg.; pl.?)<br />prince (sg.)<br />male farmer (sg.)</td>
+      <td>male actor (pl.)<br />king (pl.; sg.?)<br />prince (pl.)<br />male farmer (pl.)</td>
+    </tr>
+    <tr>
+      <th>Feminine<br />(singular change)</th>
+      <td>woman (pl.)<br />girlfriend (pl.)<br />girl (pl.)<br />sheep (pl.)<br />pen (pl.)<br />cake (pl.; sg.?)*</td>
+      <td>woman (sg.)<br />mother (sg.; pl.?)<br />girlfriend (sg.)<br />girl (sg.)<br />sheep (sg.)<br />pen (sg.)</td>
+    </tr>
+    <tr>
+      <th>Masculine non-human<br />(no change)</th>
+      <td>cream (sg. & pl.)<br />bed (sg. & pl.)<br />frog (sg. & pl.)<br />bridge (sg.; pl.?)<br />male pig (sg.; pl.?)<br />young male chicken (sg.; pl.?)<br />male cow (pl.; sg.?)</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+\*Important: why do we know that "cake" must be feminine, despite there being no singular form available? Because its plural form is "tesennow", but the definite singular form is "an desen". If it were masculine non-human, then we would expect all forms to have the same root: i.e. start with "tesen". So the "desen" must have formed via the t > d change.
+
+Therefore:
+
+| Letter | Given | Meaning | Counterpart | Explanation |
+| --- | --- | --- | --- | --- |
+| a. | damyow | mother (pl.) | → an damyow | fem.pl. doesn't change |
+| b. | an gasek | female horse (sg.) | ← kasek | fem.sg. changes; k > g |
+| c. | an kasegi | female horse (pl.) | ← kasegi | fem.pl. doesn't change |
+| d. | kulyoges | young male chicken (pl.) | → an kulyoges | masc. non-human doesn't change |
+| e. | myghtern | king (sg.) | → an myghtern | masc.sg. doesn't change |
+| f. | myghternes | queen (sg.) | → an vyghternes | fem.sg. changes; m > v |
+| g. | myghternesow | queen (pl.) | → an myghternesow | fem.pl. doesn't change |
+| h. | tas | father (sg.) | → an tas | masc.sg. doesn't change |
+| i. | tasow | father (pl.) | → an dasow | masc.pl. changes; t > d |
+| j. | bogh | male goat (sg.) | → an bogh | masc. non-human doesn't change |
+| k. | boghes | male goat (pl.) | → an boghes | masc. non-human doesn't change |
+| l. | banow | female pig (sg.) | → an vanow | fem.sg. changes; b > v |
+| m. | banowes | female pig (pl.) | → an banowes | fem.pl. doesn't change |
+| n. | an badhes | male pig (pl.) | ← badhes | masc. non-human doesn't change |
+| o. | tevesik | adult man (sg.) | → an tevesik | masc.sg. doesn't change |
+| p. | an devesigyon | adult man (pl.) | ← tevesigyon | masc.pl. changes; t > d |
+| q. | ponsyow | bridge (pl.) | → an ponsyow | masc. non-human doesn't change |
+| r. | an vebyon | boy (pl.) | ← mebyon | masc.pl. changes; m > v |
+| s. | an desen | cake (sg.) | ← tesen | fem.sg. changes; t > d |
+| t. | an tarow | male cow (sg.) | ← tarow | masc. non-human doesn't change |
+
+Next in I2 we are further given more kinds of constructions: on [something], and adjectives. This part is more of a typical semantic matching problem.
+
+- Nouns
+  - bys bras _thumb_
+  - bys byhan _pinky finger_
+  - bys troos _toe_
+  - pel _ball_
+  - pel droos _football_
+  - penn daras _lintel_
+  - rudhvelyn _orange (adjective)_
+- Adjective + noun
+  - bran bollek _intelligent crow_
+  - bran drosek _noisy crow_
+  - daras melyn _yellow door_
+  - duwes bollek _intelligent goddess_
+  - gwariores dronek _curious actress_
+  - krogen wynnrudh _pink shell_
+  - men teg _beautiful stone_
+  - pal drosek _noisy spade_
+- Definite adjective + noun
+  - an badhes tronek _the curious boars_
+  - an bal byhan _the small mine_
+- On something
+  - war bluven berfydh _on a perfect pen_
+  - war bons glas _on a blue bridge_
+  - war bons perfydh _on a perfect bridge_
+  - war desennow perfydh _on perfect cakes_
+  - war dhas deg _on a beautiful stack_
+  - war dhavas _on a sheep_
+  - war grogen benn _on a skull_
+  - war vyghternedh berfydh _on perfect kings_
+  - war weliow glasrudh _on purple beds_
+
+Looking at the "nouns" group, we know that "bys" = "finger", "troos" = "foot", "byhan" = "small". Furthermore, "bys troos" vs. "pel droos" suggests that the adjective also changes, presumably based on the gender of the head noun. So "pel" is feminine while "bys" is masculine. This can also be seen by comparing "gwariores dronek" and "an badhes tronek": the adjective changes when modifying the feminine "adjective", but not for the masculine "boars".
+
+There's nothing else remarkable about the "adjective + noun" and "definite adjective + noun" groups, but the "on something" group is interesting. We know that "pons" = "bridge" is masculine and not supposed to change. Similarly, "tesennow" = "cakes" is feminine plural and shouldn't become "desennow"—its adjective, "perfydh", doesn't change anyway. So the conclusion is that after "war", everything changes regardless of gender. But the adjective that follows only cares about the head noun and not whether there's a "war".
+
+Therefore:
+
+u. the finger = an bys (masc. non-human doesn't change)  
+v. on a beautiful cake = war desen deg ("tesen" changes because of "war", "teg" changes because "cake" is fem.sg.)  
+w. on a door = war dharas ("door" = "daras" as in "daras melyn", and it changes because of "war")  
+x. an bal berfydh = the perfect spade ("bal" can either be "mine" or changed from "pal" = "spade". In "bal byhan", we know the adjective is just "byhan" without change because "bys byhan" is masculine, so "bal" is masculine as well. However, here, "berfydh" is changed from "perfydh", so it must be that "bal" is feminine, which means it must be "pal" = "spade".)  
+y. das = stack (from "war dhas deg")  
+z. war das = on a father ("das" cannot be "stack" because it should become "dhas", so it must be "tas" = "father")
+
+Finally we are looking for "white head". This is really a stretch: we have a bunch of color terms, but no "white". Neither do we have "head". First, we have "penn daras" = "lintel (a horizontal beam over the top of a door)", plus "daras" = "door". So "penn" must be "head". Next, we have "wynnrudh" = "pink" (white + red), "rudhvelyn" = "orange" (red + yellow), "glasrudh" = "purple" (blue + red), so "rudh" = "red", leaving "wynn" = "white". Therefore, "white head" = "penn wynn" = "penguin". (Well actually, "white" is "gwynn" where gw > w because "krogen" is feminine, but you need to realize that "(war) grogen benn" = "skull" = "head shell", where "benn" is the changed version of "penn". This isn't necessary for reaching "penguin" though.)

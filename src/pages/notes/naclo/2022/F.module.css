@@ -1,0 +1,22 @@
+.red,
+.green,
+.blue,
+.violet {
+  font-weight: bold;
+}
+
+.red {
+  color: var(--color-red);
+}
+
+.green {
+  color: var(--color-green);
+}
+
+.blue {
+  color: var(--color-blue);
+}
+
+.violet {
+  color: var(--color-violet);
+}

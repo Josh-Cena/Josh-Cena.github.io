@@ -1,7 +1,78 @@
 ---
-tags: []
+tags:
+  - Writing system
 ---
 
 # Lines in the Sand
 
-TODO
+{/* cSpell:ignore Bislama sab senta blong melenisian institiut blong tijim saen filosofi hiumaniti mo teknoloji lisa vilij lolovini ITITS STITI niti lolo */}
+
+import styles from "./A.module.css";
+
+I have to show this off. There turned out to be no Unicode characters for Avoiuli, so I had to make a custom font:
+
+<div className={styles.avoiuliProse}>
+  <span>sab senta blong</span> <span>melenisian institiut</span>{" "}
+  <span>blong tijim saen filosofi</span> <span>hiumaniti mo teknoloji</span>{" "}
+  <span>lisa vilij lolovini</span>{" "}
+</div>
+
+You can even copy out the text to see the full transcription!
+
+As always, we need to answer two preliminary questions: is it alphabetic or syllabic? Is it left-to-right or right-to-left? Unlike many other writing system problems, we aren't given all the words present in the text, neither are we given any correspondence. We only know three words in the Latin alphabet: "filosofi", "institiut", "blong". This is enough to start: in "filosofi", the start and end syllables are the same, so whether syllabic or alphabetic, the first and last glyphs must be the same. We find 9. <span className={styles.avoiuli}>filosofi</span> that starts and ends with <span className={styles.avoiuli}>fi</span>, so this means "fi". Since <span className={styles.avoiuli}>f</span> never appears elsewhere while <span className={styles.avoiuli}>i</span> appears in many other places, they stand for "f" and "i" respectively. Furthermore this string has 8 glyphs, so this script is more or less alphabetic (unless vowels can be elided in certain contexts), and left-to-right. We have the following character matches: <span className={styles.avoiuli}>f</span> = f, <span className={styles.avoiuli}>i</span> = i, <span className={styles.avoiuli}>l</span> = l, <span className={styles.avoiuli}>o</span> = o, <span className={styles.avoiuli}>s</span> = s.
+
+Next for "institiut", we search for a word with <span className={styles.avoiuli}>i</span> in the 1st, 5th, and 7th positions. There are only two words that contain 3 <span className={styles.avoiuli}>i</span>s: 4. <span className={styles.avoiuliRev}>institiut</span> and 12. <span className={styles.avoiuliRev}>hiumaniti</span>. Both are 9 glyphs, but neither has "i" positions matching "institiut" when read left to right. However, 4 also contains 3 <span className={styles.avoiuliRev}>t</span>s, which we also need, _and_ a <span className={styles.avoiuliRev}>s</span>. So there's overwhelming evidence that 4 is "institiut". But when we match all the "i"s and "t"s, we get "T_ITITS_I" instead of "I_STITI_T". This means the language is... right to left?
+
+The revelation comes by noticing that <span className={styles.avoiuli}>i</span> on line 3 appears different from the one on <span className={styles.avoiuliRev}>i</span> on line 4. More precisely: they are mirror images of each other. This happens for other glyphs as well, such as <span className={styles.avoiuli}>l</span> and <span className={styles.avoiuliRev}>l</span>. This means the script is actually written in alternating directions: left-to-right, then right-to-left, then left-to-right, and so on. This is known as boustrophedon, and is common in ancient writing because it minimizes the amount of hand movement needed when writing, important when writing on stone, clay, or here, sand. So, if this is the correct analysis, then we just need to run right-to-left for the second and fourth lines. We get the matchings: <span className={styles.avoiuli}>n</span> = n, <span className={styles.avoiuli}>t</span> = t, <span className={styles.avoiuli}>u</span> = u.
+
+Knowing what "l", "o", and "n" is, we can now search for "blong". Unfortunately, there's no word containing the sequence <span className={styles.avoiuli}>lon</span> or <span className={styles.avoiuliRev}>lon</span>. However, we do find two cases of <span className={styles.avoiuli}>blong</span> which contain <span className={styles.avoiuli}>lo</span> and are short enough, so <span className={styles.avoiuli}>b</span> = b, <span className={styles.avoiuli}>ng</span> = ng (a bigram).
+
+Now we can plug in all the letters we know:
+
+<div className={styles.avoiuliProse}>
+  <span>
+    <span className={styles.normal}>s</span>a
+    <span className={styles.normal}>b</span>{" "}
+    <span className={styles.normal}>s</span>e
+    <span className={styles.normal}>nt</span>a{" "}
+    <span className={styles.normal}>blong</span>
+  </span>{" "}
+  <span>
+    me<span className={styles.normal}>l</span>e
+    <span className={styles.normal}>nisi</span>a
+    <span className={styles.normal}>n</span>{" "}
+    <span className={styles.normal}>institiut</span>
+  </span>{" "}
+  <span>
+    <span className={styles.normal}>blong</span>{" "}
+    <span className={styles.normal}>ti</span>j
+    <span className={styles.normal}>i</span>m{" "}
+    <span className={styles.normal}>s</span>ae
+    <span className={styles.normal}>n</span>{" "}
+    <span className={styles.normal}>filosofi</span>
+  </span>{" "}
+  <span>
+    h<span className={styles.normal}>iu</span>ma
+    <span className={styles.normal}>niti</span> m
+    <span className={styles.normal}>o</span>{" "}
+    <span className={styles.normal}>t</span>ek
+    <span className={styles.normal}>nolo</span>j
+    <span className={styles.normal}>i</span>
+  </span>{" "}
+  <span>
+    <span className={styles.normal}>lis</span>a v
+    <span className={styles.normal}>ili</span>j{" "}
+    <span className={styles.normal}>lolo</span>v
+    <span className={styles.normal}>ini</span>
+  </span>{" "}
+</div>
+
+Since this is a creole language, and also because we aren't given any other means of translation anyway, the words in A2 are likely to be similar in Bislama as well. For example, for "humanity" and "technology", we see two long words: 12 <span className={styles.avoiuli}>hiumaniti</span> (decoded as <span className={styles.avoiuli}>h</span>iu<span className={styles.avoiuli}>ma</span>niti) and 10 <span className={styles.avoiuli}>teknoloji</span> (decoded as t<span className={styles.avoiuli}>ek</span>nolo<span className={styles.avoiuli}>j</span>i). So undoubtedly, <span className={styles.avoiuli}>h</span> = h, <span className={styles.avoiuli}>m</span> = m, <span className={styles.avoiuli}>a</span> = a, <span className={styles.avoiuli}>e</span> = e. We just have two more letters in "te_nolo_i", which are probably <span className={styles.avoiuli}>k</span> = k and <span className={styles.avoiuli}>j</span> = j.
+
+At this point most of the text is decoded, so we can just match the remaining by sound. 2. <span className={styles.avoiuli}>senta</span> is decoded to "senta" which appears like "center". 7. <span className={styles.avoiuli}>tijim</span> is decoded to "tijim" which appears like "teaching". In 14. <span className={styles.avoiuli}>vilij</span>, we don't know what <span className={styles.avoiuli}>v</span> is, but by method of elimination this has to be "vilij" for "village".
+
+Here's the full transcription:
+
+> sab senta blong melenisian institiut blong tijim saen filosofi hiumaniti mo teknoloji lisa vilij lolovini
+
+To find the Pacific area, refer to the map and recognize "melenisian" as "Melanesia".

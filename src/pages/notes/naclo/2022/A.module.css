@@ -1,0 +1,35 @@
+.avoiuliProse {
+  font-family: "Avoiuli";
+  font-size: 5em;
+  line-height: 1.25;
+  overflow: visible;
+}
+
+.avoiuliProse > span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.avoiuliProse > span:nth-child(even) {
+  transform: scaleX(-1) translateX(-100%);
+  transform-origin: left;
+}
+
+.avoiuli {
+  display: inline-block;
+  font-family: "Avoiuli";
+  font-size: 3em;
+  line-height: 1;
+}
+
+.avoiuliRev {
+  display: inline-block;
+  font-family: "Avoiuli";
+  font-size: 3em;
+  line-height: 1;
+  transform: scaleX(-1);
+}
+
+.normal {
+  font-family: var(--font-main);
+}

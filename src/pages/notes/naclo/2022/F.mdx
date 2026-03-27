@@ -1,7 +1,205 @@
 ---
-tags: []
+tags:
+  - Phrase translation
 ---
 
 # Splash to Save
 
-TODO
+import styles from "./F.module.css";
+
+{/* cSpell:ignore abal angde ankom Bunkuttang däbe daeya dägagän däganeyo dagwaeya dakonewän dängkamän dapisamän daspunän dattkaemnegnän ddapall ddob ddobae dowae duduaibnegnän eragwaeya gogän gogon gokätaemän gongkamän guinggolän ikop käkan källa kollba Malla mängalae mäse nagnag ngänygäny peyang säresäremang tärko toko towall ttam ttängäm Ttongo ulle ulleulle walle wätali Yäbäd */}
+
+There's no syntactic pattern here, so we just have to find a few keywords. I found: "ankom" = "Ant" (appearing in (1) and (2)); "tärko" = "Small Fish" (appearing in (1) and (3)).
+
+Looking at F1:
+
+- (12) and (B) are remarkably longer than the others, and they start with "Small Fish" and "tärko" respectively, so they match.
+- The other sentence containing "tärko", (F), must be (9).
+- The sentence containing "ankom", (C), must be (8).
+
+Here are the remaining sentences:
+
+(7) It blew down and broke the tree.  
+(10) But some big fish were trying to kill him.  
+(11) A catfish was about to swallow him.
+
+(A) Bunkuttang a mäse ngänygäny e dängkamän.  
+(D) Be ddob kollba ulleulle da gäz e de ada däganeyo.  
+(E) Llo de duduaibnegnän a dattkaemnegnän.
+
+We need to look for more keywords to match them, preferably concrete nouns and verbs. Here's another with "tree":
+
+(2) Ankom obo ma me daeya llo toko me. _Ant was in his house on top of a tree._
+
+Compare with the three sentences above; the only word that repeats is "llo" in (E), so (7) = (E), and "llo" = "tree".
+
+Here's one containing "fish":
+
+(3) Tärko walle me daeya ddob kollba nagnag oba peyang. _Small Fish was in the river with some fish friends._
+
+Compare with the remaining two; "ddob kollba" appears in (D), so (10) = (D), and one of "ddob" and "kollba" is "fish". That leaves (11) = (A).
+
+Now we have all the correspondences, we need to look more closely at word-level matching. We don't have to translate each word because the question only asks for a selected few, but it would be nice to get a few more to get a sense of sentence structure.
+
+- 6 and 7 both mention "wind". They share the word "wel".
+- 3 and 8 both mention "river". They share the word "walle".
+- 8 and 12 both mention "threw". They share the word "daspunän".
+- The word after "wind" in 6, "ulle", should mean "big". Indeed, it also appears in 10 as "ulleulle". The reduplication may stand for plural. Therefore, the words before "ulleulle", "ddob kollba", mean "some fish". These two words also appear in 3, which are followed by "nagnag", which should be "friends". Indeed, "nag" is also mentioned in 1, which also mentions "friends".
+- In 6, "wel ulle da gongkamän" must be "a big wind began", leaving only "gongkamän" as "began". Combining with "daspunän", it's reasonable to guess that all words ending in "-än" are verbs. So in 5, "dakonewän" = "covered"; in 7, "duduaibnegnän a dattkaemnegnän" = "blew down and broke"; in 8, "dapisamän" = "tore"; in 9, "dägagän" = "saw", "guinggolän" = "moved closer"; in 11, "dängkamän" = "swallow"; in 12, "gokätaemän" = "splashed", "gogän" = "was saved".
+
+Here are all sentences. The colors represent different parts of speech: <span className={styles.red}>red</span> for subjects, <span className={styles.green}>green</span> for objects, <span className={styles.blue}>blue</span> for verbs, and <span className={styles.violet}>violet</span> for other parts of speech.
+
+1. <span className={styles.red}>Ankom a tärko</span> ubi eragwaeya ddobae ai
+   abal <span className={styles.green}>nag</span> dagwaeya.
+   <span className={styles.red}>Ant and Small Fish</span>, they were really very
+   good <span className={styles.green}>friends</span>.
+2. <span className={styles.red}>Ankom</span> obo ma me daeya
+   <span className={styles.violet}>llo</span> toko me.
+   <span className={styles.red}>Ant</span> was in his house on top of
+   <span className={styles.violet}>a tree</span>.
+3. <span className={styles.red}>Tärko</span>
+   <span className={styles.violet}>walle</span> me daeya
+   <span className={styles.green}>ddob kollba nagnag</span> oba peyang.
+   <span className={styles.red}>Small Fish</span> was in the
+   <span className={styles.violet}>river</span> with
+   <span className={styles.green}>some fish friends</span>.
+4. Ttongo ag me däbe ttängäm a säresäremang gogon.  
+   One morning that place was about to rain.
+5. Yäbäd de ddapall käkan da <span className={styles.blue}>dakonewän</span>.  
+   Clouds <span className={styles.blue}>covered</span> the sun.
+6. Malla wätali gogon, <span className={styles.red}>wel ulle</span> da <span className={styles.blue}>gongkamän</span>.  
+   It wasn’t long before a <span className={styles.red}>big wind</span> <span className={styles.blue}>began</span>.
+7. <span className={styles.green}>Llo</span> de
+   <span className={styles.blue}>duduaibnegnän a dattkaemnegnän</span>. (E) It
+   <span className={styles.blue}>blew down and broke</span>
+   <span className={styles.green}>the tree</span>.
+8. <span className={styles.green}>Ankom</span> bo ma de
+   <span className={styles.red}>wel</span> a
+   <span className={styles.blue}>dapisamän</span> a
+   <span className={styles.green}>ankom</span> bom
+   <span className={styles.blue}>daspunän</span>
+   <span className={styles.violet}>walle</span> we. (C) The
+   <span className={styles.red}>wind</span>
+   <span className={styles.blue}>tore</span>
+   <span className={styles.green}>Ant</span>'s house and
+   <span className={styles.blue}>threw</span>
+   <span className={styles.green}>Ant</span> into the
+   <span className={styles.violet}>river</span>.
+9. <span className={styles.red}>Tärko</span> da angde ikop dägagän, obo dowae e
+   <span className={styles.blue}>guinggolän</span>. (F) When
+   <span className={styles.red}>Small Fish</span> saw, he
+   <span className={styles.blue}>moved closer</span> to him.
+10. Be <span className={styles.red}>ddob kollba ulleulle</span> da gäz e de ada däganeyo. (D)  
+    But <span className={styles.red}>some big fish</span> were trying to kill him.
+11. Bunkuttang a mäse ngänygäny e <span className={styles.blue}>dängkamän</span>. (A)  
+    A catfish was about to <span className={styles.blue}>swallow</span> him.
+12. <span className={styles.red}>Tärko</span> da mängalae källa
+    <span className={styles.blue}>gokätaemän</span> a ine peyang
+    <span className={styles.green}>ankom</span> bom towall toko we
+    <span className={styles.blue}>daspunän</span> a ttam
+    <span className={styles.blue}>gogän</span>. (B)
+    <span className={styles.red}>Small Fish</span> quickly
+    <span className={styles.blue}>splashed</span> with his tail, and with water
+    <span className={styles.blue}>threw</span>
+    <span className={styles.green}>Ant</span> on top of the grass, and he
+    <span className={styles.blue}>was saved</span>.
+
+In F2 and F3, we only have 2 left to translate: "yäbäd" and "catfish" (I didn't explicitly say it, but "and" is obviously "a" from "ant and small fish" and "blew down and broke"). "Yäbäd" only appears in 5; "catfish" only appears in 11.
+
+To understand whether "yäbäd" is "clouds" or "sun", we must understand the word order. Unfortunately, there's no fixed word order: in most cases we have the subject first, but in a few cases we have the _object_ first. But here's a critical observation: in "wel ulle da gongkamän" = "a big wind began", we have the particle "da" unaccounted for. Looking around: in sentences 6–12, whenever we have a red phrase, it's always followed by "da" or "a". So this particle is the subject marker. Inspired by this, when we look at all green phrases, they are all followed by "de" or "bom" (in 8, the whole object is "Ant's house" = "Ankom bo ma"). Therefore, because "yäbäd" is followed by "de", it must be the object "clouds". This also means that "sun" is "ddapall käkan". Similarly, in 11, "bunkuttang" is followed by "a", so it must be the subject "catfish".
+
+Finally, I think F4 is pretty difficult. We already know that "tärko" = "small fish", "kollba" = "fish", "llo" = "tree", "ulleulle" = "big", "wel" = "wind", so none of these words can be in the translation for "Ant got on top of his house.". We also know that "ankom" = "ant" and _sort of_ that "obo ma" = "his house" (based on 2 and 8). That leaves two of "toko", "towall", "me", "we" as "on top of". We have only a few sentences containing these words:
+
+- "me"
+  <ol>
+    <li value={2}>
+      <span className={styles.red}>Ankom</span> obo ma me daeya{" "}
+      <span className={styles.violet}>llo</span> toko me.
+      <br />
+      <span className={styles.red}>Ant</span> was in his house on top of{" "}
+      <span className={styles.violet}>a tree</span>.
+    </li>
+    <li value={3}>
+      <span className={styles.red}>Tärko</span>{" "}
+      <span className={styles.violet}>walle</span> me daeya{" "}
+      <span className={styles.green}>ddob kollba nagnag</span> oba peyang.
+      <br />
+      <span className={styles.red}>Small Fish</span> was in the{" "}
+      <span className={styles.violet}>river</span> with{" "}
+      <span className={styles.green}>some fish friends</span>.
+    </li>
+    <li value={4}>
+      Ttongo ag me däbe ttängäm a säresäremang gogon.
+      <br />
+      One morning that place was about to rain.
+    </li>
+  </ol>
+- "we"
+  <ol>
+    <li value={8}>
+      <span className={styles.green}>Ankom</span> bo ma de{" "}
+      <span className={styles.red}>wel</span> a{" "}
+      <span className={styles.blue}>dapisamän</span> a{" "}
+      <span className={styles.green}>ankom</span> bom{" "}
+      <span className={styles.blue}>daspunän</span>{" "}
+      <span className={styles.violet}>walle</span> we.
+      <br />
+      The <span className={styles.red}>wind</span>{" "}
+      <span className={styles.blue}>tore</span>{" "}
+      <span className={styles.green}>Ant</span>'s house and{" "}
+      <span className={styles.blue}>threw</span>{" "}
+      <span className={styles.green}>Ant</span> into the{" "}
+      <span className={styles.violet}>river</span>.
+    </li>
+    <li value={12}>
+      <span className={styles.red}>Tärko</span> da mängalae källa{" "}
+      <span className={styles.blue}>gokätaemän</span> a ine peyang{" "}
+      <span className={styles.green}>ankom</span> bom towall toko we{" "}
+      <span className={styles.blue}>daspunän</span> a ttam{" "}
+      <span className={styles.blue}>gogän</span>. <br />
+      <span className={styles.red}>Small Fish</span> quickly{" "}
+      <span className={styles.blue}>splashed</span> with his tail, and with
+      water <span className={styles.blue}>threw</span>{" "}
+      <span className={styles.green}>Ant</span> on top of the grass, and he{" "}
+      <span className={styles.blue}>was saved</span>.
+    </li>
+  </ol>
+- "toko"
+  <ol>
+    <li value={2}>
+      <span className={styles.red}>Ankom</span> obo ma me daeya{" "}
+      <span className={styles.violet}>llo</span> toko me.
+      <br />
+      <span className={styles.red}>Ant</span> was in his house on top of{" "}
+      <span className={styles.violet}>a tree</span>.
+    </li>
+    <li value={12}>
+      <span className={styles.red}>Tärko</span> da mängalae källa{" "}
+      <span className={styles.blue}>gokätaemän</span> a ine peyang{" "}
+      <span className={styles.green}>ankom</span> bom towall toko we{" "}
+      <span className={styles.blue}>daspunän</span> a ttam{" "}
+      <span className={styles.blue}>gogän</span>.<br />
+      <span className={styles.red}>Small Fish</span> quickly{" "}
+      <span className={styles.blue}>splashed</span> with his tail, and with
+      water <span className={styles.blue}>threw</span>{" "}
+      <span className={styles.green}>Ant</span> on top of the grass, and he{" "}
+      <span className={styles.blue}>was saved</span>.
+    </li>
+  </ol>
+- "towall"
+  <ol>
+    <li value={12}>
+      <span className={styles.red}>Tärko</span> da mängalae källa{" "}
+      <span className={styles.blue}>gokätaemän</span> a ine peyang{" "}
+      <span className={styles.green}>ankom</span> bom towall toko we{" "}
+      <span className={styles.blue}>daspunän</span> a ttam{" "}
+      <span className={styles.blue}>gogän</span>.<br />
+      <span className={styles.red}>Small Fish</span> quickly{" "}
+      <span className={styles.blue}>splashed</span> with his tail, and with
+      water <span className={styles.blue}>threw</span>{" "}
+      <span className={styles.green}>Ant</span> on top of the grass, and he{" "}
+      <span className={styles.blue}>was saved</span>.
+    </li>
+  </ol>
+
+The two occurrences of "on top of" both use "toko", so "toko" should be in the translation. "me" and "we" seem to be prepositions. I wouldn't have got this, but both cases of "we" are combined with "threw", so it expresses a dynamic change of location, while "me" is used in a static location. Here "got on" is a dynamic change, so we should use "toko we". If "toko we" is "onto top of", then that leaves "towall" in 12 as "grass".
