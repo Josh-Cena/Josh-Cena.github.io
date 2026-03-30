@@ -27,8 +27,8 @@
   --margin-main-v: 0;
   --margin-paragraph: 1rem;
   --font-main:
-    "Charis SIL", "Kaktovik Numerals", "Noto Serif Todhri", Georgia,
-    "Times New Roman", serif;
+    "Charis SIL", "Kaktovik Numerals", "Noto Serif Todhri", "Noto Serif SC",
+    Georgia, "Times New Roman", serif;
   --font-code: Menlo, Consolas, Monaco, monospace;
   --border-radius-small: 0.25em;
   --border-radius-medium: 0.5em;
@@ -86,6 +86,12 @@
   font-family: "Noto Serif Todhri";
   src: url("assets/NotoSerifTodhri-Regular.woff2") format("woff2");
   unicode-range: U+105C0-105FF;
+}
+
+@font-face {
+  font-family: "Noto Serif SC";
+  src: url("assets/NotoSerifSC.woff2") format("woff2");
+  font-weight: 200 900;
 }
 
 @font-face {
@@ -246,4 +252,12 @@ abbr {
 
 .phantom {
   visibility: hidden;
+}
+
+.dark-invert {
+  transition: filter 0.2s ease-out;
+}
+
+[data-color-mode="dark"] .dark-invert {
+  filter: invert(1);
 }

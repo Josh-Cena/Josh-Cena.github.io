@@ -563,7 +563,7 @@ export default function StarRailDamage(): ReactNode {
     };
 
   return (
-    <div>
+    <div lang="zh-Hans">
       <h1>星铁伤害计算器</h1>
       <p>一些参考：</p>
       <ul>
