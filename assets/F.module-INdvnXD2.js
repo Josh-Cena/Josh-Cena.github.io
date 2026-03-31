@@ -1,0 +1,1 @@
+var e={red:`_red_1pigd_1`,green:`_green_1pigd_2`,blue:`_blue_1pigd_3`,violet:`_violet_1pigd_4`};export{e as t};
