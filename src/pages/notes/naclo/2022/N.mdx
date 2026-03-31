@@ -1,7 +1,394 @@
 ---
-tags: []
+tags:
+  - Phonology
 ---
 
 # Pseudorandom Numbers
 
-TODO
+{/* cSpell:ignore jɛ̀ɛ jɛ́ɛ ɔ̀ɔɔ wɔ̀ɔɔ wɔ́ɔ ɔ̂ɔɔ V̂VV V̀VV lwɔ̀ɔɔj màaat làaak lòoj lòooj cɛ̀ɛm nɔ̀ŋ nɔ̀ɔŋ kùuc càam pèec pɛ̀ɛɛc pèeec màat wìic wjɛ̀ɛc bòok bwɔ̀ɔk wòoo */}
+
+We first list all the alternation patterns:
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>a</th>
+      <th>ɛ</th>
+      <th>ɔ</th>
+      <th>e</th>
+      <th>o</th>
+      <th>i</th>
+      <th>u</th>
+    </tr>
+  </thead>
+  {/* prettier-ignore */}
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}>á → àa / l_j<br />áa → á / w_l</td>
+      <td></td>
+      <td>ɔ́ → àa / g_l</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>ɛ</th>
+      <td>âaa → ɛ́ɛ / g_r, g_ɲ<br />àa → ɛ̂ɛ / d̪_ŋ, m_c<br />àaa → ɛ́ɛ / m_l</td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}></td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}></td>
+      <td>é → ɛ̀ɛ / d̪_l</td>
+      <td></td>
+      <td>í → jɛ̀ɛ / d_t</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>ɔ</th>
+      <td>àaa → ɔ́ɔ / ŋ_r</td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}></td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}>ɔ̀ɔ → ɔ̂ɔ / ɲ_k<br />ɔ̂ɔɔ → ɔ́ɔ / g_k</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}>êee → ée / ɲ_l<br />èe → êe / d_ŋ</td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>o</th>
+      <td></td>
+      <td></td>
+      <td>wɔ̀ɔɔ → óo / ɟ_ŋ<br />wɔ́ɔ → ó / t_ŋ</td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}></td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}>ôoo → óo / b_k<br />òo → ôo / r_k</td>
+      <td></td>
+      <td>ú → wòo / r_p</td>
+    </tr>
+    <tr>
+      <th>i</th>
+      <td></td>
+      <td>jɛ́ɛ → í / d_l</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}></td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}></td>
+    </tr>
+    <tr>
+      <th>u</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>wòoo → úu / t_r</td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}></td>
+      <td style={{ backgroundColor: "var(--color-shadow)" }}></td>
+    </tr>
+  </tbody>
+</table>
+
+I've shaded the diagonal. Above the diagonal are changes that lower in height; below the diagonal are changes that raise in height.
+
+These changes can all be described by one of the schema below (ignoring initial glides [j] and [w] for one moment):
+
+1. V̀VV → V́V (raise)
+2. V̂VV → V́V (raise/constant)
+3. V́V → V́ (raise/constant)
+4. V́ → V̀V (lower/constant)
+5. V̀V → V̂V (raise/constant)
+
+In terms of how the raising is done: the backness is preserved, so for example we have [a] → [ɛ] → [e] → [i], and also [a] → [ɔ] → [o] → [u]. When raising from [a], it's not clear whether [ɛ] or [ɔ] should be picked, and we have both àaa → ɛ́ɛ and àaa → ɔ́ɔ. Indeed, this is what N3's referring to with "If there is more than one possible prediction, give them all".
+
+There's only one factor of nondeterminism left: given a vowel like V̂VV, how do we know if we should stay constant or raise? If raise, by how much? It turns out that for each choice of V, what it changes into under each rule is deterministic. (It's important to keep the glides here, because otherwise we lose the ability to tell if we should generate [jɛ] or [ɛ], especially for the "V́ → V̀V" row!)
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>a</th>
+      <th>ɛ</th>
+      <th>ɔ</th>
+      <th>e</th>
+      <th>o</th>
+      <th>i</th>
+      <th>u</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>V̀VV → V́V</th>
+      <td>ɛ/ɔ</td>
+      <td></td>
+      <td>wɔ → o</td>
+      <td></td>
+      <td>wo → u</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>V̂VV → V́V</th>
+      <td>ɛ</td>
+      <td></td>
+      <td>ɔ</td>
+      <td>e</td>
+      <td>o</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>V́V → V́</th>
+      <td>a</td>
+      <td>jɛ → i</td>
+      <td>o</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>V́ → V̀V</th>
+      <td>a</td>
+      <td></td>
+      <td>a</td>
+      <td>ɛ</td>
+      <td></td>
+      <td>jɛ</td>
+      <td>wo</td>
+    </tr>
+    <tr>
+      <th>V̀V → V̂V</th>
+      <td>ɛ</td>
+      <td></td>
+      <td>ɔ</td>
+      <td>e</td>
+      <td>o</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+It's helpful to further compare this with the verb conjugation table, which provides 6 different possible directions of vowel changes.
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>a</th>
+      <th>ɛ</th>
+      <th>ɔ</th>
+      <th>e</th>
+      <th>o</th>
+      <th>i</th>
+      <th>u</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>
+        root → 1<sup>st</sup>
+      </th>
+      <td>a</td>
+      <td></td>
+      <td>a</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>wo</td>
+    </tr>
+    <tr>
+      <th>
+        1<sup>st</sup> → root
+      </th>
+      <td>ɔ/a</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>wo → u</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>
+        root → 3<sup>rd</sup>
+      </th>
+      <td>ɛ</td>
+      <td></td>
+      <td>ɔ</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>u</td>
+    </tr>
+    <tr>
+      <th>
+        3<sup>rd</sup> → root
+      </th>
+      <td></td>
+      <td>a</td>
+      <td>ɔ</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>u</td>
+    </tr>
+    <tr>
+      <th>
+        1<sup>st</sup> → 3<sup>rd</sup>
+      </th>
+      <td>ɛ/ɔ</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>wo → u</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>
+        3<sup>rd</sup> → 1<sup>st</sup>
+      </th>
+      <td></td>
+      <td>a</td>
+      <td>a</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>wo</td>
+    </tr>
+  </tbody>
+</table>
+
+Notice how these two tables match row by row? There's the following mapping:
+
+- V̀VV → V́V: 1<sup>st</sup> → 3<sup>rd</sup>
+- V̂VV → V́V: root → 3<sup>rd</sup>
+- V́V → V́: 1<sup>st</sup> → root
+- V́ → V̀V: root → 1<sup>st</sup>
+- V̀V → V̂V: root → 3<sup>rd</sup>
+
+So we can merge the two tables to fill in some gaps.
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>a</th>
+      <th>ɛ</th>
+      <th>ɔ</th>
+      <th>e</th>
+      <th>o</th>
+      <th>i</th>
+      <th>u</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>
+        V̀VV → V́V = 1<sup>st</sup> → 3<sup>rd</sup>
+      </th>
+      <td>ɛ/ɔ</td>
+      <td></td>
+      <td>wɔ → o</td>
+      <td></td>
+      <td>wo → u</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>
+        V̂VV → V́V = root → 3<sup>rd</sup>
+      </th>
+      <td>ɛ</td>
+      <td></td>
+      <td>ɔ</td>
+      <td>e</td>
+      <td>o</td>
+      <td></td>
+      <td>**u**</td>
+    </tr>
+    <tr>
+      <th>
+        V́V → V́ = 1<sup>st</sup> → root
+      </th>
+      <td>a</td>
+      <td>jɛ → i</td>
+      <td>o</td>
+      <td></td>
+      <td>**wo → u**</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>
+        V́ → V̀V = root → 1<sup>st</sup>
+      </th>
+      <td>a</td>
+      <td></td>
+      <td>a</td>
+      <td>ɛ</td>
+      <td></td>
+      <td>jɛ</td>
+      <td>wo</td>
+    </tr>
+    <tr>
+      <th>
+        V̀V → V̂V = root → 3<sup>rd</sup>
+      </th>
+      <td>ɛ</td>
+      <td></td>
+      <td>ɔ</td>
+      <td>e</td>
+      <td>o</td>
+      <td></td>
+      <td>**u**</td>
+    </tr>
+  </tbody>
+</table>
+
+This is sufficient for N1. In N1, we just need to check if the input or output exists in this table.
+
+(a) Input: ɛ̀ɛ; the V̀V → V̂V row has no entry for ɛ, so doesn't follow the pattern  
+(b) Input: ìii; the V̀VV → V́V row has no entry for i, so doesn't follow the pattern  
+(c) Input: èee; the V̀VV → V́V row has no entry for e, so doesn't follow the pattern  
+(d) Output: ôo; the V̀V → V̂V row has o that outputs o, so follows the pattern  
+(e) Output: âa; the V̀V → V̂V row has no entry that outputs a, so doesn't follow the pattern  
+(f) Output: ûu; the V̀V → V̂V row has u that outputs u, so follows the pattern (this can only be reached if you filled in the gaps using the conjugation correspondence!)
+
+In N2, we apply the correspondence in the other direction and predict conjugation using singular-plural.
+
+- 1<sup>st</sup> person lwɔ̀ɔɔj
+  - Like "màaat" and "làaak", the root has form lV̀Vj and 3<sup>rd</sup> person has form lV̀VVj
+  - [wɔ] going from 1<sup>st</sup> to root: turns into [o]
+  - [wɔ] going from 1<sup>st</sup> to 3<sup>rd</sup> person: turns into [o]
+  - So root = lòoj, 3<sup>rd</sup> person = lòooj
+- 3<sup>rd</sup> person cɛ̀ɛm
+  - Like "nɔ̀ɔŋ" and "kùuc", the root has form cV̀m and 1<sup>st</sup> person has form cV̀Vm
+  - [ɛ] going from 3<sup>rd</sup> to root: reverse of root → 3<sup>rd</sup>, turns into [a]
+  - [ɛ] going from 3<sup>rd</sup> to 1<sup>st</sup> person: reverse of 1<sup>st</sup> → 3<sup>rd</sup>, turns into [a]
+  - So root = càm, 1<sup>st</sup> person = càam
+- Root pèec, 1<sup>st</sup> person pɛ̀ɛɛc
+  - Like "màat", the 3<sup>rd</sup> person has form pV̀VVc
+  - [e] going from root to 3<sup>rd</sup> person: turns into [e]
+  - So 3<sup>rd</sup> person = pèeec
+- Root wìc, 3<sup>rd</sup> person wìic
+  - Like "nɔ̀ŋ", the 1<sup>st</sup> person has form wV̀Vc
+  - [i] going from root to 1<sup>st</sup> person: turns into [jɛ]
+  - So 1<sup>st</sup> person = wjɛ̀ɛc
+- 3<sup>rd</sup> person bòok
+  - Like "nɔ̀ɔŋ", the root has form bV̀k and 1<sup>st</sup> person has form bV̀Vk
+  - [o] going from 3<sup>rd</sup> person to root: turns into [o]
+  - [o] going from 3<sup>rd</sup> person to 1<sup>st</sup> person: turns into [wɔ]
+  - So root = bòk, 1<sup>st</sup> person = bwɔ̀ɔk
+
+N3 is the exact same lookup process, which I will not repeat here.

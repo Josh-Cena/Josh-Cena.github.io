@@ -1,7 +1,103 @@
 ---
-tags: []
+tags:
+  - Phonology
 ---
 
 # Sounds Fishy
 
-TODO
+{/* cSpell:ignore tʃɜːtʃ dɜːx tiːθ diːx jelou jewou danx kwiːn giːn klaudz gauɣ souldʒə douɣə krisməs gixməx pensl penduw flauwə bauwə smouk hmouk sniːz hniːɣ wiŋz wiŋɣ veri bewi ʃugə dugə munki munʔi plein bein spuːn puːn tuːθbruʃ duːxbux bɜːθdei bɜːxdei luːs wuːx feðə peɣə elifənt ewipənt boʔl boʔu striŋg diŋg Bawwy kwisməs pwein fwauwə tuːθbwuʃ wuːs kwaudz vewi ewifənt souwdʒə stwiŋg hniːz twiŋg dɜːtʃ gisməs diːθ pendl duːθbuʃ gaudz douwɣə dampx liʔl wiʔl wiʔu frɛndz fwɛndz bɛndz bɛnɣ pliːz pwiːz biːz biːɣ tʃunki dunʔi kwiz smaʃ hmaʃ hmax ʃrimps ʃwimps dimps dimpx dinx θank mutʃ handz bruʃ bwuʃ hanɣ */}
+
+Here are the expected pronunciations vs. actual pronunciations. I'm using the same vowels as presented in the dataset, because these are not IPA but may affect our analysis.
+
+| Expected | Actual | Expected | Actual | Expected | Actual  |
+| -------- | ------ | -------- | ------ | -------- | ------- |
+| tʃɜːtʃ   | dɜːx   | krisməs  | gixməx | plein    | bein    |
+| tiːθ     | diːx   | pensl    | penduw | spuːn    | puːn    |
+| fiʃ      | pix    | flauwə   | bauwə  | tuːθbruʃ | duːxbux |
+| jelou    | jewou  | smouk    | hmouk  | bɜːθdei  | bɜːxdei |
+| stamps   | danx   | sniːz    | hniːɣ  | luːs     | wuːx    |
+| kwiːn    | giːn   | wiŋz     | wiŋɣ   | feðə     | peɣə    |
+| klaudz   | gauɣ   | veri     | bewi   | elifənt  | ewipənt |
+| souldʒə  | douɣə  | ʃugə     | dugə   | boʔl     | boʔu    |
+| θum      | dum    | munki    | munʔi  | striŋg   | diŋg    |
+
+We just need a way to rewrite from the "expected" to the "actual".
+
+First, write all "r" and "l" as "w" (remember [Bawwy](https://bigbangtheory.fandom.com/wiki/Barry_Kripke)?).
+
+| Updated     | Actual | Updated     | Actual | Updated      | Actual  |
+| ----------- | ------ | ----------- | ------ | ------------ | ------- |
+| tʃɜːtʃ      | dɜːx   | **kwisməs** | gixməx | **pwein**    | bein    |
+| tiːθ        | diːx   | pensl       | penduw | spuːn        | puːn    |
+| fiʃ         | pix    | **fwauwə**  | bauwə  | **tuːθbwuʃ** | duːxbux |
+| **jewou**   | jewou  | smouk       | hmouk  | bɜːθdei      | bɜːxdei |
+| stamps      | danx   | sniːz       | hniːɣ  | **wuːs**     | wuːx    |
+| kwiːn       | giːn   | wiŋz        | wiŋɣ   | feðə         | peɣə    |
+| **kwaudz**  | gauɣ   | **vewi**    | bewi   | **ewifənt**  | ewipənt |
+| **souwdʒə** | douɣə  | ʃugə        | dugə   | boʔl         | boʔu    |
+| θum         | dum    | munki       | munʔi  | **stwiŋg**   | diŋg    |
+
+Second, update "s" before a nasal to "h", and delete "s" before other consonants, so the next rule doesn't target it.
+
+| Updated   | Actual | Updated   | Actual | Updated   | Actual  |
+| --------- | ------ | --------- | ------ | --------- | ------- |
+| tʃɜːtʃ    | dɜːx   | kwisməs   | gixməx | pwein     | bein    |
+| tiːθ      | diːx   | pensl     | penduw | **puːn**  | puːn    |
+| fiʃ       | pix    | fwauwə    | bauwə  | tuːθbwuʃ  | duːxbux |
+| jewou     | jewou  | **hmouk** | hmouk  | bɜːθdei   | bɜːxdei |
+| **tamps** | danx   | **hniːz** | hniːɣ  | wuːs      | wuːx    |
+| kwiːn     | giːn   | wiŋz      | wiŋɣ   | feðə      | peɣə    |
+| kwaudz    | gauɣ   | vewi      | bewi   | ewifənt   | ewipənt |
+| souwdʒə   | douɣə  | ʃugə      | dugə   | boʔl      | boʔu    |
+| θum       | dum    | munki     | munʔi  | **twiŋg** | diŋg    |
+
+Third, update the onset consonant of each syllable:
+
+- **Voiceless coronals**: tʃ/t/s/θ/ʃ/tw > d, ð/dʒ > ɣ
+- **Labials**: f > p, pw/fw/v/bw > b
+- **Velars**: k > ʔ, kw > g
+
+| Updated    | Actual | Updated    | Actual | Updated     | Actual  |
+| ---------- | ------ | ---------- | ------ | ----------- | ------- |
+| **dɜːtʃ**  | dɜːx   | **gisməs** | gixməx | **bein**    | bein    |
+| **diːθ**   | diːx   | **pendl**  | penduw | puːn        | puːn    |
+| **piʃ**    | pix    | **bauwə**  | bauwə  | **duːθbuʃ** | duːxbux |
+| jewou      | jewou  | hmouk      | hmouk  | bɜːθdei     | bɜːxdei |
+| **damps**  | danx   | hniːz      | hniːɣ  | wuːs        | wuːx    |
+| **giːn**   | giːn   | wiŋz       | wiŋɣ   | **peɣə**    | peɣə    |
+| **gaudz**  | gauɣ   | **bewi**   | bewi   | **ewipənt** | ewipənt |
+| **douwɣə** | douɣə  | **dugə**   | dugə   | boʔl        | boʔu    |
+| **dum**    | dum    | **munʔi**  | munʔi  | **diŋg**    | diŋg    |
+
+Fourth, update the coda consonant:
+
+- **Coronals fricatives/affricates**: tʃ/θ/ʃ/s > x, dz/z/ð > ɣ
+
+| Updated   | Actual | Updated    | Actual | Updated     | Actual  |
+| --------- | ------ | ---------- | ------ | ----------- | ------- |
+| **dɜːx**  | dɜːx   | **gixməx** | gixməx | bein        | bein    |
+| **diːx**  | diːx   | pendl      | penduw | puːn        | puːn    |
+| **pix**   | pix    | bauwə      | bauwə  | **duːxbux** | duːxbux |
+| jewou     | jewou  | hmouk      | hmouk  | **bɜːxdei** | bɜːxdei |
+| **dampx** | danx   | **hniːɣ**  | hniːɣ  | **wuːx**    | wuːx    |
+| giːn      | giːn   | **wiŋɣ**   | wiŋɣ   | peɣə        | peɣə    |
+| **gauɣ**  | gauɣ   | bewi       | bewi   | ewipənt     | ewipənt |
+| douwɣə    | douɣə  | dugə       | dugə   | boʔl        | boʔu    |
+| dum       | dum    | munʔi      | munʔi  | diŋg        | diŋg    |
+
+Finally just a few random changes—for example, delete "w" from coda; syllabic "l" become "uw" or "u"; "mp" becomes "n".
+
+Now we can apply these five rules: rhotacism, "s" deletion, onset and coda modification, and random changes, to the data.
+
+a. little = [liʔl] > [wiʔl] > [wiʔu]  
+b. friends = [frɛndz] > [fwɛndz] > [bɛndz] > [bɛnɣ]  
+c. please = [pliːz] > [pwiːz] > [biːz] > [biːɣ]  
+d. chunky = [tʃunki] > [dunʔi]  
+e. quiz = [kwiz] > [giz] > [giɣ]  
+f. smash = [smaʃ] > [hmaʃ] > [hmax]  
+g. shrimps = [ʃrimps] > [ʃwimps] > [dimps] > [dimpx] > [dinx]
+
+Next, we are doing the reverse in J2. The major changes here are the simplifications in onset and coda, in which most of the place and manner of articulation is lost. Just use imagination to fill in the blanks, since at least we know the vowels, and we do know roughly the place (labial, coronal, velar) of the consonants.
+
+a. thank you very much = [θank ju veri mutʃ] > [θank ju vewi mutʃ] > [dank ju bewi mutʃ] > [dank ju bewi mux]  
+b. wash your hands and brush your teeth = [woʃ joː handz and bruʃ joː tiːθ] > [woʃ joː handz and bwuʃ joː tiːθ] > [woʃ joː handz and buʃ joː diːθ] > [wox joː hanɣ an bux joː diːx]

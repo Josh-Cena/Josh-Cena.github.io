@@ -1,7 +1,99 @@
 ---
-tags: []
+tags:
+  - Phonology
 ---
 
 # I Stop Being Afraid of This Problem
 
-TODO
+{/* cSpell:ignore ˈɽoih ˈɽiŋ ˈwem ˈnaʔ ˈjaʔ ˈniʔ ˈɾeʔ ˈɽiʔ ˈsaʔ ˈbʲa ˈjʲo ˈwei ˈtai ˈnah ˈɽoi ˈsam ˈpem ˈaih ˈmoʔ ˈweih ˈɽai ˈgʲi makopamy ˈgoʔ aitopòma kerikeri ˈɾiʔ parimy kurijara ykurijarary tykupimy ˈguʔ */}
+
+In R1, we are interested in the pronunciation of "y", so list them all including the contexts in which they occur. There might be cases where it's impossible to isolate the pronunciation of "y", but since the problem explicitly asks to, it must be possible.
+
+<table>
+  <thead>
+    <tr>
+      <th>Nothing</th>
+      <th>/ɨ/</th>
+      <th>/a/</th>
+      <th>/o/</th>
+      <th>/i/</th>
+    </tr>
+  </thead>
+  <tbody>
+    {/* prettier-ignore */}
+    <tr>
+      <td>/ˈ\_\_ɽa.ma/<br />/ˈ\_\_to.no.ˈɽoih.pʲo.ɽo/<br />/ˈ\_\_je.na.ˈɽiŋ.gʲe.bɨ/<br />/ˈ\_\_tu.wa.ɽõ/</td>
+      <td>/k**ɨ**.ˈnaʔ.po.ˈjaʔ.ton/<br />/a.ˈniʔ.pʲ**ɨ**.ˈna.ɽa/<br />/e.ˈɾeʔ.n**ɨ**/<br />/ˈje.na.ˈɽiŋ.gʲe.b**ɨ**/<br />/u.ˈwem.bo.ˈsaʔ.pa.ˈɽiʔ.kʲ**ɨ**/</td>
+      <td>/a.ˈsaʔ.pe.ˈɾa.ɽ**a**/<br />/a.ˈniʔ.pʲɨ.ˈna.ɽ**a**/</td>
+      <td>/ˈto.no.ˈɽoih.pʲo.ɽ**o**/<br />/ʃi.ˈbʲa.ni.ˈjʲo.ɽo.ɽ**o**/</td>
+      <td>/su.ˈgu.ɽu.ˈsa.ni.ɾ**i**/</td>
+    </tr>
+  </tbody>
+</table>
+
+Since the /ɨ/ includes the most diverse contexts, this is the "otherwise" case, while the others have more specialized conditions. The "deleted" context is clear: at the start of the word. Then, we need some "assimilation" rule that says that "y" becomes the same vowel as the preceding vowel.
+
+- Preceded by -ar, at end of word: pronounced /a/
+- Preceded by -or, at end of word: pronounced /o/
+- Preceded by -ir, at end of word: pronounced /i/
+- Otherwise: pronounced /ɨ/
+
+Note that this context is highly restrictive: it simultaneously says that the previous consonant has to be "r" (so we don't target -epy) and that the following has to be nothing (i.e., end of word). This is technically unnecessary because we don't have cases where -ry is _not_ at the end of the word, but it's safe to assume.
+
+Next, we are looking at "p", "t", "k".
+
+<table>
+  <thead>
+    <tr>
+      <th>/h.p/, /h.t/, /h.k/</th>
+      <th>/ʔ.p/, /ʔ.t/, /ʔ.k/</th>
+      <th>/b/, /d/, /g/</th>
+      <th>/p/, /t/, /k/</th>
+    </tr>
+  </thead>
+  <tbody>
+    {/* prettier-ignore */}
+    <tr>
+      <td>/ˈai**h.kʲ**u.ma/<br />/ta.ˈwei**h.pʲ**o.ɽe/<br />/ˈto.no.ˈɽoi**h.pʲ**o.ɽo/</td>
+      <td>/a.ˈsa**ʔ.p**e.ˈɾa.ɽa/<br />/kɨ.ˈna**ʔ.p**o.ˈja**ʔ.t**on/<br />/a.ˈni**ʔ.pʲ**ɨ.ˈna.ɽa/<br />/ˈa**ʔ.p**o/</td>
+      <td>/ˈoŋ.**g**ai.**gʲ**õ/<br />/a.ˈse.we.ˈnah.po.**d**a/<br />/sa.ˈ**b**e.ɾa/<br />/ˈsam.**b**u.ɽa/<br />/su.ˈ**g**u.ɽu.ˈsa.ni.ɾi/<br />/ʃi.ˈ**bʲ**a.ni.ˈjʲo.ɽo.ɽo/<br />/ˈje.na.ˈɽiŋ.**gʲ**e.**b**ɨ/<br />/ʃi.ˈ**gʲ**i.ɾiʔ.mʲa/<br />/ˈpem.**b**u.**d**u/<br />/a.ˈ**b**e.ɾem.ˈ**b**e.ɾeŋ.**g**a/</td>
+      <td>/**k**ɨ.ˈnaʔ.po.ˈjaʔ.ton/<br />/ˈ**t**ai.nʲa.ˈwe.ɾuh.**k**e/\*<br />/a.ˈse.we.ˈnah.**p**o.da/\*<br />/ˈ**p**em.bu.du/</td>
+    </tr>
+  </tbody>
+</table>
+
+\*Important: for these ones, I have to assume that the /h/ is part of the phoneme of "ù" and "à" and not the consonant, in order to fully conform to the pattern I propose.
+
+The key observation here is that the first two columns all have the consonant after a stressed syllable, with the first column after a double vowel and the second column after a single vowel. In the "/b/, /d/, /g/" column, we have: preceded by a non-stressed syllable, or preceded by a nasal consonant. Finally in the "/p/, /t/, /k/" column, we have: word-initial, or preceded by "h". The last two conditions are equally complex, so either can be the "otherwise" case.
+
+Before doing R3, there's a very important thing we haven't figured out: the stress assignment, which is very much needed to execute the plosive transformation at all. Obviously the stress is alternating (either first, third, ... or second, fourth, ... syllable), so we just need to understand whether the first or second syllable is stressed.
+
+<table>
+  <thead>
+    <tr>
+      <th>First syllable</th>
+      <th>Second syllable</th>
+    </tr>
+  </thead>
+  <tbody>
+    {/* prettier-ignore */}
+    <tr>
+      <td>/ˈaih.kʲu.ma/<br />/ˈɽa.ma/<br />/ˈoŋ.gai.gʲõ/<br />/ˈtai.nʲa.ˈwe.ɾuh.ke/<br />/ˈaʔ.po/<br />/ˈto.no.ˈɽoih.pʲo.ɽo/<br />/ˈsam.bu.ɽa/<br />/ˈje.na.ˈɽiŋ.gʲe.bɨ/<br />/ˈpem.bu.du/<br />/ˈtu.wa.ɽõ/<br />/ˈpi.ɾai/<br />/ˈmoʔ.wu.sa/<br />/ˈja.ɽã/</td>
+      <td>/a.ˈsaʔ.pe.ˈɾa.ɽa/<br />/ta.ˈweih.pʲo.ɽe/<br />/sa.ˈɽai.ʃʲa.ɽai/<br />/kɨ.ˈnaʔ.po.ˈjaʔ.ton/<br />/a.ˈniʔ.pʲɨ.ˈna.ɽa/<br />/a.ˈse.we.ˈnah.po.da/<br />/sa.ˈbe.ɾa/<br />/e.ˈɾeʔ.nɨ/<br />/su.ˈgu.ɽu.ˈsa.ni.ɾi/<br />/ʃi.ˈbʲa.ni.ˈjʲo.ɽo.ɽo/<br />/ʃi.ˈgʲi.ɾiʔ.mʲa/<br />/a.ˈbe.ɾem.ˈbe.ɾeŋ.ga/<br />/e.ˈna.ɽo/<br />/u.ˈwem.bo.ˈsaʔ.pa.ˈɽiʔ.kʲɨ/</td>
+    </tr>
+  </tbody>
+</table>
+
+The second column has a clear pattern: the first syllable is "simple": either V or CV. On the contrary the first column generally has "complex" syllables: either double vowels or coda consonants. Words with only two syllables are also here. The only exceptions are /ˈto.no.ˈɽoih.pʲo.ɽo/, /ˈje.na.ˈɽiŋ.gʲe.bɨ/, /ˈtu.wa.ɽõ/. And—looking back at R1, these are exactly the cases with an initial "y", so we know that the initial "y" is deleted in pronunciation but still counts as a (simple) syllable for stress assignment.
+
+Once we have these three rules: stress assignment, vowel assimilation for "y", and plosive transformation, we can apply them to R3.
+
+(a) makopamy → /ma.ˈgoʔ.pa.mɨ/  
+(b) aitopòma → /ˈaih.to.ˈbo.ma/  
+(c) kerikeri → /ke.ˈɽiʔ.ke.ɽi/  
+(d) parimy → /pa.ˈɽi.mɨ/  
+(e) kurijara → /ku.ˈɽi.ja.ɽa/  
+(f) ykurijarary → /ˈku.ɽi.ˈja.ɽa.ɽa/  
+(g) tykupimy → /tɨ.ˈguʔ.pi.mɨ/
+
+But there are a few important variations in the data we haven't accounted for (which you may have realized on doing the above): (1) whether to add palatalization ʲ, (2) the realization of the grave accent ò, (3) the realization of "r". The analyses would follow the exact same procedure as R1 and R2 and is therefore quite tedious and boring. The conclusions and final answers are all in the solution.

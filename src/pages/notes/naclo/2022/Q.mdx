@@ -1,7 +1,271 @@
 ---
-tags: []
+tags:
+  - Phrase translation
+  - Syntax
 ---
 
 # Relatively Speaking
 
-TODO
+{/* cSpell:ignore foki faiaoga kāmuta kitia totou sione tūmau takafaga tama mele fakatino muhu vaka holoholo ught buil */}
+
+import styles from "./F.module.css";
+
+We have a few proper names here, which can act as anchors for the translation.
+
+{/* prettier-ignore */}
+<ol>
+  <li value={7}>**Ne totou a Sione.**<br />_Sione read._</li>
+  <li value={8}>**Tā tūmau e Mele e fakatino.**<br />_Mele is always drawing the picture._</li>
+  <li value={9}>**To muhu ika a Mele.**<br />_Mele will have plenty of fish._</li>
+  <li value={13}>**Fai vaka a Sione ne holoholo e au.**<br />_Sione has canoes that I washed._</li>
+</ol>
+
+Upfront, this language is definitely not subject-initial. In 9, "Mele" comes last, so both the verb and the object come before it. In 8 and 13, there's stuff before and after the subject, so the subject is in the middle. Also note that particles like "ne", "e", and "a" are all over the place, so they are probably some case marker instead of concrete words. However the subject can be either marked by "a" or "e", so we are not too sure about the exact function of these particles yet.
+
+The next best hypothesis is that the verb/tense comes first. Let's group the sentences by verb and tense (ignoring embedded ones):
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>Perfect</th>
+      <th>Past</th>
+      <th>Present</th>
+      <th>Future</th>
+    </tr>
+  </thead>
+  {/* prettier-ignore */}
+  <tbody>
+    <tr>
+      <th>eat</th>
+      <td>1. **Kua kai noa a au.**<br />_I have only eaten._</td>
+      <td>9. **Ne kai e ika ne takafaga he tama.**<br />_The fish that the child caught ate._</td>
+      <td></td>
+      <td>6. **To kai he moa ka holoholo e au e ika.**<br />_The bird that I will wash will eat the fish._</td>
+    </tr>
+    <tr>
+      <th>there be</th>
+      <td>2. **Kua fai fakatino foki ne tā e ia.**<br />_There have also been pictures that he drew._</td>
+      <td></td>
+      <td>3. **Muhu moa tūmau.**<br />_There are always plenty of birds._</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>draw</th>
+      <td></td>
+      <td></td>
+      <td>8. **Tā tūmau e Mele e fakatino.**<br />_Mele is always drawing the picture._</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>have</th>
+      <td></td>
+      <td>4. **Ne fai faiaoga e kāmuta.**<br />_The carpenter had teachers._</td>
+      <td>12. **Muhu tama foki e faiaoga ka kitia he moa.**<br />_The teacher also has plenty of children that the bird will see._<br />13. **Fai vaka a Sione ne holoholo e au.**<br />_Sione has canoes that I washed._</td>
+      <td>11. **To muhu ika a Mele.**<br />_Mele will have plenty of fish._</td>
+    </tr>
+    <tr>
+      <th>see</th>
+      <td>5. **Kua kitia e ia a au.**<br />_He has seen me._</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>wash</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>10. **To holoholo foki he tama e vaka ne tā he kāmuta.**<br />_The child will also wash the canoe that the carpenter built._</td>
+    </tr>
+    <tr>
+      <th>read</th>
+      <td></td>
+      <td>7. **Ne totou a Sione.**<br />_Sione read._</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+Now the pattern is very clear. Looking vertically, the first word always marks the tense:
+
+- Kua = perfect
+- Ne = past
+- (nothing) = present
+- To = future
+
+Furthermore, except for "there be" and "have", the second word is consistent within each row. Although most rows only have one entry, note that "wash" appears embedded in two other sentences, and in both cases the sentence also contains "holoholo". Similarly, "kitia" also appears in 12. For "there be" and "have", the two rows share two verbs: "muhu" and "fai". Note that "muhu" is used iff the possessed object is "plenty of". Therefore:
+
+- kai = eat
+- tā = draw
+- kitia = see
+- holoholo = wash
+- totou = read
+- muhu = there be/have-plenty-of
+- fai = there be/have
+
+Once we know the tense marker, we can identify the embedded relative clause. In 2, 9, 10, and 13, we have another instance of "ne", which must be the tense marker for the embedded clause, and what follows it must be the verb. Unfortunately, no second "to" has been found in 6 or 12. Instead, "holoholo" and "kitia" in these two sentences are led by "ka", which is presumably also the tense marker.
+
+1. **<span className={styles.red}>Kua</span> <span className={styles.blue}>kai</span> noa a au.**  
+   _I <span className={styles.red}>have</span> only <span className={styles.blue}>eaten</span>._
+2. **<span className={styles.red}>Kua</span> <span className={styles.blue}>fai</span> fakatino foki <span className={styles.red}>ne</span> <span className={styles.blue}>tā</span> e ia.**  
+   _<span className={styles.red}>There have</span> also <span className={styles.blue}>been</span> pictures that he <span className={styles.blue}>dr</span><span className={styles.red}>ew</span>._
+3. **<span className={styles.blue}>Muhu</span> moa tūmau.**  
+   _<span className={styles.blue}>There are</span> always <span className={styles.blue}>plenty of</span> birds._
+4. **<span className={styles.red}>Ne</span> <span className={styles.blue}>fai</span> faiaoga e kāmuta.**  
+   _The carpenter <span className={styles.blue}>ha</span><span className={styles.red}>d</span> teachers._
+5. **<span className={styles.red}>Kua</span> <span className={styles.blue}>kitia</span> e ia a au.**  
+   _He <span className={styles.red}>has</span> <span className={styles.blue}>seen</span> me._
+6. **<span className={styles.red}>To</span> <span className={styles.blue}>kai</span> he moa <span className={styles.red}>ka</span> <span className={styles.blue}>holoholo</span> e au e ika.**  
+   _The bird that I <span className={styles.red}>will</span> <span className={styles.blue}>wash</span> <span className={styles.red}>will</span> <span className={styles.blue}>eat</span> the fish._
+7. **<span className={styles.red}>Ne</span> <span className={styles.blue}>totou</span> a Sione.**  
+   _Sione <span className={styles.blue}>rea</span><span className={styles.red}>d</span>._
+8. **<span className={styles.blue}>Tā</span> tūmau e Mele e fakatino.**  
+   _Mele <span className={styles.blue}>is</span> always <span className={styles.blue}>drawing</span> the picture._
+9. **<span className={styles.red}>Ne</span> <span className={styles.blue}>kai</span> e ika <span className={styles.red}>ne</span> <span className={styles.blue}>takafaga</span> he tama.**  
+   _The fish that the child <span className={styles.blue}>ca</span><span className={styles.red}>ught</span> <span className={styles.blue}>at</span><span className={styles.red}>e</span>._
+10. **<span className={styles.red}>To</span> <span className={styles.blue}>holoholo</span> foki he tama e vaka <span className={styles.red}>ne</span> <span className={styles.blue}>tā</span> he kāmuta.**  
+    _The child <span className={styles.red}>will</span> also <span className={styles.blue}>wash</span> the canoe that the carpenter <span className={styles.blue}>buil</span><span className={styles.red}>t</span>._
+11. **<span className={styles.red}>To</span> <span className={styles.blue}>muhu</span> ika a Mele.**  
+    _Mele <span className={styles.red}>will</span> <span className={styles.blue}>have plenty of</span> fish._
+12. **<span className={styles.blue}>Muhu</span> tama foki e faiaoga <span className={styles.red}>ka</span> <span className={styles.blue}>kitia</span> he moa.**  
+    _The teacher also <span className={styles.blue}>has plenty of</span> children that the bird <span className={styles.red}>will</span> <span className={styles.blue}>see</span>._
+13. **<span className={styles.blue}>Fai</span> vaka a Sione <span className={styles.red}>ne</span> <span className={styles.blue}>holoholo</span> e au.**  
+    _Sione <span className={styles.blue}>has</span> canoes that I <span className={styles.blue}>wash</span><span className={styles.red}>ed</span>._
+
+Since there aren't many words left, just comparing sentences that share the same noun will reveal the corresponding word. The revelation here is that case and number are not marked on the noun; for example, "picture" and "pictures", "bird" and "birds", "I" and "me", each share the same word.
+
+- au = I
+- ia = he
+- fakatino = picture
+- moa = bird
+- faiaoga = teacher
+- kāmuta = carpenter
+- ika = fish
+- tama = child
+- vaka = canoe
+
+Eliminating these, the adverbs are also apparent:
+
+- noa = only
+- foki = also
+- tūmau = always
+
+But now here's the real question: what's the word order and what are "he", "e", and "a"? Let's gloss the sentences.
+
+1. **Kua kai noa a au.**  
+   PERF eat only _a_ I.  
+   T-V-Adv-Subj  
+   _I have only eaten._
+2. **Kua fai fakatino foki ne tā e ia.**  
+   PERF have picture also [PAST draw _e_ he].  
+   T-have-Obj-Adv-[T-V-Subj(-Obj)]  
+   _There have also been pictures that he drew._
+3. **Muhu moa tūmau.**  
+   (PRES) have-plenty-of bird always.  
+   T-have-Obj-Adv  
+   _There are always plenty of birds._
+4. **Ne fai faiaoga e kāmuta.**  
+   PAST have teacher _e_ carpenter.  
+   T-have-Obj-Subj  
+   _The carpenter had teachers._
+5. **Kua kitia e ia a au.**  
+   PERF see _e_ he _a_ I.  
+   T-V-Subj-Obj  
+   _He has seen me._
+6. **To kai he moa ka holoholo e au e ika.**  
+   FUT eat _he_ bird [FUT wash _e_ I] _e_ fish.  
+   T-V-Subj-[T-V-Subj(-Obj)]-Obj  
+   _The bird that I will wash will eat the fish._
+7. **Ne totou a Sione.**  
+   PAST read _a_ Sione.  
+   T-V-Subj  
+   _Sione read._
+8. **Tā tūmau e Mele e fakatino.**  
+   (PRES) draw always _e_ Mele _e_ picture.  
+   T-V-Adv-Subj-Obj  
+   _Mele is always drawing the picture._
+9. **Ne kai e ika ne takafaga he tama.**  
+   PAST eat _e_ fish [PAST catch _he_ child].  
+   T-V-Subj-[T-V-Subj(-Obj)]  
+   _The fish that the child caught ate._
+10. **To holoholo foki he tama e vaka ne tā he kāmuta.**  
+    FUT wash also _he_ child _e_ canoe [PAST draw _he_ carpenter].  
+    T-V-Adv-Subj-Obj-[T-V-Subj(-Obj)]  
+    _The child will also wash the canoe that the carpenter built._
+11. **To muhu ika a Mele.**  
+    FUT have-plenty-of fish _a_ Mele.  
+    T-have-Obj-Subj  
+    _Mele will have plenty of fish._
+12. **Muhu tama foki e faiaoga ka kitia he moa.**  
+    (PRES) have-plenty-of child also _e_ teacher [FUT see _he_ bird].  
+    T-have-Obj-Adv-Subj-[T-V-Subj(-Obj)]  
+    _The teacher also has plenty of children that the bird will see._
+13. **Fai vaka a Sione ne holoholo e au.**  
+    (PRES) have canoe _a_ Sione [PAST wash _e_ I].  
+    T-have-Obj-Subj-[T-V-Subj(-Obj)]  
+    _Sione has canoes that I washed._
+
+I have successfully identified two word orders:
+
+1. T-V-Adv-Subj-Obj where the verb is not "have". Relative clauses are appended immediately after the noun they modify.
+2. T-have-Obj-Adv-Subj where the verb is "have". The subject is absent if the sentence is "there be". Relative clauses are appended at the end of the sentence even when modifying the object. This creates an ambiguity because now subject and object relative clauses are in the same place; indeed, it's asked in Q1(c).
+
+And here are the case marker particles. I'm separating them into three groups: transitive, intransitive, and existential (have).
+
+| Verb           | Subject     | Object       |
+| -------------- | ----------- | ------------ |
+| build          | _he_ kāmuta | (_e_ vaka)   |
+| catch          | _he_ tama   | (_e_ ika)    |
+| draw           | _e_ ia      | (fakatino)   |
+| draw           | _e_ Mele    | _e_ fakatino |
+| eat            | _he_ moa    | _e_ ika      |
+| see            | _e_ ia      | _a_ au       |
+| see            | _he_ moa    | (tama)       |
+| wash           | _e_ au      | (_e_ ika)    |
+| wash           | _e_ au      | (vaka)       |
+| wash           | _he_ tama   | _e_ vaka     |
+| eat            | _a_ au      | /            |
+| eat            | _e_ ika     | /            |
+| read           | _a_ Sione   | /            |
+| have           | _a_ Sione   | vaka         |
+| have           | _e_ kāmuta  | faiaoga      |
+| have           | /           | fakatino     |
+| have-plenty-of | _a_ Mele    | ika          |
+| have-plenty-of | _e_ faiaoga | tama         |
+| have-plenty-of | /           | moa          |
+
+- For transitive verbs:
+  - The subject either takes _he_ or _e_. _e_ is for pronouns and names, while _he_ is for common nouns.
+  - The object either takes _e_ or _a_. _a_ is for pronouns and names, while _e_ is for common nouns.
+- For intransitive verbs:
+  - Subject follows same rule as transitive objects: _a_ for pronouns and names, _e_ for common nouns.
+- For existential verb "have":
+  - Subject follows same rule as transitive objects: _a_ for pronouns and names, _e_ for common nouns.
+  - Object is always unmarked.
+
+Now we shall translate.
+
+(a) **Fai moa noa.**  
+(PRES) have bird only  
+_There is only a bird._  
+(b) **Kua holoholo foki he faiaoga ne takafaga e au a ia.**  
+PERF wash also _he_ teacher [PAST catch _e_ I] _a_ he  
+_The teacher that I caught has also washed him._  
+(c) **To muhu vaka e tama ka holoholo he moa.**  
+FUT have-plenty-of canoe _e_ child [FUT wash _he_ bird]  
+_The child will have plenty of canoes that the bird will wash._ OR _The child that the bird will wash will have plenty of canoes._
+
+(a) _He will also read._  
+FUT read also _a_ he  
+**To totou foki a ia.**  
+(b) _Sione has only had fish that the teacher will eat._  
+PERF have fish only _a_ Sione [FUT eat _he_ teacher]  
+**Kua fai ika noa a Sione ka kai he faiaoga.**  
+(c) _The teacher that Mele saw built the canoe._  
+PAST build _he_ teacher [PAST see _e_ Mele] _e_ canoe  
+**Ne tā he faiaoga ne kitia e Mele e vaka.**  
+(d) _There have always been plenty of carpenters._  
+PERF have-plenty-of carpenter always  
+**Kua muhu kāmuta tūmau.**

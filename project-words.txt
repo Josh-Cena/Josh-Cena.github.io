@@ -11,6 +11,7 @@ antinodes
 argmin
 aria-roledescription
 articulatorily
+Arun
 Ausbau
 Avoiuli
 backness
@@ -79,6 +80,7 @@ endl
 endonym
 endonyms
 envir
+epenthesized
 eshost
 eslintcache
 estree
@@ -206,6 +208,7 @@ println
 prismjs
 probs
 prosgegrammeni
+purée
 pyplot
 queenside
 quickselect

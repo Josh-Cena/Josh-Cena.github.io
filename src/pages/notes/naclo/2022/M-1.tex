@@ -1,0 +1,21 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{fontspec}
+\setmainfont{Charis SIL}
+\usetikzlibrary{automata, positioning}
+\begin{document} 
+\begin{tikzpicture}[node distance=1.5cm, auto, every loop/.style={-latex}, every initial by arrow/.style = {-latex}]
+\node (q0) [state, initial, initial text = {}] {start};
+\node (q1) [state, right = of q0] {A};
+\node (q2) [state, right = of q1] {AB};
+\path [-latex]
+     (q0) edge[bend left] node {A:$\varnothing$} (q1)
+     (q1) edge[bend left] node {B:$\varnothing$} (q2)
+     (q2) edge[bend left] node {A:00} (q1)
+     (q2) edge[bend left=60] node {B:100} (q0)
+     (q0) edge[loop above] node {B:0}()
+     (q1) edge[loop above] node {A:0}();
+\end{tikzpicture}
+ 
+\end{document}

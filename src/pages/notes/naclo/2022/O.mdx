@@ -1,7 +1,201 @@
 ---
-tags: []
+tags:
+  - Syntax
 ---
 
 # Seeing the Future
 
-TODO
+{/* cSpell:ignore kasi’ ahaɬ wehnayi’ */}
+
+(The official solution already has a very detailed explanation, so this is just a paraphrase.)
+
+Obviously the common part is "wen". Take it out and analyze the rest.
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>I</th>
+      <th>we</th>
+      <th>you (sg.)</th>
+      <th>you (pl.)</th>
+      <th>he/she/they</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>me</th>
+      <td></td>
+      <td></td>
+      <td>si’-</td>
+      <td>si’-eɬ</td>
+      <td>si’-</td>
+    </tr>
+    <tr>
+      <th>us</th>
+      <td></td>
+      <td></td>
+      <td>kasi’-</td>
+      <td>kasi’-eɬ</td>
+      <td>kasi’-</td>
+    </tr>
+    <tr>
+      <th>you (sg.)</th>
+      <td>a’-</td>
+      <td>a’-a</td>
+      <td></td>
+      <td></td>
+      <td>in’-</td>
+    </tr>
+    <tr>
+      <th>you (pl.)</th>
+      <td>a’-eɬ</td>
+      <td>a’-ahaɬ</td>
+      <td></td>
+      <td></td>
+      <td>in’-eɬ</td>
+    </tr>
+    <tr>
+      <th>him/her/them</th>
+      <td>a’-</td>
+      <td>a’-a</td>
+      <td>hi’-</td>
+      <td>hi’-eɬ</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+Basically we have the pre-/suffix pairing for every combination of pronouns (barring those whose object and subject have the same person). Therefore for "you (pl.) are going to see him/her/them", it's natural to assume the pre-/suffix pairing is "hi’-eɬ". But in fact, here's the actual combination table for future, based on what the consultant said:
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>I</th>
+      <th>we</th>
+      <th>you (sg.)</th>
+      <th>you (pl.)</th>
+      <th>he/she/they</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>me</th>
+      <td></td>
+      <td></td>
+      <td>si’-</td>
+      <td></td>
+      <td>si’-</td>
+    </tr>
+    <tr>
+      <th>us</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>you (sg.)</th>
+      <td>si’-</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>you (pl.)</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>in’-weɬ</td>
+    </tr>
+    <tr>
+      <th>him/her/them</th>
+      <td>si’-</td>
+      <td></td>
+      <td></td>
+      <td>in’-weɬ</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+We shall assume that the _rule_ for selecting pre-/suffixes hasn't changed, just the _set_ of pre-/suffixes has. That is, if we can figure out what each prefix and suffix means in the present tense, and what each affix corresponds to in future tense, we can fill in the remaining data.
+
+So here comes our analysis of the present tense:
+
+- a’- appears iff the subject is 1sg.
+- a’-a appears iff the subject is 1pl.
+- si’- appears iff the object is 1sg.
+- kasi’- appears iff the object is 1pl.
+- in’- appears iff the subject is third person and object is second person.
+- hi’- appears iff the subject is second person and object is third person.
+- -eɬ appears iff the subject or object is 2pl. -a + -eɬ = -ahaɬ.
+
+In future:
+
+- si’- replaces a’-
+- -weɬ replaces -eɬ
+- in’- replaces hi’-
+
+The sample solution wants us to believe that this is enough evidence that in the future tense, we only take the top-right half of the table and mirror it to be bottom-left (notice the symmetry in the table above?). I don't totally buy this though.
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <th>I</th>
+      <th>we</th>
+      <th>you (sg.)</th>
+      <th>you (pl.)</th>
+      <th>he/she/they</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>me</th>
+      <td></td>
+      <td></td>
+      <td>si’-</td>
+      <td>si’-weɬ</td>
+      <td>si’-</td>
+    </tr>
+    <tr>
+      <th>us</th>
+      <td></td>
+      <td></td>
+      <td>kasi’-</td>
+      <td>kasi’-weɬ</td>
+      <td>kasi’-</td>
+    </tr>
+    <tr>
+      <th>you (sg.)</th>
+      <td>**si’-**</td>
+      <td>**kasi’-**</td>
+      <td></td>
+      <td></td>
+      <td>in’-</td>
+    </tr>
+    <tr>
+      <th>you (pl.)</th>
+      <td>**si’-weɬ**</td>
+      <td>**kasi’-weɬ**</td>
+      <td></td>
+      <td></td>
+      <td>in’-weɬ</td>
+    </tr>
+    <tr>
+      <th>him/her/them</th>
+      <td>**si’-**</td>
+      <td>**kasi’-**</td>
+      <td>**in’-**</td>
+      <td>**in’-weɬ**</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+Anyway, if this is true then the problem is trivial. It only remains to read off the tables for each sentence and combine it with the root, wehnayi’.
