@@ -9,21 +9,20 @@ const formatter = new Intl.DateTimeFormat("en-US", {
 export interface FrontMatter {
   title: string;
   description: string;
-  date: string;
 }
 
 export default function PostData({
-  frontMatter,
+  date,
 }: {
   readonly frontMatter: FrontMatter;
+  readonly date: string;
 }): ReactNode {
-  const date = new Date(frontMatter.date);
-  const timeStamp = date.valueOf() + date.getTimezoneOffset() * 60 * 1000;
+  const dateParsed = new Date(date);
+  const timeStamp =
+    dateParsed.valueOf() + dateParsed.getTimezoneOffset() * 60 * 1000;
   return (
     <div>
-      <time dateTime={frontMatter.date}>
-        {formatter.format(new Date(timeStamp))}
-      </time>
+      <time dateTime={date}>{formatter.format(new Date(timeStamp))}</time>
     </div>
   );
 }

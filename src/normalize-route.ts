@@ -22,3 +22,7 @@ export function normalizeRoute(path: string): string {
   if (name === "404") return "/404";
   return `/${name}/`;
 }
+
+export function extractDate(path: string): string {
+  return /\d{4}-\d{2}-\d{2}/u.exec(path)![0];
+}

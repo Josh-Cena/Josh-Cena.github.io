@@ -1,5 +1,6 @@
 import type { Plugin } from "unified";
 import type { Root } from "hast";
+import { extractDate } from "../../src/normalize-route.ts";
 import { createImportDeclaration, createJSXElement } from "./utils.ts";
 
 const rehypeBlog: Plugin = () => (ast, vFile) => {
@@ -14,6 +15,7 @@ const rehypeBlog: Plugin = () => (ast, vFile) => {
     createImportDeclaration("PostData", "@/components/PostData"),
     createJSXElement("PostData", [
       { name: "frontMatter", value: "frontMatter" },
+      { name: "date", value: `"${extractDate(vFile.basename!)}"` },
     ]),
   );
 };
