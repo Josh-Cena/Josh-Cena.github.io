@@ -109,7 +109,11 @@ export default function Command(): ReactNode {
   }, [inputHasFocus, mouseInBox]);
   return (
     <div
-      className={clsx(styles.inputBox, expanded && styles.inputBoxExpanded)}
+      className={clsx(
+        styles.inputBox,
+        expanded && styles.inputBoxExpanded,
+        "no-print",
+      )}
       // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
       onMouseEnter={() => setMouseInBox(true)}
       // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events

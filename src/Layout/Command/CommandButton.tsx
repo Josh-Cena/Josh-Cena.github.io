@@ -8,7 +8,7 @@ export default function CommandButton({
   readonly onClick?: () => void;
 }): ReactNode {
   return (
-    <div className={styles.inputContent}>
+    <div className={clsx(styles.inputContent, "no-print")}>
       <button
         type="button"
         className={clsx(styles.cleanButton, styles.inputRow)}

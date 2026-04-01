@@ -261,3 +261,9 @@ abbr {
 [data-color-mode="dark"] .dark-invert {
   filter: invert(1);
 }
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}

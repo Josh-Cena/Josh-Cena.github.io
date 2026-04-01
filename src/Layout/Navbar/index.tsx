@@ -5,6 +5,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import clsx from "clsx";
 import Link from "@/components/Link";
 import { useColorMode } from "@/context/ColorMode";
 import LogoLight from "assets/logo.svg?react";
@@ -84,7 +85,7 @@ export default function Navbar(): ReactNode {
   const { colorMode } = useColorMode();
   const Logo = colorMode === "light" ? LogoLight : LogoDark;
   return (
-    <nav className={styles.navbar}>
+    <nav className={clsx(styles.navbar, "no-print")}>
       <div className={styles.content}>
         <Link className={styles.logo} href="/" aria-label="Home">
           <Logo />
