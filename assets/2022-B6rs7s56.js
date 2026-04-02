@@ -1,0 +1,4 @@
+import{t as e}from"./jsx-runtime-BnxRlLMJ.js";import{n as t}from"./lib-8Y9jQ4sF.js";import"./Link-p8Ht0V-s.js";import"./chroma-js-rK3xRofm.js";import{a as n}from"./_components-Q6m5hMHs.js";var r=e(),i={description:`Detailed solutions and walkthroughs of each NACLO 2022 problem.`,title:`NACLO 2022 writeups`};function a(e){let i={a:`a`,h1:`h1`,p:`p`,...t(),...e.components};return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsx)(i.h1,{children:`NACLO 2022 writeups`}),`
+`,`
+`,(0,r.jsx)(n,{year:2022}),`
+`,(0,r.jsxs)(i.p,{children:[`Looking for the 2022 Yale Linguistics NACLO coaching session problems? `,(0,r.jsx)(i.a,{href:`/notes/yale/naclo/2022/`,children:`They've moved`}),`.`]})]})}function o(e={}){let{wrapper:n}={...t(),...e.components};return n?(0,r.jsx)(n,{...e,children:(0,r.jsx)(a,{...e})}):a(e)}export{o as default,i as frontMatter};
