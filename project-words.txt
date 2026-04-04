@@ -218,6 +218,7 @@ rbind
 rebrands
 regmatches
 rehype
+remark-supersub
 renv
 retroflexes
 rocq

@@ -75,6 +75,7 @@
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "remark-mdx-frontmatter": "^5.2.0",
+    "remark-supersub": "^1.0.0",
     "sitemap": "^9.0.1",
     "unist-util-visit": "^5.1.0",
     "use-local-storage-state": "^19.5.0",

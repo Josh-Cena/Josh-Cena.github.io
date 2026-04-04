@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMDXFrontmatter from "remark-mdx-frontmatter";
+import remarkSuperSub from "remark-supersub";
 import rehypeKatex from "rehype-katex";
 import { visualizer } from "rollup-plugin-visualizer";
 import mermaidPlugin from "./server/vite-plugin-mermaid.ts";
@@ -27,9 +28,10 @@ export default defineConfig({
       enforce: "pre",
       ...mdx({
         remarkPlugins: [
-          remarkGfm,
+          [remarkGfm, { singleTilde: false }],
           remarkMath,
           remarkFrontmatter,
+          remarkSuperSub,
           remarkAOC,
           remarkCanvas,
           remarkExtractTitle,
