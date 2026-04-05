@@ -573,10 +573,10 @@ export default function StarRailDamage(): ReactNode {
         <li>
           角色基础面板/技能组：
           <a
-            href="https://homdgcat.wiki/sr/char"
+            href="https://hsr.nanoka.cc/"
             rel="noopener noreferrer"
             target="_blank">
-            玉衡杯
+            nanoka.cc
           </a>
         </li>
         <li>敌人抗性有弱点为 0，无弱点默认 20%，额外抗性另标</li>
