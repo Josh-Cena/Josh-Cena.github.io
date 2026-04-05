@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-BnxRlLMJ.js";import{t}from"./SSRContext-CQqJatvg.js";var n=e();function r(){let e=t();return e&&(e.status=404),(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(`h1`,{children:`404`}),(0,n.jsx)(`p`,{children:`Page not found.`})]})}r.meta={title:`Not found`,description:`Page not found`};export{r as default};

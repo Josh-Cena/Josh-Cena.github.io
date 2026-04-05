@@ -1,0 +1,11 @@
+import{t as e}from"./jsx-runtime-BnxRlLMJ.js";import{n as t}from"./lib-BHnTV9cU.js";import"./Link-CEJsqf-b.js";import{n,t as r}from"./_components-CjKNIGmQ.js";var i=e();function a(e){let a={code:`code`,h1:`h1`,h2:`h2`,li:`li`,ol:`ol`,p:`p`,span:`span`,...t(),...e.components};return(0,i.jsxs)(i.Fragment,{children:[(0,i.jsxs)(a.h1,{children:[`Advent of Code 2019 - Day 6`,(0,i.jsx)(a.span,{className:`subtitle`,children:`Universal Orbit Map`})]}),(0,i.jsx)(n,{frontMatter:e}),`
+`,(0,i.jsx)(a.p,{children:`The problem forms a tree because of the following observations:`}),`
+`,(0,i.jsxs)(a.ol,{children:[`
+`,(0,i.jsx)(a.li,{children:`Each object orbits exactly one other object (one parent).`}),`
+`,(0,i.jsxs)(a.li,{children:[`There is a single object `,(0,i.jsx)(a.code,{children:`COM`}),` that does not orbit anything (unique root).`]}),`
+`,(0,i.jsx)(a.li,{children:`An object cannot indirectly orbit itself (no cycles). This is not explicitly stated, but I assumed this based on how orbits should work.`}),`
+`]}),`
+`,(0,i.jsx)(a.h2,{children:`Part 1`}),`
+`,(0,i.jsx)(a.p,{children:`"Direct orbits" are parent-child relationships; "indirect orbits" are ancestor-descendant relationships. Thus, for each node in the tree, we just count the number of ancestors. This is the depth of the node. Depths can be computed with either BFS or DFS; I prefer BFS.`}),`
+`,(0,i.jsx)(a.h2,{children:`Part 2`}),`
+`,(0,i.jsxs)(a.p,{children:[`We want to find the shortest path from `,(0,i.jsx)(a.code,{children:`YOU`}),` to `,(0,i.jsx)(a.code,{children:`SAN`}),`. Since this is a tree, there is a unique path between any two nodes. Again this is a BFS, starting at `,(0,i.jsx)(a.code,{children:`YOU`}),`, searching for `,(0,i.jsx)(a.code,{children:`SAN`}),`. The result is `,(0,i.jsx)(a.code,{children:`depth - 2`}),`, since we want to exclude the starting and ending nodes.`]}),(0,i.jsx)(r,{frontMatter:e})]})}function o(e={}){let{wrapper:n}={...t(),...e.components};return n?(0,i.jsx)(n,{...e,children:(0,i.jsx)(a,{...e})}):a(e)}o.meta={tags:[`BFS/DFS`],title:`Advent of Code 2019 - Day 6: Universal Orbit Map`,description:`Advent of Code 2019 - Day 6: Universal Orbit Map, a problem that involves BFS/DFS. Solution written in C++, with detailed walkthrough and proof.`,year:2019,day:6};export{o as default};

@@ -1,0 +1,1 @@
+import{i as e,n as t,t as n}from"./jsx-runtime-BnxRlLMJ.js";var r=e(t(),1);n();var i=r.createContext(null);function a(){return(0,r.useContext)(i)}export{a as t};
