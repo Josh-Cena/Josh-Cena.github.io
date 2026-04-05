@@ -21,7 +21,7 @@ const links = [
 
 export default function Footer(): ReactNode {
   return (
-    <footer className={styles.footer}>
+    <footer lang="en-US" className={styles.footer}>
       <div>
         Copyright © {new Date().getFullYear()} Sida Chen. Licensed under MIT.
       </div>

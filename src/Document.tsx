@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useLanguageContext } from "./context/Language";
 
 export type AssetMap = {
   bootstrapModules: string[];
@@ -12,8 +13,9 @@ export default function Document({
   readonly assets: AssetMap;
   readonly children: ReactNode;
 }): ReactNode {
+  const { lang } = useLanguageContext();
   return (
-    <html lang="en-US" dir="ltr" data-color-mode="light">
+    <html lang={lang} dir="ltr" data-color-mode="light">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />

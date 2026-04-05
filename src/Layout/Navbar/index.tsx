@@ -85,7 +85,7 @@ export default function Navbar(): ReactNode {
   const { colorMode } = useColorMode();
   const Logo = colorMode === "light" ? LogoLight : LogoDark;
   return (
-    <nav className={clsx(styles.navbar, "no-print")}>
+    <nav lang="en-US" className={clsx(styles.navbar, "no-print")}>
       <div className={styles.content}>
         <Link className={styles.logo} href="/" aria-label="Home">
           <Logo />

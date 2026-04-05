@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { useHeadings, type TOCHeading } from "@/components/Heading";
+import { useLanguageContext } from "@/context/Language";
 import styles from "./index.module.css";
 
 type TOCTree = {
@@ -44,6 +45,7 @@ function TOCItem({ node }: { readonly node: TOCTree }): ReactNode {
 function TOCContent(): ReactNode {
   const { headings } = useHeadings();
   const tree = listToTree(headings);
+  const { lang } = useLanguageContext();
   if (tree.length === 0) {
     return (
       <nav className={styles.toc} aria-label="Table of contents">
@@ -55,7 +57,7 @@ function TOCContent(): ReactNode {
   return (
     <nav className={styles.toc} aria-label="Table of contents">
       <strong>Contents</strong>
-      <ul>
+      <ul lang={lang}>
         {tree.map((node) => (
           <TOCItem key={node.heading.id} node={node} />
         ))}
@@ -67,7 +69,7 @@ function TOCContent(): ReactNode {
 export default function TOC(): ReactNode {
   const [visible, setVisible] = useState(false);
   return (
-    <div className={styles.container}>
+    <div lang="en-US" className={styles.container}>
       <button
         onClick={() => setVisible(!visible)}
         className={styles.tocButton}

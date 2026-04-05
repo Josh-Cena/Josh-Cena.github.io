@@ -766,4 +766,5 @@ export default function PullsPage(): ReactNode {
 PullsPage.meta = {
   title: "崩坏：星穹铁道抽卡记录",
   description: "我在崩坏：星穹铁道的抽卡记录，五星数统计，不歪率和平均抽数统计",
+  lang: "zh-Hans-CN",
 };

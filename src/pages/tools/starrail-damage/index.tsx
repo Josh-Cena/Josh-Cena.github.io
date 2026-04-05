@@ -563,7 +563,7 @@ export default function StarRailDamage(): ReactNode {
     };
 
   return (
-    <div lang="zh-Hans">
+    <div>
       <h1>星铁伤害计算器</h1>
       <p>一些参考：</p>
       <ul>
@@ -1076,4 +1076,5 @@ StarRailDamage.meta = {
   title: "Star Rail damage calculator",
   description:
     "Estimate the damage with any given team & buffs in Honkai: Star Rail",
+  lang: "zh-Hans-CN",
 };

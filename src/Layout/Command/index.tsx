@@ -109,6 +109,7 @@ export default function Command(): ReactNode {
   }, [inputHasFocus, mouseInBox]);
   return (
     <div
+      lang="en-US"
       className={clsx(
         styles.inputBox,
         expanded && styles.inputBoxExpanded,

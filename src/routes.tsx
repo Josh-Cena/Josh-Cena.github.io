@@ -1,5 +1,8 @@
 import React from "react";
 import { normalizeRoute } from "./normalize-route";
+import { useLanguageContext } from "./context/Language";
+import { useSSRContext } from "./context/SSRContext";
+import { useIsomorphicLayoutEffect } from "./utils";
 
 // Auto generates routes from files under ./pages
 // https://vite.dev/guide/features.html#glob-import
@@ -8,7 +11,7 @@ const pages = import.meta.glob<
   string,
   {
     default: React.ComponentType<{ [key: string]: unknown }> & {
-      meta?: { title: string; description: string };
+      meta?: { title: string; description: string; lang?: string };
     };
   }
 >(["./pages/**/[!_]*.{tsx,mdx}", "!./pages/**/_*/**/*.{tsx,mdx}"]);
@@ -23,21 +26,34 @@ export const routes = Object.entries(pages)
         const metadata = Comp.meta;
         if (!metadata)
           throw new Error(`Page ${path} must export meta information`);
+        const { lang: metaLang = "en-US" } = metadata;
         return {
-          default: () => (
-            <>
-              <title>
-                {metadata.title
-                  ? `${metadata.title} | Joshua Chen`
-                  : "Joshua Chen"}
-              </title>
-              <meta name="description" content={metadata.description} />
-              <link rel="canonical" href={`https://joshcena.com${canonical}`} />
-              {/* Re-inject front matter so MDX code can access
+          // eslint-disable-next-line func-name-matching
+          default: function RouteComp() {
+            const ssrContext = useSSRContext();
+            const { setLang } = useLanguageContext();
+            if (ssrContext) ssrContext.lang = metaLang;
+            useIsomorphicLayoutEffect(() => {
+              setLang(metaLang);
+            }, [metaLang, setLang]);
+            return (
+              <>
+                <title>
+                  {metadata.title
+                    ? `${metadata.title} | Joshua Chen`
+                    : "Joshua Chen"}
+                </title>
+                <meta name="description" content={metadata.description} />
+                <link
+                  rel="canonical"
+                  href={`https://joshcena.com${canonical}`}
+                />
+                {/* Re-inject front matter so MDX code can access
               (without it being exported) */}
-              <Comp {...metadata} />
-            </>
-          ),
+                <Comp {...metadata} />
+              </>
+            );
+          },
         };
       }),
     };

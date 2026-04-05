@@ -3,6 +3,7 @@ import { prerender } from "react-dom/static";
 import { StaticRouter } from "react-router";
 import App from "./App";
 import Document, { type AssetMap } from "./Document";
+import { LanguageContextProvider } from "./context/Language";
 import { SSRContextProvider, type SSRContextValue } from "./context/SSRContext";
 
 async function readableStreamToString(stream: ReadableStream<Uint8Array>) {
@@ -27,13 +28,15 @@ export async function render(
 ): Promise<string> {
   const app = (
     <React.StrictMode>
-      <Document assets={assets}>
+      <LanguageContextProvider>
         <SSRContextProvider context={context}>
-          <StaticRouter location={url}>
-            <App />
-          </StaticRouter>
+          <Document assets={assets}>
+            <StaticRouter location={url}>
+              <App />
+            </StaticRouter>
+          </Document>
         </SSRContextProvider>
-      </Document>
+      </LanguageContextProvider>
     </React.StrictMode>
   );
 
@@ -42,5 +45,9 @@ export async function render(
     bootstrapScriptContent: `window.__ASSET_MAP__ = ${JSON.stringify(assets)};`,
   });
 
-  return await readableStreamToString(prelude);
+  const html = await readableStreamToString(prelude);
+  return html.replaceAll(
+    /%ssr-lang%/gu,
+    (context.lang as string | undefined) ?? "en-US",
+  );
 }
