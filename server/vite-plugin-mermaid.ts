@@ -51,19 +51,25 @@ export default function mermaidPlugin(): Plugin {
       this.addWatchFile(id);
       const source = await FS.readFile(id, "utf8");
       const svgId = `mermaid-${Path.basename(id, ".mmd")}`;
-      const [lightSVG, darkSVG] = await Promise.all([
-        runMmdc(source, {
-          svgId,
-          mermaidConfig: { theme: "default" },
-          backgroundColor: "transparent",
-        }),
-        runMmdc(source, {
-          svgId,
-          mermaidConfig: { theme: "dark" },
-          backgroundColor: "transparent",
-        }),
-      ]);
-      return diagramCode({ id, lightSVG, darkSVG });
+      try {
+        const [lightSVG, darkSVG] = await Promise.all([
+          runMmdc(source, {
+            svgId,
+            mermaidConfig: { theme: "default" },
+            backgroundColor: "transparent",
+          }),
+          runMmdc(source, {
+            svgId,
+            mermaidConfig: { theme: "dark" },
+            backgroundColor: "transparent",
+          }),
+        ]);
+        return diagramCode({ id, lightSVG, darkSVG });
+      } catch (err) {
+        throw new Error(`Failed to render Mermaid diagram:\n\n${source}`, {
+          cause: err,
+        });
+      }
     },
 
     handleHotUpdate(ctx) {

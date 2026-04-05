@@ -19,7 +19,7 @@ function mdxMetaPlugin({
     .use(remarkPlugins);
 
   return {
-    name: "mdx-meta",
+    name: "vite-plugin-mdx-meta",
     enforce: "pre",
 
     resolveId(source, importer) {
