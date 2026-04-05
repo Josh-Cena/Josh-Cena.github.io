@@ -432,7 +432,7 @@ export default function Keyboard(): ReactNode {
   );
 }
 
-export const meta = {
+Keyboard.meta = {
   title: "Keyboard visualizer",
   description: "A tool that visualizes your keyboard layout",
 };

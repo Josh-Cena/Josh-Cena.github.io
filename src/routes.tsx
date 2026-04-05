@@ -6,7 +6,11 @@ import { normalizeRoute } from "./normalize-route";
 const pages = import.meta.glob<
   boolean,
   string,
-  { default: React.ComponentType; [key: string]: unknown }
+  {
+    default: React.ComponentType<{ [key: string]: unknown }> & {
+      meta?: { title: string; description: string };
+    };
+  }
 >(["./pages/**/[!_]*.{tsx,mdx}", "!./pages/**/_*/**/*.{tsx,mdx}"]);
 
 export const routes = Object.entries(pages)
@@ -15,19 +19,10 @@ export const routes = Object.entries(pages)
     return {
       path: canonical === "/404" ? "*" : canonical,
       RouteComp: React.lazy(async () => {
-        const { default: Comp, ...rest } = await module();
-        const metadata = (
-          path.endsWith(".mdx") ? rest.frontMatter : rest.meta
-        ) as { title: string; description: string } | undefined;
-        if (!metadata) {
-          return {
-            default: () => (
-              <h1>
-                You must provide the <code>meta</code> export
-              </h1>
-            ),
-          };
-        }
+        const { default: Comp } = await module();
+        const metadata = Comp.meta;
+        if (!metadata)
+          throw new Error(`Page ${path} must export meta information`);
         return {
           default: () => (
             <>
@@ -38,7 +33,9 @@ export const routes = Object.entries(pages)
               </title>
               <meta name="description" content={metadata.description} />
               <link rel="canonical" href={`https://joshcena.com${canonical}`} />
-              <Comp {...rest} />
+              {/* Re-inject front matter so MDX code can access
+              (without it being exported) */}
+              <Comp {...metadata} />
             </>
           ),
         };

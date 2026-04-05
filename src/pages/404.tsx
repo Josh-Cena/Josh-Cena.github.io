@@ -12,7 +12,7 @@ export default function NotFound(): ReactNode {
   );
 }
 
-export const meta = {
+NotFound.meta = {
   title: "Not found",
   description: "Page not found",
 };

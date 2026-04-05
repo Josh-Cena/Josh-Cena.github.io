@@ -17,12 +17,12 @@ const rehypeNACLO: Plugin = () => (ast, vFile) => {
       "../_components",
     ),
     createJSXElement("ProblemHeader", [
-      { name: "frontMatter", value: "frontMatter" },
+      { name: "frontMatter", value: "props" },
     ]),
   );
   children.push(
     createJSXElement("ProblemFooter", [
-      { name: "frontMatter", value: "frontMatter" },
+      { name: "frontMatter", value: "props" },
     ]),
   );
 };

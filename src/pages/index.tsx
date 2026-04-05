@@ -28,7 +28,7 @@ export default function Home(): ReactNode {
   );
 }
 
-export const meta = {
+Home.meta = {
   title: "",
   description:
     "Programmer, linguist, data scientist, programming language enthusiast, and more. Maintainer of all sorts of open source projects. I care about languages!",

@@ -302,7 +302,7 @@ export default function ColorConverter(): ReactNode {
   );
 }
 
-export const meta = {
+ColorConverter.meta = {
   title: "Color converter",
   description:
     "Readily convert colors to different formats and adjust its components with visualizations",

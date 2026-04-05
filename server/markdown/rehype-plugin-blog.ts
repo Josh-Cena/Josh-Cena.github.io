@@ -14,7 +14,7 @@ const rehypeBlog: Plugin = () => (ast, vFile) => {
     0,
     createImportDeclaration("PostData", "@/components/PostData"),
     createJSXElement("PostData", [
-      { name: "frontMatter", value: "frontMatter" },
+      { name: "frontMatter", value: "props" },
       { name: "date", value: `"${extractDate(vFile.basename!)}"` },
     ]),
   );

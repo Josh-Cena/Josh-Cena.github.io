@@ -1,8 +1,7 @@
 import type { Plugin } from "unified";
-import type { Root, Heading, Literal, PhrasingContent } from "mdast";
+import type { Root, Heading, PhrasingContent } from "mdast";
 import { toString } from "mdast-util-to-string";
 import * as Acorn from "acorn";
-import Yaml from "yaml";
 import type { Program } from "estree";
 
 const languages: { [year: number]: string } = {
@@ -21,8 +20,13 @@ const remarkAOC: Plugin = () => (ast, vFile) => {
   const firstHeading = children.findIndex(
     (node) => node.type === "heading" && node.depth === 1,
   );
-  const frontMatter = children.find((node) => node.type === "yaml");
-  if (!frontMatter) throw new Error("AoC solution must have front matter");
+  const frontMatter = vFile.data.frontMatter as {
+    title: string;
+    description: string;
+    year: number;
+    day: number;
+    tags: string[];
+  };
   const title = children[firstHeading]!;
   const titleText = toString(title);
   const { year, day } = /notes\/aoc\/(?<year>\d{4})\/(?<day>\d{1,2})/u.exec(
@@ -31,9 +35,7 @@ const remarkAOC: Plugin = () => (ast, vFile) => {
     year: `${number}`;
     day: `${number}`;
   };
-  const { tags } = Yaml.parse((frontMatter as Literal).value) as {
-    tags: string[];
-  };
+  const { tags } = frontMatter;
   const problemCode = `Advent of Code ${year} - Day ${day}`;
   (title as Heading).children = [
     {
@@ -63,12 +65,10 @@ const remarkAOC: Plugin = () => (ast, vFile) => {
     } as unknown as PhrasingContent,
   ];
   const fullTitle = `${problemCode}: ${titleText}`;
-  frontMatter.value += `
-title: "${fullTitle}"
-description: "${problemCode}: ${titleText}, a problem that involves ${new Intl.ListFormat("en-US").format(tags)}. Solution written in ${languages[year]!}, with detailed walkthrough and proof."
-year: ${year}
-day: ${day}
-`;
+  frontMatter.title = fullTitle;
+  frontMatter.description = `${problemCode}: ${titleText}, a problem that involves ${new Intl.ListFormat("en-US").format(tags)}. Solution written in ${languages[year]!}, with detailed walkthrough and proof.`;
+  frontMatter.year = Number(year);
+  frontMatter.day = Number(day);
 };
 
 export default remarkAOC;

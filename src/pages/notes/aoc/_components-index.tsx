@@ -6,21 +6,17 @@ import styles from "./_components.module.css";
 // This has to be split out because the individual pages cannot depend on
 // this glob call, or a circular dependency occurs.
 const pages = import.meta.glob<true, string, MDFrontMatter>("./*/[0-9]*.mdx", {
+  query: "?meta",
+  import: "default",
   eager: true,
-  import: "frontMatter",
 });
 
-const data = Object.entries(pages).map(([path, frontMatter]) => {
-  const match = /\/(?<year>\d{4})\/(?<day>\d{1,2})\.mdx$/u.exec(path)!.groups!;
-  const year = Number(match.year);
-  const day = Number(match.day);
-  return {
-    year,
-    day,
-    title: frontMatter.title.split(": ")[1],
-    frontMatter,
-  };
-});
+const data = Object.values(pages).map((frontMatter) => ({
+  year: frontMatter.year,
+  day: frontMatter.day,
+  title: frontMatter.title.split(": ")[1],
+  frontMatter,
+}));
 
 export function Table(): ReactNode {
   const allTags: { [tag: string]: [number, number][] } = {};

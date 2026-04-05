@@ -216,6 +216,7 @@ raco
 randcolor
 rbind
 rebrands
+Recma
 regmatches
 rehype
 remark-supersub

@@ -1072,7 +1072,7 @@ export default function StarRailDamage(): ReactNode {
   );
 }
 
-export const meta = {
+StarRailDamage.meta = {
   title: "Star Rail damage calculator",
   description:
     "Estimate the damage with any given team & buffs in Honkai: Star Rail",

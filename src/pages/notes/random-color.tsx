@@ -110,7 +110,7 @@ const scale = canvasWidth / pictureWidth;
 
 export default function RandomColor(): ReactNode {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number | null>(null);
   useEffect(() => {
     const ctx = canvasRef.current!.getContext("2d")!;
     const iter = traversePixel(pictureWidth, "DFS");
@@ -134,7 +134,7 @@ export default function RandomColor(): ReactNode {
   return <canvas ref={canvasRef} width={canvasWidth} height={canvasWidth} />;
 }
 
-export const meta = {
+RandomColor.meta = {
   title: "Random Color",
   description: "Generates a map of random RGB colors",
 };
