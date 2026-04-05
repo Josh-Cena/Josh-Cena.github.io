@@ -1,4 +1,2 @@
 User-agent: *
-# The old website is archived
-Disallow: /old-website/
 Sitemap: https://joshcena.com/sitemap.xml
