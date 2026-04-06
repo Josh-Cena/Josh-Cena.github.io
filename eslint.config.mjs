@@ -1,9 +1,9 @@
 // @ts-check
 
 import jcRules from "eslint-config-jc";
-import tseslint from "typescript-eslint";
+import { defineConfig } from "eslint/config";
 
-export default tseslint.config(
+export default defineConfig(
   ...jcRules({
     node: true,
     react: true,
