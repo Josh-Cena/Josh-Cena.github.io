@@ -78,10 +78,7 @@ function* traverseRGB(width: number, type: "BFS" | "DFS") {
 
 function* traversePixel(width: number, type: "BFS" | "DFS") {
   const stk: Coord2[] = [];
-  stk.push({
-    x: randInt(0, width),
-    y: randInt(0, width),
-  });
+  stk.push({ x: randInt(0, width), y: randInt(0, width) });
   const vis = Array.from({ length: width }, () =>
     Array.from({ length: width }, () => false),
   );

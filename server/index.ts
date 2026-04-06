@@ -19,9 +19,7 @@ export async function createServer(
         usePolling: true,
         interval: 100,
       },
-      hmr: {
-        ...(hmrPort && { port: hmrPort }),
-      },
+      hmr: { ...(hmrPort && { port: hmrPort }) },
     },
     appType: "custom",
   });

@@ -213,9 +213,7 @@ export default function Keyboard(): ReactNode {
   const [index, setIndex] = useState<0 | 1 | 2 | 3>(0);
   const [keyboardMaps, setKeyboardMaps] = useLocalStorageState<{
     [mapName: string]: KeyboardMap;
-  }>("keyboardMaps", {
-    defaultValue: {},
-  });
+  }>("keyboardMaps", { defaultValue: {} });
   const [error, setError] = useState<string | null>(null);
   const [keysPressed, setKeysPressed] = useState<string[]>([]);
   const [currentMap, setCurrentMap] = useState<string | undefined>(undefined);

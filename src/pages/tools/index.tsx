@@ -17,7 +17,4 @@ export default function Tools(): ReactNode {
   );
 }
 
-Tools.meta = {
-  title: "Tools",
-  description: "Tools developed by Josh-Cena",
-};
+Tools.meta = { title: "Tools", description: "Tools developed by Josh-Cena" };

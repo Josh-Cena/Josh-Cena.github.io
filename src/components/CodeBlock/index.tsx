@@ -59,9 +59,7 @@ export default function CodeBlock({
                   if (line.length === 1 && line[0]!.content === "\n")
                     line[0]!.content = "";
 
-                  const lineProps = getLineProps({
-                    line,
-                  });
+                  const lineProps = getLineProps({ line });
                   return (
                     // eslint-disable-next-line react/no-array-index-key
                     <span key={i} {...lineProps}>

@@ -318,7 +318,4 @@ export default function About(): ReactNode {
   );
 }
 
-About.meta = {
-  title: "About",
-  description: "Who am I, what I do, etc.",
-};
+About.meta = { title: "About", description: "Who am I, what I do, etc." };

@@ -200,9 +200,7 @@ const safeEval = (x: string) => {
   return res;
 };
 
-function aggregateBuffs(allBuffs: Buffs[]): {
-  [kind in BuffKind]: number;
-} {
+function aggregateBuffs(allBuffs: Buffs[]): { [kind in BuffKind]: number } {
   const res = Object.fromEntries(buffKind.map((k) => [k, 0])) as {
     [kind in BuffKind]: number;
   };
@@ -513,13 +511,8 @@ export default function StarRailDamage(): ReactNode {
     韧性状态,
   };
 
-  const [buffDB, setBuffDB] = useState<BuffDB>(defaultBuffs);
-  const [selectedBuffs, setSelectedBuffs] = useState<{
-    遗器属性: string;
-    遗器外圈: string;
-    遗器内圈: string;
-    辅助: string[];
-  }>({
+  const [buffDB, setBuffDB] = useState(defaultBuffs);
+  const [selectedBuffs, setSelectedBuffs] = useState({
     遗器属性: Object.keys(buffDB.遗器属性)[0]!,
     遗器外圈: Object.keys(buffDB.遗器外圈)[0]!,
     遗器内圈: Object.keys(buffDB.遗器内圈)[0]!,

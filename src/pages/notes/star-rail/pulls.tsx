@@ -232,10 +232,7 @@ function StatsGraph(): ReactNode {
     animation: false,
     responsive: true,
     plugins: {
-      legend: {
-        display: true,
-        position: "top",
-      },
+      legend: { display: true, position: "top" },
       tooltip: {
         callbacks: {
           title(context) {
@@ -248,35 +245,17 @@ function StatsGraph(): ReactNode {
       },
     },
     scales: {
-      x: {
-        title: {
-          display: true,
-          text: "版本",
-        },
-        grid: {
-          display: false,
-        },
-      },
+      x: { title: { display: true, text: "版本" }, grid: { display: false } },
       y: {
-        title: {
-          display: true,
-          text: "五星数",
-        },
+        title: { display: true, text: "五星数" },
         beginAtZero: true,
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
       },
       y1: {
         position: "right" as const,
-        title: {
-          display: true,
-          text: "总抽数",
-        },
+        title: { display: true, text: "总抽数" },
         beginAtZero: true,
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
       },
     },
   };
@@ -312,10 +291,7 @@ function StatsGraph(): ReactNode {
     animation: false,
     responsive: true,
     plugins: {
-      legend: {
-        display: true,
-        position: "top",
-      },
+      legend: { display: true, position: "top" },
       tooltip: {
         callbacks: {
           title(context) {
@@ -328,35 +304,17 @@ function StatsGraph(): ReactNode {
       },
     },
     scales: {
-      x: {
-        title: {
-          display: true,
-          text: "版本",
-        },
-        grid: {
-          display: false,
-        },
-      },
+      x: { title: { display: true, text: "版本" }, grid: { display: false } },
       y: {
-        title: {
-          display: true,
-          text: "抽数",
-        },
+        title: { display: true, text: "抽数" },
         beginAtZero: true,
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
       },
       y1: {
         position: "right" as const,
-        title: {
-          display: true,
-          text: "不歪率",
-        },
+        title: { display: true, text: "不歪率" },
         beginAtZero: true,
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
       },
     },
   };
@@ -418,10 +376,7 @@ function StatsGraph(): ReactNode {
     animation: false,
     responsive: true,
     plugins: {
-      legend: {
-        display: true,
-        position: "top",
-      },
+      legend: { display: true, position: "top" },
       tooltip: {
         callbacks: {
           title(context) {
@@ -434,35 +389,17 @@ function StatsGraph(): ReactNode {
       },
     },
     scales: {
-      x: {
-        title: {
-          display: true,
-          text: "版本",
-        },
-        grid: {
-          display: false,
-        },
-      },
+      x: { title: { display: true, text: "版本" }, grid: { display: false } },
       y: {
-        title: {
-          display: true,
-          text: "抽数",
-        },
+        title: { display: true, text: "抽数" },
         beginAtZero: true,
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
       },
       y1: {
         position: "right" as const,
-        title: {
-          display: true,
-          text: "金数",
-        },
+        title: { display: true, text: "金数" },
         beginAtZero: true,
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
       },
     },
   };
@@ -590,36 +527,19 @@ function CharsGraph(): ReactNode {
   const options: ChartOptions<"bar"> = {
     animation: false,
     responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: "top",
-      },
-    },
+    plugins: { legend: { display: true, position: "top" } },
     indexAxis: "y",
     scales: {
       x: {
-        title: {
-          display: true,
-          text: "抽数",
-        },
-        grid: {
-          display: false,
-        },
+        title: { display: true, text: "抽数" },
+        grid: { display: false },
         stacked: true,
       },
       y: {
-        title: {
-          display: true,
-          text: "角色",
-        },
-        ticks: {
-          autoSkip: false,
-        },
+        title: { display: true, text: "角色" },
+        ticks: { autoSkip: false },
         beginAtZero: true,
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
         stacked: true,
       },
     },

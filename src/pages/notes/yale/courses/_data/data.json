@@ -7,13 +7,7 @@
         "course_code": "ECON 115",
         "course": {
           "areas": ["So"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Cormac O'Dea"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Cormac O'Dea" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -26,13 +20,7 @@
         "course_code": "LING 110",
         "course": {
           "areas": ["So"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Jason Shaw"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Jason Shaw" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -45,13 +33,7 @@
         "course_code": "MATH 120",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Ian Adelstein"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Ian Adelstein" } }],
           "credits": 1,
           "section": "10",
           "skills": ["QR"],
@@ -64,13 +46,7 @@
         "course_code": "MATH 226",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Ebru Toprak"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Ebru Toprak" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -84,11 +60,7 @@
         "course": {
           "areas": [],
           "course_professors": [
-            {
-              "professor": {
-                "name": "Madeleine Saraceni"
-              }
-            }
+            { "professor": { "name": "Madeleine Saraceni" } }
           ],
           "credits": 1,
           "section": "11",
@@ -102,13 +74,7 @@
         "course_code": "LING 231",
         "course": {
           "areas": ["Sc", "So"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Maria Pinango"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Maria Pinango" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -121,13 +87,7 @@
         "course_code": "LING 232",
         "course": {
           "areas": ["So"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Natalie Weber"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Natalie Weber" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -140,13 +100,7 @@
         "course_code": "MATH 244",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "John Hall"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "John Hall" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -160,11 +114,7 @@
         "course": {
           "areas": [],
           "course_professors": [
-            {
-              "professor": {
-                "name": "Jonathan Reuning-Scherer"
-              }
-            }
+            { "professor": { "name": "Jonathan Reuning-Scherer" } }
           ],
           "credits": 1,
           "section": "1",
@@ -178,13 +128,7 @@
         "course_code": "CPSC 223",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Ozan Erat"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Ozan Erat" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -197,13 +141,7 @@
         "course_code": "FREN 110",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Nam Nguyen"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Nam Nguyen" } }],
           "credits": 1.5,
           "section": "4",
           "skills": ["L1"],
@@ -217,11 +155,7 @@
         "course": {
           "areas": ["So"],
           "course_professors": [
-            {
-              "professor": {
-                "name": "Raffaella Zanuttini"
-              }
-            }
+            { "professor": { "name": "Raffaella Zanuttini" } }
           ],
           "credits": 1,
           "section": "1",
@@ -235,13 +169,7 @@
         "course_code": "S&DS 241",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Yihong Wu"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Yihong Wu" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -255,16 +183,8 @@
         "course": {
           "areas": [],
           "course_professors": [
-            {
-              "professor": {
-                "name": "Jay Lim"
-              }
-            },
-            {
-              "professor": {
-                "name": "Lin Zhong"
-              }
-            }
+            { "professor": { "name": "Jay Lim" } },
+            { "professor": { "name": "Lin Zhong" } }
           ],
           "credits": 1,
           "section": "1",
@@ -278,13 +198,7 @@
         "course_code": "CPSC 365",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Dylan McKay"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Dylan McKay" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -297,13 +211,7 @@
         "course_code": "FREN 120",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Nam Nguyen"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Nam Nguyen" } }],
           "credits": 1.5,
           "section": "4",
           "skills": ["L2"],
@@ -316,13 +224,7 @@
         "course_code": "LING 112",
         "course": {
           "areas": ["Hu", "So"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Edwin Ko"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Edwin Ko" } }],
           "credits": 1,
           "section": "1",
           "skills": ["WR"],
@@ -335,13 +237,7 @@
         "course_code": "S&DS 242",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Robert Wooster"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Robert Wooster" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -354,13 +250,7 @@
         "course_code": "CPSC 421",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Jay Lim"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Jay Lim" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -373,13 +263,7 @@
         "course_code": "CPSC 454",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Ruzica Piskac"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Ruzica Piskac" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -392,13 +276,7 @@
         "course_code": "FREN 130",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Nam Nguyen"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Nam Nguyen" } }],
           "credits": 1.5,
           "section": "3",
           "skills": ["L3"],
@@ -411,13 +289,7 @@
         "course_code": "S&DS 365",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "John Lafferty"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "John Lafferty" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -430,13 +302,7 @@
         "course_code": "S&DS 431",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Zhuoran Yang"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Zhuoran Yang" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -449,13 +315,7 @@
         "course_code": "CPSC 430",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Zhong Shao"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Zhong Shao" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -468,13 +328,7 @@
         "course_code": "FREN 140",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Nam Nguyen"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Nam Nguyen" } }],
           "credits": 1.5,
           "section": "3",
           "skills": ["L4"],
@@ -487,13 +341,7 @@
         "course_code": "LING 254",
         "course": {
           "areas": ["So"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Jim Wood"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Jim Wood" } }],
           "credits": 1,
           "section": "1",
           "skills": ["WR"],
@@ -506,13 +354,7 @@
         "course_code": "S&DS 432",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Sinho Chewi"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Sinho Chewi" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -526,16 +368,8 @@
         "course": {
           "areas": ["So"],
           "course_professors": [
-            {
-              "professor": {
-                "name": "Jason Shaw"
-              }
-            },
-            {
-              "professor": {
-                "name": "Michael Stern"
-              }
-            }
+            { "professor": { "name": "Jason Shaw" } },
+            { "professor": { "name": "Michael Stern" } }
           ],
           "credits": 1,
           "section": "1",
@@ -549,13 +383,7 @@
         "course_code": "CPSC 4470",
         "course": {
           "areas": ["Sc"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Yongshan Ding"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Yongshan Ding" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -568,13 +396,7 @@
         "course_code": "LING 2630",
         "course": {
           "areas": ["So"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Simon Charlow"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Simon Charlow" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -587,13 +409,7 @@
         "course_code": "LING 3800",
         "course": {
           "areas": ["So"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Kenneth Hanson"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Kenneth Hanson" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -606,13 +422,7 @@
         "course_code": "LING 4900",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Simon Charlow"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Simon Charlow" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -625,13 +435,7 @@
         "course_code": "S&DS 3120",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Zongming Ma"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Zongming Ma" } }],
           "credits": 1,
           "section": "1",
           "skills": ["QR"],
@@ -644,13 +448,7 @@
         "course_code": "S&DS 4910",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Brian Macdonald"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Brian Macdonald" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -663,13 +461,7 @@
         "course_code": "FREN 1500",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Ramla Bedoui"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Ramla Bedoui" } }],
           "credits": 1,
           "section": "2",
           "skills": ["L5"],
@@ -682,13 +474,7 @@
         "course_code": "FREN 1700",
         "course": {
           "areas": ["Hu"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Lauren Pinzka"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Lauren Pinzka" } }],
           "credits": 1,
           "section": "1",
           "skills": ["L5"],
@@ -701,13 +487,7 @@
         "course_code": "LING 3360",
         "course": {
           "areas": ["So"],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Jason Shaw"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Jason Shaw" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -720,13 +500,7 @@
         "course_code": "LING 4910",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Jason Shaw"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Jason Shaw" } }],
           "credits": 1,
           "section": "1",
           "skills": [],
@@ -739,13 +513,7 @@
         "course_code": "S&DS 3540",
         "course": {
           "areas": [],
-          "course_professors": [
-            {
-              "professor": {
-                "name": "Xiang Zhou"
-              }
-            }
-          ],
+          "course_professors": [{ "professor": { "name": "Xiang Zhou" } }],
           "credits": 1,
           "section": "1",
           "skills": [],

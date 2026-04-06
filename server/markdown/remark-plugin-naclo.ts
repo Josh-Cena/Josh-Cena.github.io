@@ -21,17 +21,11 @@ const remarkNACLO: Plugin = () => (ast, vFile) => {
   const titleText = toString(title);
   const { year, prob } = /notes\/naclo\/(?<year>\d{4})\/(?<prob>[A-Z])/u.exec(
     vFile.path,
-  )!.groups! as {
-    year: `${number}`;
-    prob: string;
-  };
+  )!.groups! as { year: `${number}`; prob: string };
   const { tags } = frontMatter;
   const problemCode = `NACLO ${year} - Problem ${prob}`;
   (title as Heading).children = [
-    {
-      type: "text",
-      value: problemCode,
-    },
+    { type: "text", value: problemCode },
     {
       type: "mdxJsxFlowElement",
       name: "span",

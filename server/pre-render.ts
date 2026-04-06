@@ -10,11 +10,7 @@ import type { AssetMap } from "@/Document";
 const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 const distPath = (...ps: string[]) => Path.join(__dirname, "../dist", ...ps);
 
-type ManifestChunk = {
-  file: string;
-  css?: string[];
-  imports?: string[];
-};
+type ManifestChunk = { file: string; css?: string[]; imports?: string[] };
 
 const manifest = JSON.parse(
   await FS.readFile(distPath("static/.vite/manifest.json"), "utf-8"),
@@ -43,11 +39,7 @@ async function renderSitemap(routes: string[]) {
   const sitemapStream = new SitemapStream({ hostname: "https://joshcena.com" });
   routes.toSorted().forEach((url) => {
     if (url === "/404") return;
-    sitemapStream.write({
-      url,
-      changefreq: "daily",
-      priority: 0.7,
-    });
+    sitemapStream.write({ url, changefreq: "daily", priority: 0.7 });
   });
   sitemapStream.end();
   const sitemap = await streamToPromise(sitemapStream);

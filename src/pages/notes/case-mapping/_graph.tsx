@@ -157,10 +157,7 @@ for (const v of remainingNodes) {
   cluster.forEach((t) => remainingNodes.delete(t));
 }
 
-export const longestChain = {
-  length: 3,
-  chains: [] as Vertex[][],
-};
+export const longestChain = { length: 3, chains: [] as Vertex[][] };
 
 for (const char of chars) {
   const vertex = graph.get(char)!;

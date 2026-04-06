@@ -6,10 +6,7 @@ import { uneval } from "devalue";
 const recmaExportFrontmatter: Plugin = () => (ast, vFile) => {
   const definition = Acorn.parse(
     `MDXContent.meta = ${uneval(vFile.data.frontMatter)}`,
-    {
-      ecmaVersion: "latest",
-      sourceType: "module",
-    },
+    { ecmaVersion: "latest", sourceType: "module" },
   ) as Program;
 
   (ast as Program).body.push(definition.body[0]!);

@@ -3,10 +3,7 @@ import { useHeadings, type TOCHeading } from "@/components/Heading";
 import { useLanguageContext } from "@/context/Language";
 import styles from "./index.module.css";
 
-type TOCTree = {
-  heading: TOCHeading;
-  children: TOCTree[];
-};
+type TOCTree = { heading: TOCHeading; children: TOCTree[] };
 
 function listToTree(headings: TOCHeading[]): TOCTree[] {
   const root: TOCTree[] = [];

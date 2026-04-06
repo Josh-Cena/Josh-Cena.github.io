@@ -77,15 +77,9 @@ export default defineConfig({
     mermaidPlugin(),
     react({ include: /\.(?:mmd|js|jsx|ts|tsx)$/u }),
     svgr(),
-    visualizer({
-      filename: "dist/static/bundle-map.html",
-    }),
+    visualizer({ filename: "dist/static/bundle-map.html" }),
   ],
-  define: {
-    "process.env": {
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-    },
-  },
+  define: { "process.env": { NODE_ENV: JSON.stringify(process.env.NODE_ENV) } },
   build: {
     cssCodeSplit: false,
     target: "es2022",

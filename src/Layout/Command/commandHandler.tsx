@@ -3,9 +3,7 @@ import type { Dispatch, SetStateAction } from "react";
 import parseBash from "bash-parser";
 import { paths } from "@/routes";
 
-type PathTree = {
-  [key: string]: PathTree | null;
-};
+type PathTree = { [key: string]: PathTree | null };
 
 const pathTree: PathTree = {};
 
@@ -95,11 +93,7 @@ export function handleCommand(
         const newPath = cd(args[0]?.text ?? "/", env.PWD!);
         if (!newPath)
           return [1, `cd: ${args[0]!.text}: No such file or directory`];
-        setEnv({
-          __proto__: null as never,
-          ...env,
-          PWD: newPath,
-        });
+        setEnv({ __proto__: null as never, ...env, PWD: newPath });
         return [0, ""];
       }
       case "echo":

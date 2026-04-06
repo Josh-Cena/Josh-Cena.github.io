@@ -11,11 +11,7 @@ I represent the packet tree as follows:
 
 ```ts
 type Packet =
-  | {
-      version: number;
-      typeId: 4;
-      value: number;
-    }
+  | { version: number; typeId: 4; value: number }
   | {
       version: number;
       typeId: 0 | 1 | 2 | 3 | 5 | 6 | 7;

@@ -31,17 +31,11 @@ const remarkAOC: Plugin = () => (ast, vFile) => {
   const titleText = toString(title);
   const { year, day } = /notes\/aoc\/(?<year>\d{4})\/(?<day>\d{1,2})/u.exec(
     vFile.path,
-  )!.groups! as {
-    year: `${number}`;
-    day: `${number}`;
-  };
+  )!.groups! as { year: `${number}`; day: `${number}` };
   const { tags } = frontMatter;
   const problemCode = `Advent of Code ${year} - Day ${day}`;
   (title as Heading).children = [
-    {
-      type: "text",
-      value: problemCode,
-    },
+    { type: "text", value: problemCode },
     {
       type: "mdxJsxFlowElement",
       name: "span",

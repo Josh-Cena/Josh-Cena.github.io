@@ -1,10 +1,7 @@
 import type { ReactNode } from "react";
 import { useLanguageContext } from "./context/Language";
 
-export type AssetMap = {
-  bootstrapModules: string[];
-  stylesheets: string[];
-};
+export type AssetMap = { bootstrapModules: string[]; stylesheets: string[] };
 
 export default function Document({
   assets,
