@@ -5,7 +5,7 @@ tags:
 
 # Let's Pivot!
 
-{/* cSpell:ignore Bassa Bété Ejagham Karajá Matsés Apinaye Tsafiki Seri Guambiano Teribe Tlapanec Yakan paban ilyby */}
+{/* cSpell:ignore Bassa Bété Ejagham Karajá Matsés Apinaye Tsafiki Seri Guambiano Teribe Tlapanec Yakan paban ilyby */}
 
 The basic idea with this problem is that when translating, we do the following:
 
@@ -35,12 +35,12 @@ c. M = \{ ocean, crow }, M' = \{ ocean, crow, sky, grass }. Need a language wher
 
 As for D3, we need to figure out all the constraints, and then find the assignments that satisfy all of them.
 
-1. M = \{ plum, strawberry }, M' = \{ crow }. Need a language where "crow" shares a word with "plum" and/or "strawberry": Bassa, Bété.
-2. M = \{ plum, ocean }, M' = \{ sky }. Need a language where "sky" shares a word with "plum" and/or "ocean": Apinaye, Bassa, Bété, English, Teribe (only Tsafiki doesn't work).
+1. M = \{ plum, strawberry }, M' = \{ crow }. Need a language where "crow" shares a word with "plum" and/or "strawberry": Bassa, Bété.
+2. M = \{ plum, ocean }, M' = \{ sky }. Need a language where "sky" shares a word with "plum" and/or "ocean": Apinaye, Bassa, Bété, English, Teribe (only Tsafiki doesn't work).
 3. M = \{ plum, strawberry }, M' = \{ plum }. This is a direct translation, so any pivot will do.
-4. M = \{ plum, strawberry, banana }, M' = \{ grass, sky, ocean }. Need any language that doesn't distinguish one of "grass", "sky", or "ocean" from one of "plum", "strawberry", or "banana": Apinaye, Bassa, Bété, Teribe.
+4. M = \{ plum, strawberry, banana }, M' = \{ grass, sky, ocean }. Need any language that doesn't distinguish one of "grass", "sky", or "ocean" from one of "plum", "strawberry", or "banana": Apinaye, Bassa, Bété, Teribe.
 5. M = \{ banana }, M' = \{ snow }. Need a language where "snow" shares a word with "banana": only Bassa.
-6. M = \{ grass }, M' = \{ plum, strawberry }. Need a language where "plum" and/or "strawberry" share a word with "grass": Apinaye, Bassa, Bété.
+6. M = \{ grass }, M' = \{ plum, strawberry }. Need a language where "plum" and/or "strawberry" share a word with "grass": Apinaye, Bassa, Bété.
 
 It happens that these constraints contain 1, 2, 3, 4, 5, 6 candidates, respectively! So we can satisfy them in the order of their restrictiveness:
 
