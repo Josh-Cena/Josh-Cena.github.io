@@ -2,11 +2,7 @@ import{t as e}from"./jsx-runtime-BnxRlLMJ.js";import{n as t}from"./lib-BHnTV9cU.
 `,(0,i.jsx)(a.h2,{children:`Part 1`}),`
 `,(0,i.jsx)(a.p,{children:`I represent the packet tree as follows:`}),`
 `,(0,i.jsx)(a.pre,{children:(0,i.jsx)(a.code,{className:`language-ts`,children:`type Packet =
-  | {
-      version: number;
-      typeId: 4;
-      value: number;
-    }
+  | { version: number; typeId: 4; value: number }
   | {
       version: number;
       typeId: 0 | 1 | 2 | 3 | 5 | 6 | 7;
