@@ -1,4 +1,4 @@
-import{t as e}from"./jsx-runtime-BnxRlLMJ.js";import{n as t}from"./lib-BHnTV9cU.js";import"./Link-CEJsqf-b.js";import"./chroma-js-CGevHmQZ.js";import{i as n,r}from"./_components-Bnwig05j.js";var i=e();function a(e){let a={br:`br`,code:`code`,h1:`h1`,li:`li`,p:`p`,pre:`pre`,span:`span`,strong:`strong`,ul:`ul`,...t(),...e.components};return(0,i.jsxs)(i.Fragment,{children:[(0,i.jsxs)(a.h1,{children:[`NACLO 2025 - Problem A`,(0,i.jsx)(a.span,{className:`subtitle`,children:`Fox out of the Box`})]}),(0,i.jsx)(n,{frontMatter:e}),`
+import{t as e}from"./jsx-runtime-BnxRlLMJ.js";import{n as t}from"./lib-BHnTV9cU.js";import"./Link-CEJsqf-b.js";import"./chroma-js-CGevHmQZ.js";import{i as n,r}from"./_components-Bnwig05j.js";var i=e();function a(e){let a={br:`br`,h1:`h1`,li:`li`,p:`p`,span:`span`,strong:`strong`,ul:`ul`,...t(),...e.components};return(0,i.jsxs)(i.Fragment,{children:[(0,i.jsxs)(a.h1,{children:[`NACLO 2025 - Problem A`,(0,i.jsx)(a.span,{className:`subtitle`,children:`Fox out of the Box`})]}),(0,i.jsx)(n,{frontMatter:e}),`
 `,`
 `,(0,i.jsx)(a.p,{children:`The only Totonac word that repeats among all sentences is [wa:qni’], so it has to mean "the fox", which means all our responses have to end with [wa:qni’] as well.`}),`
 `,(0,i.jsx)(a.p,{children:`The next pattern is that the word before [wa:qni’] is one of three things: [kchiki], [n chiki], or [ktaqalhwaxni]. Namely:`}),`
@@ -13,24 +13,33 @@ import{t as e}from"./jsx-runtime-BnxRlLMJ.js";import{n as t}from"./lib-BHnTV9cU.
 `,(0,i.jsx)(a.p,{children:`For what the prefixes mean, we refer back to the cute diagram. Notice that [akpu:-] is associated with the roof, [cha:qe:-] with the back door, [lakpa:-] with the side of the house, and [tampi:-] with the bottom of the house. This suggests that the prefixes are associated with the location relative to the house. The [∅-] prefix may mean "front" or "general", since the hole is also in front of the house.`}),`
 `,(0,i.jsx)(a.p,{children:`Furthermore, note the pattern for the second word: [n chiki] is used for all cases except with the [∅-] prefix, and the only cases of [ktaqalhwaxni] are with a hole not directly associated with the house. This suggests that [kchiki]/[n chiki] designates the house, while [ktaqalhwaxni] designates a hole. (Another way to analyze this is that [chiki] means the house, and the [k-] prefix is used for the front/general location, since we know that [n] has no meaning. But this isn't important for the translation.)`}),`
 `,(0,i.jsx)(a.p,{children:`Putting everything together, we have the following template:`}),`
-`,(0,i.jsx)(a.pre,{children:(0,i.jsx)(a.code,{className:`language-plain`,children:`[location][manner] [place] wa:qni’
-
-[location] =
-    ∅- (front/general)
-    akpu:- (top)
-    cha:qe:- (back)
-    lakpa:- (side)
-    tampi:- (bottom)
-[matter] =
-    -tanu:yi (into large area)
-    -taxtiyi (out of large area)
-    -tuju:yi (into small area)
-    -tukuta (out of small area)
-[place] =
-    kchiki (house, front/general)
-    n chiki (house)
-    ktaqalhwaxni (hole)
-`})}),`
+`,(0,i.jsx)(a.p,{children:`[location][manner] [place] wa:qni’`}),`
+`,(0,i.jsxs)(a.ul,{children:[`
+`,(0,i.jsxs)(a.li,{children:[`[location]`,`
+`,(0,i.jsxs)(a.ul,{children:[`
+`,(0,i.jsx)(a.li,{children:`∅- = front/general`}),`
+`,(0,i.jsx)(a.li,{children:`akpu:- = top`}),`
+`,(0,i.jsx)(a.li,{children:`cha:qe:- = back`}),`
+`,(0,i.jsx)(a.li,{children:`lakpa:- = side`}),`
+`,(0,i.jsx)(a.li,{children:`tampi:- = bottom`}),`
+`]}),`
+`]}),`
+`,(0,i.jsxs)(a.li,{children:[`[matter]`,`
+`,(0,i.jsxs)(a.ul,{children:[`
+`,(0,i.jsx)(a.li,{children:`-tanu:yi = into large area`}),`
+`,(0,i.jsx)(a.li,{children:`-taxtiyi = out of large area`}),`
+`,(0,i.jsx)(a.li,{children:`-tuju:yi = into small area`}),`
+`,(0,i.jsx)(a.li,{children:`-tukuta = out of small area`}),`
+`]}),`
+`]}),`
+`,(0,i.jsxs)(a.li,{children:[`[place]`,`
+`,(0,i.jsxs)(a.ul,{children:[`
+`,(0,i.jsx)(a.li,{children:`kchiki = house, front/general`}),`
+`,(0,i.jsx)(a.li,{children:`n chiki = house`}),`
+`,(0,i.jsx)(a.li,{children:`ktaqalhwaxni = hole`}),`
+`]}),`
+`]}),`
+`]}),`
 `,(0,i.jsx)(a.p,{children:`Note how certain words in the English translations are lost: the passageway such as the roof hole, the chimney, or the door, or specific destinations such as the flower box, are not explicitly mentioned. The only relevant thing is the location relative to the house and whether it's a large area or a small area.`}),`
 `,(0,i.jsx)(a.p,{children:`A1 answers:`}),`
 `,(0,i.jsxs)(a.p,{children:[`10. The fox comes out the front door. = [front][out of large area] [house] = `,(0,i.jsx)(a.strong,{children:`taxtiyi kchiki wa:qni’`}),(0,i.jsx)(a.br,{}),`
