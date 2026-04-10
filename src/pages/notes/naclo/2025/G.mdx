@@ -8,6 +8,8 @@ tags:
 
 {/* cSpell:ignore amwi bamwi nemwi badzo ncher lenini benini bebil kebil balülü banjir babibə ibat lelülü ilülü ibibə nejo munkar bachunga bande ntaw kejo ketita munde bena ngombe nekikə mabat masinxunə mokan munjir imwi nebibə netang mekan melülü nejao otang ikwi adzo beto inini mape betang menini nchungə lemo momo befwa kefwa kemo ipyao mapyao mapə ledze ndze besa */}
 
+import { Ex } from "gloss.js/react";
+
 The way to approach a phrase translation problem like this is start by making a "template" for the sentences. Here, all sentences are in past tense. All 12 but 2 of them are declarative; the other 2 are interrogative. Most of them are of the form (including the questions):
 
 [Modifier] [Subject] [Verb] [Modifier] [Object]
@@ -92,15 +94,47 @@ So we observe that nouns have different prefixes denoting different classes. The
 
 This is enough for G1:
 
-a. Mva imwi ntaw nebibə = dog see.PL goat bad.SG = The dogs saw the bad goat.  
-b. Munjir nekikə netang mekan melülü = man little read books good.PL = The little man read the good books.  
-c. Nə adzo beto be munkar? = who kill snakes of woman = Who killed the woman's snakes?
+<Ex.Group>
+  <Ex number="a.">
+    <Ex.Line>Mva imwi ntaw nebibə</Ex.Line>
+    <Ex.Line>dog see.PL goat bad.SG</Ex.Line>
+    <Ex.Line translation>**_The dogs saw the bad goat._**</Ex.Line>
+  </Ex>
+  <Ex number="b.">
+    <Ex.Line>Munjir nekikə netang mekan melülü</Ex.Line>
+    <Ex.Line>man little read books good.PL</Ex.Line>
+    <Ex.Line translation>**_The little man read the good books._**</Ex.Line>
+  </Ex>
+  <Ex number="c.">
+    <Ex.Line>Nə adzo beto be munkar?</Ex.Line>
+    <Ex.Line>who kill snakes of woman</Ex.Line>
+    <Ex.Line translation>**_Who killed the woman's snakes?_**</Ex.Line>
+  </Ex>
+</Ex.Group>
 
-As for G2:
+As for G2, we would have to refer back constantly for the inflections because none of these contexts appeared in the examples.
 
-a. "Heard" is "kejo/nejo"; here the subject is "cows", a plural domestic animal, so we use the "i-" prefix: "ijo". "Big" is "lenini/benini", here the noun is "dogs", again a plural domestic animal, so we use "inini". Answer: Ngombe ijo mva inini.  
-b. "Learned" is "nejao"; here the subject is "the white man", a singular human, so we keep the "ne-" prefix. The infinitive form of "eat" is "ola". "Wing" is "ipe", so its plural is "mape". Put together: Munde nejao ola mape.  
-c. "Snakes" is "beto", so its agreeing possessive is "be". "Read" is "otang" (infinitive), so to agree with "snakes" we use "betang". "Big" is "lenini/benini", so to agree with books "mekan" we use "menini". Put together: Beto be kebil betang mekan menini.
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="a.">
+    <Ex.Line>**Ngombe ijo mva inini.**</Ex.Line>
+    <Ex.Line>cow heard dog big</Ex.Line>
+    <Ex.Line translation>_The cow heard the big dogs._</Ex.Line>
+    <Ex.Line translation>Explanation: "Heard" is "kejo/nejo"; here the subject is "cows", a plural domestic animal, so we use the "i-" prefix: "ijo". "Big" is "lenini/benini", here the noun is "dogs", again a plural domestic animal, so we use "inini".</Ex.Line>
+  </Ex>
+  <Ex number="b.">
+    <Ex.Line>**Munde nejao ola mape.**</Ex.Line>
+    <Ex.Line>white-man learned eat wing.PL</Ex.Line>
+    <Ex.Line translation>_The white man learned to eat wings._</Ex.Line>
+    <Ex.Line translation>Explanation: "Learned" is "nejao"; here the subject is "the white man", a singular human, so we keep the "ne-" prefix. The infinitive form of "eat" is "ola". "Wing" is "ipe", so its plural is "mape".</Ex.Line>
+  </Ex>
+  <Ex number="c.">
+    <Ex.Line>**Beto be kebil betang mekan menini.**</Ex.Line>
+    <Ex.Line>snakes of field read books big</Ex.Line>
+    <Ex.Line translation>_The snakes of the field read the big books._</Ex.Line>
+    <Ex.Line translation>Explanation: "Snakes" is "beto", so its agreeing possessive is "be". "Read" is "otang" (infinitive), so to agree with "snakes" we use "betang". "Big" is "lenini/benini", so to agree with books "mekan" we use "menini".</Ex.Line>
+  </Ex>
+</Ex.Group>
 
 In G3, the new observation is that numbers also agree with the head noun, using what appears to be the adjective agreement rules.
 

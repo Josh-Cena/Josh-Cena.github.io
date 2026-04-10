@@ -8,6 +8,8 @@ tags:
 
 {/* cSpell:ignore Meli blulu nelabe nelalee Nibie nefomefe Nalime nafomelee Meneme naomeie Menele naolane Nalile natemefe Melife walafe Nali Nibiefe walabe */}
 
+import { Ex } from "gloss.js/react";
+
 There are only 8 sentences, which is a good sign because the fewer sentences (with more repetitions of lexical items), the simpler the pattern.
 
 Indeed, these 8 sentences only involve 3 verbs: boil, tell a story, and go. They only involve 4 tenses: past (far), present, near future, and far future. All of them are progressive. So we can make a table:
@@ -100,9 +102,41 @@ Therefore we can summarize the grammar as follows:
 
 Once the grammar has been thoroughly dissected, translation is straightforward.
 
-- Mene-le na-o-me-lee = Me tell-me-far-past.3s = He was telling me a story a while ago.
-- Nali-me na-te-la-ne = He/they-reflexive tell-them-near-past.3p = They are telling themselves a story.
-- Wa-me-ie = Go-far-past.1s = I was going a while ago.
-- He will be going for breadfruit soon = breadfruit-for go-near-future.3s = Nibie-fe wa-la-be
-- He was going to him a while ago = Him go-him-far-past.3s = Nali-le wa-fo-me-lee (note: -le not -me because the object is "him" not "himself")
-- The breadfruit will be boiling in a while = breadfruit boil-far-future.3s = Nibie blulu ne-me-be
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="P1.">
+    <Ex number="(a)">
+      <Ex.Line>Mene-le na-o-me-lee</Ex.Line>
+      <Ex.Line>Me tell-me-far-past.3s</Ex.Line>
+      <Ex.Line translation>**_He was telling me a story a while ago._**</Ex.Line>
+    </Ex>
+    <Ex number="(b)">
+      <Ex.Line>Nali-me na-te-la-ne</Ex.Line>
+      <Ex.Line>He/they-REFL tell-them-near-past.3p</Ex.Line>
+      <Ex.Line translation>**_They are telling themselves a story._**</Ex.Line>
+    </Ex>
+    <Ex number="(c)">
+      <Ex.Line>Wa-me-ie</Ex.Line>
+      <Ex.Line>Go-far-past.1s</Ex.Line>
+      <Ex.Line translation>**_I was going a while ago._**</Ex.Line>
+    </Ex>
+  </Ex>
+  <Ex number="P2.">
+    <Ex number="(a)">
+      <Ex.Line>**Nibie-fe wa-la-be**</Ex.Line>
+      <Ex.Line>breadfruit-for go-near-future.3s</Ex.Line>
+      <Ex.Line translation>_He will be going for breadfruit soon._</Ex.Line>
+    </Ex>
+    <Ex number="(b)">
+      <Ex.Line>**Nali-le wa-fo-me-lee**</Ex.Line>
+      <Ex.Line>Him go-him-far-past.3s</Ex.Line>
+      <Ex.Line translation>_He was going to him a while ago._</Ex.Line>
+      <Ex.Line translation>Note: -le not -me because the object is "him" not "himself".</Ex.Line>
+    </Ex>
+    <Ex number="(c)">
+      <Ex.Line>**Nibie <>blulu ne-me-be</>**</Ex.Line>
+      <Ex.Line>breadfruit boil-far-future.3s</Ex.Line>
+      <Ex.Line translation>_The breadfruit will be boiling in a while._</Ex.Line>
+    </Ex>
+  </Ex>
+</Ex.Group>

@@ -8,6 +8,8 @@ tags:
 
 {/* cSpell:ignore achab achik’ aloʔ atiʔ awajanik aweʔ awich chab chenek’ jchik’tik jk’uxtik jloʔ jloʔbaltik jtiʔ jwajtik jweʔ jweʔtik kajan kajpe kalwanextik kaxlan k’oxox manko mankoe sejkub sloʔ sloʔik sp’olik stiʔ stiʔik stsalub sweʔik tiʔbal tsukum waje wakax xchaʔ yaskal yaʔlel yonik yoʔtan ʔich ʔone panela chik’ ʔajan awonik ixim */}
 
+import { Ex } from "gloss.js/react";
+
 This problem originally appeared to me as approachable, but it turned out to be quite intractable 😅
 
 Excluding the starting "la", phrases here are mostly two or three words long. But the translation needs at least three elements: subject, verb, and object. The subject is always a pronoun, so the conclusion is that the subject has been subsumed into the verb. Let's first group the phrases by subject, since the verbs are all identical ("ate") anyway:
@@ -44,7 +46,7 @@ Excluding the starting "la", phrases here are mostly two or three words long. Bu
   - sweʔik te pats’e _the tamales_
   - stiʔik te yoʔtan mute _the chicken heart_
 
-The second word obviously has common prefixes and suffixes depending on the subject. Let's do that:
+The first word obviously has common prefixes and suffixes depending on the subject. If we remove the prefixes and suffixes, we get the following verb roots:
 
 {/* prettier-ignore */}
 <table>
@@ -102,7 +104,7 @@ The second word obviously has common prefixes and suffixes depending on the subj
   </tbody>
 </table>
 
-Since agreement with the subject happens on the second word, this is likely the verb "ate". What follows is therefore the object. Furthermore, we have different forms of "ate" that pair with different kinds of foods; we need to figure out what the classes of foods are.
+Since agreement with the subject happens on this word, this is likely the verb "ate". What follows is therefore the object. Furthermore, we have different forms of "ate" that pair with different kinds of foods; we need to figure out what the classes of foods are.
 
 - tiʔ: chicken comb, chili peppers, chicken gizzard, cow liver, chicken heart
 - weʔ: bread, tortillas, tamales
@@ -177,18 +179,55 @@ Observations:
 
 Now translation:
 
-- la j-tiʔ s-k’in wakax = 1sg-ate(meat) 3sg-kidney cow = I ate her cow kidney.
-- We ate the peanuts. = 1pl-ate(granular) the-peanuts = la j-k’ux-tik te kaxlan chenek’-e
-- You (pl.) ate cow stomach. = 2pl-ate(meat) stomach cow = la a-k’ux-ik tsukum wakax
-- They ate meat. = 3pl-ate(meat) meat = la s-tiʔ-ik tiʔbal
-- You (sg.) ate your (pl.) avocados. = 2sg-ate(mushy) 2pl-avocados = la a-loʔ a-ʔon-ik = la aloʔ awonik
-- I ate my honey. = 1sg-ate(mushy) 1sg-honey = la j-loʔ j-chab (solution has a typo)
-- She ate cooked greens. = 3sg-ate(mushy) greens = la s-loʔ bok (this is like "ripe mango" vs. "unripe mango" - the noun is always just "mango", but the verb changes to indicate whether it's mushy or crunchy)
-- She ate bean soup. = 3sg-ate(liquid) soup beans = la s-chik’ yaʔlel chenek’
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="H2.">
+    <Ex.Line>la j-tiʔ s-k’in wakax</Ex.Line>
+    <Ex.Line>_la_ 1sg-ate(meat) 3sg-kidney cow</Ex.Line>
+    <Ex.Line translation>**_I ate her cow kidney._**</Ex.Line>
+  </Ex>
+  <Ex number="a.">
+    <Ex.Line>**la j-k’ux-tik te kaxlan chenek’-e**</Ex.Line>
+    <Ex.Line>_la_ 1pl-ate(granular) the-peanuts</Ex.Line>
+    <Ex.Line translation>_We ate the peanuts._</Ex.Line>
+  </Ex>
+  <Ex number="b.">
+    <Ex.Line>**la a-k’ux-ik tsukum wakax**</Ex.Line>
+    <Ex.Line>_la_ 2pl-ate(meat) stomach cow</Ex.Line>
+    <Ex.Line translation>_You (pl.) ate cow stomach._</Ex.Line>
+  </Ex>
+  <Ex number="c.">
+    <Ex.Line>**la s-tiʔ-ik tiʔbal**</Ex.Line>
+    <Ex.Line>_la_ 3pl-ate(meat) meat</Ex.Line>
+    <Ex.Line translation>_They ate meat._</Ex.Line>
+  </Ex>
+  <Ex number="d.">
+    <Ex.Line>**la a-loʔ a-ʔon-ik** <>(= **la aloʔ awonik**)</></Ex.Line>
+    <Ex.Line>_la_ 2sg-ate(mushy) 2pl-avocados</Ex.Line>
+    <Ex.Line translation>_You (sg.) ate your (pl.) avocados._</Ex.Line>
+  </Ex>
+  <Ex number="e.">
+    <Ex.Line>**la j-loʔ j-chab**</Ex.Line>
+    <Ex.Line>_la_ 1sg-ate(mushy) 1sg-honey</Ex.Line>
+    <Ex.Line translation>_I ate my honey._</Ex.Line>
+    <Ex.Line translation>(solution has a typo)</Ex.Line>
+  </Ex>
+  <Ex number="f.">
+    <Ex.Line>**la s-loʔ bok**</Ex.Line>
+    <Ex.Line>_la_ 3sg-ate(mushy) greens</Ex.Line>
+    <Ex.Line translation>_She ate cooked greens._</Ex.Line>
+    <Ex.Line translation>(this is like "ripe mango" vs. "unripe mango"—the noun is always just "mango", but the verb changes to indicate whether it's mushy or crunchy)</Ex.Line>
+  </Ex>
+  <Ex number="g.">
+    <Ex.Line>**la s-chik’ yaʔlel chenek’**</Ex.Line>
+    <Ex.Line>_la_ 3sg-ate(liquid) soup beans</Ex.Line>
+    <Ex.Line translation>_She ate bean soup._</Ex.Line>
+  </Ex>
+</Ex.Group>
 
 H6 is mostly unrelated. We want to know what the "kaxlan" word does. Compare:
 
 - kaxlan waj _bread_ vs. waj _tortillas_
 - ? vs. ixim _corn_
 
-Not 100% rigorous, but just based on semantic relations, this should be "wheat". (ixim makes waj; kaxlan ixim makes kaxlan waj).
+Not 100% rigorous, but just based on semantic relations, this should be "wheat". ("ixim" makes "waj"; "kaxlan ixim" makes "kaxlan waj").

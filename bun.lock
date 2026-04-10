@@ -16,6 +16,7 @@
         "color-name": "^2.1.0",
         "devalue": "^5.6.4",
         "github-slugger": "^2.0.0",
+        "gloss.js": "^0.3.2",
         "image-size": "^2.0.2",
         "mdast-util-to-string": "^4.0.0",
         "mermaid": "^11.13.0",
@@ -1300,6 +1301,8 @@
     "globalthis": ["globalthis@1.0.4", "", { "dependencies": { "define-properties": "^1.2.1", "gopd": "^1.0.1" } }, "sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ=="],
 
     "globrex": ["globrex@0.1.2", "", {}, "sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg=="],
+
+    "gloss.js": ["gloss.js@0.3.2", "", {}, "sha512-H2/A3cUUqZKub1ymI+YNi4bWrRQNuRuk7ooZNMRK2svwrtP9ZsroeFvGNs8OhJYMZZkYh5WYgFbgxgAU76PaQQ=="],
 
     "gopd": ["gopd@1.2.0", "", {}, "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg=="],
 

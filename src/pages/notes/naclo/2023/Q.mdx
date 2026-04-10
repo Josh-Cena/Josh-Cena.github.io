@@ -7,6 +7,8 @@ tags:
 
 {/* cSpell:ignore qhot chak níing qhat tsong qhòng niìm chuān */}
 
+import { Ex } from "gloss.js/react";
+
 Group the sentences by the piece of clothing mentioned.
 
 - Skirt:
@@ -98,11 +100,46 @@ The word in the middle must be verb. But the verb is different for each type of 
 
 The word order is \[object] \[verb] \[subject] when the subject is a pronoun, and \[subject] \[verb] \[subject] when the subject is a noun ("my hat falls down"). The final marker in the latter case is probably just an agreement marker based on the subject's gender. The possessive pronouns come before the noun itself.
 
-a. jàa qhòng qhòng ang. = [shoes] [wear] [I] = I wear shoes  
-b. u kho pok pok u. = [her hat] [wear] [you (sg.)] = You (sg.) wears her hat  
-c. í jàa qhòng kap íin. = [our shoes] [find] [you (pl.)] = You (pl.) find our shoes  
-d. baa kho pok lak chak u. = [your (sg.) hat] [forget] [you (sg.)] = You (sg.) forget your (sg.) hat  
-e. Your (sg.) hat falls down. = [your (sg.) hat] [fall down] [she] = baa kho pok qhat aa  
-f. We buy your (sg.) earrings. = [your (sg.) earrings] [buy] [we] = baa naa tsong rí i  
-g. I forget our shoes. = [our shoes] [forget] [I] = í jàa qhòng lak chak ang  
-h. I forget my shoes. = [my shoes] [forget] [I] = i jàa qhòng lak chak ang
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="(a)">
+    <Ex.Line><>jàa qhòng</> qhòng ang.</Ex.Line>
+    <Ex.Line>shoes wear I</Ex.Line>
+    <Ex.Line translation>**_I wear shoes._**</Ex.Line>
+  </Ex>
+  <Ex number="(b)">
+    <Ex.Line>u <>kho pok</> pok u.</Ex.Line>
+    <Ex.Line>her hat wear you(sg.)</Ex.Line>
+    <Ex.Line translation>**_You (sg.) wear her hat._**</Ex.Line>
+  </Ex>
+  <Ex number="(c)">
+    <Ex.Line>í <>jàa qhòng</> kap íin.</Ex.Line>
+    <Ex.Line>our shoes find you(pl.)</Ex.Line>
+    <Ex.Line translation>**_You (pl.) find our shoes._**</Ex.Line>
+  </Ex>
+  <Ex number="(d)">
+    <Ex.Line>baa <>kho pok</> <>lak chak</> u.</Ex.Line>
+    <Ex.Line>your(sg.) hat forget you(sg.)</Ex.Line>
+    <Ex.Line translation>**_You (sg.) forget your (sg.) hat._**</Ex.Line>
+  </Ex>
+  <Ex number="(e)">
+    <Ex.Line>**baa <>kho pok</> qhat aa**</Ex.Line>
+    <Ex.Line>your(sg.) hat fall-down she</Ex.Line>
+    <Ex.Line translation>_Your (sg.) hat falls down._</Ex.Line>
+  </Ex>
+  <Ex number="(f)">
+    <Ex.Line>**baa <>naa tsong</> rí i**</Ex.Line>
+    <Ex.Line>your(sg.) earrings buy we</Ex.Line>
+    <Ex.Line translation>_We buy your (sg.) earrings._</Ex.Line>
+  </Ex>
+  <Ex number="(g)">
+    <Ex.Line>**í <>jàa qhòng</> <>lak chak</> ang**</Ex.Line>
+    <Ex.Line>our shoes forget I</Ex.Line>
+    <Ex.Line translation>_I forget our shoes._</Ex.Line>
+  </Ex>
+  <Ex number="(h)">
+    <Ex.Line>**i <>jàa qhòng</> <>lak chak</> ang**</Ex.Line>
+    <Ex.Line>my shoes forget I</Ex.Line>
+    <Ex.Line translation>_I forget my shoes._</Ex.Line>
+  </Ex>
+</Ex.Group>

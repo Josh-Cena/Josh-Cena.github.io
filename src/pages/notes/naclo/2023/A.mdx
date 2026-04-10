@@ -8,6 +8,8 @@ tags:
 
 {/* cSpell:ignore arcebisceop cyning Eadweard menn weras Æþelwine Wulfstan gesawon Athelwine gretton Nereþ bisceop þone hine Hwæt cweþe cumaþ hiere wifmen hieraþ hierdest hierde hierdon ridon þære byrig gesawe geseah fremest Fremede fremedon nerede grette Swithun */}
 
+import { Ex } from "gloss.js/react";
+
 Most words here are identical or very close, so word matching is easy.
 
 a. "Archbishop" is in sentence 3: arcebisceop.  
@@ -17,28 +19,117 @@ d. "weras" is from sentence 8; "þas weras" = "these men".
 
 Next we want to understand a bit about Old English syntax, or at least the ways in which it differs from Modern English.
 
-- Æþelwine and Wulfstan gesawon þas menn. = Athelwine and Wulfstan saw these men.
-- Hi hi gretton. = They them greeted. (object pronoun before verb)
-- Nereþ hit us? = Saves it us? (verb lifted instead of do-support)
-- Se cyning and se bisceop and ic gesawon þone arcebisceop. = The king and the bishop and I saw the archbishop.
-- We hine gretton. = We him greeted. (object pronoun before verb)
-- Hwæt cweþe we? = What say we? (verb lifted instead of do-support)
-- Seo lar eow nereþ. = The teaching you saves. (object pronoun before verb)
-- We cumaþ. = We come.
-- Ne hiere we þas wifmen. = No hear we these women. (verb at second position, before subject and after negation)
-- Þas weras hieraþ þas wifmen. = These men hear these women.
-- Ne gesawon hi hi. = No saw they them. (verb at second position, before subject and after negation)
-- Þu hierdest þas menn. = You heard these men.
-- Þa hierde we þe. = Then heard we you. (verb at second position, before subject and after adverb)
-- Þu þe hierdest, and we us hierdon. = You you heard, and we us heard. (object pronoun before verb)
-- Alfred cyning and se bisceop ridon into þære byrig. = Alfred king and the bishop rode into the town.
-- Þa gesawe we hi. = Then saw we them. (verb at second position, before subject and after adverb)
-- Eadweard hine geseah. = Edward himself saw. (object pronoun before verb)
-- Gesawe ge us? = Saw you us? (verb lifted instead of do-support)
-- Hwæt fremest þu? = What perform you? (verb lifted instead of do-support)
-- Fremede we hit? = Perform we it? (verb lifted instead of do-support)
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="1.">
+    <Ex.Line>Æþelwine and Wulfstan gesawon þas menn.</Ex.Line>
+    <Ex.Line>Athelwine and Wulfstan saw these men</Ex.Line>
+    <Ex.Line translation>_Athelwine and Wulfstan saw these men._</Ex.Line>
+  </Ex>
+  <Ex number="1'.">
+    <Ex.Line>Hi hi gretton.</Ex.Line>
+    <Ex.Line>They them greeted</Ex.Line>
+    <Ex.Line translation>_They greeted them._</Ex.Line>
+  </Ex>
+  <Ex number="2.">
+    <Ex.Line>Nereþ hit us?</Ex.Line>
+    <Ex.Line>Saves it us</Ex.Line>
+    <Ex.Line translation>_Does it save us?_</Ex.Line>
+  </Ex>
+  <Ex number="3.">
+    <Ex.Line>Se cyning and se bisceop and ic gesawon þone arcebisceop.</Ex.Line>
+    <Ex.Line>The king and the bishop and I saw the archbishop</Ex.Line>
+    <Ex.Line translation>_The king and the bishop and I saw the archbishop._</Ex.Line>
+  </Ex>
+  <Ex number="3'.">
+    <Ex.Line>We hine gretton.</Ex.Line>
+    <Ex.Line>We him greeted</Ex.Line>
+    <Ex.Line translation>_We greeted him._</Ex.Line>
+  </Ex>
+  <Ex number="4.">
+    <Ex.Line>Hwæt cweþe we?</Ex.Line>
+    <Ex.Line>What say we</Ex.Line>
+    <Ex.Line translation>_What do we say?_</Ex.Line>
+  </Ex>
+  <Ex number="5.">
+    <Ex.Line>Seo lar eow nereþ.</Ex.Line>
+    <Ex.Line>The teaching you saves</Ex.Line>
+    <Ex.Line translation>_The teaching saves you._</Ex.Line>
+  </Ex>
+  <Ex number="6.">
+    <Ex.Line>We cumaþ.</Ex.Line>
+    <Ex.Line>We come</Ex.Line>
+    <Ex.Line translation>_We come._</Ex.Line>
+  </Ex>
+  <Ex number="7.">
+    <Ex.Line>Ne hiere we þas wifmen.</Ex.Line>
+    <Ex.Line>No hear we these women</Ex.Line>
+    <Ex.Line translation>_We do not hear these women._</Ex.Line>
+  </Ex>
+  <Ex number="8.">
+    <Ex.Line>Þas weras hieraþ þas wifmen.</Ex.Line>
+    <Ex.Line>These men hear these women</Ex.Line>
+    <Ex.Line translation>_These men hear these women._</Ex.Line>
+  </Ex>
+  <Ex number="8'.">
+    <Ex.Line>Ne gesawon hi hi.</Ex.Line>
+    <Ex.Line>No saw they them</Ex.Line>
+    <Ex.Line translation>_They did not see them._</Ex.Line>
+  </Ex>
+  <Ex number="9.">
+    <Ex.Line>Þu hierdest þas menn.</Ex.Line>
+    <Ex.Line>You heard these men</Ex.Line>
+    <Ex.Line translation>_You heard these men._</Ex.Line>
+  </Ex>
+  <Ex number="10.">
+    <Ex.Line>Þa hierde we þe.</Ex.Line>
+    <Ex.Line>Then heard we you</Ex.Line>
+    <Ex.Line translation>_Then we heard you._</Ex.Line>
+  </Ex>
+  <Ex number="11.">
+    <Ex.Line>Þu þe hierdest, and we us hierdon.</Ex.Line>
+    <Ex.Line>You you heard, and we us heard</Ex.Line>
+    <Ex.Line translation>_You heard yourself, and we heard ourselves._</Ex.Line>
+  </Ex>
+  <Ex number="12.">
+    <Ex.Line>Alfred cyning and se bisceop ridon into þære byrig.</Ex.Line>
+    <Ex.Line>Alfred king and the bishop rode into the town</Ex.Line>
+    <Ex.Line translation>_King Alfred and the bishop rode into the town._</Ex.Line>
+  </Ex>
+  <Ex number="12'.">
+    <Ex.Line>Þa gesawe we hi.</Ex.Line>
+    <Ex.Line>Then saw we them</Ex.Line>
+    <Ex.Line translation>_Then we saw them._</Ex.Line>
+  </Ex>
+  <Ex number="13.">
+    <Ex.Line>Eadweard hine geseah.</Ex.Line>
+    <Ex.Line>Edward himself saw</Ex.Line>
+    <Ex.Line translation>_Edward saw himself._</Ex.Line>
+  </Ex>
+  <Ex number="13'.">
+    <Ex.Line>Gesawe ge us?</Ex.Line>
+    <Ex.Line>Saw you us</Ex.Line>
+    <Ex.Line translation>_Did you see us?_</Ex.Line>
+  </Ex>
+  <Ex number="14.">
+    <Ex.Line>Hwæt fremest þu?</Ex.Line>
+    <Ex.Line>What perform you</Ex.Line>
+    <Ex.Line translation>_What do you perform?_</Ex.Line>
+  </Ex>
+  <Ex number="15.">
+    <Ex.Line>Fremede we hit?</Ex.Line>
+    <Ex.Line>Performed we it</Ex.Line>
+    <Ex.Line translation>_Did we perform it?_</Ex.Line>
+  </Ex>
+</Ex.Group>
 
-Therefore, we observed three main differences: in simple and wh questions, the verb is lifted without any do-support; in normal sentences with a pronoun object, the pronoun comes before the verb (like French "je le mange"); in sentences starting with negation "ne" or adverb "þa", the verb is in the second position, lifted before the subject. These suggest that Old English has V-to-T movement as well as V2 word order (no need to worry what these terms mean).
+Therefore, we observed three main differences:
+
+- In simple and wh questions, the verb is lifted without any do-support;
+- In normal sentences with a pronoun object, the pronoun comes before the verb (like French "je le mange");
+- In sentences starting with negation "ne" or adverb "þa", the verb is in the second position, lifted before the subject.
+
+These suggest that Old English has V-to-T movement as well as V2 word order (no need to worry what these terms mean).
 
 It may be helpful to list out all the pronouns:
 
@@ -61,17 +152,53 @@ And all the verbs:
 
 There's rich inflection: at least three variants per word. "-on" is always used for "we/they" past tense: "gesawon", "gretton", "hierdon", "ridon"; while "-est" for "you" past tense: "hierdest", "fremest". "We heard" has two forms: "hierde" and "hierdon". Similarly "we saw" can be either "gesawe" or "gesawon". Which one to choose? Note that "hierde" is used when it comes before "we" and "hierdon" when it's after. Similarly, "gesawe", "hiere", "fremede", and "cweþe" are all used when the verb comes before the subject "we". So the suffix is just "-e" when the verb comes before the "we" and inflected normally otherwise. However, this rule doesn't apply to "hi" pronoun, which still uses "gesawon hi" instead of "gesawe hi". We don't have to figure out the inflection 100%: just enough to get us through the translations.
 
-e. Ne hierde ge hi. = No heard you them. = You did not hear them.  
-f. Ne gesawon hi þe. = No saw they you. = They did not see you.  
-g. Hi hit fremedon. = They it performed. = They performed it.  
-h. Ne nerede we þe. = No saved we you. = We did not save you.
+<Ex number="A1.">
+  <Ex number="e.">
+    <Ex.Line>Ne hierde ge hi.</Ex.Line>
+    <Ex.Line>No heard you them</Ex.Line>
+    <Ex.Line translation>**_You did not hear them._**</Ex.Line>
+  </Ex>
+  <Ex number="f.">
+    <Ex.Line>Ne gesawon hi þe.</Ex.Line>
+    <Ex.Line>No saw they you</Ex.Line>
+    <Ex.Line translation>**_They did not see you._**</Ex.Line>
+  </Ex>
+  <Ex number="g.">
+    <Ex.Line>Hi hit fremedon.</Ex.Line>
+    <Ex.Line>They it performed</Ex.Line>
+    <Ex.Line translation>**_They performed it._**</Ex.Line>
+  </Ex>
+  <Ex number="h.">
+    <Ex.Line>Ne nerede we þe.</Ex.Line>
+    <Ex.Line>No saved we you</Ex.Line>
+    <Ex.Line translation>**_We did not save you._**</Ex.Line>
+  </Ex>
+</Ex>
 
 In A2, we just find out which parts are missing.
 
-a. them = hi  
-b. saves = nereþ  
-c. (you) it heard = hit hierdest  
-d. heard they us = hierdon hi us
+<Ex number="A2.">
+  <Ex number="a.">
+    <Ex.Line>Ne grette ge **hi**.</Ex.Line>
+    <Ex.Line>No greeted you **them**</Ex.Line>
+    <Ex.Line translation>_You did not greet them._</Ex.Line>
+  </Ex>
+  <Ex number="b.">
+    <Ex.Line>Seo lar hi **nereþ**.</Ex.Line>
+    <Ex.Line>The teaching them **saves**</Ex.Line>
+    <Ex.Line translation>_The teaching saves them._</Ex.Line>
+  </Ex>
+  <Ex number="c.">
+    <Ex.Line>þu **hit hierdest**.</Ex.Line>
+    <Ex.Line>You **it heard**</Ex.Line>
+    <Ex.Line translation>_You heard it._</Ex.Line>
+  </Ex>
+  <Ex number="d.">
+    <Ex.Line>þa **hierdon hi us**.</Ex.Line>
+    <Ex.Line>Then **heard they us**</Ex.Line>
+    <Ex.Line translation>_Then they heard us._</Ex.Line>
+  </Ex>
+</Ex>
 
 In A3, based on how the problem is set up, we need to focus on the two pronouns: "we" and "you". "We" can be either "we" or "wit", and "you" can be either "eow", "inc", or "þe". Because all these sentences have the same structure, the selection is not a syntactic choice, but a semantic one. Look at the right hand side. The distinction is based on what the pronouns refer to. Look for commonalities in the referents of "we" and "you":
 

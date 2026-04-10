@@ -59,6 +59,7 @@
     "color-name": "^2.1.0",
     "devalue": "^5.6.4",
     "github-slugger": "^2.0.0",
+    "gloss.js": "^0.3.2",
     "image-size": "^2.0.2",
     "mdast-util-to-string": "^4.0.0",
     "mermaid": "^11.13.0",

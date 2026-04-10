@@ -1,3 +1,5 @@
+@import url("gloss.js/styles.css");
+
 :root {
   --max-page-width: 1000px;
   --color-background: white;
@@ -252,6 +254,12 @@ abbr {
 
 .phantom {
   visibility: hidden;
+}
+
+.gloss-ex,
+.gloss-ex ol,
+.gloss-ex li {
+  padding-left: 1em;
 }
 
 .dark-invert {

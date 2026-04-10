@@ -7,14 +7,27 @@ tags:
 
 {/* cSpell:ignore Balık yüzdü kaplan gibi kaplumbağa için atladı Zürafa koştu gördü zürafayı kurbağayı kurbağa kimi martı balina */}
 
+import { Ex } from "gloss.js/react";
+
 Compare the following two sentences:
 
-- Balık yüzdü. _The fish swam._
-- Balık kaplan gibi yüzdü. _The fish swam like a tiger._
+<Ex.Group>
+  <Ex>
+    <Ex.Line translation>Balık yüzdü.</Ex.Line>
+    <Ex.Line translation>_The fish swam._</Ex.Line>
+  </Ex>
+  <Ex>
+    <Ex.Line translation>Balık kaplan gibi yüzdü.</Ex.Line>
+    <Ex.Line translation>_The fish swam like a tiger._</Ex.Line>
+  </Ex>
+</Ex.Group>
 
 Clearly "kaplan gibi" = "like a tiger". Furthermore, from:
 
-- Kaplan kaplumbağa için atladı. _The tiger jumped for the turtle._
+<Ex>
+  <Ex.Line translation>Kaplan kaplumbağa için atladı.</Ex.Line>
+  <Ex.Line translation>_The tiger jumped for the turtle._</Ex.Line>
+</Ex>
 
 Which also contains "kaplan", and contains the word "tiger" but not "like", we know that "kaplan" = "tiger" and "gibi" = "like". Therefore in Turkish, the word order is as follows:
 
@@ -37,8 +50,18 @@ Which also contains "kaplan", and contains the word "tiger" but not "like", we k
 
 The translations are straightforward by plugging in the words:
 
-- Fil atladı. _The elephant jumped._
-- _The turtle ran for the fish._ Kaplumbağa balık için koştu.
+<Ex number="B1.">
+  <Ex number="a.">
+    <Ex.Line>Fil atladı.</Ex.Line>
+    <Ex.Line>elephant jumped</Ex.Line>
+    <Ex.Line translation>**_The elephant jumped._**</Ex.Line>
+  </Ex>
+  <Ex number="b.">
+    <Ex.Line>**Kaplumbağa balık için koştu.**</Ex.Line>
+    <Ex.Line>turtle fish for ran</Ex.Line>
+    <Ex.Line translation>_The turtle ran for the fish._</Ex.Line>
+  </Ex>
+</Ex>
 
 In B2, all sentences are variations of "A saw B", including wh-questions of the form "Who saw B?" and "Whom did A see?". We can easily identify the common parts for each structure.
 
@@ -64,6 +87,20 @@ We also know a few more words:
 
 Now we can translate:
 
-- Martı kaplumbağa-yı gördü. _The seagull saw the turtle._
-- _Who saw the bear?_ Kim ayı-yı gördü?
-- _Whom did the bear see?_ Ayı kimi gördü?
+<Ex number="B2.">
+  <Ex number="a.">
+    <Ex.Line>Martı kaplumbağa-yı gördü.</Ex.Line>
+    <Ex.Line>seagull turtle-DO saw</Ex.Line>
+    <Ex.Line translation>**_The seagull saw the turtle._**</Ex.Line>
+  </Ex>
+  <Ex number="b.">
+    <Ex.Line>**Kim ayı-yı gördü?**</Ex.Line>
+    <Ex.Line>Who bear-DO saw?</Ex.Line>
+    <Ex.Line translation>_Who saw the bear?_</Ex.Line>
+  </Ex>
+  <Ex number="c.">
+    <Ex.Line>**Ayı kimi gördü?**</Ex.Line>
+    <Ex.Line>Bear whom saw?</Ex.Line>
+    <Ex.Line translation>_Whom did the bear see?_</Ex.Line>
+  </Ex>
+</Ex>

@@ -6,19 +6,32 @@ tags:
 
 # Relatively Speaking
 
-{/* cSpell:ignore foki faiaoga kāmuta kitia totou sione tūmau takafaga tama mele fakatino muhu vaka holoholo ught buil */}
+{/* cSpell:ignore foki faiaoga kāmuta kitia totou sione tūmau takafaga tama mele fakatino muhu vaka holoholo ught buil */}
 
 import styles from "./F.module.css";
+import { Ex } from "gloss.js/react";
 
 We have a few proper names here, which can act as anchors for the translation.
 
 {/* prettier-ignore */}
-<ol>
-  <li value={7}>**Ne totou a Sione.**<br />_Sione read._</li>
-  <li value={8}>**Tā tūmau e Mele e fakatino.**<br />_Mele is always drawing the picture._</li>
-  <li value={9}>**To muhu ika a Mele.**<br />_Mele will have plenty of fish._</li>
-  <li value={13}>**Fai vaka a Sione ne holoholo e au.**<br />_Sione has canoes that I washed._</li>
-</ol>
+<Ex.Group>
+  <Ex number="7.">
+    <Ex.Line translation>Ne totou a Sione.</Ex.Line>
+    <Ex.Line translation>_Sione read._</Ex.Line>
+  </Ex>
+  <Ex number="8.">
+    <Ex.Line translation>Tā tūmau e Mele e fakatino.</Ex.Line>
+    <Ex.Line translation>_Mele is always drawing the picture._</Ex.Line>
+  </Ex>
+  <Ex number="9.">
+    <Ex.Line translation>To muhu ika a Mele.</Ex.Line>
+    <Ex.Line translation>_Mele will have plenty of fish._</Ex.Line>
+  </Ex>
+  <Ex number="13.">
+    <Ex.Line translation>Fai vaka a Sione ne holoholo e au.</Ex.Line>
+    <Ex.Line translation>_Sione has canoes that I washed._</Ex.Line>
+  </Ex>
+</Ex.Group>
 
 Upfront, this language is definitely not subject-initial. In 9, "Mele" comes last, so both the verb and the object come before it. In 8 and 13, there's stuff before and after the subject, so the subject is in the middle. Also note that particles like "ne", "e", and "a" are all over the place, so they are probably some case marker instead of concrete words. However the subject can be either marked by "a" or "e", so we are not too sure about the exact function of these particles yet.
 
@@ -45,7 +58,7 @@ The next best hypothesis is that the verb/tense comes first. Let's group the sen
     </tr>
     <tr>
       <th>there be</th>
-      <td>2. **Kua fai fakatino foki ne tā e ia.**<br />_There have also been pictures that he drew._</td>
+      <td>2. **Kua fai fakatino foki ne tā e ia.**<br />_There have also been pictures that he drew._</td>
       <td></td>
       <td>3. **Muhu moa tūmau.**<br />_There are always plenty of birds._</td>
       <td></td>
@@ -54,13 +67,13 @@ The next best hypothesis is that the verb/tense comes first. Let's group the sen
       <th>draw</th>
       <td></td>
       <td></td>
-      <td>8. **Tā tūmau e Mele e fakatino.**<br />_Mele is always drawing the picture._</td>
+      <td>8. **Tā tūmau e Mele e fakatino.**<br />_Mele is always drawing the picture._</td>
       <td></td>
     </tr>
     <tr>
       <th>have</th>
       <td></td>
-      <td>4. **Ne fai faiaoga e kāmuta.**<br />_The carpenter had teachers._</td>
+      <td>4. **Ne fai faiaoga e kāmuta.**<br />_The carpenter had teachers._</td>
       <td>12. **Muhu tama foki e faiaoga ka kitia he moa.**<br />_The teacher also has plenty of children that the bird will see._<br />13. **Fai vaka a Sione ne holoholo e au.**<br />_Sione has canoes that I washed._</td>
       <td>11. **To muhu ika a Mele.**<br />_Mele will have plenty of fish._</td>
     </tr>
@@ -76,7 +89,7 @@ The next best hypothesis is that the verb/tense comes first. Let's group the sen
       <td></td>
       <td></td>
       <td></td>
-      <td>10. **To holoholo foki he tama e vaka ne tā he kāmuta.**<br />_The child will also wash the canoe that the carpenter built._</td>
+      <td>10. **To holoholo foki he tama e vaka ne tā he kāmuta.**<br />_The child will also wash the canoe that the carpenter built._</td>
     </tr>
     <tr>
       <th>read</th>
@@ -98,7 +111,7 @@ Now the pattern is very clear. Looking vertically, the first word always marks t
 Furthermore, except for "there be" and "have", the second word is consistent within each row. Although most rows only have one entry, note that "wash" appears embedded in two other sentences, and in both cases the sentence also contains "holoholo". Similarly, "kitia" also appears in 12. For "there be" and "have", the two rows share two verbs: "muhu" and "fai". Note that "muhu" is used iff the possessed object is "plenty of". Therefore:
 
 - kai = eat
-- tā = draw
+- tā = draw
 - kitia = see
 - holoholo = wash
 - totou = read
@@ -107,32 +120,61 @@ Furthermore, except for "there be" and "have", the second word is consistent wit
 
 Once we know the tense marker, we can identify the embedded relative clause. In 2, 9, 10, and 13, we have another instance of "ne", which must be the tense marker for the embedded clause, and what follows it must be the verb. Unfortunately, no second "to" has been found in 6 or 12. Instead, "holoholo" and "kitia" in these two sentences are led by "ka", which is presumably also the tense marker.
 
-1. **<span className={styles.red}>Kua</span> <span className={styles.blue}>kai</span> noa a au.**  
-   _I <span className={styles.red}>have</span> only <span className={styles.blue}>eaten</span>._
-2. **<span className={styles.red}>Kua</span> <span className={styles.blue}>fai</span> fakatino foki <span className={styles.red}>ne</span> <span className={styles.blue}>tā</span> e ia.**  
-   _<span className={styles.red}>There have</span> also <span className={styles.blue}>been</span> pictures that he <span className={styles.blue}>dr</span><span className={styles.red}>ew</span>._
-3. **<span className={styles.blue}>Muhu</span> moa tūmau.**  
-   _<span className={styles.blue}>There are</span> always <span className={styles.blue}>plenty of</span> birds._
-4. **<span className={styles.red}>Ne</span> <span className={styles.blue}>fai</span> faiaoga e kāmuta.**  
-   _The carpenter <span className={styles.blue}>ha</span><span className={styles.red}>d</span> teachers._
-5. **<span className={styles.red}>Kua</span> <span className={styles.blue}>kitia</span> e ia a au.**  
-   _He <span className={styles.red}>has</span> <span className={styles.blue}>seen</span> me._
-6. **<span className={styles.red}>To</span> <span className={styles.blue}>kai</span> he moa <span className={styles.red}>ka</span> <span className={styles.blue}>holoholo</span> e au e ika.**  
-   _The bird that I <span className={styles.red}>will</span> <span className={styles.blue}>wash</span> <span className={styles.red}>will</span> <span className={styles.blue}>eat</span> the fish._
-7. **<span className={styles.red}>Ne</span> <span className={styles.blue}>totou</span> a Sione.**  
-   _Sione <span className={styles.blue}>rea</span><span className={styles.red}>d</span>._
-8. **<span className={styles.blue}>Tā</span> tūmau e Mele e fakatino.**  
-   _Mele <span className={styles.blue}>is</span> always <span className={styles.blue}>drawing</span> the picture._
-9. **<span className={styles.red}>Ne</span> <span className={styles.blue}>kai</span> e ika <span className={styles.red}>ne</span> <span className={styles.blue}>takafaga</span> he tama.**  
-   _The fish that the child <span className={styles.blue}>ca</span><span className={styles.red}>ught</span> <span className={styles.blue}>at</span><span className={styles.red}>e</span>._
-10. **<span className={styles.red}>To</span> <span className={styles.blue}>holoholo</span> foki he tama e vaka <span className={styles.red}>ne</span> <span className={styles.blue}>tā</span> he kāmuta.**  
-    _The child <span className={styles.red}>will</span> also <span className={styles.blue}>wash</span> the canoe that the carpenter <span className={styles.blue}>buil</span><span className={styles.red}>t</span>._
-11. **<span className={styles.red}>To</span> <span className={styles.blue}>muhu</span> ika a Mele.**  
-    _Mele <span className={styles.red}>will</span> <span className={styles.blue}>have plenty of</span> fish._
-12. **<span className={styles.blue}>Muhu</span> tama foki e faiaoga <span className={styles.red}>ka</span> <span className={styles.blue}>kitia</span> he moa.**  
-    _The teacher also <span className={styles.blue}>has plenty of</span> children that the bird <span className={styles.red}>will</span> <span className={styles.blue}>see</span>._
-13. **<span className={styles.blue}>Fai</span> vaka a Sione <span className={styles.red}>ne</span> <span className={styles.blue}>holoholo</span> e au.**  
-    _Sione <span className={styles.blue}>has</span> canoes that I <span className={styles.blue}>wash</span><span className={styles.red}>ed</span>._
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="1.">
+    <Ex.Line translation><span className={styles.red}>Kua</span> <span className={styles.blue}>kai</span> noa a au.</Ex.Line>
+    <Ex.Line translation>_I <span className={styles.red}>have</span> only <span className={styles.blue}>eaten</span>._</Ex.Line>
+  </Ex>
+  <Ex number="2.">
+    <Ex.Line translation><span className={styles.red}>Kua</span> <span className={styles.blue}>fai</span> fakatino foki <span className={styles.red}>ne</span> <span className={styles.blue}>tā</span> e ia.</Ex.Line>
+    <Ex.Line translation>_<span className={styles.red}>There have</span> also <span className={styles.blue}>been</span> pictures that he <span className={styles.blue}>dr</span><span className={styles.red}>ew</span>._</Ex.Line>
+  </Ex>
+  <Ex number="3.">
+    <Ex.Line translation><span className={styles.blue}>Muhu</span> moa tūmau.</Ex.Line>
+    <Ex.Line translation>_<span className={styles.blue}>There are</span> always <span className={styles.blue}>plenty of</span> birds._</Ex.Line>
+  </Ex>
+  <Ex number="4.">
+    <Ex.Line translation><span className={styles.red}>Ne</span> <span className={styles.blue}>fai</span> faiaoga e kāmuta.</Ex.Line>
+    <Ex.Line translation>_The carpenter <span className={styles.blue}>ha</span><span className={styles.red}>d</span> teachers._</Ex.Line>
+  </Ex>
+  <Ex number="5.">
+    <Ex.Line translation><span className={styles.red}>Kua</span> <span className={styles.blue}>kitia</span> e ia a au.</Ex.Line>
+    <Ex.Line translation>_He <span className={styles.red}>has</span> <span className={styles.blue}>seen</span> me._</Ex.Line>
+  </Ex>
+  <Ex number="6.">
+    <Ex.Line translation><span className={styles.red}>To</span> <span className={styles.blue}>kai</span> he moa <span className={styles.red}>ka</span> <span className={styles.blue}>holoholo</span> e au e ika.</Ex.Line>
+    <Ex.Line translation>_The bird that I <span className={styles.red}>will</span> <span className={styles.blue}>wash</span> <span className={styles.red}>will</span> <span className={styles.blue}>eat</span> the fish._</Ex.Line>
+  </Ex>
+  <Ex number="7.">
+    <Ex.Line translation><span className={styles.red}>Ne</span> <span className={styles.blue}>totou</span> a Sione.</Ex.Line>
+    <Ex.Line translation>_Sione <span className={styles.blue}>rea</span><span className={styles.red}>d</span>._</Ex.Line>
+  </Ex>
+  <Ex number="8.">
+    <Ex.Line translation><span className={styles.blue}>Tā</span> tūmau e Mele e fakatino.</Ex.Line>
+    <Ex.Line translation>_Mele <span className={styles.blue}>is</span> always <span className={styles.blue}>drawing</span> the picture._</Ex.Line>
+  </Ex>
+  <Ex number="9.">
+    <Ex.Line translation><span className={styles.red}>Ne</span> <span className={styles.blue}>kai</span> e ika <span className={styles.red}>ne</span> <span className={styles.blue}>takafaga</span> he tama.</Ex.Line>
+    <Ex.Line translation>_The fish that the child <span className={styles.blue}>ca</span><span className={styles.red}>ught</span> <span className={styles.blue}>at</span><span className={styles.red}>e</span>._</Ex.Line>
+  </Ex>
+  <Ex number="10.">
+    <Ex.Line translation><span className={styles.red}>To</span> <span className={styles.blue}>holoholo</span> foki he tama e vaka <span className={styles.red}>ne</span> <span className={styles.blue}>tā</span> he kāmuta.</Ex.Line>
+    <Ex.Line translation>_The child <span className={styles.red}>will</span> also <span className={styles.blue}>wash</span> the canoe that the carpenter <span className={styles.blue}>buil</span><span className={styles.red}>t</span>._</Ex.Line>
+  </Ex>
+  <Ex number="11.">
+    <Ex.Line translation><span className={styles.red}>To</span> <span className={styles.blue}>muhu</span> ika a Mele.</Ex.Line>
+    <Ex.Line translation>_Mele <span className={styles.red}>will</span> <span className={styles.blue}>have plenty of</span> fish._</Ex.Line>
+  </Ex>
+  <Ex number="12.">
+    <Ex.Line translation><span className={styles.blue}>Muhu</span> tama foki e faiaoga <span className={styles.red}>ka</span> <span className={styles.blue}>kitia</span> he moa.</Ex.Line>
+    <Ex.Line translation>_The teacher also <span className={styles.blue}>has plenty of</span> children that the bird <span className={styles.red}>will</span> <span className={styles.blue}>see</span>._</Ex.Line>
+  </Ex>
+  <Ex number="13.">
+    <Ex.Line translation><span className={styles.blue}>Fai</span> vaka a Sione <span className={styles.red}>ne</span> <span className={styles.blue}>holoholo</span> e au.</Ex.Line>
+    <Ex.Line translation>_Sione <span className={styles.blue}>has</span> canoes that I <span className={styles.blue}>wash</span><span className={styles.red}>ed</span>._</Ex.Line>
+  </Ex>
+</Ex.Group>
 
 Since there aren't many words left, just comparing sentences that share the same noun will reveal the corresponding word. The revelation here is that case and number are not marked on the noun; for example, "picture" and "pictures", "bird" and "birds", "I" and "me", each share the same word.
 
@@ -154,58 +196,87 @@ Eliminating these, the adverbs are also apparent:
 
 But now here's the real question: what's the word order and what are "he", "e", and "a"? Let's gloss the sentences.
 
-1. **Kua kai noa a au.**  
-   PERF eat only _a_ I.  
-   T-V-Adv-Subj  
-   _I have only eaten._
-2. **Kua fai fakatino foki ne tā e ia.**  
-   PERF have picture also [PAST draw _e_ he].  
-   T-have-Obj-Adv-[T-V-Subj(-Obj)]  
-   _There have also been pictures that he drew._
-3. **Muhu moa tūmau.**  
-   (PRES) have-plenty-of bird always.  
-   T-have-Obj-Adv  
-   _There are always plenty of birds._
-4. **Ne fai faiaoga e kāmuta.**  
-   PAST have teacher _e_ carpenter.  
-   T-have-Obj-Subj  
-   _The carpenter had teachers._
-5. **Kua kitia e ia a au.**  
-   PERF see _e_ he _a_ I.  
-   T-V-Subj-Obj  
-   _He has seen me._
-6. **To kai he moa ka holoholo e au e ika.**  
-   FUT eat _he_ bird [FUT wash _e_ I] _e_ fish.  
-   T-V-Subj-[T-V-Subj(-Obj)]-Obj  
-   _The bird that I will wash will eat the fish._
-7. **Ne totou a Sione.**  
-   PAST read _a_ Sione.  
-   T-V-Subj  
-   _Sione read._
-8. **Tā tūmau e Mele e fakatino.**  
-   (PRES) draw always _e_ Mele _e_ picture.  
-   T-V-Adv-Subj-Obj  
-   _Mele is always drawing the picture._
-9. **Ne kai e ika ne takafaga he tama.**  
-   PAST eat _e_ fish [PAST catch _he_ child].  
-   T-V-Subj-[T-V-Subj(-Obj)]  
-   _The fish that the child caught ate._
-10. **To holoholo foki he tama e vaka ne tā he kāmuta.**  
-    FUT wash also _he_ child _e_ canoe [PAST draw _he_ carpenter].  
-    T-V-Adv-Subj-Obj-[T-V-Subj(-Obj)]  
-    _The child will also wash the canoe that the carpenter built._
-11. **To muhu ika a Mele.**  
-    FUT have-plenty-of fish _a_ Mele.  
-    T-have-Obj-Subj  
-    _Mele will have plenty of fish._
-12. **Muhu tama foki e faiaoga ka kitia he moa.**  
-    (PRES) have-plenty-of child also _e_ teacher [FUT see _he_ bird].  
-    T-have-Obj-Adv-Subj-[T-V-Subj(-Obj)]  
-    _The teacher also has plenty of children that the bird will see._
-13. **Fai vaka a Sione ne holoholo e au.**  
-    (PRES) have canoe _a_ Sione [PAST wash _e_ I].  
-    T-have-Obj-Subj-[T-V-Subj(-Obj)]  
-    _Sione has canoes that I washed._
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="1.">
+    <Ex.Line>Kua kai noa a au.</Ex.Line>
+    <Ex.Line>PERF eat only _a_ I</Ex.Line>
+    <Ex.Line>T V Adv <></> Subj</Ex.Line>
+    <Ex.Line translation>_I have only eaten._</Ex.Line>
+  </Ex>
+  <Ex number="2.">
+    <Ex.Line>Kua fai fakatino foki ne tā e ia.</Ex.Line>
+    <Ex.Line>PERF have picture also [PAST draw _e_ he]</Ex.Line>
+    <Ex.Line>T have Obj Adv [T V <></> Subj]</Ex.Line>
+    <Ex.Line translation>_There have also been pictures that he drew._</Ex.Line>
+  </Ex>
+  <Ex number="3.">
+    <Ex.Line>∅ Muhu moa tūmau.</Ex.Line>
+    <Ex.Line>(PRES) have-plenty-of bird always</Ex.Line>
+    <Ex.Line>T have Obj Adv</Ex.Line>
+    <Ex.Line translation>_There are always plenty of birds._</Ex.Line>
+  </Ex>
+  <Ex number="4.">
+    <Ex.Line>Ne fai faiaoga e kāmuta.</Ex.Line>
+    <Ex.Line>PAST have teacher _e_ carpenter</Ex.Line>
+    <Ex.Line>T have Obj <></> Subj</Ex.Line>
+    <Ex.Line translation>_The carpenter had teachers._</Ex.Line>
+  </Ex>
+  <Ex number="5.">
+    <Ex.Line>Kua kitia e ia a au.</Ex.Line>
+    <Ex.Line>PERF see _e_ he _a_ I</Ex.Line>
+    <Ex.Line>T V <></> Subj <></> Obj</Ex.Line>
+    <Ex.Line translation>_He has seen me._</Ex.Line>
+  </Ex>
+  <Ex number="6.">
+    <Ex.Line>To kai he moa ka holoholo e au e ika.</Ex.Line>
+    <Ex.Line>FUT eat _he_ bird [FUT wash _e_ I] _e_ fish</Ex.Line>
+    <Ex.Line>T V <></> Subj [T V <></> Subj] <></> Obj</Ex.Line>
+    <Ex.Line translation>_The bird that I will wash will eat the fish._</Ex.Line>
+  </Ex>
+  <Ex number="7.">
+    <Ex.Line>Ne totou a Sione.</Ex.Line>
+    <Ex.Line>PAST read _a_ Sione</Ex.Line>
+    <Ex.Line>T V <></> Subj</Ex.Line>
+    <Ex.Line translation>_Sione read._</Ex.Line>
+  </Ex>
+  <Ex number="8.">
+    <Ex.Line>∅ Tā tūmau e Mele e fakatino.</Ex.Line>
+    <Ex.Line>(PRES) draw always _e_ Mele _e_ picture</Ex.Line>
+    <Ex.Line>T V Adv <></> Subj <></> Obj</Ex.Line>
+    <Ex.Line translation>_Mele is always drawing the picture._</Ex.Line>
+  </Ex>
+  <Ex number="9.">
+    <Ex.Line>Ne kai e ika ne takafaga he tama.</Ex.Line>
+    <Ex.Line>PAST eat _e_ fish [PAST catch _he_ child]</Ex.Line>
+    <Ex.Line>T V <></> Subj [T V <></> Subj]</Ex.Line>
+    <Ex.Line translation>_The fish that the child caught ate._</Ex.Line>
+  </Ex>
+  <Ex number="10.">
+    <Ex.Line>To holoholo foki he tama e vaka ne tā he kāmuta.</Ex.Line>
+    <Ex.Line>FUT wash also _he_ child _e_ canoe [PAST draw _he_ carpenter]</Ex.Line>
+    <Ex.Line>T V Adv <></> Subj <></> Obj [T V <></> Subj]</Ex.Line>
+    <Ex.Line translation>_The child will also wash the canoe that the carpenter built._</Ex.Line>
+  </Ex>
+  <Ex number="11.">
+    <Ex.Line>To muhu ika a Mele.</Ex.Line>
+    <Ex.Line>FUT have-plenty-of fish _a_ Mele</Ex.Line>
+    <Ex.Line>T have Obj <></> Subj</Ex.Line>
+    <Ex.Line translation>_Mele will have plenty of fish._</Ex.Line>
+  </Ex>
+  <Ex number="12.">
+    <Ex.Line>∅ Muhu tama foki e faiaoga ka kitia he moa.</Ex.Line>
+    <Ex.Line>(PRES) have-plenty-of child also _e_ teacher [FUT see _he_ bird]</Ex.Line>
+    <Ex.Line>T have Obj Adv <></> Subj [T V <></> Subj]</Ex.Line>
+    <Ex.Line translation>_The teacher also has plenty of children that the bird will see._</Ex.Line>
+  </Ex>
+  <Ex number="13.">
+    <Ex.Line>∅ Fai vaka a Sione ne holoholo e au.</Ex.Line>
+    <Ex.Line>(PRES) have canoe _a_ Sione [PAST wash _e_ I]</Ex.Line>
+    <Ex.Line>T have Obj <></> Subj [T V <></> Subj]</Ex.Line>
+    <Ex.Line translation>_Sione has canoes that I washed._</Ex.Line>
+  </Ex>
+</Ex.Group>
 
 I have successfully identified two word orders:
 
@@ -247,25 +318,45 @@ And here are the case marker particles. I'm separating them into three groups: t
 
 Now we shall translate.
 
-(a) **Fai moa noa.**  
-(PRES) have bird only  
-_There is only a bird._  
-(b) **Kua holoholo foki he faiaoga ne takafaga e au a ia.**  
-PERF wash also _he_ teacher [PAST catch _e_ I] _a_ he  
-_The teacher that I caught has also washed him._  
-(c) **To muhu vaka e tama ka holoholo he moa.**  
-FUT have-plenty-of canoe _e_ child [FUT wash _he_ bird]  
-_The child will have plenty of canoes that the bird will wash._ OR _The child that the bird will wash will have plenty of canoes._
-
-(a) _He will also read._  
-FUT read also _a_ he  
-**To totou foki a ia.**  
-(b) _Sione has only had fish that the teacher will eat._  
-PERF have fish only _a_ Sione [FUT eat _he_ teacher]  
-**Kua fai ika noa a Sione ka kai he faiaoga.**  
-(c) _The teacher that Mele saw built the canoe._  
-PAST build _he_ teacher [PAST see _e_ Mele] _e_ canoe  
-**Ne tā he faiaoga ne kitia e Mele e vaka.**  
-(d) _There have always been plenty of carpenters._  
-PERF have-plenty-of carpenter always  
-**Kua muhu kāmuta tūmau.**
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="Q1.">
+    <Ex number="(a)">
+      <Ex.Line>∅ Fai moa noa.</Ex.Line>
+      <Ex.Line>(PRES) have bird only</Ex.Line>
+      <Ex.Line translation>**_There is only a bird._**</Ex.Line>
+    </Ex>
+    <Ex number="(b)">
+      <Ex.Line>Kua holoholo foki he faiaoga ne takafaga e au a ia.</Ex.Line>
+      <Ex.Line>PERF wash also _he_ teacher [PAST catch _e_ I] _a_ he</Ex.Line>
+      <Ex.Line translation>**_The teacher that I caught has also washed him._**</Ex.Line>
+    </Ex>
+    <Ex number="(c)">
+      <Ex.Line>To muhu vaka e tama ka holoholo he moa.</Ex.Line>
+      <Ex.Line>FUT have-plenty-of canoe _e_ child [FUT wash _he_ bird]</Ex.Line>
+      <Ex.Line translation>**_The child will have plenty of canoes that the bird will wash._** OR**_The child that the bird will wash will have plenty of canoes._**</Ex.Line>
+    </Ex>
+  </Ex>
+  <Ex number="Q2.">
+    <Ex number="(a)">
+      <Ex.Line>**To totou foki a ia.**</Ex.Line>
+      <Ex.Line>FUT read also _a_ he</Ex.Line>
+      <Ex.Line translation>_He will also read._</Ex.Line>
+    </Ex>
+    <Ex number="(b)">
+      <Ex.Line>**Kua fai ika noa a Sione ka kai he faiaoga.**</Ex.Line>
+      <Ex.Line>PERF have fish only _a_ Sione [FUT eat _he_ teacher]</Ex.Line>
+      <Ex.Line translation>_Sione has only had fish that the teacher will eat._</Ex.Line>
+    </Ex>
+    <Ex number="(c)">
+      <Ex.Line>**Ne tā he faiaoga ne kitia e Mele e vaka.**</Ex.Line>
+      <Ex.Line>PAST build _he_ teacher [PAST see _e_ Mele] _e_ canoe</Ex.Line>
+      <Ex.Line translation>_The teacher that Mele saw built the canoe._</Ex.Line>
+    </Ex>
+    <Ex number="(d)">
+      <Ex.Line>**Kua muhu kāmuta tūmau.**</Ex.Line>
+      <Ex.Line>PERF have-plenty-of carpenter always</Ex.Line>
+      <Ex.Line translation>_There have always been plenty of carpenters._</Ex.Line>
+    </Ex>
+  </Ex>
+</Ex.Group>

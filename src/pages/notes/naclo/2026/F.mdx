@@ -8,6 +8,8 @@ tags:
 
 {/* cSpell:ignore Māori Kāhore kōrero ahau tāne haere whare tāku tamawahine tamatāne ngeru tāna tōku matua tētahi ētahi */}
 
+import { Ex } from "gloss.js/react";
+
 Notice that the sentences can be of one of four types: simple present, present perfect, negative simple present, and negative present perfect. The sentences are as follows:
 
 <table>
@@ -130,11 +132,51 @@ So obviously, plural determiners have the extra "t-" prefix (except for "the", f
 
 Finally, the possessor is marked by the ending: "-ku" = my, "-u" = your, "-na" = her.
 
-1\. Kei te kite au i ētahi wahine. = [Present] see I [direct] a.PL woman = I see some women.  
-2\. Kua haere ia ki te whare. = [Perfect] go she to the.SG house = She has gone to the house.  
-3\. Kāhore āna ngeru kia kite i ōku whare. = [Neg] her.PL cat [Perfect] see [direct] my.PL house = Her cats have not seen my houses.  
-4\. Kei te kōrero tōu matua wahine ki a ia. = [Present] speak your.SG parent woman to her = Your mother speaks to her.  
-5\. I have not seen your houses. = [Neg] I [Perfect] see [direct] your.PL house = Kāhore au kia kite i ōu whare.  
-6\. Some men have seen me. = [Perfect] see a.PL man [direct] me = Kua kite ētahi tāne i ahau.  
-7\. Her parents go to my house. = [Present] go her.PL parent to my.SG house = Kei te haere ōna matua ki tōku whare. (using "ōna" because "matua tāne" is in the "ō" class)  
-8\. Your wife has spoken to you. = [Perfect] speak your.SG wife to you = Kua kōrero tāu wahine ki a koe. (using "tāu" because "tāne" is in the "ā" class)
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="F1.">
+    <Ex number="1.">
+      <Ex.Line><>Kei te</> kite au i ētahi wahine.</Ex.Line>
+      <Ex.Line>PRES see I DIR a.PL woman</Ex.Line>
+      <Ex.Line translation>**_I see some women._**</Ex.Line>
+    </Ex>
+    <Ex number="2.">
+      <Ex.Line>Kua haere ia ki te whare.</Ex.Line>
+      <Ex.Line>PERF go she to the.SG house</Ex.Line>
+      <Ex.Line translation>**_She has gone to the house._**</Ex.Line>
+    </Ex>
+    <Ex number="3.">
+      <Ex.Line>Kāhore āna ngeru kia kite i ōku whare.</Ex.Line>
+      <Ex.Line>NEG her.PL cat PERF see DIR my.PL house</Ex.Line>
+      <Ex.Line translation>**_Her cats have not seen my houses._**</Ex.Line>
+    </Ex>
+    <Ex number="4.">
+      <Ex.Line><>Kei te</> kōrero tōu matua wahine ki <>a ia</>.</Ex.Line>
+      <Ex.Line>PRES speak your.SG parent woman to her</Ex.Line>
+      <Ex.Line translation>**_Your mother speaks to her._**</Ex.Line>
+    </Ex>
+  </Ex>
+  <Ex number="F2.">
+    <Ex number="5.">
+      <Ex.Line>**Kāhore au kia kite i ōu whare.**</Ex.Line>
+      <Ex.Line>NEG I PERF see DIR your.PL house</Ex.Line>
+      <Ex.Line translation>_I have not seen your houses._</Ex.Line>
+    </Ex>
+    <Ex number="6.">
+      <Ex.Line>**Kua kite ētahi tāne i ahau.**</Ex.Line>
+      <Ex.Line>PERF see a.PL man DIR me</Ex.Line>
+      <Ex.Line translation>_Some men have seen me._</Ex.Line>
+    </Ex>
+    <Ex number="7.">
+      <Ex.Line>**<>Kei te</> haere ōna matua ki tōku whare.**</Ex.Line>
+      <Ex.Line>PRES go her.PL parent to my.SG house</Ex.Line>
+      <Ex.Line translation>_Her parents go to my house._</Ex.Line>
+    </Ex>
+    <Ex number="8.">
+      <Ex.Line>**Kua kōrero tāu wahine ki <>a koe</>.**</Ex.Line>
+      <Ex.Line>PERF speak your.SG wife to you</Ex.Line>
+      <Ex.Line translation>_Your wife has spoken to you._</Ex.Line>
+      <Ex.Line translation>(using "tāu" because "tāne" is in the "ā" class)</Ex.Line>
+    </Ex>
+  </Ex>
+</Ex.Group>

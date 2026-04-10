@@ -7,6 +7,8 @@ tags:
 
 {/* cSpell:ignore Atsima Atsa abaŋa Isopiao̥ hoikḁ ɲcie leɓetse gaanḁ atse̥ ɔkaka atsia hoo̥ ŋoka abaŋḁ ɓets’ḁ Minia ɲecayḁ ɔkakḁ zeƙwe̥ kuruo̥ cekia ntsie̥ oŋoro̥ kuruo daḁ oŋorḁ ɲakawakḁ ɲcie̥ Zeƙwata oŋorika epḁ leɓetse̥ */}
 
+import { Ex } from "gloss.js/react";
+
 We can first pick some low hanging fruits based on clever observations.
 
 - Looking around, the devoicing marker ◌̥ appears on and only on the final vowels, with the exception of [i] in "dii"—this is also consistent with all Ik sentences we are to see. Therefore, this marker is purely phonological and we can safely ignore it for analysis. It's also the answer for E6.
@@ -70,16 +72,68 @@ The remaining ones need some more careful analysis.
 
 Having studied all the word correspondences, we can now say a few things about word order: this language is VSO, with adjectives, demonstratives, and relative clauses coming after the noun. The verb agrees with the subject in person and number. If the subject is a pronoun, it can be dropped. The past tense morpheme ("bee") comes after the verb.
 
-1. 1\. Epa ŋoka kuruo na daḁ. = sleeps dog in-shade which is-nice ("na" appears in 3 "na ɓets’ḁ" = "that is white" and 13 "na daa" = "nice")  
-   2\. Epa ŋoka na ɓets’ḁ. = sleeps dog which is-white
-2. a. these = dii  
-   b. my huts = huts my = hoika ɲcie̥ (the other one is "hoika na ɲcie̥", but I don't know how you are supposed to see that "na" also works with possessives because the cases we've seen of "na" are all with adjectives.)  
-   c. I love my wife. = love-1sg wife my = Minia cekia ɲcie̥. (again, the other one is " Minia cekia na ɲcie̥.")  
-   d. Father is coming from the nice hut. = come-3sg-prog father hut which is-nice = Atsa abaŋa hoo na daḁ.
-3. a. Zeƙwata oŋorika kuruo̥. = sit-3pl elephants shade = The elephants are sitting in the shade. (We haven't seen the first two words exactly, but we've seen "zeƙwe" and "oŋoro" with the same roots. Based on "hoo"-"hoika", we can infer that "-ika" is the plural suffix; there aren't many other things you can attach to a noun anyway.)  
-   b. Mina ŋoka ɔkaka ntsie̥. = love-3sg dog bone his = The dog loves his bone.  
-   c. Minima oŋorika ni epḁ. = love-1pl elephants that sleep = We love elephants that sleep. (The solution also gives "We love sleeping elephants." but this is _really_ hard to think of because they are meaning-wise equivalent. The "-ima" suffix means 1pl based on 9 "Atsima".)  
-   d. ŋoka na ɲcie̥ = dog which my = my dog (Why doesn't the answer say "the dog of mine" as well? I'm not sure.)
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="E2.">
+    <Ex number="S1.">
+      <Ex.Line>Epa ŋoka kuruo na daḁ.</Ex.Line>
+      <Ex.Line>sleeps **dog** in-shade **which** **is-nice**</Ex.Line>
+      <Ex.Line translation>(Note: "na" appears in 3 "na ɓets’ḁ" = "that is white" and 13 "na daa" = "nice")</Ex.Line>
+    </Ex>
+    <Ex number="S2.">
+      <Ex.Line>Epa ŋoka na ɓets’ḁ.</Ex.Line>
+      <Ex.Line>**sleeps dog which is-white**</Ex.Line>
+    </Ex>
+  </Ex>
+  <Ex number="E3.">
+    <Ex number="a.">
+      <Ex.Line>**dii**</Ex.Line>
+      <Ex.Line>these</Ex.Line>
+    </Ex>
+    <Ex number="b.">
+      <Ex.Line>**hoika ɲcie̥**</Ex.Line>
+      <Ex.Line>huts my</Ex.Line>
+      <Ex.Line translation>_my huts_</Ex.Line>
+      <Ex.Line translation>(the other one is "hoika na ɲcie̥", but I don't know how you are supposed to see that "na" also works with possessives because the cases we've seen of "na" are all with adjectives.)</Ex.Line>
+    </Ex>
+    <Ex number="c.">
+      <Ex.Line>**Minia cekia ɲcie̥.**</Ex.Line>
+      <Ex.Line>love-1sg wife my</Ex.Line>
+      <Ex.Line translation>_I love my wife._</Ex.Line>
+      <Ex.Line translation>(again, the other one is " Minia cekia na ɲcie̥.")</Ex.Line>
+    </Ex>
+    <Ex number="d.">
+      <Ex.Line>**Atsa abaŋa hoo na daḁ.**</Ex.Line>
+      <Ex.Line>come-3sg-prog father hut which is-nice</Ex.Line>
+      <Ex.Line translation>_Father is coming from the nice hut._</Ex.Line>
+    </Ex>
+  </Ex>
+  <Ex number="E4.">
+    <Ex number="a.">
+      <Ex.Line>Zeƙwata oŋorika kuruo̥.</Ex.Line>
+      <Ex.Line>sit-3pl elephants shade</Ex.Line>
+      <Ex.Line translation>**_The elephants are sitting in the shade._**</Ex.Line>
+      <Ex.Line translation>(We haven't seen the first two words exactly, but we've seen "zeƙwe" and "oŋoro" with the same roots. Based on "hoo"-"hoika", we can infer that "-ika" is the plural suffix; there aren't many other things you can attach to a noun anyway.)</Ex.Line>
+    </Ex>
+    <Ex number="b.">
+      <Ex.Line>Mina ŋoka ɔkaka ntsie̥.</Ex.Line>
+      <Ex.Line>love-3sg dog bone his</Ex.Line>
+      <Ex.Line translation>**_The dog loves his bone._**</Ex.Line>
+    </Ex>
+    <Ex number="c.">
+      <Ex.Line>Minima oŋorika ni epḁ.</Ex.Line>
+      <Ex.Line>love-1pl elephants that sleep</Ex.Line>
+      <Ex.Line translation>**_We love elephants that sleep._**</Ex.Line>
+      <Ex.Line translation>(The solution also gives "We love sleeping elephants." but this is _really_ hard to think of because they are meaning-wise basically equivalent. The "-ima" suffix means 1pl based on 9 "Atsima".)</Ex.Line>
+    </Ex>
+    <Ex number="d.">
+      <Ex.Line>ŋoka na ɲcie̥</Ex.Line>
+      <Ex.Line>dog which my</Ex.Line>
+      <Ex.Line translation>**_my dog_**</Ex.Line>
+      <Ex.Line translation>(Why doesn't the answer say "the dog of mine" as well? I'm not sure.)</Ex.Line>
+    </Ex>
+  </Ex>
+</Ex.Group>
 
 In E5:
 

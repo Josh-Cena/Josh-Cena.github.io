@@ -5,9 +5,10 @@ tags:
 
 # Splash to Save
 
-import styles from "./F.module.css";
-
 {/* cSpell:ignore abal angde ankom Bunkuttang däbe daeya dägagän däganeyo dagwaeya dakonewän dängkamän dapisamän daspunän dattkaemnegnän ddapall ddob ddobae dowae duduaibnegnän eragwaeya gogän gogon gokätaemän gongkamän guinggolän ikop käkan källa kollba Malla mängalae mäse nagnag ngänygäny peyang säresäremang tärko toko towall ttam ttängäm Ttongo ulle ulleulle walle wätali Yäbäd */}
+
+import styles from "./F.module.css";
+import { Ex } from "gloss.js/react";
 
 There's no syntactic pattern here, so we just have to find a few keywords. I found: "ankom" = "Ant" (appearing in (1) and (2)); "tärko" = "Small Fish" (appearing in (1) and (3)).
 
@@ -49,60 +50,57 @@ Now we have all the correspondences, we need to look more closely at word-level 
 
 Here are all sentences. The colors represent different parts of speech: <span className={styles.red}>red</span> for subjects, <span className={styles.green}>green</span> for objects, <span className={styles.blue}>blue</span> for verbs, and <span className={styles.violet}>violet</span> for other parts of speech.
 
-1. <span className={styles.red}>Ankom a tärko</span> ubi eragwaeya ddobae ai
-   abal <span className={styles.green}>nag</span> dagwaeya.
-   <span className={styles.red}>Ant and Small Fish</span>, they were really very
-   good <span className={styles.green}>friends</span>.
-2. <span className={styles.red}>Ankom</span> obo ma me daeya
-   <span className={styles.violet}>llo</span> toko me.
-   <span className={styles.red}>Ant</span> was in his house on top of
-   <span className={styles.violet}>a tree</span>.
-3. <span className={styles.red}>Tärko</span>
-   <span className={styles.violet}>walle</span> me daeya
-   <span className={styles.green}>ddob kollba nagnag</span> oba peyang.
-   <span className={styles.red}>Small Fish</span> was in the
-   <span className={styles.violet}>river</span> with
-   <span className={styles.green}>some fish friends</span>.
-4. Ttongo ag me däbe ttängäm a säresäremang gogon.  
-   One morning that place was about to rain.
-5. Yäbäd de ddapall käkan da <span className={styles.blue}>dakonewän</span>.  
-   Clouds <span className={styles.blue}>covered</span> the sun.
-6. Malla wätali gogon, <span className={styles.red}>wel ulle</span> da <span className={styles.blue}>gongkamän</span>.  
-   It wasn’t long before a <span className={styles.red}>big wind</span> <span className={styles.blue}>began</span>.
-7. <span className={styles.green}>Llo</span> de
-   <span className={styles.blue}>duduaibnegnän a dattkaemnegnän</span>. (E) It
-   <span className={styles.blue}>blew down and broke</span>
-   <span className={styles.green}>the tree</span>.
-8. <span className={styles.green}>Ankom</span> bo ma de
-   <span className={styles.red}>wel</span> a
-   <span className={styles.blue}>dapisamän</span> a
-   <span className={styles.green}>ankom</span> bom
-   <span className={styles.blue}>daspunän</span>
-   <span className={styles.violet}>walle</span> we. (C) The
-   <span className={styles.red}>wind</span>
-   <span className={styles.blue}>tore</span>
-   <span className={styles.green}>Ant</span>'s house and
-   <span className={styles.blue}>threw</span>
-   <span className={styles.green}>Ant</span> into the
-   <span className={styles.violet}>river</span>.
-9. <span className={styles.red}>Tärko</span> da angde ikop dägagän, obo dowae e
-   <span className={styles.blue}>guinggolän</span>. (F) When
-   <span className={styles.red}>Small Fish</span> saw, he
-   <span className={styles.blue}>moved closer</span> to him.
-10. Be <span className={styles.red}>ddob kollba ulleulle</span> da gäz e de ada däganeyo. (D)  
-    But <span className={styles.red}>some big fish</span> were trying to kill him.
-11. Bunkuttang a mäse ngänygäny e <span className={styles.blue}>dängkamän</span>. (A)  
-    A catfish was about to <span className={styles.blue}>swallow</span> him.
-12. <span className={styles.red}>Tärko</span> da mängalae källa
-    <span className={styles.blue}>gokätaemän</span> a ine peyang
-    <span className={styles.green}>ankom</span> bom towall toko we
-    <span className={styles.blue}>daspunän</span> a ttam
-    <span className={styles.blue}>gogän</span>. (B)
-    <span className={styles.red}>Small Fish</span> quickly
-    <span className={styles.blue}>splashed</span> with his tail, and with water
-    <span className={styles.blue}>threw</span>
-    <span className={styles.green}>Ant</span> on top of the grass, and he
-    <span className={styles.blue}>was saved</span>.
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="1.">
+    <Ex.Line translation><span className={styles.red}>Ankom</span> a tärko ubi eragwaeya ddobae ai abal <span className={styles.green}>nag</span> dagwaeya.</Ex.Line>
+    <Ex.Line translation><span className={styles.red}>Ant and Small Fish</span>, they were really very good <span className={styles.green}>friends</span>.</Ex.Line>
+  </Ex>
+  <Ex number="2.">
+    <Ex.Line translation><span className={styles.red}>Ankom</span> obo ma me daeya <span className={styles.violet}>llo</span> toko me.</Ex.Line>
+    <Ex.Line translation><span className={styles.red}>Ant</span> was in his house on top of <span className={styles.violet}>a tree</span>.</Ex.Line>
+  </Ex>
+  <Ex number="3.">
+    <Ex.Line translation><span className={styles.red}>Tärko</span> <span className={styles.violet}>walle</span> me daeya <span className={styles.green}>ddob kollba nagnag</span> oba peyang.</Ex.Line>
+    <Ex.Line translation><span className={styles.red}>Small Fish</span> was in the <span className={styles.violet}>river</span> with <span className={styles.green}>some fish friends</span>.</Ex.Line>
+  </Ex>
+  <Ex number="4.">
+    <Ex.Line translation>Ttongo ag me däbe ttängäm a säresäremang gogon.</Ex.Line>
+    <Ex.Line translation>One morning that place was about to rain.</Ex.Line>
+  </Ex>
+  <Ex number="5.">
+    <Ex.Line translation>Yäbäd de ddapall käkan da <span className={styles.blue}>dakonewän</span>.</Ex.Line>
+    <Ex.Line translation>Clouds <span className={styles.blue}>covered</span> the sun.</Ex.Line>
+  </Ex>
+  <Ex number="6.">
+    <Ex.Line translation>Malla wätali gogon, <span className={styles.red}>wel ulle</span> da <span className={styles.blue}>gongkamän</span>.</Ex.Line>
+    <Ex.Line translation>It wasn’t long before a <span className={styles.red}>big wind</span> <span className={styles.blue}>began</span>.</Ex.Line>
+  </Ex>
+  <Ex number="7.">
+    <Ex.Line translation><span className={styles.green}>Llo</span> de <span className={styles.blue}>duduaibnegnän a dattkaemnegnän</span>.</Ex.Line>
+    <Ex.Line translation>(E) It <span className={styles.blue}>blew down and broke</span> <span className={styles.green}>the tree</span>.</Ex.Line>
+  </Ex>
+  <Ex number="8.">
+    <Ex.Line translation><span className={styles.red}>Ankom</span> bo ma de <span className={styles.red}>wel</span> a <span className={styles.blue}>dapisamän</span> a <span className={styles.green}>ankom</span> bom <span className={styles.blue}>daspunän</span> <span className={styles.violet}>walle</span> we.</Ex.Line>
+    <Ex.Line translation>(C) The <span className={styles.red}>wind</span> <span className={styles.blue}>tore</span> <span className={styles.red}>Ant</span>'s house and <span className={styles.blue}>threw</span> <span className={styles.red}>Ant</span> into the <span className={styles.violet}>river</span>.</Ex.Line>
+  </Ex>
+  <Ex number="9.">
+    <Ex.Line translation><span className={styles.red}>Tärko</span> da angde ikop dägagän, obo dowae e <span className={styles.blue}>guinggolän</span>.</Ex.Line>
+    <Ex.Line translation>(F) When <span className={styles.red}>Small Fish</span> saw, he <span className={styles.blue}>moved closer</span> to him.</Ex.Line>
+  </Ex>
+  <Ex number="10.">
+    <Ex.Line translation>Be <span className={styles.red}>ddob kollba ulleulle</span> da gäz e de ada däganeyo.</Ex.Line>
+    <Ex.Line translation>(D) But <span className={styles.red}>some big fish</span> were trying to kill him.</Ex.Line>
+  </Ex>
+  <Ex number="11.">
+    <Ex.Line translation>Bunkuttang a mäse ngänygäny e <span className={styles.blue}>dängkamän</span>.</Ex.Line>
+    <Ex.Line translation>(A) A catfish was about to <span className={styles.blue}>swallow</span> him.</Ex.Line>
+  </Ex>
+  <Ex number="12.">
+    <Ex.Line translation><span className={styles.red}>Tärko</span> da mängalae källa <span className={styles.blue}>gokätaemän</span> a ine peyang <span className={styles.green}>ankom</span> bom towall toko we <span className={styles.blue}>daspunän</span> a ttam <span className={styles.blue}>gogän</span>.</Ex.Line>
+    <Ex.Line translation>(B) <span className={styles.red}>Small Fish</span> quickly <span className={styles.blue}>splashed</span> with his tail, and with water <span className={styles.blue}>threw</span> <span className={styles.green}>Ant</span> on top of the grass, and he <span className={styles.blue}>was saved</span>.</Ex.Line>
+  </Ex>
+</Ex.Group>
 
 In F2 and F3, we only have 2 left to translate: "yäbäd" and "catfish" (I didn't explicitly say it, but "and" is obviously "a" from "ant and small fish" and "blew down and broke"). "Yäbäd" only appears in 5; "catfish" only appears in 11.
 
@@ -110,96 +108,50 @@ To understand whether "yäbäd" is "clouds" or "sun", we must understand the wor
 
 Finally, I think F4 is pretty difficult. We already know that "tärko" = "small fish", "kollba" = "fish", "llo" = "tree", "ulleulle" = "big", "wel" = "wind", so none of these words can be in the translation for "Ant got on top of his house.". We also know that "ankom" = "ant" and _sort of_ that "obo ma" = "his house" (based on 2 and 8). That leaves two of "toko", "towall", "me", "we" as "on top of". We have only a few sentences containing these words:
 
+{/* prettier-ignore */}
 - "me"
-  <ol>
-    <li value={2}>
-      <span className={styles.red}>Ankom</span> obo ma me daeya{" "}
-      <span className={styles.violet}>llo</span> toko me.
-      <br />
-      <span className={styles.red}>Ant</span> was in his house on top of{" "}
-      <span className={styles.violet}>a tree</span>.
-    </li>
-    <li value={3}>
-      <span className={styles.red}>Tärko</span>{" "}
-      <span className={styles.violet}>walle</span> me daeya{" "}
-      <span className={styles.green}>ddob kollba nagnag</span> oba peyang.
-      <br />
-      <span className={styles.red}>Small Fish</span> was in the{" "}
-      <span className={styles.violet}>river</span> with{" "}
-      <span className={styles.green}>some fish friends</span>.
-    </li>
-    <li value={4}>
-      Ttongo ag me däbe ttängäm a säresäremang gogon.
-      <br />
-      One morning that place was about to rain.
-    </li>
-  </ol>
+  <Ex.Group>
+    <Ex number="2.">
+      <Ex.Line translation><span className={styles.red}>Ankom</span> obo ma me daeya <span className={styles.violet}>llo</span> toko me.</Ex.Line>
+      <Ex.Line translation><span className={styles.red}>Ant</span> was in his house on top of <span className={styles.violet}>a tree</span>.</Ex.Line>
+    </Ex>
+    <Ex number="3.">
+      <Ex.Line translation><span className={styles.red}>Tärko</span> <span className={styles.violet}>walle</span> me daeya <span className={styles.green}>ddob kollba nagnag</span> oba peyang.</Ex.Line>
+      <Ex.Line translation><span className={styles.red}>Small Fish</span> was in the <span className={styles.violet}>river</span> with <span className={styles.green}>some fish friends</span>.</Ex.Line>
+    </Ex>
+    <Ex number="4.">
+      <Ex.Line translation>Ttongo ag me däbe ttängäm a säresäremang gogon.</Ex.Line>
+      <Ex.Line translation>One morning that place was about to rain.</Ex.Line>
+    </Ex>
+  </Ex.Group>
 - "we"
-  <ol>
-    <li value={8}>
-      <span className={styles.green}>Ankom</span> bo ma de{" "}
-      <span className={styles.red}>wel</span> a{" "}
-      <span className={styles.blue}>dapisamän</span> a{" "}
-      <span className={styles.green}>ankom</span> bom{" "}
-      <span className={styles.blue}>daspunän</span>{" "}
-      <span className={styles.violet}>walle</span> we.
-      <br />
-      The <span className={styles.red}>wind</span>{" "}
-      <span className={styles.blue}>tore</span>{" "}
-      <span className={styles.green}>Ant</span>'s house and{" "}
-      <span className={styles.blue}>threw</span>{" "}
-      <span className={styles.green}>Ant</span> into the{" "}
-      <span className={styles.violet}>river</span>.
-    </li>
-    <li value={12}>
-      <span className={styles.red}>Tärko</span> da mängalae källa{" "}
-      <span className={styles.blue}>gokätaemän</span> a ine peyang{" "}
-      <span className={styles.green}>ankom</span> bom towall toko we{" "}
-      <span className={styles.blue}>daspunän</span> a ttam{" "}
-      <span className={styles.blue}>gogän</span>. <br />
-      <span className={styles.red}>Small Fish</span> quickly{" "}
-      <span className={styles.blue}>splashed</span> with his tail, and with
-      water <span className={styles.blue}>threw</span>{" "}
-      <span className={styles.green}>Ant</span> on top of the grass, and he{" "}
-      <span className={styles.blue}>was saved</span>.
-    </li>
-  </ol>
+  <Ex.Group>
+    <Ex number="8.">
+      <Ex.Line translation><span className={styles.red}>Ankom</span> bo ma de <span className={styles.red}>wel</span> a <span className={styles.blue}>dapisamän</span> a <span className={styles.green}>ankom</span> bom <span className={styles.blue}>daspunän</span> <span className={styles.violet}>walle</span> we.</Ex.Line>
+      <Ex.Line translation>The <span className={styles.red}>wind</span> <span className={styles.blue}>tore</span> <span className={styles.red}>Ant</span>'s house and <span className={styles.blue}>threw</span> <span className={styles.red}>Ant</span> into the <span className={styles.violet}>river</span>.</Ex.Line>
+    </Ex>
+    <Ex number="12.">
+      <Ex.Line translation><span className={styles.red}>Tärko</span> da mängalae källa <span className={styles.blue}>gokätaemän</span> a ine peyang <span className={styles.green}>ankom</span> bom towall toko we <span className={styles.blue}>daspunän</span> a ttam <span className={styles.blue}>gogän</span>.</Ex.Line>
+      <Ex.Line translation><span className={styles.red}>Small Fish</span> quickly <span className={styles.blue}>splashed</span> with his tail, and with water <span className={styles.blue}>threw</span> <span className={styles.green}>Ant</span> on top of the grass, and he <span className={styles.blue}>was saved</span>.</Ex.Line>
+    </Ex>
+  </Ex.Group>
 - "toko"
-  <ol>
-    <li value={2}>
-      <span className={styles.red}>Ankom</span> obo ma me daeya{" "}
-      <span className={styles.violet}>llo</span> toko me.
-      <br />
-      <span className={styles.red}>Ant</span> was in his house on top of{" "}
-      <span className={styles.violet}>a tree</span>.
-    </li>
-    <li value={12}>
-      <span className={styles.red}>Tärko</span> da mängalae källa{" "}
-      <span className={styles.blue}>gokätaemän</span> a ine peyang{" "}
-      <span className={styles.green}>ankom</span> bom towall toko we{" "}
-      <span className={styles.blue}>daspunän</span> a ttam{" "}
-      <span className={styles.blue}>gogän</span>.<br />
-      <span className={styles.red}>Small Fish</span> quickly{" "}
-      <span className={styles.blue}>splashed</span> with his tail, and with
-      water <span className={styles.blue}>threw</span>{" "}
-      <span className={styles.green}>Ant</span> on top of the grass, and he{" "}
-      <span className={styles.blue}>was saved</span>.
-    </li>
-  </ol>
+  <Ex.Group>
+    <Ex number="2.">
+      <Ex.Line translation><span className={styles.red}>Ankom</span> obo ma me daeya <span className={styles.violet}>llo</span> toko me.</Ex.Line>
+      <Ex.Line translation><span className={styles.red}>Ant</span> was in his house on top of <span className={styles.violet}>a tree</span>.</Ex.Line>
+    </Ex>
+    <Ex number="12.">
+      <Ex.Line translation><span className={styles.red}>Tärko</span> da mängalae källa <span className={styles.blue}>gokätaemän</span> a ine peyang <span className={styles.green}>ankom</span> bom towall toko we <span className={styles.blue}>daspunän</span> a ttam <span className={styles.blue}>gogän</span>.</Ex.Line>
+      <Ex.Line translation>(B) <span className={styles.red}>Small Fish</span> quickly <span className={styles.blue}>splashed</span> with his tail, and with water <span className={styles.blue}>threw</span> <span className={styles.green}>Ant</span> on top of the grass, and he <span className={styles.blue}>was saved</span>.</Ex.Line>
+    </Ex>
+  </Ex.Group>
 - "towall"
-  <ol>
-    <li value={12}>
-      <span className={styles.red}>Tärko</span> da mängalae källa{" "}
-      <span className={styles.blue}>gokätaemän</span> a ine peyang{" "}
-      <span className={styles.green}>ankom</span> bom towall toko we{" "}
-      <span className={styles.blue}>daspunän</span> a ttam{" "}
-      <span className={styles.blue}>gogän</span>.<br />
-      <span className={styles.red}>Small Fish</span> quickly{" "}
-      <span className={styles.blue}>splashed</span> with his tail, and with
-      water <span className={styles.blue}>threw</span>{" "}
-      <span className={styles.green}>Ant</span> on top of the grass, and he{" "}
-      <span className={styles.blue}>was saved</span>.
-    </li>
-  </ol>
+  <Ex.Group>
+    <Ex number="12.">
+      <Ex.Line translation><span className={styles.red}>Tärko</span> da mängalae källa <span className={styles.blue}>gokätaemän</span> a ine peyang <span className={styles.green}>ankom</span> bom towall toko we <span className={styles.blue}>daspunän</span> a ttam <span className={styles.blue}>gogän</span>.</Ex.Line>
+      <Ex.Line translation>(B) <span className={styles.red}>Small Fish</span> quickly <span className={styles.blue}>splashed</span> with his tail, and with water <span className={styles.blue}>threw</span> <span className={styles.green}>Ant</span> on top of the grass, and he <span className={styles.blue}>was saved</span>.</Ex.Line>
+    </Ex>
+  </Ex.Group>
 
 The two occurrences of "on top of" both use "toko", so "toko" should be in the translation. "me" and "we" seem to be prepositions. I wouldn't have got this, but both cases of "we" are combined with "threw", so it expresses a dynamic change of location, while "me" is used in a static location. Here "got on" is a dynamic change, so we should use "toko we". If "toko we" is "onto top of", then that leaves "towall" in 12 as "grass".
