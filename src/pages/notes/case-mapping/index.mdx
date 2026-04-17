@@ -1,533 +1,753 @@
 ---
-description: Properties of the default Unicode case conversion algorithm.
+description: "Properties of the default Unicode case conversion algorithm: interaction between uppercase/lowercase and case mapping variance, structure of the mapping graph, and functional properties."
 ---
 
-# Case mapping
-
-import { CharSet, charCode } from "./_DataTables";
-import {
-  UC,
-  U,
-  L,
-  Uext,
-  Lext,
-  RU,
-  RL,
-  toLowerCase,
-  toUpperCase,
-  isLowerCase,
-  isUpperCase,
-  isChar,
-  MU,
-  ML,
-  MU_,
-  ML_,
-  NU,
-  NL,
-  NU_,
-  NL_,
-  GrU,
-} from "./_data";
-import {
-  graph,
-  simplePairs,
-  complexClusters,
-  nClusters,
-  longestChain,
-} from "./_graph";
-import dataSource from "./_data.tsx?raw";
-import CodeBlock from "@/components/CodeBlock";
-
-There are three sets of characters: upper case, lower case, and neither. [`toUpperCase()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase) and [`toLowerCase()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase) provide mappings between them. Let's define the following sets:
-
-- $\mathbb{C}$ is the set of all single-code-point Unicode characters.
-- $I$ := $\{ c\in\mathbb{C}\mid \mathtt{toUpperCase}(c) = \mathtt{toLowerCase}(c) = c \}$ are characters that are invariant under both `toUpperCase()` and `toLowerCase()`, such as numbers and emojis. These are "uninteresting" characters that aren't in the scope of discussion.
-  - $I$ is closed under both functions, i.e. there does not exist a character $c\in\mathbb{C}$ such that $c\notin I$ but $\mathtt{toUpperCase}(c)\in I$ or $\mathtt{toLowerCase}(c)\in I$. This has been built into the data collector code shown below, so you can check that there are no logs in the browser console. (Note that $I$ also includes code points that aren't assigned to characters, so the exact set of characters is hard to get.)
-- $\mathbb{UC}$ := $\mathbb{C}\setminus I$. Characters in $\mathbb{UC}$ are never mapped to $I$. Size: {UC.size}
-- $M_L$ := $\{ c\in\mathbb{UC}\mid \mathtt{toLowerCase}(\mathtt{toUpperCase}(c))\in\mathbb{C}, \mathtt{toUpperCase}(c)\notin\mathbb{C} \}$ = <CharSet set={ML} display={(c) => `${charCode(c)} → ${charCode(toUpperCase(c))} → ${charCode(toLowerCase(toUpperCase(c)))}`} assertSize={21} /> To summarize, they are:
-  - [Latin Extended-B](https://www.unicode.org/charts/PDF/U0180.pdf)
-    - LATIN SMALL LETTER J WITH CARON (U+01F0)
-  - [Greek and Coptic](http://www.unicode.org/charts/PDF/U0370.pdf)
-    - GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS (U+0390)
-    - GREEK SMALL LETTER UPSILON WITH DIALYTIKA AND TONOS (U+03B0)
-  - [Latin Extended Additional](http://www.unicode.org/charts/PDF/U1E00.pdf)
-    - 4 characters
-  - [Greek Extended](http://www.unicode.org/charts/PDF/U1F00.pdf)
-    - 14 characters
-- $M_U$ := $\{ c\in\mathbb{UC}\mid \mathtt{toUpperCase}(\mathtt{toLowerCase}(c))\in\mathbb{C}, \mathtt{toLowerCase}(c)\notin\mathbb{C} \}$ = <CharSet set={MU} display={(c) => `${charCode(c)} → ${charCode(toLowerCase(c))} → ${charCode(toUpperCase(toLowerCase(c)))}`} assertSize={1} /> The only character is:
-  - [Latin Extended-A](https://www.unicode.org/charts/PDF/U0100.pdf)
-    - LATIN CAPITAL LETTER I WITH DOT ABOVE (U+0130)
-- $N_L$ := $\{ c\in\mathbb{UC}\mid \mathtt{toLowerCase}(\mathtt{toUpperCase}(c))\notin\mathbb{C}, \mathtt{toUpperCase}(c)\notin\mathbb{C} \}$ = <CharSet set={NL} display={(c) => `${charCode(c)} → ${charCode(toUpperCase(c))} → ${charCode(toLowerCase(toUpperCase(c)))}`} assertSize={79} /> To summarize, they are:
-  - [Latin-1 Supplement](https://www.unicode.org/charts/PDF/U0080.pdf)
-    - LATIN SMALL LETTER SHARP S (U+00DF)
-  - [Latin Extended-A](https://www.unicode.org/charts/PDF/U0100.pdf)
-    - LATIN SMALL LETTER N PRECEDED BY APOSTROPHE (U+0149)
-  - [Latin Extended Additional](https://www.unicode.org/charts/PDF/U1E00.pdf)
-    - LATIN SMALL LETTER A WITH RIGHT HALF RING (U+1E9A)
-  - [Armenian](https://www.unicode.org/charts/PDF/U0530.pdf)
-    - ARMENIAN SMALL LIGATURE ECH YIWN (U+0587)
-  - [Greek Extended](https://www.unicode.org/charts/PDF/U1F00.pdf)
-    - Greek small letters with [ypogegrammeni](https://en.wikipedia.org/wiki/Iota_subscript) ($Gr_L$): U+1F\{8,9,A}0 – U+1F\{8,9,A}7, U+1F\{B,C,F}2 – U+1F\{B,C,F}4, U+1F\{B,C,F}7 (the Iota subscript, COMBINING GREEK YPOGEGRAMMENI (U+0345) itself, maps to GREEK CAPITAL LETTER IOTA (U+0399) which will be discussed later)
-    - Greek capital letters with prosgegrammeni ($Gr_U$): U+1F\{8,9,A}8 – U+1F\{8,9,A}F, U+1F\{B,C,F}C
-  - [Alphabetic Presentation Forms](https://www.unicode.org/charts/PDF/UFB00.pdf)
-    - All latin ligatures: U+FB00 – U+FB06
-    - All Armenian ligatures: U+FB13 – U+FB17
-- $N_U$ := $\{ c\in\mathbb{UC}\mid \mathtt{toUpperCase}(\mathtt{toLowerCase}(c))\notin\mathbb{C}, \mathtt{toLowerCase}(c)\notin\mathbb{C} \}$ = <CharSet set={NU} display={(c) => `${charCode(c)} → ${charCode(toUpperCase(c))} → ${charCode(toLowerCase(toUpperCase(c)))}`} assertSize={0} />
-- $M_L'$ := $\mathtt{toUpperCase}(M_L)$. Conceptually, these are uppercase letters that just don't have a single Unicode code point.
-- $M_U'$ := $\mathtt{toLowerCase}(M_U)$. Conceptually, these are lowercase letters that just don't have a single Unicode code point.
-- $N_L'$ := $\mathtt{toUpperCase}(N_L)$
-- $N_U'$ := $\mathtt{toLowerCase}(N_U)$
-- $\mathcal{R}_U$ := $\mathtt{toUpperCase}(\mathbb{UC})$. Size: {RU.size}
-- $\mathcal{R}_L$ := $\mathtt{toLowerCase}(\mathbb{UC})$. Size: {RL.size}
-
-Also define the following predicates:
-
-- $\mathtt{isUpperCase}(c) = \mathtt{/\backslash p\{Uppercase\_Letter\}/u.test(c)}$
-- $\mathtt{isLowerCase}(c) = \mathtt{/\backslash p\{Lowercase\_Letter\}/u.test(c)}$
-
-Thus define the following sets:
-
-- $U_{ext}$ := $\{ c\in\mathbb{C}\mid \mathtt{isUpperCase}(c) \}$. Size: {Uext.size} (Note: [Unicode utility](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AUppercase_Letter%3A%5D&g=&i=) lists 1831, with the extra 10 possibly being duplicates by normalization.)
-- $L_{ext}$ := $\{ c\in\mathbb{C}\mid \mathtt{isLowerCase}(c) \}$. Size: {Lext.size} (Note: [Unicode utility](https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3ALowercase_Letter%3A%5D&g=&i=) lists 2233, with the extra 10 possibly being duplicates by normalization.)
-- $U$ := $U_{ext}\setminus I$. Size: {U.size}
-- $L$ := $L_{ext}\setminus I$. Size: {L.size}
-
-Define the following terminologies:
-
-- $c$ is _upper case_ if $c\in U_{ext}$.
-- $c$ is _lower case_ if $c\in L_{ext}$.
-  - _upper case_ and _lower case_ are mutually exclusive: $U_{ext}\cap L_{ext}$ = <CharSet set={Uext.intersection(Lext)} assertSize={0} />
-- $c$ is _cased_ if $c\in U_{ext}\cup L_{ext}$.
-- $c$ is _uncased_ if $c\notin U_{ext}\cup L_{ext}$.
-- $c$ is _lowercase variant_ if $\mathtt{toLowerCase}(c)\neq c$.
-- $c$ is _uppercase variant_ if $\mathtt{toUpperCase}(c)\neq c$.
-- $c$ is _case-mapping variant_ if $c$ is either lowercase variant or uppercase variant.
-- $c$ is _case-mapping invariant_ if $c$ is neither lowercase variant nor uppercase variant.
-
-<CodeBlock language="ts">{dataSource}</CodeBlock>
-
-NOTE: To maximize the number of single-code-point characters in discussion, we normalize the output with `.normalize("NFC")`.
-
-## Case-mapping properties
-
-### Idempotence
-
-The first invariant we want to establish is `toUpperCase(toUpperCase(c)) == toUpperCase(c)` and `toLowerCase(toLowerCase(c)) == toLowerCase(c)` for all $c\in\mathbb{UC}$.
-
-- $\{ c\in\mathbb{UC}\mid \mathtt{toUpperCase}(\mathtt{toUpperCase}(c))\neq \mathtt{toUpperCase}(c) \}$ = <CharSet set={new Set(UC.values().filter((c) => toUpperCase(toUpperCase(c)) !== toUpperCase(c)))} assertSize={0} />
-- $\{ c\in\mathbb{UC}\mid \mathtt{toLowerCase}(\mathtt{toLowerCase}(c))\neq \mathtt{toLowerCase}(c) \}$ = <CharSet set={new Set(UC.values().filter((c) => toLowerCase(toLowerCase(c)) !== toLowerCase(c)))} assertSize={0} />
-
-This also means that if $c$ is uppercase variant, then $c$ will not be the output of `toUpperCase()`; similarly, if $c$ is lowercase variant, then $c$ will not be the output of `toLowerCase()`.
-
-### Complementary ranges
-
-The ranges of `toUpperCase()` and `toLowerCase()` are disjoint:
-
-- $\mathcal{R}_U\cap \mathcal{R}_L$ = <CharSet set={RU.intersection(RL)} assertSize={0} />
-
-But, they are **not** partitions of $\mathbb{UC}$:
-
-- $\mathbb{UC}\setminus(\mathcal{R}_U\cup \mathcal{R}_L)$ = <CharSet set={UC.difference(RU.union(RL))} assertSize={31} />
-
-27 of these characters are $Gr_U$. The other 4 are:
-
-- [Latin Extended-B](https://www.unicode.org/charts/PDF/U0180.pdf)
-  - Ligatures ($La$): U+01C5, U+01C8, U+01CB, U+01F2
-
-These characters cannot be produced by `toUpperCase()` or `toLowerCase()` with _any_ input, including themselves.
-
-## Relationships between case-mapping variance and case
-
-### Does upper(lower) case imply upper(lower)case invariance?
-
-**Yes**. `toUpperCase()` and `toLowerCase()` are identity functions on $U_{ext}$ and $L_{ext}$, respectively.
-
-- $\{ c\in U_{ext}\mid \mathtt{toUpperCase}(c)\neq c \}$ = <CharSet set={new Set(Uext.values().filter((c) => toUpperCase(c) !== c))} assertSize={0} />
-- $\{ c\in L_{ext}\mid \mathtt{toLowerCase}(c)\neq c \}$ = <CharSet set={new Set(Lext.values().filter((c) => toLowerCase(c) !== c))} assertSize={0} />
-
-This means upper case implies uppercase invariance, and lower case implies lowercase invariance.
-
-### Does upper(lower) case imply lower(upper)case variance?
-
-**No**. $U_{ext}$ and $L_{ext}$ are not proper subsets of $\mathbb{UC}$:
-
-- $U_{ext}\setminus\mathbb{U}$ = <CharSet set={Uext.difference(UC)} />
-- $L_{ext}\setminus\mathbb{U}$ = <CharSet set={Lext.difference(UC)} />
-
-This means there are cased letters that are case-mapping invariant. Always-upper characters include:
-
-- [Greek and Coptic](https://www.unicode.org/charts/PDF/U0370.pdf)
-  - Variants of GREEK UPSILON: U+03D2 – U+03D4
-- [Letterlike Symbols](https://www.unicode.org/charts/PDF/U2100.pdf)
-  - EULER CONSTANT (U+2107)
-  - DOUBLE-STRUCK (ITALIC) CAPITAL \{C,H,N,P,Q,R,Z,GAMMA,PI,D}: U+2102, U+210D, U+2115, U+2119, U+211A, U+211D, U+2124, U+213E, U+213F, U+2145
-  - SCRIPT CAPITAL \{H,I,L,R,B,E,F,M}: U+210B, U+2110, U+2112, U+211B, U+212C, U+2130, U+2131, U+2133
-  - BLACK-LETTER CAPITAL \{H,I,R,Z,C}: U+210C, U+2111, U+211C, U+2128, U+212D
-- [Mathematical Alphanumeric Symbols](https://www.unicode.org/charts/PDF/U1D400.pdf)
-  - MATHEMATICAL \{BOLD,ITALIC,BOLD ITALIC,SCRIPT,BOLD SCRIPT,FRAKTUR,DOUBLE-STRUCK,BOLD FRAKTUR,SANS-SERIF,SANS-SERIF BOLD,SANS-SERIF ITALIC,SANS-SERIF BOLD ITALIC,MONOSPACE} CAPITAL Latin alphabet: U+1D400 – U+1D419, U+1D434 – U+1D44D, U+1D468 – U+1D481, U+1D49C – U+1D4B5, U+1D4D0 – U+1D4E9, U+1D504 – U+1D51C, U+1D538 – U+1D550, U+1D56C – U+1D585, U+1D5A0 – U+1D5B9, U+1D5D4 – U+1D5ED, U+1D608 – U+1D621, U+1D63C – U+1D655, U+1D670 – U+1D689
-  - MATHEMATICAL \{BOLD,ITALIC,BOLD ITALIC,SANS-SERIF BOLD,SANS-SERIF ITALIC} CAPITAL Greek alphabet: U+1D6A8 – U+1D6C0, U+1D6E2 – U+1D6FA, U+1D71C – U+1D734, U+1D756 – U+1D76E, U+1D790 – U+1D7A8
-  - MATHEMATICAL BOLD CAPITAL DIGAMMA (U+1D7CA)
-
-Always-lower characters include:
-
-- [Latin Extended-A](https://www.unicode.org/charts/PDF/U0100.pdf)
-  - LATIN SMALL LETTER KRA (U+0138)
-- [Latin Extended-B](https://www.unicode.org/charts/PDF/U0180.pdf)
-  - LATIN SMALL LETTER TURNED DELTA (U+018D)
-  - LATIN SMALL LETTER LAMBDA WITH STROKE (U+019B)
-  - LATIN LETTER REVERSED ESH LOOP (U+01AA)
-  - LATIN SMALL LETTER T WITH PALATAL HOOK (U+01AB)
-  - LATIN SMALL LETTER EZH WITH TAIL (U+01BA)
-  - LATIN LETTER INVERTED GLOTTAL STOP WITH STROKE (U+01BE)
-  - LATIN SMALL LETTER \{D,L,N,T} WITH CURL: U+0221, U+0234 – U+0236
-  - LATIN SMALL LETTER DOTLESS J (U+0237)
-  - LATIN SMALL LETTER \{DB,QP} DIGRAPH: U+0238, U+0239
-- [IPA Extensions](https://www.unicode.org/charts/PDF/U0250.pdf)
-  - U+0250 – U+02AF, except 28 of them
-- [Greek and Coptic](https://www.unicode.org/charts/PDF/U0370.pdf)
-  - GREEK RHO WITH STROKE SYMBOL (U+03FC)
-- [Armenian](https://www.unicode.org/charts/PDF/U0530.pdf)
-  - ARMENIAN SMALL LETTER TURNED AYB (U+0560)
-  - ARMENIAN SMALL LETTER YI WITH STROKE (U+0589)
-- [Phonetic Extensions](https://www.unicode.org/charts/PDF/U1D00.pdf)
-  - Latin letters, Greek letters, and Cyrillic letter: U+1D00 – U+1D2B
-  - Latin letter for American lexicography, Latin letters with middle tilde: U+1D6B – U+1D76
-  - LATIN SMALL LETTER TURNED G (U+1D77)
-  - Other phonetic symbols, except LATIN SMALL LETTER INSULAR G: U+1D7A – U+1D7F
-- [Phonetic Extensions Supplement](https://www.unicode.org/charts/PDF/U1D80.pdf)
-  - Latin letters with palatal hook, except LATIN SMALL LETTER Z WITH PALATAL HOOK: U+1D80 – U+1D8D
-  - Latin letters with retroflex hook: U+1D8F – U+1D9A
-- [Latin Extended Additional](http://www.unicode.org/charts/PDF/U1E00.pdf)
-  - Mediavalist additions: U+1E9C, U+1E9D, U+1E9F
-- ...
-
-To make our discussions more meaningful, we will limit our future discussions to $U$ and $L$ instead of $U_{ext}$ and $L_{ext}$, so that all sets in question are subsets of $\mathbb{UC}$. Upper(Lower) case letters that are case-mapping variant must be lower(upper)case variant, because we already showed that they are upper(lower)case *in*variant.
-
-### Does case-mapping variance imply casedness?
-
-**No**. $U_{ext}$ and $L_{ext}$ are not partitions of $\mathbb{UC}$: there are characters that are uncased, but are case-mapping variant:
-
-- $\mathbb{UC}\setminus(U_{ext}\cup L_{ext})$ = <CharSet set={UC.difference(Uext.union(Lext))} assertSize={116} />
-
-They include $Gr_U$, $La$, and also:
-
-- [Number Forms](https://www.unicode.org/charts/PDF/U2150.pdf)
-  - Uppercase roman numerals ($Ro_U$): U+2160 – U+216F
-  - Small roman numerals ($Ro_L$): U+2170 – U+217F
-- [Enclosed Alphanumerics](https://www.unicode.org/charts/PDF/U2460.pdf)
-  - Circled Latin letters ($Ci_U$): U+24B6 – U+24CF
-  - Circled small Latin letters ($Ci_L$): U+24D0 – U+24E9
-- [Combining Diacritical Marks](https://www.unicode.org/charts/PDF/U0300.pdf)
-  - COMBINING GREEK YPOGEGRAMMENI (U+0345) (Previously mentioned)
-
-### Are uppercase variance and lowercase variance mutually exclusive?
-
-**No**. There are characters that are both uppercase variant and lowercase variant:
-
-- $\{ c\in\mathbb{UC}\mid c\neq \mathtt{toUpperCase}(c) \neq \mathtt{toLowerCase}(c) \}$ = $La\cup Gr_U$ = <CharSet set={new Set(UC.values().filter((c) => toUpperCase(c) !== c && toLowerCase(c) !== c))} display={(c) => `${charCode(c)} → ${charCode(toUpperCase(c))}, ${charCode(toLowerCase(c))}`} assertSize={31} />
-
-In addition, as shown before, these are also characters that cannot be produced by `toUpperCase()` or `toLowerCase()` with _any_ input, including themselves.
-
-### Is `Lower(Upper)Case_Letter` always mapped to `Upper(Lower)Case_Letter` by `toUpper(Lower)Case`?
-
-We already mentioned that certain upper-/lower-case letters are mapping invariant. Furthermore, there are plenty of characters in $M_L\cup M_U\cup N_L\cup N_U$ that are cased. Dropping those, the answer is **yes**. If the input is a `Lowercase_Letter`, the output of `toUpperCase()` is always an `Uppercase_Letter`. If the input is an `Uppercase_Letter`, the output of `toLowerCase()` is always a `Lowercase_Letter`.
-
-- $\mathtt{toUpperCase}(L\setminus M_L\setminus N_L) \setminus U$ = <CharSet set={toUpperCase(L.difference(ML).difference(NL)).difference(U)} assertSize={0} />
-- $\mathtt{toLowerCase}(U\setminus M_U\setminus N_U) \setminus L$ = <CharSet set={toLowerCase(U.difference(MU).difference(NU)).difference(L)} assertSize={0} />
-
-### Does `toUpper(Lower)Case` always produce `Upper(Lower)case_Letter`? Can it produce `Lower(Upper)case_Letter`?
-
-(Again, disregarding multi-code-point characters) **No** and **no** (but **yes**, if you count case-mapping invariant but cased characters). $U$ and $L$ are proper subsets of $\mathcal{R}_U$ and $\mathcal{R}_L$, respectively:
-
-- $U\setminus \mathcal{R}_U$ = <CharSet set={U.difference(RU)} assertSize={0} />
-- $\mathcal{R}_U\setminus U\setminus M_L'\setminus N_L'$ = $Ro_U\cup Ci_U$ = <CharSet set={RU.difference(U).difference(ML_).difference(NL_)} assertSize={42} />
-- $L\setminus \mathcal{R}_L$ = <CharSet set={L.difference(RL)} assertSize={0} />
-- $\mathcal{R}_L\setminus L\setminus M_U'\setminus N_U'$ = $Ro_L\cup Ci_L\cup\{\text{U+0345}\}$ = <CharSet set={RL.difference(L).difference(MU_).difference(NU_)} assertSize={43} />
-
-Uncased letters produced by `to{Upper,Lower}Case` are the same sets as discussed before: those characters that are uncased but case-mapping variant. **To produce an uncased output, the input must be uncased too.**
-
-On the other hand, $L$ and $\mathcal{R}_U$, $U$ and $\mathcal{R}_L$ are disjoint:
-
-- $L\cap \mathcal{R}_U$ = <CharSet set={L.intersection(RU)} assertSize={0} />
-- $U\cap \mathcal{R}_L$ = <CharSet set={U.intersection(RL)} assertSize={0} />
-
-So `toUpperCase()` never produces a `Lowercase_Letter`, and `toLowerCase()` never produces an `Uppercase_Letter`.
-
-### Can `toUpper(Lower)Case` produce `Upper(Lower)case_Letter` from uncased characters?
-
-**Yes**. Uncased letters may become cased after case mapping:
-
-- $\mathtt{toUpperCase}\left(\mathbb{UC}\setminus (U\cup L)\right) \cap U$ = $\mathtt{toUpperCase}(La\cup \{\text{U+0345}\})$ = <CharSet set={toUpperCase(UC.difference(U.union(L))).intersection(U)} assertSize={5} />
-- $\mathtt{toLowerCase}\left(\mathbb{UC}\setminus (U\cup L)\right) \cap L$ = $\mathtt{toLowerCase}(La\cup Gr_U)$ = <CharSet set={toLowerCase(UC.difference(U.union(L))).intersection(L)} assertSize={31} />
-
-These characters are also the characters that are uncased but case-mapping variant.
-
-To summarize:
-
-<table>
-  <caption>
-    Input and output cases of `toUpperCase` when the input is...
-  </caption>
-  <tbody>
-    <tr>
-      <td>Input case\Output case</td>
-      <th scope="col">Upper case</th>
-      <th scope="col">Lower case</th>
-      <th scope="col">Uncased</th>
-    </tr>
-    <tr>
-      <th scope="row">Upper case</th>
-      <td>$U_{ext}$ (identity)</td>
-      <td>Never</td>
-      <td>Never</td>
-    </tr>
-    <tr>
-      <th scope="row">Lower case</th>
-      <td>$L$</td>
-      <td>$L_{ext}\setminus L$ (identity)</td>
-      <td>Never</td>
-    </tr>
-    <tr>
-      <th scope="row">Uncased</th>
-      <td>$La$, U+0345</td>
-      <td>Never</td>
-      <td>$Ro_L$, $Ci_L$, other identities</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <caption>
-    Input and output cases of `toLowerCase` when the input is...
-  </caption>
-  <tbody>
-    <tr>
-      <td>Input case\Output case</td>
-      <th scope="col">Upper case</th>
-      <th scope="col">Lower case</th>
-      <th scope="col">Uncased</th>
-    </tr>
-    <tr>
-      <th scope="row">Upper case</th>
-      <td>$U_{ext}\setminus U$ (identity)</td>
-      <td>$U$</td>
-      <td>Never</td>
-    </tr>
-    <tr>
-      <th scope="row">Lower case</th>
-      <td>Never</td>
-      <td>$L_{ext}$ (identity)</td>
-      <td>Never</td>
-    </tr>
-    <tr>
-      <th scope="row">Uncased</th>
-      <td>Never</td>
-      <td>$La$, $Gr_U$</td>
-      <td>$Ro_U$, $Ci_U$, other identities</td>
-    </tr>
-  </tbody>
-</table>
-
-## Properties of characters that map to multiple characters
-
-We now focus on these particular subsets:
-
-- $M_L$
-  - Lower case (thus lowercase invariant): $M_L\cap (\mathbb{UC}\setminus L)$ = <CharSet set={ML.intersection(UC.difference(L))} assertSize={0} />
-- $M_U$
-  - Upper case (thus uppercase invariant): $M_U\cap (\mathbb{UC}\setminus U)$ = <CharSet set={MU.intersection(UC.difference(U))} assertSize={0} />
-- $N_L$
-  - We already mentioned that $Gr_U$ is uncased, and both uppercase and lowercase variant. $N_L\setminus Gr_U$ is lower case (thus lowercase invariant): $N_L\setminus Gr_U\cap (\mathbb{UC}\setminus L)$ = <CharSet set={NL.difference(GrU).intersection(UC.difference(L))} assertSize={0} />
-- $N_U$
-  - Empty set
-
-Define $\mathbb{UC}_S = \mathbb{UC}\setminus M_U\setminus N_U\setminus M_L\setminus N_L$. So, we may characterize the domain and codomain of `toUpperCase()` and `toLowerCase()` as the following, where each piece has a disjoint domain and each except the last has a disjoint codomain:
-
-$$
-\begin{aligned}
-\mathtt{toUpperCase}&: \begin{cases}
-  M_L'\to M_L'&\text{(Identity)}\\
-  M_U'\to M_U\\
-  M_U\to M_U&\text{(Identity)}\\
-  M_L\to M_L'\\
-  N_U\to N_U&\text{(Identity)}\\
-  N_L\to N_L'\\
-  I\to I&\text{(Identity)}\\
-  \mathbb{UC}_S\to\mathbb{UC}&(*)\\
-\end{cases}\\
-\mathtt{toLowerCase}&: \begin{cases}
-  M_L'\to M_L\\
-  M_U'\to M_U'&\text{(Identity)}\\
-  M_U\to M_U'\\
-  M_L\to M_L&\text{(Identity)}\\
-  N_U\to N_U'\\
-  N_L\setminus Gr_U\to N_L\setminus Gr_U&\text{(Identity)}\\
-  Gr_U\to Gr_L\\
-  I\to I&\text{(Identity)}\\
-  \mathbb{UC}_S\to\mathbb{UC}&(*)\\
-\end{cases}
-\end{aligned}
-$$
-
-There are other cases where multiple code points can be mapped to single code points, but they are not of our interest. We will discuss these multi-code-point characters soon.
-
-We wonder if characters in $\mathbb{UC}_S$ always stay in $\mathbb{UC}_S$. In order to narrow the codomain of the pieces marked with (\*), we want to find if there are characters $c\in \mathbb{UC}_S$ such that $\mathtt{toUpperCase}(c)\in M_U\cup M_L\cup N_U\cup N_L$, or $\mathtt{toLowerCase}(c)\in M_U\cup M_L\cup N_U\cup N_L$.
-
-- $\{ c\in \mathbb{UC}_s\mid \mathtt{toUpperCase}(c)\in M_U\cup M_L\cup N_U\cup N_L \}$ = <CharSet set={new Set(UC.difference(MU.union(NU).union(ML).union(NL)).values().filter((c) => MU.has(toUpperCase(c)) || ML.has(toUpperCase(c)) || NU.has(toUpperCase(c)) || NL.has(toUpperCase(c))))} assertSize={0} />
-- $\{ c\in \mathbb{UC}_s\mid \mathtt{toLowerCase}(c)\in M_U\cup M_L\cup N_U\cup N_L \}$ = <CharSet set={new Set(UC.difference(MU.union(NU).union(ML).union(NL)).values().filter((c) => MU.has(toLowerCase(c)) || ML.has(toLowerCase(c)) || NU.has(toLowerCase(c)) || NL.has(toLowerCase(c))))} assertSize={1} />
-
-There is exactly one: LATIN CAPITAL LETTER SHARP S (U+1E9E). The mappings of this character are:
-
-- ẞ $\xrightarrow{\mathtt{toUpperCase}}$ ẞ (U+1E9E)
-- ẞ $\xrightarrow{\mathtt{toLowerCase}}$ ß (U+00DF) $\xrightarrow{\mathtt{toUpperCase}}$ SS (U+0053 U+0053)
-
-i.e. it maps to a character in $N_L$. There's no other character that maps to U+00DF:
-
-- $\{ c\in \mathbb{UC}\mid \mathtt{toLowerCase}(c) = \text{U+00DF} \}$ = <CharSet set={new Set(UC.values().filter((c) => toLowerCase(c) === "\u00DF"))} assertSize={2} />
-
-The characters that map to $\mathtt{toLowerCase}(Gr_U)$ are exactly $Gr_L$ and $Gr_U$:
-
-- $\{ c\in \mathbb{UC}\mid \mathtt{toLowerCase}(c) \in \mathtt{toLowerCase}(Gr_U) \}$ = <CharSet set={new Set(UC.values().filter((c) => toLowerCase(GrU).has(toLowerCase(c))))} assertSize={54} />
-
-Then we can refine the domain and codomain of `toUpperCase()` and `toLowerCase()` as the following, so that each piece has a disjoint domain and codomain:
-
-$$
-\begin{aligned}
-\mathtt{toUpperCase}&: \begin{cases}
-  M_L'\to M_L'&\text{(Identity)}\\
-  M_U'\to M_U\\
-  M_U\to M_U&\text{(Identity)}\\
-  M_L\to M_L'\\
-  N_U\to N_U&\text{(Identity)}\\
-  N_L\to N_L'\\
-  I\to I&\text{(Identity)}\\
-  \mathbb{UC}_S\to\mathbb{UC}_S\\
-\end{cases}\\
-\mathtt{toLowerCase}&: \begin{cases}
-  M_L'\to M_L\\
-  M_U'\to M_U'&\text{(Identity)}\\
-  M_U\to M_U'\\
-  M_L\to M_L&\text{(Identity)}\\
-  N_U\to N_U'\\
-  N_L\setminus Gr_U\to N_L\setminus Gr_U&\text{(Identity)}\\
-  Gr_U\to Gr_L\\
-  Gr_L\to Gr_L&\text{(Identity)}\\
-  I\to I&\text{(Identity)}\\
-  \{\text{U+1E9E}, \text{U+00DF}\}\to \{\text{U+00DF}\}\\
-  \mathbb{UC}_S\setminus Gr\setminus \{\text{U+1E9E}, \text{U+00DF}\}\to\mathbb{UC}_S\setminus Gr\setminus \{\text{U+1E9E}, \text{U+00DF}\}\\
-\end{cases}
-\end{aligned}
-$$
+# Unicode case mapping study
+
+This page primarily concerns the following concepts:
+
+- **Single code point character**: Any grapheme that is a single Unicode code point. This includes astral characters, but excludes grapheme clusters, including certain accented characters.
+- **Upper-/lowercase mapping**: The default case conversion algorithm implemented in JavaScript by the [`toUpperCase`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase) and [`toLowerCase`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase) methods. (See [UnicodeData.txt](https://unicode.org/Public/UCD/latest/ucd/UnicodeData.txt).) Importantly, this is not the same as _case folding_ (used in JavaScript by [Unicode-aware case-insensitive matching](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/ignoreCase)), which is a canonicalization process. It is also not locale-sensitive, as provided by the [`toLocaleUpperCase`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleUpperCase) and [`toLocaleLowerCase`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleLowerCase) methods.
+- **Upper-/lowercase letter**: Any character that has the Unicode `Uppercase_Letter` (Lu) or `Lowercase_Letter` (Ll) general category, respectively.
+- **Upper-/lowercase symbol**: Any character that has the Unicode `Uppercase` or `Lowercase` property, respectively.
+
+There's no great way to list all existing Unicode code points in JavaScript. However, most of these code points, even if they exist, are things like `&` which are (1) not letters, (2) not cased, (3) invariant under case conversion, and therefore not relevant to this discussion. The non-existent code points also check all these boxes are therefore thrown out. So, we can simply list all the code points and check if they are either cased or case-variant. We call these code points "interesting".
+
+```js
+const candidates = new Set();
+
+for (let i = 0; i <= 0x10ffff; i++) {
+  const char = String.fromCodePoint(i);
+  if (
+    char.toUpperCase() !== char ||
+    char.toLowerCase() !== char ||
+    /^[\p{Uppercase_Letter}\p{Lowercase_Letter}\p{Uppercase}\p{Lowercase}]$/u.test(
+      char,
+    )
+  )
+    candidates.add(char);
+}
+
+console.log(candidates.size);
+```
+
+At the time of writing (Unicode v17), there are 4632 such interesting code points.
+
+But that's not the end of the story. Some single code point characters map to multiple code points under case conversion, which then can be further case-converted, and so on. (We'll see more closely later.) So, we also need to include all the code points that are reachable from these 4632 code points by applying `toUpperCase` and `toLowerCase` repeatedly until we reach a fixed point.
+
+```js
+for (const char of [...candidates]) {
+  let newChar = char.toUpperCase();
+  let isUpper = true;
+  while (!candidates.has(newChar)) {
+    candidates.add(newChar);
+    newChar = isUpper ? newChar.toLowerCase() : newChar.toUpperCase();
+    isUpper = !isUpper;
+  }
+
+  newChar = char.toLowerCase();
+  isUpper = false;
+  while (!candidates.has(newChar)) {
+    candidates.add(newChar);
+    newChar = isUpper ? newChar.toLowerCase() : newChar.toUpperCase();
+    isUpper = !isUpper;
+  }
+}
+
+console.log(candidates.size);
+```
+
+This brings us to a total of 4778 strings. To confirm that this set is closed under case conversion:
+
+```js
+for (const char of candidates) {
+  if (!candidates.has(char.toUpperCase()))
+    console.log(`Failed to satisfy closure under toUpperCase for ${char}`);
+  if (!candidates.has(char.toLowerCase()))
+    console.log(`Failed to satisfy closure under toLowerCase for ${char}`);
+}
+```
+
+By definition "uninteresting" characters cannot change _into_ interesting characters because they are invariant. Can we have an interesting character that changes _into_ an uninteresting character? We check if all of `candidates` are still interesting.
+
+```js
+for (const char of candidates) {
+  if (
+    char.toUpperCase() === char &&
+    char.toLowerCase() === char &&
+    !/^[\p{Uppercase_Letter}\p{Lowercase_Letter}\p{Uppercase}\p{Lowercase}]$/u.test(
+      char,
+    )
+  )
+    console.log(`Failed to satisfy closure under case conversion for ${char}`);
+}
+```
+
+So the `candidates` set remains fully interesting; the only difference is that we have added some multi-code point strings that are reachable from interesting code points by case conversion.
+
+## Relationship between Uppercase_Letter/Lowercase_Letter and Uppercase/Lowercase
+
+The `Uppercase_Letter` and `Lowercase_Letter` general categories are supposedly subsets of the `Uppercase` and `Lowercase` properties, respectively. Furthermore a character cannot be simultaneously uppercase and lowercase. We shall verify this:
+
+```js
+let c1 = 0,
+  c2 = 0,
+  c3 = 0,
+  c4 = 0,
+  c5 = 0,
+  c6 = 0;
+
+for (const char of candidates) {
+  const isLu = /^\p{Uppercase_Letter}$/u.test(char);
+  const isLl = /^\p{Lowercase_Letter}$/u.test(char);
+  const isUppercase = /^\p{Uppercase}$/u.test(char);
+  const isLowercase = /^\p{Lowercase}$/u.test(char);
+  if (isLu && !isUppercase)
+    console.log(`Failed to satisfy Uppercase_Letter ⊆ Uppercase for ${char}`);
+  if (isLl && !isLowercase)
+    console.log(`Failed to satisfy Lowercase_Letter ⊆ Lowercase for ${char}`);
+  if (isUppercase && isLowercase)
+    console.log(`Failed to satisfy Uppercase ∩ Lowercase = ∅ for ${char}`);
+  if (isLu) c1++;
+  else if (isLl) c2++;
+  else if (isUppercase) c3++;
+  else if (isLowercase) c4++;
+  else if ([...char].length === 1) c5++;
+  else c6++;
+}
+
+console.log(c1, c2, c3, c4, c5, c6);
+```
+
+Indeed this is true. Other than the 4778－4632=146 multi-code point strings, the remaining ones may have a maximum of 2^4^=16 combinations of these 4 boolean properties, but since `Uppercase_Letter` implies `Uppercase`, `Lowercase_Letter` implies `Lowercase`, `Uppercase` implies not `Lowercase` and vice versa, we are left with only 5 valid combinations:
+
+| Uppercase_Letter | Lowercase_Letter | Uppercase | Lowercase | Category | Count |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 0 | 1 | 0 | Uppercase letter | 1858 |
+| 0 | 1 | 0 | 1 | Lowercase letter | 2258 |
+| 0 | 0 | 1 | 0 | Uppercase non-letter | 120 |
+| 0 | 0 | 0 | 1 | Lowercase non-letter | 311 |
+| 0 | 0 | 0 | 0 | Uncased | 31 |
 
 ## Mapping graph
 
-To study the injectivity/surjectivity of case mapping, we introduce the concept of a _mapping graph_, a directed graph $(\mathbb{UC}_S\cup M_L\cup M_U\cup N_L\cup N_U\cup M_L'\cup M_U'\cup N_L'\cup N_U'\cup I, E_u\cup E_l)$. The vertices are all characters that we discussed, and the edges have two colors: $(c_1, c_2)\in E_u$ iff $\mathtt{toUpperCase}(c_1) = c_2$, $(c_1, c_2)\in E_l$ iff $\mathtt{toLowerCase}(c_1) = c_2$. Therefore, we can reformulate case-mapping variance as:
+Here's the data structure we are going to be working with: a _mapping graph_. The node set is the `candidates` set. Each node has exactly two outgoing edges, one labeled `toUpperCase` and the other labeled `toLowerCase`, which point to the nodes corresponding to the result of applying the respective case conversion method to the node. Edges can be self-referential, and there can be any number of incoming edges.
 
-1. A node is case-mapping invariant iff both of its out edges are self-loops. These are nodes in $I$.
-2. A node is uppercase invariant iff its out $u$-edge is a self-loop.
-3. A node is lowercase invariant iff its out $l$-edge is a self-loop.
-4. A node is both uppercase and lowercase variant iff both of its out edges are not self-loops. These are the 31 characters mentioned [before](#are-uppercase-variance-and-lowercase-variance-mutually-exclusive): $La\cup Gr_U$.
+Nodes in this graph can be classified into the following categories:
 
-We also have the following observations:
+- Multi-code-point
+- Uppercase letter
+- Uppercase non-letter
+- Lowercase letter
+- Lowercase non-letter
+- Uncased
 
-1. Edges can be self-referential. Each node except those in $N_L'$ and $N_U'$ has exactly one out $u$-edge and exactly one out $l$-edge. $N_L'$ has a self-referential out $u$-edge and no out $l$-edge. $N_U'$ has a self-referential out $l$-edge and no out $u$-edge.
-2. Each node has zero or more in edges colored either $u$ or $l$.
-3. Idempotence: if a node has a non-self-referential in $u$-edge, then its out $u$-edge is self-referential. Similarly, if a node has a non-self-referential in $l$-edge, then its out $l$-edge is self-referential.
-4. Complementary ranges: if a node has a non-self-referential in $u$-edge, then it has no non-self-referential in $l$-edge. Similarly, if a node has a non-self-referential in $l$-edge, then it has no non-self-referential in $u$-edge.
-5. Closedness of $I$: if a node has a non-self-referential in $u$-edge, then it has no out $l$-edge or its out $l$-edge is non-self-referential. Similarly, if a node has a non-self-referential in edge colored $l$, then it has no out $u$-edge or its out $u$-edge is non-self-referential.
+It's apparent that this graph isn't going to be very connected: it's going to have many isolated components. We identify these components by their shapes.
 
-We already established that:
+To begin with, we build a reverse graph for easy lookup:
 
-1. Nodes in $I$ have no in edges from other nodes.
-2. Nodes in $La\cup Gr_U$ have no in edges from other nodes.
+```js
+const lowersTo = new Map();
+const uppersTo = new Map();
 
-Therefore, ignoring these nodes, the graph is inherently bipartite:
+for (const s of candidates) {
+  const lower = s.toLowerCase();
+  const upper = s.toUpperCase();
+  if (s !== lower)
+    lowersTo.set(lower, (lowersTo.get(lower) ?? new Set()).add(s));
+  if (s !== upper)
+    uppersTo.set(upper, (uppersTo.get(upper) ?? new Set()).add(s));
+}
 
-- Each uppercase invariant node points to a lowercase invariant node with an $l$-edge and points to itself with a $u$-edge. It has zero or more in $u$-edges and no in $l$-edge.
-- Each lowercase invariant node points to an uppercase invariant node with a $u$-edge and points to itself with an $l$-edge. It has zero or more in $l$-edges and no in $u$-edge.
-
-### Connected subgraphs
-
-A _connected subgraph_, called a _cluster_, formed by $c$ is recursively defined:
-
-1. $c$ is in the cluster.
-2. If $c'$ is in the cluster, then all nodes that point to $c'$ and those that $c'$ points to are all in the cluster.
-
-Nodes that are in the cluster formed by $c\in N_L'\cup N_U'$ do not always form cycles through some series of `toUpperCase`/`toLowerCase` transformations, because they eventually map to a node in $N_L'\cup N_U'$, which has no out $l$-edge or no out $u$-edge.
-
-<CharSet
-  set={nClusters}
-  display={(v) => [...v].map((v) => charCode(v.char)).join(", ")}
-/>
-
-### Simple mapping pairs
-
-Define a _mapping pair_ as a cluster of size 2. A mapping pair $(c_u, c_l)$ ($c_u\neq c_l$) satisfies:
-
-1. $(c_u, c_l)\in E_l$ (the $l$-edge of $c_u$ points to $c_l$)
-2. $(c_l, c_u)\in E_u$ (the $u$-edge of $c_l$ points to $c_u$)
-3. $\nexists c\neq c_u$ such that $(c, c_u)\in E_u$ or $(c, c_l)\in E_l$ (no other node points to $c_u$ or $c_l$)
-
-There are {simplePairs.size} such pairs. Of these, {simplePairs.values().reduce((acc, pair) => pair[0].type === "upper" && pair[1].type === "lower" || pair[0].type === "lower" && pair[1].type === "upper" ? acc + 1 : acc, 0)} are pairs of `Uppercase_Letter` and `Lowercase_Letter`, and the rest are:
-
-<CharSet
-  set={
-    new Set(
-      simplePairs
-        .values()
-        .filter(
-          (pair) =>
-            !(
-              (pair[0].type === "upper" && pair[1].type === "lower") ||
-              (pair[0].type === "lower" && pair[1].type === "upper")
-            ),
-        ),
+function formatChar(char) {
+  const points = [...char]
+    .map(
+      (c) =>
+        `U+${c.codePointAt(0).toString(16).toUpperCase().padStart(4, "0")}`,
     )
+    .join(" ");
+  return `${char} (${points})`;
+}
+
+function charType(char) {
+  if ([...char].length > 1) return "multi-code-point";
+  if (/^\p{Uppercase_Letter}$/u.test(char)) return "uppercase letter";
+  if (/^\p{Lowercase_Letter}$/u.test(char)) return "lowercase letter";
+  if (/^\p{Uppercase}$/u.test(char)) return "uppercase non-letter";
+  if (/^\p{Lowercase}$/u.test(char)) return "lowercase non-letter";
+  return "uncased";
+}
+```
+
+### Isolated nodes
+
+There are some nodes that are both toUpperCase-invariant and toLowerCase-invariant. These are still interesting because they are cased, but they have 2 self-loop edges. Furthermore, _all of them_ are isolated, meaning that no other node points to them.
+
+```js
+const isolated = [];
+
+for (const char of candidates) {
+  if (char.toUpperCase() === char && char.toLowerCase() === char) {
+    if (lowersTo.has(char) || uppersTo.has(char))
+      console.log(`Failed to satisfy isolation for ${char}`);
+    isolated.push(char);
   }
-  display={(pair) => `${charCode(pair[0].char)} — ${charCode(pair[1].char)}`}
-  assertSize={64}
-/>
+}
 
-Which are roman numerals $(Ro_U, Ro_L)$, circled letters $(Ci_U, Ci_L)$, and $(M_L', M_L)$, $(M_U, M_U')$.
+const g1 = [],
+  g2 = [],
+  g3 = [],
+  g4 = [];
+for (const char of isolated) {
+  const type = charType(char);
+  if (type === "uppercase letter") g1.push(char);
+  else if (type === "lowercase letter") g2.push(char);
+  else if (type === "uppercase non-letter") g3.push(char);
+  else if (type === "lowercase non-letter") g4.push(char);
+  else console.log(`Bad category: ${char} (${type})`);
+}
 
-Now, the remaining nodes are the complex cycles that neither have dead ends nor are simple mapping pairs. They are:
+console.table(g1.map(formatChar));
+console.table(g2.map(formatChar));
+console.table(g3.map(formatChar));
+console.table(g4.map(formatChar));
+```
 
-<CharSet
-  set={complexClusters}
-  display={(v) => [...v].map((v) => charCode(v.char)).join(", ")}
-/>
+There are 1651 such isolated nodes. Among these: there 499 uppercase letters, 805 lowercase letters, 78 uppercase non-letters, and 269 lowercase non-letters.
 
-### Which characters are the upper(lower)case form of multiple characters?
+### Pairs
 
-Below are all characters that is the uppercase form of multiple characters.
+Presumably most of the nodes satisfy the following:
 
-<CharSet
-  set={new Set(graph.values().filter((v) => v.uEdgesIn.size > 2))}
-  display={(v) =>
-    `${charCode(v.char)}: ${[...v.uEdgesIn]
-      .filter((v2) => v2 !== v)
-      .map((v2) => charCode(v2.char))
-      .join(", ")}`
+- One of them is the _uppercase_: it's toUpperCase-invariant.
+- The other is the _lowercase_: it's toLowerCase-invariant.
+- They point to each other: the uppercase's `toLowerCase` edge points to the lowercase, and the lowercase's `toUpperCase` edge points to the uppercase.
+
+```js
+const pairs = [];
+
+for (const upper of candidates) {
+  if (upper.toUpperCase() !== upper) continue;
+  const lower = upper.toLowerCase();
+  if (lower.toUpperCase() !== upper) continue;
+  pairs.push({ upper, lower });
+}
+
+console.table(
+  pairs.map(({ upper, lower }) => ({
+    upper: formatChar(upper),
+    lower: formatChar(lower),
+  })),
+);
+```
+
+There are 1496 such pairs; together with the isolated nodes, they account for 4643 nodes, which is 97.2% of the entire graph's 4778 nodes. Furthermore, all of these pairs satisfy that either they are an uppercase/lowercase letter pair (1381 pairs), or they are an uppercase/lowercase non-letter pair (42 pairs), or they both have multiple code points (73 pairs).
+
+```js
+c1 = 0;
+c2 = 0;
+c3 = 0;
+for (const { upper, lower } of pairs) {
+  const upperType = charType(upper);
+  const lowerType = charType(lower);
+  if (upperType === "uppercase letter" && lowerType === "lowercase letter") {
+    c1++;
+  } else if (
+    upperType === "uppercase non-letter" &&
+    lowerType === "lowercase non-letter"
+  ) {
+    c2++;
+  } else if (
+    upperType === "multi-code-point" &&
+    lowerType === "multi-code-point"
+  ) {
+    c3++;
+  } else {
+    console.log(
+      `Bad pair: ${formatChar(upper)} (${upperType}) and ${formatChar(lower)} (${lowerType})`,
+    );
   }
-/>
+}
+console.log(c1, c2, c3);
+```
 
-Below are all characters that is the lowercase form of multiple characters.
+There cannot exist cycle kinds other than isolated nodes and pairs. If a triangle exists: A → B → C → A, then two of these three adjacent edges must be labeled the same, violating idempotence. (Note that this is about a _circular_ triangle; there can be a non-circular triangle, where A uppercases to B and lowercases to C, while B and C form a pair. We'll see these later.) There could theoretically be other even-numbered cycles (A uppercases to B, B lowercases to C, C uppercases to D, D lowercases to A), but that would be exceedingly unlikely. Therefore, the remaining 135 nodes must eventually arrive at one of these pairs (since the isolated nodes don't have incoming edges) via some single-directional path.
 
-<CharSet
-  set={new Set(graph.values().filter((v) => v.lEdgesIn.size > 2))}
-  display={(v) =>
-    `${charCode(v.char)}: ${[...v.lEdgesIn]
-      .filter((v2) => v2 !== v)
-      .map((v2) => charCode(v2.char))
-      .join(", ")}`
+### Aliases
+
+Since these 135 nodes must be pointing to some pair via a single-directional path, we just traverse each one and see where we end up.
+
+There are two kinds of cases here: (1) the node is invariant under one mapping; (2) the node is variant under both mappings. In the first case, there's one simple path; in the second case, there are two paths that may eventually reach different places. However, we can be sure about one thing: this node must have no incoming edges, because that would break idempotence. So we just need to find all nodes with no incoming edges, and then traverse them.
+
+```js
+const isolatedSet = new Set(isolated);
+const pairLookup = new Map(
+  pairs.flatMap(({ upper, lower }) => [
+    [upper, lower],
+    [lower, upper],
+  ]),
+);
+
+const rest = candidates.difference(isolatedSet).difference(pairLookup);
+
+for (const char of rest) {
+  if (lowersTo.has(char) || uppersTo.has(char)) continue;
+  const nextNodes = (
+    [
+      ["-U->", char.toUpperCase()],
+      ["-L->", char.toLowerCase()],
+    ]
+  ).filter((c) => c[1] !== char);
+  if (nextNodes.length === 0)
+    throw new Error(`Can't happen because ${char} is not isolated`);
+  for (const [label, next] of nextNodes) {
+    const path = [char, label, next];
+    let current = next;
+    while (!pairLookup.has(current)) {
+      if (isolatedSet.has(current))
+        throw new Error(`Can't happen because ${current} is isolated`);
+      const nextNodes = (
+        [
+          ["-U->", current.toUpperCase()],
+          ["-L->", current.toLowerCase()],
+        ]
+      ).filter((c) => c[1] !== current);
+      if (nextNodes.length === 0)
+        throw new Error(`Can't happen because ${current} is not isolated`);
+      if (nextNodes.length > 1) {
+        throw new Error(
+          `Can't happen because ${current} shouldn't have multiple outgoing edges`,
+        );
+      }
+      const [label, next] = nextNodes[0]!;
+      path.push(label, next);
+      current = next;
+    }
+    console.log(
+      path
+        .map((x, i) => {
+          if (i === path.length - 1)
+            return `${formatChar(x)} <--> ${formatChar(pairLookup.get(x)!)}`;
+          else if (i % 2 === 0) return formatChar(x);
+          return x;
+        })
+        .join(" "),
+    );
   }
-/>
+}
+```
 
-### What's the longest case-mapping chain?
+The results form a few obvious groups:
 
-A _case-mapping chain_ is a sequence of distinct nodes $(c_1, c_2, \dots, c_n)$ such that $(c_i, c_{i+1})\in E_u\cup E_l$. Invariant nodes in $I$ have case-mapping chains of length 1 (only the node itself). Simple mapping pairs have case-mapping chains of length 2 (the two nodes). The longest case-mapping chain has length {longestChain.length}, and there are many of them:
+- [Latin-1 Supplement](http://www.unicode.org/charts/PDF/U0080.pdf), [Latin Extended-A](http://www.unicode.org/charts/PDF/U0100.pdf), [Greek and Coptic](http://www.unicode.org/charts/PDF/U0370.pdf), [Cyrillic Extended-C](http://www.unicode.org/charts/PDF/U1C80.pdf), [Latin Extended Additional](http://www.unicode.org/charts/PDF/U1E00.pdf), [Greek Extended](http://www.unicode.org/charts/PDF/U1F00.pdf) (1+2+8+9+1+1=22 groups, 22 non-pair extra nodes)
+  - An extra alias for the lowercase form: A → B, B ↔ C. A is a lowercase letter, while B and C an upper/lowercase letter pair.
 
-<CharSet
-  set={longestChain.chains}
-  display={(c) => c.map((v) => charCode(v.char)).join(" → ")}
-/>
+    | A          | B          | C          |
+    | ---------- | ---------- | ---------- |
+    | µ (U+00B5) | Μ (U+039C) | μ (U+03BC) |
+    | ı (U+0131) | I (U+0049) | i (U+0069) |
+    | ſ (U+017F) | S (U+0053) | s (U+0073) |
+    | ς (U+03C2) | Σ (U+03A3) | σ (U+03C3) |
+    | ϐ (U+03D0) | Β (U+0392) | β (U+03B2) |
+    | ϑ (U+03D1) | Θ (U+0398) | θ (U+03B8) |
+    | ϕ (U+03D5) | Φ (U+03A6) | φ (U+03C6) |
+    | ϖ (U+03D6) | Π (U+03A0) | π (U+03C0) |
+    | ϰ (U+03F0) | Κ (U+039A) | κ (U+03BA) |
+    | ϱ (U+03F1) | Ρ (U+03A1) | ρ (U+03C1) |
+    | ϵ (U+03F5) | Ε (U+0395) | ε (U+03B5) |
+    | ᲀ (U+1C80) | В (U+0412) | в (U+0432) |
+    | ᲁ (U+1C81) | Д (U+0414) | д (U+0434) |
+    | ᲂ (U+1C82) | О (U+041E) | о (U+043E) |
+    | ᲃ (U+1C83) | С (U+0421) | с (U+0441) |
+    | ᲄ (U+1C84) | Т (U+0422) | т (U+0442) |
+    | ᲅ (U+1C85) | Т (U+0422) | т (U+0442) |
+    | ᲆ (U+1C86) | Ъ (U+042A) | ъ (U+044A) |
+    | ᲇ (U+1C87) | Ѣ (U+0462) | ѣ (U+0463) |
+    | ᲈ (U+1C88) | Ꙋ (U+A64A) | ꙋ (U+A64B) |
+    | ẛ (U+1E9B) | Ṡ (U+1E60) | ṡ (U+1E61) |
+    | ι (U+1FBE) | Ι (U+0399) | ι (U+03B9) |
+
+- [Latin Extended-A](https://www.unicode.org/charts/PDF/U0100.pdf), [Latin Extended-B](https://www.unicode.org/charts/PDF/U0180.pdf), [Greek and Coptic](https://www.unicode.org/charts/PDF/U0370.pdf), [Armenian](http://www.unicode.org/charts/PDF/U0530.pdf), [Latin Extended Additional](http://www.unicode.org/charts/PDF/U1E00.pdf), [Greek Extended](https://www.unicode.org/charts/PDF/U1F00.pdf), [Alphabetic Presentation Forms](http://www.unicode.org/charts/PDF/UFB00.pdf) (1+1+2+1+5+25+12=47 groups, 47 non-pair extra nodes)
+  - An extra alias for the lowercase form: A → B, B ↔ C. A is a lowercase letter, while B and C are multi-code-point strings.
+
+    | A          | B                          | C                          |
+    | ---------- | -------------------------- | -------------------------- |
+    | ŉ (U+0149) | ʼN (U+02BC U+004E)         | ʼn (U+02BC U+006E)         |
+    | ǰ (U+01F0) | J̌ (U+004A U+030C)          | ǰ (U+006A U+030C)          |
+    | ΐ (U+0390) | Ϊ́ (U+0399 U+0308 U+0301)   | ΐ (U+03B9 U+0308 U+0301)   |
+    | ΰ (U+03B0) | Ϋ́ (U+03A5 U+0308 U+0301)   | ΰ (U+03C5 U+0308 U+0301)   |
+    | և (U+0587) | ԵՒ (U+0535 U+0552)         | եւ (U+0565 U+0582)         |
+    | ẖ (U+1E96) | H̱ (U+0048 U+0331)          | ẖ (U+0068 U+0331)          |
+    | ẗ (U+1E97) | T̈ (U+0054 U+0308)          | ẗ (U+0074 U+0308)          |
+    | ẘ (U+1E98) | W̊ (U+0057 U+030A)          | ẘ (U+0077 U+030A)          |
+    | ẙ (U+1E99) | Y̊ (U+0059 U+030A)          | ẙ (U+0079 U+030A)          |
+    | ẚ (U+1E9A) | Aʾ (U+0041 U+02BE)         | aʾ (U+0061 U+02BE)         |
+    | ὐ (U+1F50) | Υ̓ (U+03A5 U+0313)          | ὐ (U+03C5 U+0313)          |
+    | ὒ (U+1F52) | Υ̓̀ (U+03A5 U+0313 U+0300)   | ὒ (U+03C5 U+0313 U+0300)   |
+    | ὔ (U+1F54) | Υ̓́ (U+03A5 U+0313 U+0301)   | ὔ (U+03C5 U+0313 U+0301)   |
+    | ὖ (U+1F56) | Υ̓͂ (U+03A5 U+0313 U+0342)   | ὖ (U+03C5 U+0313 U+0342)   |
+    | ᾲ (U+1FB2) | ᾺΙ (U+1FBA U+0399)         | ὰι (U+1F70 U+03B9)         |
+    | ᾴ (U+1FB4) | ΆΙ (U+0386 U+0399)         | άι (U+03AC U+03B9)         |
+    | ᾶ (U+1FB6) | Α͂ (U+0391 U+0342)          | ᾶ (U+03B1 U+0342)          |
+    | ᾷ (U+1FB7) | Α͂Ι (U+0391 U+0342 U+0399)  | ᾶι (U+03B1 U+0342 U+03B9)  |
+    | ῂ (U+1FC2) | ῊΙ (U+1FCA U+0399)         | ὴι (U+1F74 U+03B9)         |
+    | ῄ (U+1FC4) | ΉΙ (U+0389 U+0399)         | ήι (U+03AE U+03B9)         |
+    | ῆ (U+1FC6) | Η͂ (U+0397 U+0342)          | ῆ (U+03B7 U+0342)          |
+    | ῇ (U+1FC7) | Η͂Ι (U+0397 U+0342 U+0399)  | ῆι (U+03B7 U+0342 U+03B9)  |
+    | ῒ (U+1FD2) | Ϊ̀ (U+0399 U+0308 U+0300)   | ῒ (U+03B9 U+0308 U+0300)   |
+    | ΐ (U+1FD3) | Ϊ́ (U+0399 U+0308 U+0301)   | ΐ (U+03B9 U+0308 U+0301)   |
+    | ῖ (U+1FD6) | Ι͂ (U+0399 U+0342)          | ῖ (U+03B9 U+0342)          |
+    | ῗ (U+1FD7) | Ϊ͂ (U+0399 U+0308 U+0342)   | ῗ (U+03B9 U+0308 U+0342)   |
+    | ῢ (U+1FE2) | Ϋ̀ (U+03A5 U+0308 U+0300)   | ῢ (U+03C5 U+0308 U+0300)   |
+    | ΰ (U+1FE3) | Ϋ́ (U+03A5 U+0308 U+0301)   | ΰ (U+03C5 U+0308 U+0301)   |
+    | ῤ (U+1FE4) | Ρ̓ (U+03A1 U+0313)          | ῤ (U+03C1 U+0313)          |
+    | ῦ (U+1FE6) | Υ͂ (U+03A5 U+0342)          | ῦ (U+03C5 U+0342)          |
+    | ῧ (U+1FE7) | Ϋ͂ (U+03A5 U+0308 U+0342)   | ῧ (U+03C5 U+0308 U+0342)   |
+    | ῲ (U+1FF2) | ῺΙ (U+1FFA U+0399)         | ὼι (U+1F7C U+03B9)         |
+    | ῴ (U+1FF4) | ΏΙ (U+038F U+0399)         | ώι (U+03CE U+03B9)         |
+    | ῶ (U+1FF6) | Ω͂ (U+03A9 U+0342)          | ῶ (U+03C9 U+0342)          |
+    | ῷ (U+1FF7) | Ω͂Ι (U+03A9 U+0342 U+0399)  | ῶι (U+03C9 U+0342 U+03B9)  |
+    | ﬀ (U+FB00) | FF (U+0046 U+0046)         | ff (U+0066 U+0066)         |
+    | ﬁ (U+FB01) | FI (U+0046 U+0049)         | fi (U+0066 U+0069)         |
+    | ﬂ (U+FB02) | FL (U+0046 U+004C)         | fl (U+0066 U+006C)         |
+    | ﬃ (U+FB03) | FFI (U+0046 U+0046 U+0049) | ffi (U+0066 U+0066 U+0069) |
+    | ﬄ (U+FB04) | FFL (U+0046 U+0046 U+004C) | ffl (U+0066 U+0066 U+006C) |
+    | ﬅ (U+FB05) | ST (U+0053 U+0054)         | st (U+0073 U+0074)         |
+    | ﬆ (U+FB06) | ST (U+0053 U+0054)         | st (U+0073 U+0074)         |
+    | ﬓ (U+FB13) | ՄՆ (U+0544 U+0546)         | մն (U+0574 U+0576)         |
+    | ﬔ (U+FB14) | ՄԵ (U+0544 U+0535)         | մե (U+0574 U+0565)         |
+    | ﬕ (U+FB15) | ՄԻ (U+0544 U+053B)         | մի (U+0574 U+056B)         |
+    | ﬖ (U+FB16) | ՎՆ (U+054E U+0546)         | վն (U+057E U+0576)         |
+    | ﬗ (U+FB17) | ՄԽ (U+0544 U+053D)         | մխ (U+0574 U+056D)         |
+
+- [Combining Diacritical Marks](https://www.unicode.org/charts/PDF/U0300.pdf) (1 group, 1 non-pair extra node)
+  - An extra alias for the lowercase form: A → B, B ↔ C. A is uncased (combining ypogegrammeni), while B and C are an upper/lowercase letter pair.
+
+    | A          | B          | C          |
+    | ---------- | ---------- | ---------- |
+    | ◌ͅ (U+0345) | Ι (U+0399) | ι (U+03B9) |
+
+- [Greek and Coptic](https://www.unicode.org/charts/PDF/U0370.pdf), [Letterlike characters](https://www.unicode.org/charts/PDF/U2100.pdf) (1+3=4 groups, 4 non-pair extra nodes)
+  - An extra alias for the uppercase form: A → C, B ↔ C. A is an uppercase letter, while B and C are an upper/lowercase letter pair.
+
+    | A          | B          | C          |
+    | ---------- | ---------- | ---------- |
+    | ϴ (U+03F4) | Θ (U+0398) | θ (U+03B8) |
+    | Ω (U+2126) | Ω (U+03A9) | ω (U+03C9) |
+    | K (U+212A) | K (U+004B) | k (U+006B) |
+    | Å (U+212B) | Å (U+00C5) | å (U+00E5) |
+
+- [Latin Extended-A](https://www.unicode.org/charts/PDF/U0100.pdf) (1 group, 1 non-pair extra node)
+  - An extra alias for the uppercase form: A → C, B ↔ C. A is an uppercase letter, while B and C are multi-code-point strings.
+
+    | A          | B                 | C                 |
+    | ---------- | ----------------- | ----------------- |
+    | İ (U+0130) | İ (U+0049 U+0307) | i̇ (U+0069 U+0307) |
+
+- [Latin Extended-B](http://www.unicode.org/charts/PDF/U0180.pdf) (4 groups, 4 non-pair extra nodes)
+  - 4 triangles of the form A → B, A → C, B ↔ C. A is uncased (contains a capital and a small letter in a ligature), while B and C are an upper/lowercase letter pair.
+
+    | A          | B          | C          |
+    | ---------- | ---------- | ---------- |
+    | ǅ (U+01C5) | Ǆ (U+01C4) | ǆ (U+01C6) |
+    | ǈ (U+01C8) | Ǉ (U+01C7) | ǉ (U+01C9) |
+    | ǋ (U+01CB) | Ǌ (U+01CA) | ǌ (U+01CC) |
+    | ǲ (U+01F2) | Ǳ (U+01F1) | ǳ (U+01F3) |
+
+- [Latin-1 Supplement](https://www.unicode.org/charts/PDF/U0080.pdf) and [Latin Extended Additional](https://www.unicode.org/charts/PDF/U1E00.pdf) (1 group, 2 non-pair extra nodes)
+  - A path of the form A → B, B → C, C ↔ D. A is an uppercase letter, B is a lowercase letter, while C and D are both multi-code-point strings.
+
+    | A          | B          | C                  | D                  |
+    | ---------- | ---------- | ------------------ | ------------------ |
+    | ẞ (U+1E9E) | ß (U+00DF) | SS (U+0053 U+0053) | ss (U+0073 U+0073) |
+
+  This seems to be an unfortunate historical artifact: had ß been transformed by `toUpperCase` into ẞ instead of SS, we would have two trivial pairs.
+
+- [Greek Extended](https://www.unicode.org/charts/PDF/U1F00.pdf) (27 groups, 54 non-pair extra nodes)
+  - 4 pair-and-triangle groups of the form A → B, A → C, B → C, C ↔ D. A is uncased (contains a capital letter and a [prosgegrammeni](https://en.wikipedia.org/wiki/Iota_subscript)), B is a lowercase letter (contains a lowercase letter and a ypogegrammeni), while C and D are both multi-code-point strings, where the ypogegrammeni is replaced by a real iota.
+
+    | A          | B          | C                  | D                  |
+    | ---------- | ---------- | ------------------ | ------------------ |
+    | ᾈ (U+1F88) | ᾀ (U+1F80) | ἈΙ (U+1F08 U+0399) | ἀι (U+1F00 U+03B9) |
+    | ᾉ (U+1F89) | ᾁ (U+1F81) | ἉΙ (U+1F09 U+0399) | ἁι (U+1F01 U+03B9) |
+    | ᾊ (U+1F8A) | ᾂ (U+1F82) | ἊΙ (U+1F0A U+0399) | ἂι (U+1F02 U+03B9) |
+    | ᾋ (U+1F8B) | ᾃ (U+1F83) | ἋΙ (U+1F0B U+0399) | ἃι (U+1F03 U+03B9) |
+    | ᾌ (U+1F8C) | ᾄ (U+1F84) | ἌΙ (U+1F0C U+0399) | ἄι (U+1F04 U+03B9) |
+    | ᾍ (U+1F8D) | ᾅ (U+1F85) | ἍΙ (U+1F0D U+0399) | ἅι (U+1F05 U+03B9) |
+    | ᾎ (U+1F8E) | ᾆ (U+1F86) | ἎΙ (U+1F0E U+0399) | ἆι (U+1F06 U+03B9) |
+    | ᾏ (U+1F8F) | ᾇ (U+1F87) | ἏΙ (U+1F0F U+0399) | ἇι (U+1F07 U+03B9) |
+    | ᾘ (U+1F98) | ᾐ (U+1F90) | ἨΙ (U+1F28 U+0399) | ἠι (U+1F20 U+03B9) |
+    | ᾙ (U+1F99) | ᾑ (U+1F91) | ἩΙ (U+1F29 U+0399) | ἡι (U+1F21 U+03B9) |
+    | ᾚ (U+1F9A) | ᾒ (U+1F92) | ἪΙ (U+1F2A U+0399) | ἢι (U+1F22 U+03B9) |
+    | ᾛ (U+1F9B) | ᾓ (U+1F93) | ἫΙ (U+1F2B U+0399) | ἣι (U+1F23 U+03B9) |
+    | ᾜ (U+1F9C) | ᾔ (U+1F94) | ἬΙ (U+1F2C U+0399) | ἤι (U+1F24 U+03B9) |
+    | ᾝ (U+1F9D) | ᾕ (U+1F95) | ἭΙ (U+1F2D U+0399) | ἥι (U+1F25 U+03B9) |
+    | ᾞ (U+1F9E) | ᾖ (U+1F96) | ἮΙ (U+1F2E U+0399) | ἦι (U+1F26 U+03B9) |
+    | ᾟ (U+1F9F) | ᾗ (U+1F97) | ἯΙ (U+1F2F U+0399) | ἧι (U+1F27 U+03B9) |
+    | ᾨ (U+1FA8) | ᾠ (U+1FA0) | ὨΙ (U+1F68 U+0399) | ὠι (U+1F60 U+03B9) |
+    | ᾩ (U+1FA9) | ᾡ (U+1FA1) | ὩΙ (U+1F69 U+0399) | ὡι (U+1F61 U+03B9) |
+    | ᾪ (U+1FAA) | ᾢ (U+1FA2) | ὪΙ (U+1F6A U+0399) | ὢι (U+1F62 U+03B9) |
+    | ᾫ (U+1FAB) | ᾣ (U+1FA3) | ὫΙ (U+1F6B U+0399) | ὣι (U+1F63 U+03B9) |
+    | ᾬ (U+1FAC) | ᾤ (U+1FA4) | ὬΙ (U+1F6C U+0399) | ὤι (U+1F64 U+03B9) |
+    | ᾭ (U+1FAD) | ᾥ (U+1FA5) | ὭΙ (U+1F6D U+0399) | ὥι (U+1F65 U+03B9) |
+    | ᾮ (U+1FAE) | ᾦ (U+1FA6) | ὮΙ (U+1F6E U+0399) | ὦι (U+1F66 U+03B9) |
+    | ᾯ (U+1FAF) | ᾧ (U+1FA7) | ὯΙ (U+1F6F U+0399) | ὧι (U+1F67 U+03B9) |
+    | ᾼ (U+1FBC) | ᾳ (U+1FB3) | ΑΙ (U+0391 U+0399) | αι (U+03B1 U+03B9) |
+    | ῌ (U+1FCC) | ῃ (U+1FC3) | ΗΙ (U+0397 U+0399) | ηι (U+03B7 U+03B9) |
+    | ῼ (U+1FFC) | ῳ (U+1FF3) | ΩΙ (U+03A9 U+0399) | ωι (U+03C9 U+03B9) |
+
+Among these 107 groups, most pairs only participate in one group, except:
+
+- Θ (U+0398) and θ (U+03B8): has ϴ (U+03F4) as another uppercase and ϑ (U+03D1) as another lowercase.
+- Т (U+0422) and т (U+0442): has both ᲄ (U+1C84) and ᲅ (U+1C85) as alternative lowercase.
+- Ι (U+0399) and ι (U+03B9): has both ι (U+1FBE) and ◌ͅ (U+0345) as alternative lowercase.
+- ST (U+0053 U+0054) and st (U+0073 U+0074): has both ﬅ (U+FB05) and ﬆ (U+FB06) as alternative lowercase.
+- Ϊ́ (U+0399 U+0308 U+0301) and ΐ (U+03B9 U+0308 U+0301): has both ΐ (U+0390) and ΐ (U+1FD3) as alternative lowercase.
+- Ϋ́ (U+03A5 U+0308 U+0301) and ΰ (U+03C5 U+0308 U+0301): has both ΰ (U+03B0) and ΰ (U+1FE3) as alternative lowercase.
+
+Therefore there are 101 unique pairs which host vestigial nodes; all other 1496－101=1395 pairs are trivial.
+
+### Graph summary
+
+To summarize, we have the following partition of the mapping graph:
+
+- 1651 isolated nodes:
+  - 499 uppercase letters
+  - 805 lowercase letters
+  - 78 uppercase non-letters
+  - 269 lowercase non-letters
+- 1395 trivial pairs (2790 nodes):
+  - 1353 pairs of uppercase and lowercase letters (2706 nodes)
+  - 42 pairs of uppercase and lowercase non-letters (84 nodes)
+- 59 pair-and-alias groups with a lowercase alias (177 nodes):
+  - 18 groups of upper/lowercase letter pairs with a lowercase letter alias (54 nodes)
+  - 41 groups of multi-code-point string pairs with a lowercase letter alias (123 nodes)
+- 4 pair-and-alias groups with an uppercase alias (12 nodes):
+  - 3 groups of upper/lowercase letter pairs with an uppercase letter alias (9 nodes)
+  - 1 group of multi-code-point string pairs with an uppercase letter alias (3 nodes)
+- 5 pair-and-alias groups with two lowercase aliases (20 nodes):
+  - 2 groups of upper/lowercase letter pairs with two lowercase letter aliases (16 nodes)
+  - 3 groups of multi-code-point string pairs with two lowercase letter aliases (4 nodes)
+- 1 pair-and-alias group with both an uppercase and lowercase alias (4 nodes):
+  - 1 group of upper/lowercase letter pairs with an uppercase letter alias and a lowercase letter alias (4 nodes)
+- 4 triangular groups where A → B, A → C, B ↔ C (12 nodes)
+  - 4 groups where A is uncased, B and C are an upper/lowercase letter pair (12 nodes)
+- 1 pair-and-path group where A → B, B → C, C ↔ D (4 nodes)
+  - 1 group where A is an uppercase letter, B is a lowercase letter, while C and D are both multi-code-point strings (4 nodes)
+- 27 pair-and-triangle groups where A → B, A → C, B → C, C ↔ D (108 nodes)
+  - 27 groups where A is uncased, B is a lowercase letter, C and D are both multi-code-point strings
+
+## Input/output of case mapping
+
+Everything can be summarized by these two tables:
+
+{/* prettier-ignore */}
+<table>
+  <caption>Input and output cases of `toUpperCase`</caption>
+  <thead>
+    <tr>
+      <th>Input \ Output</th>
+      <th>Identity</th>
+      <th>lowercase letter</th>
+      <th>uppercase letter</th>
+      <th>lowercase non-letter</th>
+      <th>uppercase non-letter</th>
+      <th>uncased</th>
+      <th>multi-code-point</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th>lowercase letter</th><td>805</td><td></td><td>1403</td><td></td><td></td><td></td><td>75</td></tr>
+    <tr><th>uppercase letter</th><td>1886</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>lowercase non-letter</th><td>269</td><td></td><td></td><td></td><td>42</td><td></td><td></td></tr>
+    <tr><th>uppercase non-letter</th><td>120</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>uncased</th><td></td><td></td><td>4</td><td></td><td></td><td></td><td>27</td></tr>
+    <tr><th>multi-code-point</th><td>73</td><td></td><td></td><td></td><td></td><td></td><td>73</td></tr>
+  </tbody>
+</table>
+
+{/* prettier-ignore */}
+<table>
+  <caption>Input and output cases of `toLowerCase`</caption>
+  <thead>
+    <tr>
+      <th>Input \ Output</th>
+      <th>Identity</th>
+      <th>lowercase letter</th>
+      <th>uppercase letter</th>
+      <th>lowercase non-letter</th>
+      <th>uppercase non-letter</th>
+      <th>uncased</th>
+      <th>multi-code-point</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th>lowercase letter</th><td>2283</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>uppercase letter</th><td>499</td><td>1386</td><td></td><td></td><td></td><td></td><td>1</td></tr>
+    <tr><th>lowercase non-letter</th><td>312</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>uppercase non-letter</th><td>78</td><td></td><td></td><td>42</td><td></td><td></td><td></td></tr>
+    <tr><th>uncased</th><td></td><td>31</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>multi-code-point</th><td>73</td><td></td><td></td><td></td><td></td><td></td><td>73</td></tr>
+  </tbody>
+</table>
+
+### Does upper(lower) case imply upper(lower)case invariance?
+
+**Yes**. Looking horizontally across the "uppercase letter" and "uppercase non-letter" rows in the first table and "lowercase letter" and "lowercase non-letter" rows in the second table, all characters are identity-mapped.
+
+As a corollary, given a character is cased, lower(upper)case variance implies upper(lower) case.
+
+### Does upper(lower) case imply lower(upper)case variance?
+
+**No**. The isolated nodes are cased but case-invariant. Excluding them, the answer is yes (but is almost trivial).
+
+As a corollary, given a character is cased, upper(lower)case invariance does not imply upper(lower) case.
+
+### Does case-mapping variance imply casedness?
+
+**No**. There are characters that are uncased, but are case-mapping variant. These are exactly the intermediate nodes in triangles:
+
+- The 4 ligatures: ǅ (U+01C5), ǈ (U+01C8), ǋ (U+01CB), ǲ (U+01F2)
+- All the 27 uppercase greek letters with prosgegrammeni
+
+#### Are uppercase variance and lowercase variance mutually exclusive?
+
+**No**. There are characters that are both uppercase and lowercase variant. These are exactly the intermediate nodes in triangles:
+
+- The 4 ligatures: ǅ (U+01C5), ǈ (U+01C8), ǋ (U+01CB), ǲ (U+01F2)
+- All the 27 uppercase greek letters with prosgegrammeni
+
+```js
+const bothVariant = [];
+for (const char of candidates) {
+  if (char.toUpperCase() !== char && char.toLowerCase() !== char)
+    bothVariant.push(char);
+}
+console.table(bothVariant.map(formatChar));
+```
+
+### Can a case-variant character change into a case-invariant character?
+
+**No**, never. In our mapping graph, the only sink nodes are the isolated nodes. You can never enter a node without being able to exit.
+
+### Can an uncased character change into a cased character, or vice versa?
+
+**Yes**; specifically, the triangle intermediate nodes are uncased but can change into cased characters. But **no**, a cased character can never change into an uncased character.
+
+### Can a single-code-point character change into a multi-code-point string, or vice versa?
+
+The first question is obviously **yes** (see the tables above). Namely, there are 75 lowercase letters (the 47 lowercase aliases of multi-code-point pairs, ß, and the Greek lowercase letters with ypogegrammeni) and 27 uncased characters (the Greek uppercase letters with prosgegrammeni) that become multi-code-point after uppercasing; on the other hand, only a single uppercase letter (İ) becomes multi-code-point after lowercasing.
+
+Most of the times, as soon as you change from a single code point to multiple code points, you never go back (resulting in the pair-and-alias groups), so the second question is **no** (in the tables, the "multi-code-point" row only maps to "identity" or "multi-code-point").
+
+However, the answer to the second question changes slightly if you perform [NFC normalization](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize) after case mapping. Some of these sequences remain multi-code-point after normalization before case mapping, but become single-code-point after case mapping and normalization.
+
+```js
+const lowerToSingle = [];
+const upperToSingle = [];
+
+for (const char of candidates) {
+  const normChar = char.normalize("NFC");
+  if ([...normChar].length > 1) {
+    const upper = char.toUpperCase().normalize("NFC");
+    const lower = char.toLowerCase().normalize("NFC");
+    if ([...upper].length === 1) upperToSingle.push({ char: normChar, upper });
+    if ([...lower].length === 1) lowerToSingle.push({ char: normChar, lower });
+  }
+}
+
+console.table(
+  lowerToSingle.map(({ char, lower }) => ({
+    char: formatChar(char),
+    lower: formatChar(lower),
+  })),
+);
+
+console.table(
+  upperToSingle.map(({ char, upper }) => ({
+    char: formatChar(char),
+    upper: formatChar(upper),
+  })),
+);
+```
+
+(Note that this isn't meant to be exhaustive, since the `candidates` list only includes character sequences that are derived from single code points by case mapping in the first place.)
+
+| Sequence                 | Lowercase  |
+| ------------------------ | ---------- |
+| J̌ (U+004A U+030C)        | ǰ (U+01F0) |
+| Ϊ́ (U+03AA U+0301)        | ΐ (U+0390) |
+| Ϋ́ (U+03AB U+0301)        | ΰ (U+03B0) |
+| H̱ (U+0048 U+0331)        | ẖ (U+1E96) |
+| T̈ (U+0054 U+0308)        | ẗ (U+1E97) |
+| W̊ (U+0057 U+030A)        | ẘ (U+1E98) |
+| Y̊ (U+0059 U+030A)        | ẙ (U+1E99) |
+| Υ̓ (U+03A5 U+0313)        | ὐ (U+1F50) |
+| Υ̓̀ (U+03A5 U+0313 U+0300) | ὒ (U+1F52) |
+| Υ̓́ (U+03A5 U+0313 U+0301) | ὔ (U+1F54) |
+| Υ̓͂ (U+03A5 U+0313 U+0342) | ὖ (U+1F56) |
+| Α͂ (U+0391 U+0342)        | ᾶ (U+1FB6) |
+| Η͂ (U+0397 U+0342)        | ῆ (U+1FC6) |
+| Ϊ̀ (U+03AA U+0300)        | ῒ (U+1FD2) |
+| Ι͂ (U+0399 U+0342)        | ῖ (U+1FD6) |
+| Ϊ͂ (U+03AA U+0342)        | ῗ (U+1FD7) |
+| Ϋ̀ (U+03AB U+0300)        | ῢ (U+1FE2) |
+| Ρ̓ (U+03A1 U+0313)        | ῤ (U+1FE4) |
+| Υ͂ (U+03A5 U+0342)        | ῦ (U+1FE6) |
+| Ϋ͂ (U+03AB U+0342)        | ῧ (U+1FE7) |
+| Ω͂ (U+03A9 U+0342)        | ῶ (U+1FF6) |
+
+- [Latin Extended-B](https://www.unicode.org/charts/PDF/U0180.pdf)
+  - LATIN SMALL LETTER J WITH CARON (U+01F0)
+- [Greek and Coptic](http://www.unicode.org/charts/PDF/U0370.pdf)
+  - GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS (U+0390)
+  - GREEK SMALL LETTER UPSILON WITH DIALYTIKA AND TONOS (U+03B0)
+- [Latin Extended Additional](http://www.unicode.org/charts/PDF/U1E00.pdf)
+  - 4 characters
+- [Greek Extended](http://www.unicode.org/charts/PDF/U1F00.pdf)
+  - 14 characters
+
+| Sequence          | Uppercase  |
+| ----------------- | ---------- |
+| i̇ (U+0069 U+0307) | İ (U+0130) |
+
+- [Latin Extended-A](https://www.unicode.org/charts/PDF/U0100.pdf)
+  - LATIN CAPITAL LETTER I WITH DOT ABOVE (U+0130)
+
+### Are lower(upper)case characters always mapped to upper(lower)case characters by `toUpper(Lower)Case`?
+
+**No** because of the existence of case-invariant characters. Also **no** because of cases where a single-code-point character is mapped to a multi-code-point string. However, if the character is case-variant and the result is single-code-point, then **yes**.
+
+### Can case-mapping convert a letter to a non-letter, or vice versa?
+
+**No** (if you ignore multi-code-point cases). Letters stay letters, and non-letters stay non-letters.
+
+### Does `toUpper(Lower)Case` always produce upper(lower)case characters? Can it produce lower(upper)case characters?
+
+**Yes** (if you ignore invariant and multi-code-point cases) and **no** (always).
+
+## Functional properties
+
+### Can the same character be produced by both `toUpperCase` and `toLowerCase` (ignoring identity mapping)?
+
+**No**. By idempotence: if A → C by `toUpperCase` and B → C by `toLowerCase`, then C is invariant under both operations, but invariant characters are never the result of case mapping from other characters.
+
+### Can the same character be produced by `toUpper(Lower)Case` from two different characters (ignoring identity mapping)?
+
+**Yes**. By the existence of aliases, there are many cases where two characters map to the same one. Namely, the 18 groups with a lowercase letter alias, 3 groups with an uppercase letter alias, 2 groups with two lowercase letter aliases, 1 group with an uppercase letter alias and a lowercase letter alias
+
+### Are `toUpperCase` and `toLowerCase` reverse operations?
+
+This is to ask, is it true that either `x === x.toUpperCase().toLowerCase()` or `x === x.toLowerCase().toUpperCase()` for all single-code-point `x`?
+
+The answer is **no**. If `x` is not a part of an isolated node or a pair (the other 135 characters), then you always end up different from where you started. However these characters are actually quite rare, so for 97% of the time, the answer is yes.
+
+### Do `toUpperCase` and `toLowerCase` become reverse operations after applying a `toUpperCase`? After applying a `toLowerCase`?
+
+This is to ask, is it true that either `x.toUpperCase() === x.toUpperCase().toLowerCase().toUpperCase()` or `x.toLowerCase() === x.toLowerCase().toUpperCase().toLowerCase()` for all single-code-point `x`?
+
+The answer is unfortunately still **no**, because a single `toUpperCase` or `toLowerCase` is not sufficient to move into a steady state. Namely, if `x` is ẞ (the end of the path-and-pair group), you must apply `x.toLowerCase().toUpperCase()` to arrive at steady state "SS". For all other characters, the answer is yes.
+
+### What's the maximum number of strings one can reach by repeatedly applying `toUpperCase` and `toLowerCase` on a single character?
+
+The answer is 4, and is always in the order of `x`, `x.toLowerCase()`, `x.toLowerCase().toUpperCase()`, `x.toLowerCase().toUpperCase().toLowerCase()`. `x` is either ẞ (ẞ → ß → SS → ss) or one of the 27 uppercase Greek letters with prosgegrammeni (e.g. ᾈ → ᾀ → ἈΙ → ἀι).

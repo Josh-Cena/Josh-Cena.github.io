@@ -81,6 +81,7 @@ endonym
 endonyms
 envir
 epenthesized
+Erfe
 eshost
 eslintcache
 estree
@@ -98,6 +99,7 @@ flipud
 foldl
 foldr
 forceable
+formants
 fragmenter
 frozenset
 functools
@@ -191,6 +193,7 @@ nrow
 nsteps
 numpy
 nums
+Nyquist
 ocamlformat
 opam
 optimizability
@@ -284,6 +287,8 @@ uncurry
 underlyingly
 unlines
 unlist
+uppercases
+uppercasing
 userland
 usize
 vapply

@@ -25,39 +25,47 @@ import remarkMermaid from "./server/markdown/remark-plugin-mermaid.ts";
 import remarkNACLO from "./server/markdown/remark-plugin-naclo.ts";
 import remarkParseFrontmatter from "./server/markdown/remark-plugin-parse-frontmatter.ts";
 
-const remarkPlugins: PluggableList = [
-  [remarkGfm, { singleTilde: false }],
-  remarkMath,
-  // Our front matter setup is a bit complicated.
-  // We can't use remark-mdx-frontmatter because it breaks HMR:
-  // https://github.com/remcohaszing/remark-mdx-frontmatter/issues/9
-  // Therefore we need to do it in four steps:
-  // 1. remark-frontmatter to parse the front matter from MDX into AST
-  // 2. parse-frontmatter to parse raw YAML and put into vFile.data
-  // 3. a Recma plugin to define the front matter on the component itself
-  // so it can be accessed in routes.tsx without doing another query import
-  // 4. a Vite plugin to allow directly importing ?meta for tree-shakable
-  // imports for blog, AoC, etc. that don't need the full MDX content
+// Our front matter setup is a bit complicated.
+// We can't use remark-mdx-frontmatter because it breaks HMR:
+// https://github.com/remcohaszing/remark-mdx-frontmatter/issues/9
+// Therefore we need to do it in four steps:
+// 1. remark-frontmatter to parse the front matter from MDX into AST
+// 2. parse-frontmatter to parse raw YAML and put into vFile.data
+// 3. a Recma plugin to define the front matter on the component itself
+// so it can be accessed in routes.tsx without doing another query import
+// 4. a Vite plugin to allow directly importing ?meta for tree-shakable
+// imports for blog, AoC, etc. that don't need the full MDX content
+const sharedRemarkPlugins: PluggableList = [
   remarkFrontmatter,
   remarkParseFrontmatter,
-  remarkSuperSub,
   remarkAOC,
-  remarkCanvas,
   remarkExtractTitle,
-  remarkLocalImage,
-  remarkMDLink,
-  remarkMermaid,
   remarkNACLO,
 ];
 
 export default defineConfig({
   plugins: [
     // Intercept .mdx?meta imports, so the MDX loader doesn't see it
-    mdxMetaPlugin({ remarkPlugins }),
+    mdxMetaPlugin({
+      remarkPlugins: [
+        // Important: without this the parser would fail on math
+        remarkMath,
+        ...sharedRemarkPlugins,
+      ],
+    }),
     {
       enforce: "pre",
       ...mdx({
-        remarkPlugins,
+        remarkPlugins: [
+          [remarkGfm, { singleTilde: false }],
+          remarkMath,
+          remarkSuperSub,
+          remarkCanvas,
+          remarkLocalImage,
+          remarkMDLink,
+          remarkMermaid,
+          ...sharedRemarkPlugins,
+        ],
         rehypePlugins: [
           [
             rehypeKatex,

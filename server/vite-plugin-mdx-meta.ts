@@ -40,14 +40,23 @@ function mdxMetaPlugin({
       const filepath = id.slice(prefix.length);
       const source = await FS.readFile(filepath, "utf8");
 
-      const vFile = new VFile({ path: filepath, value: source });
-      const ast = processor.parse(vFile);
-      await processor.run(ast, vFile);
+      try {
+        const vFile = new VFile({ path: filepath, value: source });
+        const ast = processor.parse(vFile);
+        await processor.run(ast, vFile);
 
-      const { frontMatter } = vFile.data;
-      if (!frontMatter)
-        throw new Error(`MDX file ${filepath} must have front matter`);
-      return `export default ${uneval(frontMatter)};`;
+        const { frontMatter } = vFile.data;
+        if (!frontMatter)
+          throw new Error(`MDX file ${filepath} must have front matter`);
+        return `export default ${uneval(frontMatter)};`;
+      } catch (err) {
+        this.error(
+          new Error(`Failed to parse MDX front matter in ${filepath}`, {
+            cause: err,
+          }),
+        );
+        throw err;
+      }
     },
   };
 }

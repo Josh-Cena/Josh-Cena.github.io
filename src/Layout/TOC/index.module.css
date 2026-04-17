@@ -33,6 +33,7 @@
   width: 200px;
   max-height: calc(100vh - 100px);
   overflow-x: visible;
+  overflow-y: auto;
   padding: 10px;
   border: 2px solid var(--color-text-subdued);
   border-radius: var(--border-radius-medium);
