@@ -305,5 +305,6 @@ fi
 `,(0,n.jsx)(r.p,{children:`Other libraries:`}),`
 `,(0,n.jsxs)(r.ul,{children:[`
 `,(0,n.jsxs)(r.li,{children:[(0,n.jsx)(r.code,{children:`graphviz`}),` (used by `,(0,n.jsx)(r.code,{children:`networkx`}),`, `,(0,n.jsx)(r.code,{children:`DiagrammeR`}),`, and others)`]}),`
+`,(0,n.jsxs)(r.li,{children:[(0,n.jsx)(r.a,{href:`https://www.xquartz.org/`,children:(0,n.jsx)(r.code,{children:`X11`})}),` (used by some R libraries, like `,(0,n.jsx)(r.code,{children:`geoR`}),`; installs to both `,(0,n.jsx)(r.code,{children:`/Applications/Utilities/XQuartz.app`}),` and `,(0,n.jsx)(r.code,{children:`/opt/X11/bin/*`}),`)`]}),`
 `,(0,n.jsxs)(r.li,{children:[(0,n.jsx)(r.code,{children:`z3`}),` (for theorem proving)`]}),`
 `]})]})}function i(e={}){let{wrapper:i}={...t(),...e.components};return i?(0,n.jsx)(i,{...e,children:(0,n.jsx)(r,{...e})}):r(e)}i.meta={description:`A registry of the technologies I use and how to update each one.`,title:`My tech registry`};export{i as default};
