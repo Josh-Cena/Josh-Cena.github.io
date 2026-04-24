@@ -1,0 +1,299 @@
+---
+tags:
+  - Phrase translation
+---
+
+# Sea Saw
+
+{/* cSpell:ignore apwirtha mwangwiyiwanga nanamwi nanga nani narrakwi narramwi narranga narringa ngini ngipwi ningarra ningini ningkwarra ningkwinga ningkwi yingakwi yingimwa yingini yingi yingirringkatjingwa tjingwa rringka ning ningkw ngi narr narra narri ying ipwi arra anga amwi akwi inga imwa ningi yinga narrani narrirra ngikwi yingamwi ngimwi nana */}
+
+First notice that for sentences involving "the shark" and "the whale", regardless if this noun is the subject or the object, it always appears as a word at the second position: "apwirtha" for "the whale" and "mwangwiyiwanga" for "the shark". So we just focus on the first word.
+
+Among all the first words, the longest common substring is "rringka". There's one phrase, "yingirringkatjingwa", in which "rringka" is followed by something else (namely "tjingwa"); this is the only one where there's a reflexive object "herself", so "tjingwa" is the reflexive marker. Now focus on the prefix, which must stand for the subject/object.
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>he</th><th>she</th><th>they</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td></td><td rowSpan={2}>ngini-</td><td></td><td rowSpan={2}>ngipwi-</td><td></td><td></td></tr>
+    <tr><th>you</th><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>him</th><td>ningini-</td><td></td><td>nani-</td><td>yingini-</td><td></td><td>nanamwi-</td><td></td></tr>
+    <tr><th>her</th><td></td><td>ningkwinga-</td><td>nanga-</td><td>yingi-</td><td>narringa-</td><td></td><td>yingakwi-</td></tr>
+    <tr><th>them</th><td>ningarra-</td><td>ningkwarra-</td><td></td><td>narranga-</td><td></td><td>narramwi-</td><td>narrakwi-</td></tr>
+    <tr><th>shark</th><td></td><td></td><td></td><td>yingimwa-</td><td></td><td></td><td></td></tr>
+    <tr><th>whale</th><td></td><td>ningkwi-</td><td></td><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+There's the familiar "alternating row/column" pattern (see for example [2023 M](../2023/M.mdx) and [2022 O](../2022/O.mdx)), where some prefixes are shared across rows but others are shared across columns. Move the "they/them" row/column and this becomes obvious:
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td className="diagonal"></td><td></td><td rowSpan={2}>ngipwi-</td><td rowSpan={2}>ngini-</td><td></td><td></td><td></td></tr>
+    <tr><th>you</th><td></td><td className="diagonal"></td><td></td><td></td><td></td></tr>
+    <tr><th>them</th><td>ningarra-</td><td>ningkwarra-</td><td className="diagonal"></td><td></td><td>narranga-</td><td>narramwi-</td><td>narrakwi-</td></tr>
+    <tr><th>him</th><td>ningini-</td><td></td><td></td><td className="diagonal">nani-</td><td>yingini-</td><td>nanamwi-</td><td></td></tr>
+    <tr><th>her</th><td></td><td>ningkwinga-</td><td>narringa-</td><td>nanga-</td><td className="diagonal">yingi-</td><td></td><td>yingakwi-</td></tr>
+    <tr><th>shark</th><td></td><td></td><td></td><td></td><td>yingimwa-</td><td className="diagonal"></td><td></td></tr>
+    <tr><th>whale</th><td></td><td>ningkwi-</td><td></td><td></td><td></td><td></td><td className="diagonal"></td></tr>
+  </tbody>
+</table>
+
+Cells below and including the diagonal always have a common prefix across a column (including the she/him cell); cells to the right of the diagonal always have a common prefix across a row, as follows (parentheses mean that there's a single known word, so we can't extract the common prefix):
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td rowSpan={7}>ning-</td><td></td><td colSpan={5} rowSpan={2}>ngi-</td></tr>
+    <tr><th>you</th><td rowSpan={6}>ningkw-</td></tr>
+    <tr><th>them</th><td rowSpan={5}>(narringa-)</td><td colSpan={4}>narra-</td></tr>
+    <tr><th>him</th><td rowSpan={4}>nan-</td><td rowSpan={4}>yingi-</td><td colSpan={2}>(nanamwi-)</td></tr>
+    <tr><th>her</th><td colSpan={2}>(yingakwi-)</td></tr>
+    <tr><th>shark</th><td rowSpan={2} colSpan={2}></td></tr>
+    <tr><th>whale</th></tr>
+  </tbody>
+</table>
+
+For the other part, the pattern is similar: cells above the diagonal always have a common suffix across a column; cells to the left of and including the diagonal (including the she/him cell) always have a common suffix across a row, as follows:
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td></td><td rowSpan={2}>(ngipwi-)</td><td rowSpan={3}>(ngini-)</td><td rowSpan={3}>(narranga-)</td><td rowSpan={5}>-amwi-</td><td rowSpan={5}>-akwi-</td></tr>
+    <tr><th>you</th><td colSpan={2}></td></tr>
+    <tr><th>them</th><td colSpan={3}>-arra-</td></tr>
+    <tr><th>him</th><td colSpan={5}>-ni-</td></tr>
+    <tr><th>her</th><td colSpan={4}>-nga-</td><td>(yingi-)</td></tr>
+    <tr><th>shark</th><td colSpan={5}>(yingimwa-)</td><td rowSpan={2} colSpan={2}></td></tr>
+    <tr><th>whale</th><td colSpan={5}>(ningkwi-)</td></tr>
+  </tbody>
+</table>
+
+This kind of alternating row/column pattern is always indicative of a hierarchy: the subject and the object, whichever ranks higher in the hierarchy is placed first. The hierarchy here is I ≥ you > they > he/she > shark = whale.
+
+Now, we can look at these two tables together to use one to fill in the other. For example, we don't know the prefix of "narringa-", but we know that the suffix for this cell is "-nga-", so we can deduce that the prefix is "narri-":
+
+- narringa- = **narri-** + -nga-
+- nanamwi- = **nan-** + -amwi-
+- yingakwi- = **ying-** + -akwi-
+- ngipwi- = ngi- + **-pwi-**
+- ngini- = ngi- + **-ni-**
+- narranga- = narra- + **-nga-**
+- yingi- = yingi- + **∅**
+- yingimwa- = yingi- + **-mwa-**
+- ningkwi- = ningkw- + **-i-**
+
+In the case of she/her, we see yingi- instead of the expected yingi-nga. This is because, again, this sentence was actually "herself", so it looks like the reflexive marker has _replaced_ the object marker. So we ignore it when looking for the suffix for "her".
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td rowSpan={7}>ning-</td><td></td><td colSpan={5} rowSpan={2}>ngi-</td></tr>
+    <tr><th>you</th><td rowSpan={6}>ningkw-</td></tr>
+    <tr><th>them</th><td rowSpan={5}>**narri-**</td><td colSpan={4}>narra-</td></tr>
+    <tr><th>him</th><td rowSpan={4}>nan-</td><td rowSpan={4}>yingi-</td><td colSpan={2}>**nan-**</td></tr>
+    <tr><th>her</th><td colSpan={2}>**ying-**</td></tr>
+    <tr><th>shark</th><td rowSpan={2} colSpan={2}></td></tr>
+    <tr><th>whale</th></tr>
+  </tbody>
+</table>
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td></td><td rowSpan={2}>**-pwi-**</td><td rowSpan={3}>**-ni-**</td><td rowSpan={3}>**-nga-**</td><td rowSpan={5}>-amwi-</td><td rowSpan={5}>-akwi-</td></tr>
+    <tr><th>you</th><td colSpan={2}></td></tr>
+    <tr><th>them</th><td colSpan={3}>-arra-</td></tr>
+    <tr><th>him</th><td colSpan={5}>-ni-</td></tr>
+    <tr><th>her</th><td colSpan={5}>-nga-</td></tr>
+    <tr><th>shark</th><td colSpan={5}>**-mwa-**</td><td rowSpan={2} colSpan={2}></td></tr>
+    <tr><th>whale</th><td colSpan={5}>**-i-**</td></tr>
+  </tbody>
+</table>
+
+At this point, although some details are still messy, we can already do Q1, which would give us extra data points.
+
+1\. narra-ni-rringka = them-he-saw = he saw them  
+2\. narri-rra-rringka = they-them-saw = they saw them  
+3\. ngi-kwi-rringka apwirtha = me/you-whale-saw whale = the whale saw me/you  
+4\. ying-amwi-rringka mwangwiyiwanga = her-shark-saw shark = the shark saw her
+
+Now let's reconstruct the full pronoun table from the two prefix/suffix tables and see if it's consistent with the data we have:
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td></td><td rowSpan={2}>ngi-pwi-<br />ngipwi-</td><td rowSpan={2}>ngi-ni-<br />ngini-</td><td rowSpan={2}>ngi-nga-</td><td rowSpan={2}>ngi-amwi-</td><td rowSpan={2}>ngi-akwi-<br />ngikwi-</td></tr>
+    <tr><th>you</th><td></td><td></td></tr>
+    <tr><th>them</th><td>ning-arra-<br />ningarra-</td><td>ningkw-arra-<br />ningkwarra-</td><td>narri-arra-<br />narrirra-</td><td>narra-ni-<br />narrani-</td><td>narra-nga-<br />narranga-</td><td>narra-amwi-<br />narramwi-</td><td>narra-akwi-<br />narrakwi-</td></tr>
+    <tr><th>him</th><td>ning-ni-<br />ningini-</td><td>ningkw-ni-</td><td>narri-ni-</td><td>nan-ni-<br />nani-</td><td>yingi-ni-<br />yingini-</td><td>nan-amwi-<br />nanamwi-</td><td>nan-akwi-</td></tr>
+    <tr><th>her</th><td>ning-nga-</td><td>ningkw-nga-<br />ningkwinga-</td><td>narri-nga-<br />narringa-</td><td>nan-nga-<br />nanga-</td><td>yingi-<br />yingi-</td><td>ying-amwi-<br />yingamwi-</td><td>ying-akwi-<br />yingakwi-</td></tr>
+    <tr><th>shark</th><td>ning-mwa-</td><td>ningkw-mwa-</td><td>narri-mwa-</td><td>nan-mwa-</td><td>yingi-mwa-<br />yingimwa-</td><td></td><td></td></tr>
+    <tr><th>whale</th><td>ning-i-</td><td>ningkw-i-<br />ningkwi-</td><td>narri-i-</td><td>nan-i-</td><td>yingi-i-</td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+There are some inconsistencies:
+
+- ngi-akwi- → ngikwi-
+- narri-arra- → narrirra-
+- narra-amwi- → narramwi-
+- narra-akwi- → narrakwi-
+- ning-ni- → ningini-
+- ningkw-nga- → ningkwinga-
+- nan-ni- → nani-
+- nan-nga- → nanga-
+
+For the two cases where the "n" gets deleted, notice that it always involves "nan-" with a suffix that already starts with an "n". Because when we extracted prefixes, we just extended it as far as possible, it looks like it happens that we included an extra "n" in the prefix that should have belonged to the suffix. So "he" should actually be "na-" instead of "nan-".
+
+The other cases are slightly more complicated: we have both cases where a vowel gets inserted and where a vowel gets deleted. We could assume that the prefix for "them" is actually "narr-" instead of "narra-" (i.e., we over-extracted) like we previously did, and then find some way to insert either an "a" or an "i"; or, we can posit that there's actually another vowel in the prefix that gets deleted, causing our prefix extraction to miss it. Vowel deletion is easier to specify in general, so we'll go with that and see how to make it work.
+
+- ning-ni- → ningini-: an "i" needs to appear, so the prefix should be "ningi-" instead
+- ningkw-nga- → ningkwinga-: an "i" needs to appear, so the prefix should be "ningkwi-" instead
+
+Slightly reanalyze the suffix given these prefixes:
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td rowSpan={7}>**ningi-**</td><td></td><td colSpan={5} rowSpan={2}>ngi-</td></tr>
+    <tr><th>you</th><td rowSpan={6}>**ningkwi-**</td></tr>
+    <tr><th>them</th><td rowSpan={5}>narri-</td><td colSpan={4}>narra-</td></tr>
+    <tr><th>him</th><td rowSpan={4}>**na-**</td><td rowSpan={4}>yingi-</td><td colSpan={2}>nan-</td></tr>
+    <tr><th>her</th><td colSpan={2}>ying-</td></tr>
+    <tr><th>shark</th><td rowSpan={2} colSpan={2}></td></tr>
+    <tr><th>whale</th></tr>
+  </tbody>
+</table>
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td></td><td rowSpan={2}>-pwi-</td><td rowSpan={3}>-ni-</td><td rowSpan={3}>-nga-</td><td rowSpan={5}>-amwi-</td><td rowSpan={5}>-akwi-</td></tr>
+    <tr><th>you</th><td colSpan={2}></td></tr>
+    <tr><th>them</th><td colSpan={3}>-arra-</td></tr>
+    <tr><th>him</th><td colSpan={5}>-ni-</td></tr>
+    <tr><th>her</th><td colSpan={5}>-nga-</td></tr>
+    <tr><th>shark</th><td colSpan={5}>-mwa-</td><td rowSpan={2} colSpan={2}></td></tr>
+    <tr><th>whale</th><td colSpan={5}>**-∅-**</td></tr>
+  </tbody>
+</table>
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td></td><td rowSpan={2}>ngi-pwi-<br />ngipwi-</td><td rowSpan={2}>ngi-ni-<br />ngini-</td><td rowSpan={2}>ngi-nga-</td><td rowSpan={2}>ngi-amwi-</td><td rowSpan={2}>ngi-akwi-<br />ngikwi-</td></tr>
+    <tr><th>you</th><td></td><td></td></tr>
+    <tr><th>them</th><td>**ningi**-arra-<br />ningarra-</td><td>**ningkwi**-arra-<br />ningkwarra-</td><td>narri-arra-<br />narrirra-</td><td>narra-ni-<br />narrani-</td><td>narra-nga-<br />narranga-</td><td>narra-amwi-<br />narramwi-</td><td>narra-akwi-<br />narrakwi-</td></tr>
+    <tr><th>him</th><td>**ningi**-ni-<br />ningini-</td><td>**ningkwi**-ni-</td><td>narri-ni-</td><td>**na**-ni-<br />nani-</td><td>yingi-ni-<br />yingini-</td><td>nan-amwi-<br />nanamwi-</td><td>nan-akwi-</td></tr>
+    <tr><th>her</th><td>**ningi**-nga-</td><td>**ningkwi**-nga-<br />ningkwinga-</td><td>narri-nga-<br />narringa-</td><td>**na**-nga-<br />nanga-</td><td>yingi-<br />yingi-</td><td>ying-amwi-<br />yingamwi-</td><td>ying-akwi-<br />yingakwi-</td></tr>
+    <tr><th>shark</th><td>**ningi**-mwa-</td><td>**ningkwi**-mwa-</td><td>narri-mwa-</td><td>**na**-mwa-</td><td>yingi-mwa-<br />yingimwa-</td><td></td><td></td></tr>
+    <tr><th>whale</th><td>**ningi**-</td><td>**ningkwi**-<br />ningkwi-</td><td>narri-</td><td>**na**-</td><td>yingi-</td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+However we are still not consistent yet. Among the cases where a vowel is deleted, we have:
+
+- Vowel from either one deleted (because they are identical):
+  - narra-amwi- → narramwi-
+  - narra-akwi- → narrakwi-
+- Vowel from prefix deleted:
+  - ningi-arra- → ningarra-
+  - ningkwi-arra- → ningkwarra-
+- Vowel from suffix deleted:
+  - narri-arra- → narrirra-
+  - ngi-akwi- → ngikwi-
+
+The official answer says that the vowel should always be deleted from the prefix, and that in ngi-akwi- → ngikwi-, the suffix is actually "kwi-" (so there's no deletion in fact). This analysis causes a chain reaction and results the following different morphemes:
+
+- him = nana-
+- her = yinga-
+- shark (subj.) = -mwi-
+- whale (subj.) = -kwi-
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td rowSpan={7}>ningi-</td><td></td><td colSpan={5} rowSpan={2}>ngi-</td></tr>
+    <tr><th>you</th><td rowSpan={6}>ningkwi-</td></tr>
+    <tr><th>them</th><td rowSpan={5}>narri-</td><td colSpan={4}>narra-</td></tr>
+    <tr><th>him</th><td rowSpan={4}>na-</td><td rowSpan={4}>yingi-</td><td colSpan={2}>**nana-**</td></tr>
+    <tr><th>her</th><td colSpan={2}>**yinga-**</td></tr>
+    <tr><th>shark</th><td rowSpan={2} colSpan={2}></td></tr>
+    <tr><th>whale</th></tr>
+  </tbody>
+</table>
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td></td><td rowSpan={2}>-pwi-</td><td rowSpan={3}>-ni-</td><td rowSpan={3}>-nga-</td><td rowSpan={5}>**-mwi-**</td><td rowSpan={5}>**-kwi-**</td></tr>
+    <tr><th>you</th><td colSpan={2}></td></tr>
+    <tr><th>them</th><td colSpan={3}>-arra-</td></tr>
+    <tr><th>him</th><td colSpan={5}>-ni-</td></tr>
+    <tr><th>her</th><td colSpan={5}>-nga-</td></tr>
+    <tr><th>shark</th><td colSpan={5}>-mwa-</td><td rowSpan={2} colSpan={2}></td></tr>
+    <tr><th>whale</th><td colSpan={5}>-∅-</td></tr>
+  </tbody>
+</table>
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>they</th><th>he</th><th>she</th><th>shark</th><th>whale</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td></td><td rowSpan={2}>ngi-pwi-<br />ngipwi-</td><td rowSpan={2}>ngi-ni-<br />ngini-</td><td rowSpan={2}>ngi-nga-</td><td rowSpan={2}>ngi-mwi-</td><td rowSpan={2}>ngi-kwi-<br />ngikwi-</td></tr>
+    <tr><th>you</th><td></td><td></td></tr>
+    <tr><th>them</th><td>ningi-arra-<br />ningarra-</td><td>ningkwi-arra-<br />ningkwarra-</td><td>narri-arra-<br />narrirra-</td><td>narra-ni-<br />narrani-</td><td>narra-nga-<br />narranga-</td><td>narra-mwi-<br />narramwi-</td><td>narra-kwi-<br />narrakwi-</td></tr>
+    <tr><th>him</th><td>ningi-ni-<br />ningini-</td><td>ningkwi-ni-</td><td>narri-ni-</td><td>na-ni-<br />nani-</td><td>yingi-ni-<br />yingini-</td><td>nan-mwi-<br />nanamwi-</td><td>nan-kwi-</td></tr>
+    <tr><th>her</th><td>ningi-nga-</td><td>ningkwi-nga-<br />ningkwinga-</td><td>narri-nga-<br />narringa-</td><td>na-nga-<br />nanga-</td><td>yingi-<br />yingi-</td><td>yinga-mwi-<br />yingamwi-</td><td>yinga-kwi-<br />yingakwi-</td></tr>
+    <tr><th>shark</th><td>ningi-mwa-</td><td>ningkwi-mwa-</td><td>narri-mwa-</td><td>na-mwa-</td><td>yingi-mwa-<br />yingimwa-</td><td></td><td></td></tr>
+    <tr><th>whale</th><td>ningi-</td><td>ningkwi-<br />ningkwi-</td><td>narri-</td><td>na-</td><td>yingi-</td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+This still leaves one problem I can't explain, which is narri-arra- → narrirra-, which the problem and solution doesn't explain either. I have no idea why. All of this turns out to be mostly unnecessary though; in Q2, there's a single word that involves vowel deletion, and it can be explained by saying that "-amwi-" has lower priority than "ngi-" so the vowel of "ngi-" is kept instead. But if you do buy the analysis above, then the second and third words are just ngi-mwi and nana-kwi respectively, with no vowel deletion at all.
+
+Q2:
+
+- I saw her = I-her-saw = ningi-nga-rringka
+- the shark saw you = you-shark-saw shark = ngi-amwi-rringka mwangwiyiwanga = ngimwi-rringka mwangwiyiwanga
+- the whale saw him = him-whale-saw whale = nan-akwi-rringka apwirtha
+- you saw yourself = you-saw-self = ningkwi-rringka-tjingwa

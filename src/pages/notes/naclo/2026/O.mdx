@@ -1,0 +1,91 @@
+---
+tags:
+  - Number system
+---
+
+# Sum Times in Na
+
+{/* cSpell:ignore maka muta jɔkɛ mitikijo */}
+
+First analyze the structure of the number phrases. These phrases are at least 1 word and at most 3 words:
+
+- 1 word
+  - ko
+  - jo
+  - maka
+  - muta
+- 2 words
+  - ko-jo
+  - ko-muta
+- 3 words: "X bi-jɔ Y"
+  - X:
+    - ko
+    - jɔkɛ
+    - ko-bi-jɔkɛ
+    - ko-jo
+    - jɔkɛ-jo
+    - ko-muta
+  - Y:
+    - maka
+    - mitikijo
+    - sɔ
+    - muta
+    - jo
+
+In the 3-word forms, X always starts with "ko" or "jɔkɛ", strongly suggesting that these are bases. This is supported by ko + ko = ko-jo, which tells us "-jo" means "2". We shall assume that the other 4 Y words are units digits as well, and that "bi-jɔ" performs addition. Let **ko** = $K$, **jɔkɛ** = $J$, **maka** = $a$, **mitikijo** = $i$, **muta** = $u$, **sɔ** = $s$. Hence:
+
+$$
+\begin{aligned}
+  K + K &= K\times 2 \\
+  a \times a &= K + a \\
+  (J + i)\times 2 &= \mathbf{ko‐bi‐jɔkɛ} + s \\
+  K + i + \mathbf{ko‐bi‐jɔkɛ} + u &= K\times u \\
+  (J + 2)\times u &= K\times 2 + a \\
+  J\times 2 + a + J\times 2 + i &= K\times u + u
+\end{aligned}
+$$
+
+We are given very little information about possible ranges of each digit, so we must make reasonable assumptions. For starters, $K$ and $J$ are bases. Although any base may exist, bases that are not multiples of 5 are incredibly hard to deal with IRL. Also, they must be greater than the units digits, $a$, $i$, $u$, $s$. I'm going to assume that these units digits are all less than 10 (base 10 seems to be as high as you can get without inventing a subbase, because otherwise you need 19 different numerals).
+
+From (2), $K = a\times (a-1)$. If $K$ is a multiple of 5, then $a$ is either 5 or 6, and $K$ is either 20 or 30.
+
+In (5), RHS evaluates to 45 or 66. If the former, then $u$ is 3 or 5; if the latter, then $u$ is 2, 3, or 6 (since $u$ must be less than $J+2$). In each case:
+
+- $a=5,K=20,u=3$: $J+2=15$, leaving $J=13$. Reject because it's not a natural base.
+- $a=5,K=20,u=5$: already a contradiction because $a$ and $u$ cannot be identical.
+- $a=6,K=30,u=2$: $J+2=33$, leaving $J=31$. Reject because it's not a natural base.
+- $a=6,K=30,u=3$: $J+2=22$, so $J=20$.
+- $a=6,K=30,u=6$: again, $a$ and $u$ cannot be identical.
+
+So, assuming our bold assumption that $K$ and $J$ are multiples of 5 is correct, then the only viable answer is $a=6,K=30,u=3,J=20,j=2$. This gives us $i=7$. It's also nice that "jɔkɛ" and "jo", which look similar, stand for 20 and 2 respectively.
+
+Now we only have $s$ and "ko-bi-jɔkɛ" left.
+
+$$
+\begin{aligned}
+  (20 + 7)\times 2 &= \mathbf{ko‐bi‐jɔkɛ} + s \\
+  30 + 7 + \mathbf{ko‐bi‐jɔkɛ} + 3 &= 30\times 3
+\end{aligned}
+$$
+
+Therefore "ko-bi-jɔkɛ" = 90－40=50, which is ko+jɔkɛ. And $s=4$.
+
+Let's recap the number system:
+
+- jo = 2
+- muta = 3
+- sɔ = 4
+- maka = 6
+- mitikijo = 7
+- jɔkɛ = 20
+- jɔkɛ bi-jɔ X = 20 + X
+- ko = 30
+- ko bi-jɔ X = 30 + X
+- ko-bi-jɔkɛ = 50
+- ko-bi-jɔkɛ bi-jɔ X = 50 + X
+- ko-jo = 60
+- ko-jo bi-jɔ X = 60 + X
+
+So in O2, ko-jo-bi-jɔkɛ bi-jɔ muta is (60+20) + 3 = 83.
+
+In O3, we don't know what 40 is. It could be either (30+10) or (20×2). However we don't know what 10 is either, so the only viable answer is that jɔkɛ-jo = 40, and jɔkɛ-jo bi-jɔ sɔ = 44. As for 110, we don't know if the primary base is 20 or 30, since we have jɔkɛ and jɔkɛ-jo but also ko and ko-jo, and ko-bi-jɔkɛ. 110=30×3+20=30+20×4; the answer is given as ko-muta-bi-jɔkɛ, but I'm not certain about the acceptability of ko-bi-jɔkɛ-sɔ. Anyway, assuming the former, 117 = ko-muta-bi-jɔkɛ bi-jɔ mitikijo.

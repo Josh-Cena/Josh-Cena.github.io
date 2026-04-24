@@ -1,0 +1,175 @@
+---
+tags:
+  - Phrase translation
+---
+
+# Can You Speak Aikanã?
+
+{/* cSpell:ignore Aikanã apaepü apaena enume ãrüa aweria yoanea herekaa nũpane enue ãwĩwãhe yoane hereka ũpane ãwĩwã */}
+
+import { Ex } from "gloss.js/react";
+
+Each sentence here contains two sub-sentences, connected by "and", and their Aikanã translations each contain two words. So naturally, one Aikanã word corresponds to one sentence.
+
+First there's a glaring issue: "apaepü" and "apaena" both mean "he sees you unexpectedly", but have different endings. In fact, all other sentences have the first word alternate between "-pü" and "-na":
+
+- -pü
+  - _I recognize you and I feel jealous._
+  - _He sees you unexpectedly and he lies._
+  - _You ban him and you trick me._
+  - _I am warm and I dream weirdly._
+- -na
+  - _You find me and I smell good._
+  - _He sleeps and you are angry with him._
+  - _He sees you unexpectedly and you see him unexpectedly._
+  - _He remembers me and I hate him._
+  - _You are thirsty and he is angry with me._
+  - _I remember you and he finds me._
+
+The pattern is clear: in the first group, the two sentences have the same subject, while in the second group, they have different subjects. So this marker does not indicate any part of speech.
+
+Similarly, all the second words end in "ẽ", so we can remove that suffix as well. The remaining words strictly stand for the subject, verb, and object. First group by the verb. I have applied some discretion and grouped together sentences that have obviously the same stem even if the translations are different.
+
+- feel jealous/ban
+  - **d[ama]** _I feel jealous_
+  - **[ama]me** _you ban him_
+- hate/be angry with
+  - **d[enume]** _I hate him_
+  - **[enume]kea** _he is angry with me_
+  - **[enume]me** _you are angry with him_
+- see unexpectedly/find
+  - **h[apa]** _you see him unexpectedly_
+  - **[apa]mea** _you find me_
+  - **[apa]kea** _he finds me_
+  - **[apa]e** _he sees you unexpectedly_
+- recognize/remember
+  - **n[ãrüa]e** _I recognize you_
+  - **[ãrüa]kea** _he remembers me_
+  - **[ãrüa]kae** _I remember you_
+- trick/lie
+  - **h[aweria]a** _you trick me_
+  - **[aweria]he** _he lies_
+
+We can now group them by the subject/object:
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>he</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td>**[apa]mea**<br />_you find me_<br />**h[aweria]a**<br />_you trick me_</td><td>**[ãrüa]kea**<br />_he remembers me_<br />**[enume]kea**<br />_he is angry with me_<br />**[apa]kea**<br />_he finds me_</td></tr>
+    <tr><th>you</th><td>**n[ãrüa]e**<br />_I recognize you_<br />**[ãrüa]kae**<br />_I remember you_</td><td></td><td>**[apa]e**<br />_he sees you unexpectedly_</td></tr>
+    <tr><th>him</th><td>**d[enume]**<br />_I hate him_</td><td>**[enume]me**<br />_you are angry with him_<br />**h[apa]**<br />_you see him unexpectedly_<br />**[ama]me**<br />_you ban him_</td><td></td></tr>
+    <tr><th>∅</th><td>**d[ama]**<br />_I feel jealous_<br />**yoanea**<br />_I smell good_<br />**herekaa**<br />_I am warm_<br />**nũpane**<br />_I dream weirdly_</td><td>**enue**<br />_you are thirsty_</td><td>**ãwĩwãhe**<br />_he sleeps_<br />**[aweria]he**<br />_he lies_</td></tr>
+  </tbody>
+</table>
+
+If we look vertically, there doesn't seem to be any common prefix or suffix, so the subject is a bit complicated. On the other hand, ignore the last row and look horizontally. The first row has the common ending "-a"; the second row has the common ending "-e"; the third row has no common ending. So this is the object marker:
+
+- -a = me
+- -e = you
+- -∅ = him
+
+Remove these markers and look vertically. Weirdly, we see an alternation between prefix and suffix:
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>I</th><th>you</th><th>he</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>me</th><td></td><td>**-me**<br />_you find me_<br />**h-**<br />_you trick me_</td><td>**-ke**<br />_he remembers me_<br />**-ke**<br />_he is angry with me_<br />**-ke**<br />_he finds me_</td></tr>
+    <tr><th>you</th><td>**n-**<br />_I recognize you_<br />**-ka**<br />_I remember you_</td><td></td><td>**∅**<br />_he sees you unexpectedly_</td></tr>
+    <tr><th>him</th><td>**d-**<br />_I hate him_</td><td>**-me**<br />_you are angry with him_<br />**h-**<br />_you see him unexpectedly_<br />**-me**<br />_you ban him_</td><td></td></tr>
+    <tr><th>∅</th><td>**d-**<br />_I feel jealous_<br />**yoanea**<br />_I smell good_<br />**herekaa**<br />_I am warm_<br />**nũpane**<br />_I dream weirdly_</td><td>**enue**<br />_you are thirsty_</td><td>**ãwĩwãhe**<br />_he sleeps_<br />**-he**<br />_he lies_</td></tr>
+  </tbody>
+</table>
+
+So it appears that the subject can either be a prefix:
+
+- n-/d- = I
+- h- = you
+- ∅- = he
+
+Or a suffix:
+
+- -ka = I
+- -me = you
+- -ke/-he = he
+
+How do we select between the two? It's not based on the object, because the you/him entry contains both prefixes and suffixes. However, if you look back at the groups of verbs, notice how there's always a meaning that takes a prefix and the other meaning that takes a suffix. So:
+
+| Root   | Subject prefix   | Subject suffix |
+| ------ | ---------------- | -------------- |
+| ama    | feel jealous     | ban            |
+| enume  | hate             | be angry with  |
+| apa    | see unexpectedly | find           |
+| ãrüa   | recognize        | remember       |
+| aweria | trick            | lie            |
+
+There are a few words for which we don't know the verb root yet.
+
+- **yoanea** (_I smell good_): has no n-/d- prefix nor -ka suffix. However, it has the -a suffix ("me" object). So it appears that the subject is marked as the object instead, with the root being "yoane".
+- **herekaa** (_I am warm_): has no n-/d- prefix nor -ka suffix (there's "-kaa" but we wouldn't be able to explain the extra "a"). However, it again uses the -a suffix, so the subject is also marked as the object here, with the root being "hereka".
+- **nũpane** (_I dream weirdly_): has the n- prefix, so the root is "ũpane".
+- **enue** (_you are thirsty_): has no h- prefix nor -me suffix, but has the -e suffix, so the root is "enu" and the subject is marked as the object.
+- **ãwĩwãhe** (_he sleeps_): has the -he suffix, so the root is "ãwĩwã".
+
+Adding these to the table:
+
+| Root   | Subject prefix   | Subject suffix | Subject using object marker |
+| ------ | ---------------- | -------------- | --------------------------- |
+| ama    | feel jealous     | ban            |                             |
+| enume  | hate             | be angry with  |                             |
+| apa    | see unexpectedly | find           |                             |
+| ãrüa   | recognize        | remember       |                             |
+| aweria | trick            | lie            |                             |
+| yoane  |                  |                | smell good                  |
+| hereka |                  |                | be warm                     |
+| ũpane  | dream weirdly    |                |                             |
+| enu    |                  |                | be thirsty                  |
+| ãwĩwã  |                  | sleep          |                             |
+
+There's one more alternation we haven't explained: the n-/d- prefix for "I", and the -ke/-he suffix for "he".
+
+- For "I", d- and n- have both been used in the no-object condition, so this cannot be conditioned on the object. n- is used with the verbs ãrüa and ũpane, while d- is used with enume and ama. So it appears to be based on whether the first vowel is nasal.
+- For "he", -ke is used with ãrüa and enume, while -he is used with ãwĩwã and aweria. There's no phonological pattern here, but -he only appears in the no-object condition while -ke only appears in the "me" object condition, so it appears to be based on the object.
+
+Now we may translate.
+
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="1.">
+    <Ex.Line>h-aweria-na enu-a-ẽ</Ex.Line>
+    <Ex.Line>you-trick(-him)-_na_ be-thirsty-me-_ẽ_</Ex.Line>
+    <Ex.Line translation>**_You trick him and I am thirsty._**</Ex.Line>
+  </Ex>
+  <Ex number="2.">
+    <Ex.Line>yoane-na h-enume-ẽ</Ex.Line>
+    <Ex.Line>smell-good(-him)-_na_ you-hate(-him)-_ẽ_</Ex.Line>
+    <Ex.Line translation>**_He smells good and you hate him._**</Ex.Line>
+  </Ex>
+  <Ex number="3.">
+    <Ex.Line>d-apa-pü ũpane-ka-ẽ</Ex.Line>
+    <Ex.Line>I-see-unexpectedly(-him)-_pü_ dream-I-_ẽ_</Ex.Line>
+    <Ex.Line translation>**_I see him unexpectedly and I dream._**</Ex.Line>
+    <Ex.Line translation>Note: we've only seen "ũpane" with a prefix subject (which means "dream weirdly"), and by changing the subject marking, a new meaning is derived, so it must have something to do with "dream". The answer key just says "dream"; this is also necessary for (5), because otherwise we can't derive yet another word to translate "dream".</Ex.Line>
+  </Ex>
+  <Ex number="4.">
+    <Ex.Line>**n-ãwĩwã-pü d-aweria-e-ẽ**</Ex.Line>
+    <Ex.Line>I-oversleep-_pü_ I-trick-you-_ẽ_</Ex.Line>
+    <Ex.Line translation>_I oversleep and I trick you._</Ex.Line>
+    <Ex.Line translation>Note: again, we only know how to translate "sleep" (ãwĩwã with a suffix object), but "oversleep" is not "sleep", and the only process that we know that can derive new verbs is to change the subject marking, so we use a prefix subject here.</Ex.Line>
+  </Ex>
+  <Ex number="5.">
+    <Ex.Line>**ama-ke-a-na  ũpane-me-ẽ**</Ex.Line>
+    <Ex.Line>ban-he-me-_na_ dream-you-_ẽ_</Ex.Line>
+    <Ex.Line translation>_He bans me and you dream._</Ex.Line>
+  </Ex>
+  <Ex number="6.">
+    <Ex.Line>**ãrüa-me-pü  hereka-e-ẽ**</Ex.Line>
+    <Ex.Line>remember-you(-him)-_pü_ be-warm-you-_ẽ_</Ex.Line>
+    <Ex.Line translation>_You remember him and you are warm._</Ex.Line>
+  </Ex>
+</Ex.Group>

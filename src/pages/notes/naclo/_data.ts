@@ -15,6 +15,14 @@ const data = `Year,Index,Mean ± Stdev,Median,Max,Median Solve %,Round
 2026,G,N/A,N/A,10,N/A,Open
 2026,H,N/A,N/A,15,N/A,Open
 2026,I,N/A,N/A,5,N/A,Open
+2026,J,N/A,N/A,5,N/A,Invitational
+2026,K,N/A,N/A,15,N/A,Invitational
+2026,L,N/A,N/A,10,N/A,Invitational
+2026,M,N/A,N/A,15,N/A,Invitational
+2026,N,N/A,N/A,15,N/A,Invitational
+2026,O,N/A,N/A,10,N/A,Invitational
+2026,P,N/A,N/A,15,N/A,Invitational
+2026,Q,N/A,N/A,15,N/A,Invitational
 2025,A,5.882 ± 3.091,5.882,10,58.82%,Open
 2025,B,6.364 ± 2.562,6.364,10,63.64%,Open
 2025,C,4.839 ± 4.554,4.839,15,32.26%,Open

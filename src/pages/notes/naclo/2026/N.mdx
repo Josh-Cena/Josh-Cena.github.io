@@ -1,0 +1,151 @@
+---
+tags:
+  - Computational
+  - Syntax
+---
+
+# A Token of Your Attention
+
+{/* cSpell:ignore Santali ᱯᱩᱥᱤ ᱜᱩᱵᱩ ᱯᱟᱛᱤᱨᱮ ᱡᱚᱢᱮᱟᱮ ᱦᱮᱡᱮᱱᱟᱠᱳ ᱥᱮᱛᱟ ᱦᱮᱡᱳᱜᱟᱮ ᱨᱚᱲᱮᱱᱟᱧ ᱨᱚᱲᱮᱱᱟᱮ ᱫᱟᱲᱩ ᱦᱟᱠᱳ ᱡᱚᱢᱠᱮᱫᱮᱟᱧ ᱢᱚᱴᱟ */}
+
+import { Ex } from "gloss.js/react";
+
+I originally thought this is a pure math puzzle like most similar computational problems; but no this one involves non-trivial syntax theory! We need to first and foremost understand how the attention is calculated. Look at the example matrix. Most entries are .05, which is probably the "base value". The diagonal values are .60 by default. If there are other entries that are more than .05, then the diagonal is reduced accordingly to maintain the row sum. We focus on the _other_ words that has attention.
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td><th>the</th><th>cat</th><th>eat</th><th>s</th><th>the</th><th>rat</th><th>on</th><th>the</th><th>mat</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>the</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>cat</th><td></td><td></td><td>.30</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>eat</th><td></td><td>.15</td><td></td><td>.20</td><td></td><td>.10</td><td></td><td></td><td>.10</td></tr>
+    <tr><th>s</th><td></td><td></td><td>.40</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>the</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>rat</th><td></td><td></td><td>.20</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>on</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>the</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><th>mat</th><td></td><td></td><td>.20</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+So there are three conclusions:
+
+- Attention is symmetric: if A attends to B, then B attends to A. Furthermore the proportion is the same: the "eat" row's entries are proportional to the "eat" column's values (with every value doubled).
+- The verb attends to: subject "cat", tense "-s", object "rat", location "mat", and nothing else.
+- Nothing else attends to anything other than with the verb.
+
+In N1, first look at the verb row. "chase" attends to subject "dog", tense "was" and aspect "-ing", object "cat", and location "yard". The weights satisfy object = location < subject < tense = aspect. Furthermore if the verb attends to X with weight _w_, then X attends to the verb with weight 2*w*. All as expected.
+
+a\. "fast" is not one of the verb's attentions, so it only attends to itself, like "the": fast→fast = .60.  
+b\. For non-diagonal entries, the base value is used: fast→dog = .04.  
+c\. chase→cat = .08, so cat→chase = .16, leaving cat→cat = 1 － .04×9 － .16 = .48.  
+d\. chase→yard = .08, so yard→chase = .16.
+
+Now we need to understand how the attention weights are calculated for the verb. We know that:
+
+- eat: verb itself = .25, tense = .20, subject = .15, object = location = .10, other 4 parts = .05
+- chase: verb itself = .20, tense = aspect = .16, subject = .12, object = location = .08, other 5 parts = .04
+
+Obviously there's a fixed proportion of the constituents: verb itself = 5*x*, tense = aspect = 4*x*, subject = 3*x*, object = location = 2*x*, other parts = 1*x*. We just need to calculate _x_ based on the sum.
+
+- eat: 5*x* + 4*x* + 3*x* + 2×2*x* + 4×1*x* = 20*x* = 1; _x_ = .05
+- chase: 5*x* + 2×4*x* + 3*x* + 2×2*x* + 5×1*x* = 25*x* = 1; _x_ = .04
+
+Therefore in "the cat meowed", the verb itself gets 5*x*, tense gets 4*x*, subject gets 3*x*, "the" gets _x_; they total to 12*x*, so _x_ = 1/12, and we should get meow→meow = .417. However the problem says .40, so we need to adjust the proportions as: 4*x*, 3*x*, 2*x*, _x_ (i.e., since there's no object or location, the higher-priority constituents have lower proportions too). This gives _x_ = .10 and meow→meow = .40, exactly what we want. Therefore, (f) meow→cat = 2*x* = .20; (g) meow→ed = 3*x* = .30; meow→the = _x_ = .10 (base value). Vertically, every non-diagonal, non-base entry is double the corresponding horizon entry: (e) cat→meow = .40; (h) ed→meow = .60. Finally the other two grayed cells of "ed" are both .10, so (i) ed→ed = .20.
+
+For N3, we again focus on the non-diagonal, non-base values. There's exactly one row per table with multiple non-base values.
+
+- A: .176 (3*x*), .117 (2*x*), .117 (2*x*), .058 (_x_), .235 (4*x*), .117 (2*x*), .176 (3*x*)
+- B: .166 (3*x*), .111 (2*x*), .055 (_x_), .277 (5*x*), .222 (4*x*), .166 (3*x*)
+- C: .133 (2*x*), .066 (_x_), .333 (5*x*), .266 (4*x*), .200 (3*x*)
+- D: .058 (_x_), .117 (2*x*), .294 (5*x*), .235 (4*x*), .117 (2*x*), .176 (3*x*)
+- E: .083 (_x_), .166 (2*x*), .333 (4*x*), .250 (3*x*), .166 (2*x*)
+
+For A and E, we don't have the 5*x* rank, so they are missing something. We know that the highest-ranked must be the verb, and the lowest must be "other".
+
+- A: 3 2 2 other verb 2 3
+- B: subject object other verb tense subject
+- C: object other verb tense subject
+- D: other object verb tense object subject
+- E: other 2 verb 3 2
+
+For E, 3 should be "tense" and 2 should be "subject", because the verb-tense-subject order is present in B and C too. However, I don't want to do the same for A, because that creates verb-subject-object and puts a "tense" at the beginning, both of which we've never seen. Instead, if we assume that 3 is "subject" and 2 is "object", then we create the familiar verb-object-subject order seen in D.
+
+- A: subject object object other verb object subject
+- B: subject object other verb tense subject
+- C: object other verb tense subject
+- D: other object verb tense object subject
+- E: other subject verb tense subject
+
+Take a brief look at the scripts. Notice that we have 1 4-word sentence, 3 3-word sentences, and 2 2-word sentences. Naturally, these words correspond to: subject, object, verb, location. Presumably, the trailing "object" and "subject" after the verb itself are just agreement markers, and so is the "tense", so this whole thing is one word. Also presumably, "other" after the object should be merged with the object; otherwise A would have 5 words. It's unclear if sentence-initial "other" should be merged too, but I assume no, because otherwise we have 3 3-word sentences.
+
+- A: S O O-other V-O-S
+- B: S O-other V-T-S
+- C: O-other V-T-S
+- D: other O V-T-O-S
+- E: other S V-T-S
+
+But in any case, there's one matrix (A) with two lexical objects (plus subject and verb), and one sentence (4) with 4 words, so they must match.
+
+We are looking for a sentence that matches one of the English sentences: _The cat eats the rat on the mat._, _The dog was chasing the fast cat around the yard._, _The cat meowed._. The last, should it match one, may only match the subject-only E, but E requires the existence of an "other" morpheme (which is not the determiner; determiners are probably unmarked in this language due to the general insufficiency of "other" morphemes). The first two sentences both contain 4 constituents, so either one must be A. A does not have tense, but the second sentence has marked past tense, so only _The cat eats the rat on the mat._ is viable, also revealing to us that present tense is unmarked in this language.
+
+{/* prettier-ignore */}
+<Ex>
+  <Ex.Line>(4) ᱯᱩᱥᱤ ᱜᱩᱵᱩ ᱯᱟᱛᱤᱨᱮ ᱡᱚᱢᱮᱟᱮ</Ex.Line>
+  <Ex.Line>(A) S    O     O-P    V-O-S</Ex.Line>
+  <Ex.Line><></> cat  rat   mat-on eat-O-S</Ex.Line>
+  <Ex.Line translation>_The cat eats the rat on the mat._</Ex.Line>
+</Ex>
+
+The words "rat" appeared again in 1. **ᱜᱩᱵᱩ**-ᱥᱮᱡ ᱦᱮᱡᱮᱱᱟᱠᱳ. Because it's suffixed by something, this matches the pattern for C. (ᱥᱮᱡ = "toward" is not deducible from the data.)
+
+{/* prettier-ignore */}
+<Ex>
+  <Ex.Line>(1) ᱜᱩᱵᱩ-ᱥᱮᱡ    ᱦᱮᱡᱮᱱᱟᱠᱳ</Ex.Line>
+  <Ex.Line>(C) O-P          V-T-S</Ex.Line>
+  <Ex.Line><></> rat-toward V-T-S</Ex.Line>
+</Ex>
+
+The word "cat" appears again in 5. ᱥᱮᱛᱟ **ᱯᱩᱥᱤ**-ᱥᱟᱶ ᱦᱮᱡᱳᱜᱟᱮ. Because it's also suffixed by something, this matches the pattern for B. (ᱥᱮᱛᱟ = "dog", ᱥᱟᱶ = "with" are not deducible from the data.)
+
+{/* prettier-ignore */}
+<Ex>
+  <Ex.Line>(5) ᱥᱮᱛᱟ ᱯᱩᱥᱤ-ᱥᱟᱶ ᱦᱮᱡᱳᱜᱟᱮ</Ex.Line>
+  <Ex.Line>(B) S     O-P      V-T-S</Ex.Line>
+  <Ex.Line><></> dog cat-with V-T-S</Ex.Line>
+</Ex>
+
+Whatever ᱥᱮᱛᱟ is, it must be a noun like "cat" and "rat" because it's in subject position. It appears in 6. **ᱥᱮᱛᱟ**-ᱥᱟᱶ ᱨᱚᱲᱮᱱᱟᱧ. Due to the extra suffix, it must again be the (C) structure.
+
+{/* prettier-ignore */}
+<Ex>
+  <Ex.Line>(6) ᱥᱮᱛᱟ-ᱥᱟᱶ  ᱨᱚᱲᱮᱱᱟᱧ</Ex.Line>
+  <Ex.Line>(C) O-P        V-T-S</Ex.Line>
+  <Ex.Line><></> dog-with V-T-S</Ex.Line>
+</Ex>
+
+Now we know that C has been used twice, the other two matrices, D and E, shall only be used once for 2 and 3. In 3, look at the verb word: ᱨᱚᱲᱮᱱᱟᱮ. "ᱮᱱ" appears in 1 and 6 in the middle; "ᱟᱮ" appears in 4 and 5 at the end; "ᱨᱚᱲ" appears in 6 at the beginning. Put together, this should correspond to V-T-S, so 3 is E, leaving 2 to be D.
+
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="">
+    <Ex.Line>(2) ᱫᱟᱲᱩ ᱦᱟᱠᱳ ᱡᱚᱢᱠᱮᱫᱮᱟᱧ</Ex.Line>
+    <Ex.Line>(D) ?    O     V-T-O-S</Ex.Line>
+    <Ex.Line><></> ?  fish  V-T-O-S</Ex.Line>
+  </Ex>
+  <Ex number="">
+    <Ex.Line>(3) ᱢᱚᱴᱟ ᱥᱮᱛᱟ ᱨᱚᱲ-ᱮᱱ-ᱟᱮ</Ex.Line>
+    <Ex.Line>(E) ?    S     V-T-S</Ex.Line>
+    <Ex.Line><></> ?  dog   talk-T-S</Ex.Line>
+  </Ex>
+</Ex.Group>
+
+For N5, we must tokenize these sentences.
+
+- For A, we want the middle morpheme in "ᱡᱚᱢᱮᱟᱮ". "ᱡᱚᱢ" appears in (2) and (4); "ᱟᱮ" appears in (3), (4), (5). Removing these, only "ᱮ" is left. (Like [J](./J.mdx), our goal here is to extract the longest common substring among multiple sentences, so if we see "ABC" and "ABD", we should always assume that "AB" is a common morpheme, and not that the common morpheme is just "A" while the root happens to begin with the same letter. This is not fool-proof, but it seems to work with such sparse information.)
+- For B, we want the last morpheme in "ᱦᱮᱡᱳᱜᱟᱮ", which again should be "ᱟᱮ" as previously analyzed.
+- For C, we want the second morpheme of the sentence, and this matrix maps to two sentences: (1) and (6). They have both already been tokenized above, and the suffixes are "ᱥᱮᱡ" and "ᱥᱟᱶ".
+- For D, we want the third morpheme of the sentence, which is the verb in "ᱡᱚᱢᱠᱮᱫᱮᱟᱧ". This is "ᱡᱚᱢ" as previously analyzed.
+- For E, we want the middle morpheme in "ᱨᱚᱲ-ᱮᱱ-ᱟᱮ", which is "ᱮᱱ" as previously analyzed.

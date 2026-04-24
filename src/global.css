@@ -256,6 +256,15 @@ abbr {
   visibility: hidden;
 }
 
+.diagonal {
+  background: linear-gradient(
+    to top right,
+    transparent calc(50% - 1px),
+    var(--color-text) 50%,
+    transparent calc(50% + 1px)
+  );
+}
+
 .gloss-ex,
 .gloss-ex ol,
 .gloss-ex li {

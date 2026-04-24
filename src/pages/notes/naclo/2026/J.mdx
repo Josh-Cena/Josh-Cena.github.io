@@ -1,0 +1,92 @@
+---
+tags:
+  - Computational
+  - Puzzle
+---
+
+# Strawbery Shortcake
+
+{/* cSpell:ignore Strawbery anging ssive eding sses */}
+
+- Initial input: `small`
+- `small` is followed by: `elephants` (2 times), `strawberries` (1 time); so the next word is `elephants`
+- `elephants` is followed by: `eat` (1 time), `are` (2 times); so the next word is `are`
+- `are` is followed by: `not` (1 time), `alleged` (2 times), `very` (1 time); so the next word is `alleged`
+- `alleged` is followed by: `spies` (2 times), `blueberries` (1 time); so the next word is `spies`
+
+So the sentence is `small elephants are alleged spies`.
+
+In J2, the critical information is as follows:
+
+- "None of these words have any repeating letters"
+- "all the words are four letters long"
+- _coaches_ is tokenized as \[co]\[a]\[ch]\[es]
+
+And the common token counts:
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr>
+      <td></td><th>1️⃣</th><th>2️⃣</th><th>3️⃣</th><th>4️⃣</th><th>5️⃣</th><th>6️⃣</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th>1️⃣</th><td></td><td>2</td><td>2</td><td>1</td><td></td><td>0</td></tr>
+    <tr><th>2️⃣</th><td>2</td><td></td><td></td><td>0</td><td>1</td><td></td></tr>
+    <tr><th>3️⃣</th><td>2</td><td></td><td></td><td></td><td>0</td><td></td></tr>
+    <tr><th>4️⃣</th><td>1</td><td>0</td><td></td><td></td><td>1</td><td>2</td></tr>
+    <tr><th>5️⃣</th><td></td><td>1</td><td>0</td><td>1</td><td></td><td></td></tr>
+    <tr><th>6️⃣</th><td>0</td><td></td><td></td><td>2</td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+Note that in general, the words overlap quite a bit, so we want to tokenize the words such that they share tokens as much as possible. That is, we always want to extract longest common substrings as tokens. My first assumption: "c" never appears as a token on its own, because the two tokens above are both "c" followed by something else.
+
+A\. _\[ch]anging_  
+B\. _\[co]\[a]\[ch]\[es]_  
+C\. _ex\[ce]ssive_  
+D\. _pro\[ce]eding_  
+E\. _pro\[ce]sses_  
+F\. _started_
+
+The "ex" and "pro" prefixes must be tokens, because the suffixes look more complex and we only have 4 tokens to work with. Among the suffixes, note that "sses" contains "es", a known token. The remainder, "ss", also appears in C.
+
+A\. _\[ch]anging_  
+B\. _\[co]\[a]\[ch]\[es]_  
+C\. _\[ex]\[ce]\[ss]\[ive]_  
+D\. _\[pro]\[ce]eding_  
+E\. _\[pro]\[ce]\[ss]\[es]_  
+F\. _started_
+
+If we divide "eding" into "ed" and "ing", then "ed" can be reused for F and "ing" can be reused for A.
+
+A\. _\[ch]ang\[ing]_  
+B\. _\[co]\[a]\[ch]\[es]_  
+C\. _\[ex]\[ce]\[ss]\[ive]_  
+D\. _\[pro]\[ce]\[ed]\[ing]_  
+E\. _\[pro]\[ce]\[ss]\[es]_  
+F\. _start\[ed]_
+
+Let's count the common tokens. Although we haven't fully tokenized A and F, we can know for sure that a token _doesn't_ appear in them if there's no such substring.
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr>
+      <td></td><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th>A</th><td></td><td>1/2</td><td>0</td><td>1</td><td>0</td><td>0/1</td></tr>
+    <tr><th>B</th><td>1/2</td><td></td><td>0</td><td>0</td><td>1</td><td>0/1</td></tr>
+    <tr><th>C</th><td>0</td><td>0</td><td></td><td>1</td><td>2</td><td>0</td></tr>
+    <tr><th>D</th><td>1</td><td>0</td><td>1</td><td></td><td>2</td><td>1</td></tr>
+    <tr><th>E</th><td>0</td><td>1</td><td>2</td><td>2</td><td></td><td>0</td></tr>
+    <tr><th>F</th><td>0/1</td><td>0/1</td><td>0</td><td>1</td><td>0</td><td></td></tr>
+  </tbody>
+</table>
+
+1️⃣ shares 2 tokens with 2 other words, so this must be E, while 2️⃣ and 3️⃣ are C and D, in some order. 1️⃣ shares 1 token with 4️⃣, so 4️⃣ is B. 4️⃣ is known to share 2 tokens with 6️⃣, so 6️⃣ must be A, and the tokenization of A contains the token "a": A. _\[ch]\[a]\[ng]\[ing]_. B is known to share no tokens with C or D, but 4️⃣ needs to share 1 token with 5️⃣, so 5️⃣ must be F, and F also contains the token "a": F. _st\[a]rt\[ed]_. Finally, 5️⃣ shares 1 token with 2️⃣ and no tokens with 3️⃣, so 2️⃣ is D and 3️⃣ is C.
+
+(This is mostly guesswork, based on the assumption that the tokenization should create as many common tokens as possible. I'm not sure if there's an entirely rigorous way to do this.)

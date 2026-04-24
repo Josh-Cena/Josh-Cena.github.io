@@ -1,0 +1,175 @@
+---
+tags:
+  - Phrase translation
+  - Morphology
+  - Phonology
+---
+
+# Wear There's a Will
+
+{/* cSpell:ignore annɔʁaa annɔʁaamik annɔʁɑɑ annɔʁɑɑʁa avaa iluɑʁsaass iluɑʁsaassavaa iluɑʁsaassissɑɑq issɑɑq isuss isussavaa isɔʁs katɛʁs katɛʁsissɑɑq katiss katissavaa kunngi kunngiga nulia nuliɑ nuliɑq nuliɑʁa ɔʁsu ɔʁsɔ ɔʁsɔʁa palasi palasiga palasima palasissɑq pisussɑɑq qalissia qalissiamik sinissɑɑq tigumiass tigumiɑʁs tigumiɑʁsissɑɑq uima uissɑq ussɑɑq viinni viinnissa viinnissamik */}
+
+import { Ex } from "gloss.js/react";
+
+There are 2 2-word sentences, which both contain an intransitive verb; the other sentences are 3-word and contain a transitive verb. So we know that the words stand for the subject, verb, and object respectively, we just don't know their order. Compare common parts:
+
+- wife
+  - **nuliɑ**q annɔʁaamik iluɑʁsaassissɑɑq. _The wife will mend a coat._
+  - **nuliɑ**ʁa pisussɑɑq. _My wife will walk._
+- priest
+  - **palasi**ga sinissɑɑq. _My priest will sleep._
+  - **palasi**ma annɔʁɑɑʁa iluɑʁsaassavaa. _My priest will mend my coat._
+- king
+  - **kunngi**ga qalissiamik tigumiɑʁsissɑɑq. _My king will wear linen._
+  - uima **kunngi** isussavaa. _My husband will criticize the king._
+- mend-coat
+  - nuliɑq **annɔʁaa**mik **iluɑʁsaass**issɑɑq. _The wife will mend a coat._
+  - palasima **annɔʁɑɑ**ʁa **iluɑʁsaass**avaa. _My priest will mend my coat._
+
+Based on "wife" and "priest", the first word is the subject. Based on "king", the second word is the object. In the "mend-coat" sentences, both the verb and object are shared, explaining why the last two words both share the same root.
+
+Now we can study each word in isolation. Nouns:
+
+| Noun             | indefinite     | "the"        | "my"                |
+| ---------------- | -------------- | ------------ | ------------------- |
+| coat             | annɔʁaa-mik    |              | annɔʁɑɑ-ʁa          |
+| king             |                | kunngi       | kunngi-ga           |
+| wife             |                | nuliɑ-q      | nuliɑ-ʁa            |
+| processed oil    |                |              | ɔʁsɔ-ʁa             |
+| priest           |                |              | palasi-ga/palasi-ma |
+| religion student |                | palasi-ssɑ-q |                     |
+| linen            | qalissia-mik   |              |                     |
+| husband          |                |              | ui-ma               |
+| fiancé           |                | ui-ssɑ-q     |                     |
+| grape            | viinni-ssa-mik |              |                     |
+
+There's obvious suffix alternation here, which I've already annotated in the table, with the goal of maximizing the length of the common root in each row, and then applying the common suffixes across rows.
+
+- If the noun is indefinite, it ends with -mik.
+- If the determiner is "the", it either ends with -q or has no suffix.
+- The "my" possessive can be one of three suffixes: -ʁa, -ma, or -ga.
+
+There's another interesting pattern that I've marked: we have some shared roots _across_ rows. Namely, palasi = "priest", while palasi-ssɑ = "religion student"; ui = "husband", while ui-ssɑ = "fiancé". This suggests that the suffix -ssɑ is a "future" marker (i.e., "X-to-be").
+
+We can augment this table with the nouns introduced in P1. Most of the roots here (ignoring the determiner suffix) are derived from the root in the table by adding or removing -ssa:
+
+- "nulia-ssɑ" = "wife-to-be" = "fiancée"
+- "viinni" = "was-grape" = "wine" ("viinni" just looks like "vin")
+- "annɔʁaa-ssa" = "coat-to-be" = "cotton" (might be anything else that makes coats)
+- "ɔʁsu-ssɑ" = "processed-oil-to-be" = "raw oil"
+
+| Noun             | indefinite      | "the"        | "my"                |
+| ---------------- | --------------- | ------------ | ------------------- |
+| coat             | annɔʁaa-mik     |              | annɔʁɑɑ-ʁa          |
+| cotton           | annɔʁaa-ssa-mik |              |                     |
+| king             |                 | kunngi       | kunngi-ga           |
+| wife             |                 | nuliɑ-q      | nuliɑ-ʁa            |
+| fiancée          |                 | nulia-ssɑ-q  |                     |
+| processed oil    |                 |              | ɔʁsɔ-ʁa             |
+| raw oil          |                 | ɔʁsu-ssɑ-q   |                     |
+| priest           |                 | palasi       | palasi-ga/palasi-ma |
+| religion student |                 | palasi-ssɑ-q | palasi-ssɑ-ʁa       |
+| linen            | qalissia-mik    |              |                     |
+| husband          |                 |              | ui-ma               |
+| fiancé           |                 | ui-ssɑ-q     |                     |
+| wine             |                 |              | viinni-ga           |
+| grape            | viinni-ssa-mik  |              |                     |
+
+Apparently, nouns come in two kinds: those that take nothing for "the" and -ga/-ma for "my", and those that take -q for "the" and -ʁa for "my". Within the first kind, the choice between -ga and -ma is not conditioned by the noun itself, since we have both palasi-ma and palasi-ga. Looking at the sentences, palasi-ga has no object while palasi-ma does ("my coat"); ui-ma and kunngi-ga also have objects, where the former has "the king" and the latter has "linen". So:
+
+- -ga: object is definite ("my", "the")
+- -ma: object is indefinite or no object
+
+There's one more variation we haven't accounted for: between "a" and "ɑ". As follows:
+
+| a                            | ɑ                 |
+| ---------------------------- | ----------------- |
+| annɔʁaa-mik, annɔʁaa-ssa-mik | annɔʁɑɑ-ʁa        |
+| nulia-ssɑ-q                  | nuliɑ-q, nuliɑ-ʁa |
+| -ssa-mik                     | -ssɑ-q, -ssɑ-ʁa   |
+
+The conclusion is that this is a harmony: a → ɑ when before a uvular (q, ʁ).
+
+Verbs:
+
+| word              | meaning   | subject              | object           |
+| ----------------- | --------- | -------------------- | ---------------- |
+| iluɑʁsaass-avaa   | mend      | my priest            | my coat          |
+| iluɑʁsaass-issɑɑq | mend      | the wife             | a coat           |
+| isuss-avaa        | criticize | my husband           | the king         |
+| katiss-avaa       | collect   | the fiancé           | my processed oil |
+| katɛʁs-issɑɑq     | collect   | the religion student | a grape          |
+| pis-ussɑɑq        | walk      | my wife              |                  |
+| sin-issɑɑq        | sleep     | my priest            |                  |
+| tigumiɑʁs-issɑɑq  | wear      | my king              | linen            |
+
+So the suffix:
+
+- -avaa: object is definite ("my", "the")
+- -issɑɑq/-ussɑɑq: object is indefinite or no object
+
+Apply these findings to P1:
+
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="1.">
+    <Ex.Line>nulia-ssɑ-q viinni-ga katiss-avaa.</Ex.Line>
+    <Ex.Line>husband-FUT-the wine-my collect-DEF.OBJ.</Ex.Line>
+    <Ex.Line translation>**_The fiancée will collect my wine._**</Ex.Line>
+  </Ex>
+  <Ex number="2.">
+    <Ex.Line>palasi-ssɑ-ʁa annɔʁaa-ssa-mik isɔʁs-issɑɑq.</Ex.Line>
+    <Ex.Line>priest-FUT-my cotton-indef criticize-INDEF.OBJ.</Ex.Line>
+    <Ex.Line translation>**_My religion student will criticize cotton._**</Ex.Line>
+    <Ex.Line translation>Note: we haven't seen "isɔʁs" before, but it's closest to "isuss".</Ex.Line>
+  </Ex>
+  <Ex number="3.">
+    <Ex.Line>palasi ɔʁsu-ssɑ-q tigumiass-avaa.</Ex.Line>
+    <Ex.Line>priest oil-FUT-the wear-def.obj.</Ex.Line>
+    <Ex.Line translation>**_The priest will wear the raw oil._**</Ex.Line>
+    <Ex.Line translation>Note: again, "tigumiass" is closest to "tigumiɑʁs".</Ex.Line>
+  </Ex>
+</Ex.Group>
+
+We have a few extra verbs to augment the table:
+
+| word              | meaning   | subject              | object           |
+| ----------------- | --------- | -------------------- | ---------------- |
+| iluɑʁsaass-avaa   | mend      | my priest            | my coat          |
+| iluɑʁsaass-issɑɑq | mend      | the wife             | a coat           |
+| isuss-avaa        | criticize | my husband           | the king         |
+| isɔʁs-issɑɑq      | criticize | the religion student | cotton           |
+| katiss-avaa       | collect   | the fiancé           | my processed oil |
+| katiss-avaa       | collect   | the fiancée          | my wine          |
+| katɛʁs-issɑɑq     | collect   | the religion student | a grape          |
+| pis-ussɑɑq        | walk      | my wife              |                  |
+| sin-issɑɑq        | sleep     | my priest            |                  |
+| tigumiass-avaa    | wear      | the priest           | the raw oil      |
+| tigumiɑʁs-issɑɑq  | wear      | my king              | linen            |
+
+Again, we have to explain all the variations in the root:
+
+- isuss vs. isɔʁs
+- katiss vs. katɛʁs
+- tigumiass vs. tigumiɑʁs
+
+The obvious explanation for the vowel is, again, harmony: a → ɑ, u → ɔ, i → ɛ when before a uvular (q, ʁ). But where does this uvular come from? Why does the "s" randomly become "ʁ"? And why doesn't "iluɑʁsaass" undergo the same change? The explanation is that this "ʁ" is actually the underlying form, which changes to "s" in the presence of "-avaa". It's quite unnatural but it suffices for the explanation in P3. It's not necessary for P2 though.
+
+{/* prettier-ignore */}
+<Ex.Group>
+  <Ex number="4.">
+    <Ex.Line>**ui-ma ɔʁsu-ssɑ-q katiss-avaa.**</Ex.Line>
+    <Ex.Line>husband-my oil-FUT-the collect-DEF.OBJ.</Ex.Line>
+    <Ex.Line translation>_My husband will collect the raw oil._</Ex.Line>
+  </Ex>
+  <Ex number="5.">
+    <Ex.Line>**palasi-ga qalissia-ssa-mik katɛʁs-issɑɑq.**</Ex.Line>
+    <Ex.Line>priest-my linen-FUT-indef collect-indef.obj.</Ex.Line>
+    <Ex.Line translation>_My priest will collect flax._</Ex.Line>
+  </Ex>
+  <Ex number="6.">
+    <Ex.Line>**ui-ssɑ-ʁa kunngi-ssa-mik isɔʁs-issɑɑq.**</Ex.Line>
+    <Ex.Line>husband-FUT-my king-FUT-indef criticize-INDEF.OBJ.</Ex.Line>
+    <Ex.Line translation>_My fiancé will criticize a crown prince._</Ex.Line>
+  </Ex>
+</Ex.Group>
