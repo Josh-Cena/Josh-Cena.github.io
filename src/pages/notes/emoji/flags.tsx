@@ -18,6 +18,31 @@ function pixelsEqual(a: Uint8ClampedArray, b: Uint8ClampedArray) {
   return a.length === b.length && a.every((val, i) => val === b[i]);
 }
 
+// On Android, unsupported flags still renders as a flag (white with question
+// mark). If so, then we need to compare pixels against a known "unknown" flag.
+// Otherwise, unsupported flags render as two separate region indicator
+// symbols, so just compare against the known "separate" rendering.
+let flagForUnknown: Uint8ClampedArray | null | undefined = undefined;
+
+function rendersAsFlag(text: string) {
+  if (flagForUnknown === undefined) {
+    const guaranteedUnknown = "🇿🇿";
+    const unknownChars = [...guaranteedUnknown];
+    const pixelsUnknown = renderTextToPixels(guaranteedUnknown);
+    const separateUnknown = renderTextToPixels(
+      `${unknownChars[0]!}\u200b${unknownChars[1]!}`,
+    );
+    flagForUnknown = pixelsEqual(pixelsUnknown, separateUnknown)
+      ? null
+      : pixelsUnknown;
+  }
+  const chars = [...text];
+  return !pixelsEqual(
+    renderTextToPixels(text),
+    flagForUnknown ?? renderTextToPixels(`${chars[0]!}\u200b${chars[1]!}`),
+  );
+}
+
 const regionNames = new Intl.DisplayNames(["en-US"], {
   type: "region",
   fallback: "none",
@@ -62,12 +87,8 @@ export default function Flags(): ReactElement {
     const newAllFlags = { ...allFlags };
     for (const [c1, row] of Object.entries(allFlags)) {
       const newRow = { ...row };
-      for (const [c2, { flag }] of Object.entries(row)) {
-        const pixels = renderTextToPixels(flag);
-        const chars = [...flag];
-        const separate = renderTextToPixels(`${chars[0]!}\u200b${chars[1]!}`);
-        newRow[c2]!.flagRendered = !pixelsEqual(pixels, separate);
-      }
+      for (const [c2, { flag }] of Object.entries(row))
+        newRow[c2]!.flagRendered = rendersAsFlag(flag);
       newAllFlags[c1] = newRow;
     }
     setAllFlags(newAllFlags);
@@ -128,7 +149,9 @@ export default function Flags(): ReactElement {
                       {(!onlySupported || flagData.flagRendered) && (
                         <>
                           {flagData.flag}{" "}
-                          <small>{flagData.name ?? "Unknown"}</small>
+                          <small suppressHydrationWarning>
+                            {flagData.name ?? "Unknown"}
+                          </small>
                         </>
                       )}
                     </td>
@@ -160,7 +183,9 @@ export default function Flags(): ReactElement {
                         <th>{c2}</th>
                         <td className="no-br">
                           {flagData.flag}{" "}
-                          <small>{flagData.name ?? "Unknown"}</small>
+                          <small suppressHydrationWarning>
+                            {flagData.name ?? "Unknown"}
+                          </small>
                         </td>
                       </tr>
                     ),
