@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "@/components/Link";
 
 function renderTextToPixels(text: string) {
@@ -59,7 +59,7 @@ for (let i = 0; i < 26; i++) {
   }
 }
 
-export default function Flags(): ReactElement {
+export default function Flags(): ReactNode {
   const [onlySupported, setOnlySupported] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [allFlags, setAllFlags] = useState(() =>

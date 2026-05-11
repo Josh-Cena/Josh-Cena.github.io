@@ -1,0 +1,649 @@
+---
+description: foo
+---
+
+# French verb conjugation study
+
+{/* cSpell:disable */}
+
+Data source: [Josh-Cena/french-inflections](https://github.com/Josh-Cena/french-inflections)
+
+The following words, while correct, are removed from the dataset because they are obsolete or have very rare patterns:
+
+- copier-coller: Complicated to analyze because both parts conjugate
+- ruisseller: now spelled as ruisseler, and listed with conjugations like -eler verbs instead of like other -eller verbs
+- estre: now spelled as être, and so archaic that the endings are Middle French (e.g., "ois" instead of "ais" for imperfect)
+- brusler: now spelled as brûler, and listed with Middle French conjugation
+- esloigner: now spelled as éloigner, and listed with Middle French conjugation
+- esposer: now spelled as exposer, and listed with Middle French conjugation
+- resver: now spelled as rêver. Slightly hard to predict because present 1sg is "resve" and not "rèsve"
+- oevrer: now spelled as œuvrer. Removed just so I don't have to say why it's not "oèvre".
+
+The data encodes alternative spellings in inflections as `;`. The infinitive may also have spelling variations (mostly stemming from the [1990 spelling reform](https://en.wiktionary.org/wiki/Appendix:French_spelling_reforms_of_1990)) but does not pertain to conjugation patterns, so they are treated as independent words. There are only three rows with identical infinitive spellings:
+
+- départir: Selon l'Académie, départir et se départir se conjuguent comme partir (en se départant ; je me dépars, il se départ, etc.), mais l'usage leur fait généralement suivre la conjugaison de répartir (en se départissant ; je me départis, il se départit, etc.). [source](https://www.larousse.fr/conjugaison/francais/d%C3%A9partir/2847)
+- ressortir: irregular conjugation when meaning "to go out again", regular conjugation when meaning "to come under the jurispendence of". [Wiktionary](https://en.wiktionary.org/wiki/ressortir#French)
+- faillir: irregular conjugation when meaning "to almost", regular conjugation when meaning "to go bankrupt". [Wiktionary](https://en.wiktionary.org/wiki/faillir#French)
+
+My final dataset contains 5344 verbs. It has 4694 -er verbs, 360 -ir verbs, 37 -oir verbs, 251 -re verbs, and 2 -ïr verbs: haïr, ouïr.
+
+## Present
+
+Present is the most complex conjugation because it forms the basis of many other tenses. I will discuss them by the set of conjugation suffixes. As an overview:
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><td></td>                                <th>-er</th> <th>-ir</th><th>-oir</th><th>-re</th><th>-ïr</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>Group 1 (e/es/e/ons/ez/ent)</th>     <td>4693</td><td>16</td><td></td><td></td><td></td></tr>
+    <tr><th>Group 2 (s/s/t/ssons/ssez/ssent)</th><td></td>    <td>273</td><td></td><td>34</td><td>1</td></tr>
+    <tr><th>Group 3 (s/s/(t)/ons/ez/ent)</th>    <td></td>    <td>70</td><td>29</td><td>206</td><td></td></tr>
+    <tr><th>Other</th>                           <td>1</td>   <td>1</td><td>8</td><td>11</td><td>1</td></tr>
+  </tbody>
+</table>
+
+### Group 1
+
+Group 1 -er conjugation is as follows:
+
+| Inf | 1sg | 2sg | 3sg | 1pl  | 2pl | 3pl  | Count |
+| --- | --- | --- | --- | ---- | --- | ---- | ----- |
+| -er | -e  | -es | -e  | -ons | -ez | -ent | 4073  |
+
+No alternations are made if and only if the root (infinitive minus -er) are all true:
+
+- The root does not end with -g or -c, unless it ends with -gg.
+- The last syllable's vowel is not é. (Note: a syllable is counted as VC(C), where CC might be "gu" or "qu" but must otherwise be consonants.)
+- The last syllable's vowel is not e, unless the e is followed by w, x, or y, or the word is "clamecer". Interestingly, "clamecer" conjugates as "clamece" [klams] without "è", but "dépecer" (therefore "redépecer") conjugates as "dépèce" [de.pɛs]. ([Wikitionary](https://en.wiktionary.org/wiki/clamecer#French))
+- The root does not end with oy, uy, or ay.
+
+The rest undergo phonological changes.
+
+First, the following "g" and "c" softening rules are purely orthographic so happens across all tenses:
+
+- When the final consonant is g [ʒ], an extra e is added before the suffix if the suffix is open (starts with a, o, â). (With the exception of "tagger" which is already a hard g; it is fully regular.)
+- When the final consonant is c, it is changed to ç before the suffix if the suffix is open.
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -**g**er | -**g**e | -**g**es | -**g**e | -**ge**ons | -**g**ez | -**g**ent | 147 |
+| -**c**er | -**c**e | -**c**es | -**c**e | -**ç**ons | -**c**ez | -**c**ent | 97 |
+
+For all other words, alternations are never made to the 1pl and 2pl forms, for which the suffix is not silent. For 1sg, 2sg, 3sg, and 3pl (-e, -es, -ent), the ending is silent and the root would be rewritten as follows:
+
+- When the last syllable's vowel is é, the é is changed to è. -éger and -écer also simultaneously use the above two rules.
+- When the last syllable's vowel is e, unless the e is followed by t, l, w, x, or y (in other words: -ev, -evr, -es, -ec, -em, -en), the e is changed to è. -eger and -ecer also simultaneously use the above two rules. "clamecer" is the only exception.
+- When the last syllable's vowel is e, and the e is followed by t or l, there are three options: double the t or l (for -jeter and -appeler series), change the e to è, or either (words that previously could only double). There are only a handful of words that can do the second (never double):
+  - acheter, cacheter, racheter, tacheter, crocheter, haleter, fureter, corseter, craqueter, débequeter, déchiqueter, duveter
+  - celer, receler, déceler, déficeler, ensorceler, remodeler, -geler, grommeler, peler, ciseler, ruisseler, démanteler, -arteler, -niveler
+- When the word would end on -oy or -uy, the y is changed to i.
+- When the word would end on -ay, the y is changed to i _optionally_.
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -**éX**er | -**èX**e | -**èX**es | -**èX**e | -**éX**ons | -**éX**ez | -**èX**ent | 179 |
+| -**ég**er | -**èg**e | -**èg**es | -**èg**e | -**ége**ons | -**ég**ez | -**èg**ent | 8 |
+| -**éc**er | -**èc**e | -**èc**es | -**èc**e | -**éç**ons | -**éc**ez | -**èc**ent | 1 |
+| -**eX**er | -**èX**e | -**èX**es | -**èX**e | -**eX**ons | -**eX**ez | -**èX**ent | 32 |
+| -**ec**er | -**èc**e | -**èc**es | -**èc**e | -**eç**ons | -**ec**ez | -**èc**ent | 2 |
+| -**el**er | -**ell**e;-**èl**e | -**ell**es;-**èl**es | -**ell**e;-**èl**e | -**el**ons | -**el**ez | -**ell**ent;-**èl**ent | 24 |
+| -**el**er | -**èl**e | -**èl**es | -**èl**e | -**el**ons | -**el**ez | -**èl**ent | 21 |
+| -**el**er | -**ell**e | -**ell**es | -**ell**e | -**el**ons | -**el**ez | -**ell**ent | 2 |
+| -**et**er | -**ett**e;-**èt**e | -**ett**es;-**èt**es | -**ett**e;-**èt**e | -**et**ons | -**et**ez | -**ett**ent;-**èt**ent | 21 |
+| -**et**er | -**èt**e | -**èt**es | -**èt**e | -**et**ons | -**et**ez | -**èt**ent | 12 |
+| -**et**er | -**ett**e | -**ett**es | -**ett**e | -**et**ons | -**et**ez | -**ett**ent | 4 |
+| -**oy**er | -**oi**e | -**oi**es | -**oi**e | -**oy**ons | -**oy**ez | -**oi**ent | 38 |
+| -**uy**er | -**ui**e | -**ui**es | -**ui**e | -**uy**ons | -**uy**ez | -**ui**ent | 5 |
+| -**ay**er | -**ay**e;-**ai**e | -**ay**es;-**ai**es | -**ay**e;-**ai**e | -**ay**ons | -**ay**ez | -**ay**ent;-**ai**ent | 27 |
+
+These are all the 4693 group 1 -er verbs. Only "aller" is irregular.
+
+There are 16 -ir verbs that use group 1 conjugation: défaillir (but not faillir), -saillir (assaillir, saillir, tressaillir), -cueillir (accueillir, cueillir, recueillir), -(f)frir (offrir, souffrir), -ouvrir (couvrir, découvrir, entrouvrir, ouvrir, recouvrir, redécouvrir, rouvrir).
+
+| Inf | 1sg | 2sg | 3sg | 1pl  | 2pl | 3pl  | Count |
+| --- | --- | --- | --- | ---- | --- | ---- | ----- |
+| -ir | -e  | -es | -e  | -ons | -ez | -ent | 16    |
+
+### Group 2
+
+Group 2 applies to the majority of -ir verbs (but none of the -oir verbs). This is the default case; see the other groups for exceptions.
+
+| Inf | 1sg | 2sg | 3sg | 1pl     | 2pl    | 3pl     | Count |
+| --- | --- | --- | --- | ------- | ------ | ------- | ----- |
+| -ir | -is | -is | -it | -issons | -issez | -issent | 273   |
+
+There is no root alternation.
+
+There are also "haïr" and "ouïr" (but only one of its conjugations):
+
+| Inf | 1sg | 2sg | 3sg | 1pl     | 2pl    | 3pl     | Word |
+| --- | --- | --- | --- | ------- | ------ | ------- | ---- |
+| -ïr | -is | -is | -it | -ïssons | -ïssez | -ïssent | haïr |
+| -ïr | -ïs | -ïs | -ït | -ïssons | -ïssez | -ïssent | ouïr |
+
+Within -re verbs, some words that end in "-iX" conjugate as if that suffix is actually -ir. This includes maudire, bruire, and the -ître/-itre words. For -ître, whether the "î" keeps the circumflex varies. Generally, only 3sg keeps it. For croître and recroître (but not accroître and décroître), all singulars have a circumflex. From [Wiktionary](https://en.wiktionary.org/wiki/cro%C3%AEtre#French):
+
+> This verb takes an especially irregular conjugation, taking circumflexes in many forms, so as to distinguish from the forms of the verb _croire_.
+
+| Inf   | 1sg | 2sg | 3sg | 1pl     | 2pl    | 3pl     | Count |
+| ----- | --- | --- | --- | ------- | ------ | ------- | ----- |
+| -ire  | -is | -is | -it | -issons | -issez | -issent | 2     |
+| -ître | -îs | -îs | -ît | -issons | -issez | -issent | 2     |
+| -ître | -is | -is | -ît | -issons | -issez | -issent | 18    |
+| -itre | -is | -is | -it | -issons | -issez | -issent | 12    |
+
+### Group 3
+
+There are two main kinds of group 3 conjugations, which differ in their 3sg suffix. I will refer to them as subgroup 1 and subgroup 2, respectively. The first kind has no suffix for 3sg; the second kind has an extra "t" in 3sg. This group is very rough; in reality, very few words conjugate with these suffixes as-is. Most have some form of root mofification.
+
+Start with -re.
+
+-cre (convaincre, vaincre) words are subgroup 1, where the plurals replace "c" with "qu".
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -**c**re | -**c**s | -**c**s | -**c** | -**qu**ons | -**qu**ez | -**qu**ent | 2 |
+
+Most -dre verbs are subgroup 1, except -indre and -soudre which are subgroup 2.
+
+- -prendre: the plurals lose the "d", and softens "pren-" to "prenn-" for 3pl.
+- -indre: all forms lose the "d", and plurals velarize "n" to "gn".
+- -coudre and -moudre: the plurals replace "d" with "s" and "l". From [Wiktionary](https://en.wiktionary.org/wiki/coudre#French):
+
+  > _coudre_: The original Old French infinitive was \*_co(u)sre_, where _-d-_ was inserted as a gliding sound. The preconsonantal _-s-_ then became silent, in this case dropping from the spelling relatively early on. The _d_-spellings in the present tense are merely analogical (for expected _je cous_, _il coût_).
+  >
+  > _moudre_: The original form of the infinitive was \*_molre_, where _-d-_ was inserted as a gliding sound. [...]
+
+- -soudre: the singulars remove the "d", while the plurals replace "ud" with "lv". From [Wiktionary](https://en.wiktionary.org/wiki/soudre#French):
+
+  > The forms with _-lv-_ are of learned origin; spoken Middle French had developed analogical forms with _-oud-_, which are attested until the 18th century (_absoudons_, _absoudait_ etc.).
+
+- All other -dre (-(ép)andre, -(des)cendre, -fendre, (compre)hendre, -pendre, rendre, -tendre, -vendre, -ondre, -rdre): no root modification. I will refer to these 43 words as "regular -dre", which is useful later.
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -**prend**re | -**prend**s | -**prend**s | -**prend** | -**pren**ons | -**pren**ez | -**prenn**ent | 9 |
+| -**ind**re | -**in**s | -**in**s | -**in**t | -**ign**ons | -**ign**ez | -**ign**ent | 28 |
+| -**coud**re | -**coud**s | -**coud**s | -**coud** | -**cous**ons | -**cous**ez | -**cous**ent | 3 |
+| -**moud**re | -**moud**s | -**moud**s | -**moud** | -**moul**ons | -**moul**ez | -**moul**ent | 3 |
+| -**soud**re | -**sou**s | -**sou**s | -**sou**t | -**solv**ons | -**solv**ez | -**solv**ent | 3 |
+| -**d**re | -**d**s | -**d**s | -**d** | -**d**ons | -**d**ez | -**d**ent | 43 |
+
+All -ire words are subgroup 2 (faire, dire, redire are irregular). Generally, the plurals get an additional -s. If yet another -s is added to the plurals, they would become group 2—this is the case for maudire and bruire.
+
+- -(p)laire (complaire, déplaire, plaire): the 3sg form may optionally have a circumflex.
+- -raire (braire, -traire), -(c)roire (croire, recroire): the plurals use -ray-/-roy- instead of -rais-/-rois- (where "y" becomes "i" in 3pl). From [Wiktionary](https://en.wiktionary.org/wiki/traire#French):
+
+  > The root -trais- was used instead of -tray- in the 18th century, and remains in Swiss and Savoy dialects.
+
+- (ma)udire, bruire: group 2.
+- -boire: 1pl and 2pl use buv- instead of boi-. From [Wiktionary](https://en.wiktionary.org/wiki/boire#French):
+
+  > The imperfect, 1st and 2nd plural present (including subjunctive), plural imperative and present participle stems are from Old French unstressed stem _bev-_ which [e]volves to _beuv-_, then _buv-_.
+
+- rire, (so)urire: no root modification.
+- frire: defective, but otherwise works like rire/sourire.
+- -crire: plurals have an additional -v instead of -s.
+- All other -ire (taire, (circon)cire, (pr)ædire, (con)tredire, -édire, (inte)rdire, -fire, -lire, -cuire, -duire, -luire, nuire, -truire): just add -s for plurals.
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -**plai**re | -**plai**s | -**plai**s | -**plaî**t;-**plai**t | -**plais**ons | -**plais**ez | -**plais**ent | 3 |
+| -**rai**re | -**rai**s | -**rai**s | -**rai**t | -**ray**ons | -**ray**ez | -**rai**ent | 7 |
+| -**croi**re | -**croi**s | -**croi**s | -**croi**t | -**croy**ons | -**croy**ez | -**croi**ent | 2 |
+| -**boi**re | -**boi**s | -**boi**s | -**boi**t | -**buv**ons | -**buv**ez | -**buv**ent | 2 |
+| -**ri**re | -**ri**s | -**ri**s | -**ri**t | -**ri**ons | -**ri**ez | -**ri**ent | 3 |
+| -**cri**re | -**cri**s | -**cri**s | -**cri**t | -**criv**ons | -**criv**ez | -**criv**ent | 13 |
+| -**i**re | -**i**s | -**i**s | -**i**t | -**is**ons | -**is**ez | -**is**ent | 42 |
+
+-(cl)ore words are subgroup 2. In 3sg, the "o" has a circumflex. The plurals get an additional -s like -ire.
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -**o**re | -**o**s | -**o**s | -**ô**t | -**os**ons | -**os**ez | -**os**ent | 5 |
+
+-(rom)pre and -(cl)ure are subgroup 2.
+
+| Inf | 1sg | 2sg | 3sg | 1pl  | 2pl | 3pl  | Count |
+| --- | --- | --- | --- | ---- | --- | ---- | ----- |
+| -re | -s  | -s  | -t  | -ons | -ez | -ent | 8     |
+
+Most -tre words are -itre/-ître and thus group 2. être is irregular. For the remaining -tre verbs (-battre, -mettre, foutre), the singulars drop the "t". -ttre (-battre, -mettre) are subgroup 1, while (fo)utre is subgroup 2 (i.e., the "t" gets added back).
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count | Words |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| -**t**re | -s | -s | - | -**t**ons | -**t**ez | -**t**ent | 23 | -battre, -mettre |
+| -**t**re | -s | -s | -t | -**t**ons | -**t**ez | -**t**ent | 1 | foutre |
+
+-(i)vre (-suivre, -vivre) words are subgroup 2, where the singulars drop the "v".
+
+| Inf      | 1sg | 2sg | 3sg | 1pl       | 2pl      | 3pl       | Count |
+| -------- | --- | --- | --- | --------- | -------- | --------- | ----- |
+| -**v**re | -s  | -s  | -t  | -**v**ons | -**v**ez | -**v**ent | 6     |
+
+These are the 206 group 3 -re verbs. Only 11 -re verbs remain unaccounted for, including -faire, -dire (except maudire), and être.
+
+There's also the archaic conjugation of "ouïr", which works like -raire/-roire:
+
+| Inf  | 1sg     | 2sg     | 3sg     | 1pl       | 2pl      | 3pl       |
+| ---- | ------- | ------- | ------- | --------- | -------- | --------- |
+| -uïr | -**i**s | -**i**s | -**i**t | -**y**ons | -**y**ez | -**i**ent |
+
+Because "ouïr" is simultaneously group 2 and group 3, it is listed as "other" in the table at the beginning of this section, but it should really be group 2.
+
+There are 70 -ir verbs that use group 3 conjugation, with root modification.
+
+- -(bo)uillir: subgroup 2, singulars drop -ill-.
+- -(d)ormir, -mentir, (re)pentir, -sentir, -partir (except répartir and one of the two départir, which are regular group 2), sortir, ressortir (one of the two), -servir (except asservir which is regular group 2): subgroup 2, singulars drop the final consonant.
+- -venir, -tenir: subgroup 2, singulars replace "en" with "ien", 3pl replaces "en" with "ienn".
+- -quérir: singulars replace "ér" with "ier", 3pl replaces "ér" with "ièr".
+- -courir: subgroup 2, no modification.
+- mourir: singulars and 3pl replace "our" with "eur".
+- gésir: singulars replace "és" with "i", 3sg optionally adds a circumflex, plurals replace "és" with "is".
+- -vêtir: subgroup 1, no modification.
+- fuir: works almost like -raire/-roire, except that the infinitive drops -r instead of -re.
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -**bouill**ir | -**bou**s | -**bou**s | -**bou**t | -**bouill**ons | -**bouill**ez | -**bouill**ent | 2 |
+| -**X**ir | -s | -s | -t | -**X**ons | -**X**ez | -**X**ent | 19 |
+| -**en**ir | -**ien**s | -**ien**s | -**ien**t | -**en**ons | -**en**ez | -**ienn**ent | 28 |
+| -**quér**ir | -**quier**s | -**quier**s | -**quier**t | -**quér**ons | -**quér**ez | -**quièr**ent | 6 |
+| -**cour**ir | -**cour**s | -**cour**s | -**cour**t | -**cour**ons | -**cour**ez | -**cour**ent | 8 |
+| **mour**ir | **meur**s | **meur**s | **meur**t | **mour**ons | **mour**ez | **meur**ent | 1 |
+| **gés**ir | **gi**s | **gi**s | **gî**t;**gi**t | **gis**ons | **gis**ez | **gis**ent | 1 |
+| -**vêt**ir | -**vêt**s | -**vêt**s | -**vêt** | -**vêt**ons | -**vêt**ez | -**vêt**ent | 4 |
+| **fui**r | **fui**s | **fui**s | **fui**t | -**fuy**ons | **fuy**ez | **fui**ent | 1 |
+
+There are 29 -oir verbs that use group 3 conjugation, often with suppletive root modifications. Except seoir (and analogous conjugations for asseoir/rasseoir), all of them are subgroup 2.
+
+- seoir: irregular.
+- (su)rseoir: replace -eoir with -oir and then undergoes the same change as fuir.
+- -(a)sseoir (asseoir, rasseoir): both the surseoir and seoir forms are allowed.
+- choir, voir, -revoir (entrevoir, revoir), (pr)évoir, -(pou)rvoir (dépourvoir, pourvoir): undergo the same change as fuir (replace "i" with "y" in 1pl/2pl).
+- échoir: undergoes the same change as fuir, but defective and only has 3sg and 3pl forms, where the 3sg form may optionally be "échet" and the 3pl form may optionally be "échettent".
+- déchoir: undergoes the same change as fuir, but the 3sg form may optionally be "déchet".
+- (fa)lloir: highly defective, only has 3sg form which is "faut".
+- savoir: the singulars replace sav- with sai-.
+- -cevoir: "ev" is replaced with "oi" for singulars and "oiv" for 3pl. c to ç before o.
+- -devoir: "ev" is replaced with "oi" for singulars and "oiv" for 3pl.
+- -(pl)euvoir (pleuvoir, repleuvoir): highly defective, only has 3sg form which is "pleut" and 3pl form which is "pleuvent".
+- -mouvoir (mouvoir, émouvoir, promouvoir): the singulars replace "ouv" with "eu", and the 3pl replaces "ouv" with "euv".
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count | Words |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **se**oir | **sied**s | **sied**s | **sied** | **sey**ons | **sey**ez | **sié**ent | 1 | seoir |
+| -**e**oir | -**oi**s | -**oi**s | -**oi**t | -**oy**ons | -**oy**ez | -**oi**ent | 1 | surseoir |
+| -**e**oir | -**oi**s;-**ied**s | -**oi**s;-**ied**s | -**oi**t;-**ied** | -**oy**ons;-**ey**ons | -**oy**ez;-**ey**ez | -**oi**ent;-**ié**ent | 2 | -asseoir |
+| -oir | -**oi**s | -**oi**s | -**oi**t | -**oy**ons | -**oy**ez | -**oi**ent | 7 |  |
+| -oir |  |  | -**oi**t;-**e**t |  |  | -**oi**ent;-**ett**ent | 1 | échoir |
+| -oir | -**oi**s | -**oi**s | -**oi**t;-**e**t | -**oy**ons | -**oy**ez | -**oi**ent | 1 | déchoir |
+| **fall**oir |  |  | **fau**t |  |  |  | 1 |  |
+| -**v**oir | -**i**s | -**i**s | -**i**t | -**v**ons | -**v**ez | -**v**ent | 1 | savoir |
+| -**cev**oir | -**çoi**s | -**çoi**s | -**çoi**t | -**ev**ons | -**ev**ez | -**çoiv**ent | 7 | -cevoir |
+| -**ev**oir | -**oi**s | -**oi**s | -**oi**t | -**ev**ons | -**ev**ez | -**oiv**ent | 2 | -devoir |
+| -**v**oir |  |  | -t |  |  | -**v**ent | 2 | pleuvoir, repleuvoir |
+| -**ouv**oir | -**eu**s | -**eu**s | -**eu**t | -**ouv**ons | -**ouv**ez | -**euv**ent | 3 | -mouvoir |
+
+### Irregular
+
+The remaining ones don't contain one of the abover endings at all.
+
+| Inf | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| faire | fais | fais | fait | faisons | **faites** | **font** | 8 |
+| dire/redire | dis | dis | dit | disons | **dites** | disent | 2 |
+| être | **suis** | **es** | **est** | **sommes** | **êtes** | **sont** | 1 |
+| aller | **vais** | **vas** | **va** | allons | allez | **vont** | 1 |
+| faillir | **faux** | **faux** | faut | faillons | faillez | faillent | 1 |
+| valoir | **vaux** | **vaux** | vaut | valons | valez | valent | 3 |
+| vouloir | **veux** | **veux** | veut | voulons | voulez | veulent | 2 |
+| avoir | **ai** | **as** | **a** | avons | avez | **ont** | 1 |
+| pouvoir | **peux** | **peux** | peut | pouvons | pouvez | peuvent | 2 |
+
+### Filling in defective verbs
+
+Before continuing: there are certain tenses (notably, imperfect, subjunctive, imperative) that rely on certain present conjugations. If a verb is defective and lacks those conjugations, we have to figure out the missing forms separately. For this purpose, I will apply the rules above to the defective verbs. There are 20 words with missing present conjugations:
+
+- -er: bruiner, brumer, crachiner, dracher, gibouler, grêler, neigeoter, pleuviner, pleuvioter, résulter, venter
+  - By analogy with regular -er verbs
+- -ger: neiger, urger
+  - By analogy with regular -ger verbs
+- -rire: frire
+  - By analogy with rire/sourire
+- -choir: échoir
+  - By analogy with choir
+- -vre: ensuivre
+  - By analogy with suivre
+- -llir: saillir
+  - By analogy with assaillir
+- -voir: pleuvoir, repleuvoir
+  - Guessed endings: s/s/t/vons/vez/vent
+- falloir
+  - By analogy with faillir: faux/faux/faut/fallons/fallez/fallent
+
+## Imperfect
+
+The imperfect is formed based on the present 1pl form.
+
+| 1pl (present) | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -ons | -ais | -ais | -ait | -ions | -iez | -aient | 5088 |
+| -**ge**ons | -**ge**ais | -**ge**ais | -**ge**ait | -**g**ions | -**g**iez | -**ge**aient | 155 |
+| -**ç**ons | -**ç**ais | -**ç**ais | -**ç**ait | -**c**ions | -**c**iez | -**ç**aient | 100 |
+
+Note that if the present 1pl form has multiple alternatives, the imperfect considers all of them. For example, "asseoir" has both "asseyons" and "assoyons" as 1pl present, so it has both "asseyais" and "assoyais" as imperfect forms. There are only 3 such verbs: asseoir, rasseoir, ouïr.
+
+There's only one irregular imperfect. être has present 1pl "sommes", but imperfect formed with the suppletive "ét-".
+
+| Inf  | Imperfect root |
+| ---- | -------------- |
+| être | ét-            |
+
+## Future & conditional
+
+The future is formed by directly appending to the infinitive. If the infinitive ends in "e", we remove it before appending.
+
+| Inf | 1sg | 2sg | 3sg | 1pl  | 2pl | 3pl  | Count |
+| --- | --- | --- | --- | ---- | --- | ---- | ----- |
+| -   | -ai | -as | -a  | -ons | -ez | -ont | 4632  |
+| -e  | -ai | -as | -a  | -ons | -ez | -ont | 242   |
+
+The rest undergo a few root modifications. The first few are almost exactly the same as present [group 1](#group-1).
+
+- If the infinitive ends in -éXer, the "é" is optionally changed to "è" (mandatory for present).
+- If the infinitive ends in -eXer where X is anything other than t, l, w, x, y (but not clamecer), the "e" is changed to "è".
+- If the infinitive ends in -eXer where X is t, l, there are three options: double the t or l, change the e to è, or either. Which one to use is exactly the same as before.
+- If the infinitive ends in -oyer (except -envoyer), -uyer, the "y" is changed to "i".
+- If the infinitive ends in -ayer, the "y" is optionally changed to "i".
+
+| Inf   | Future root  | Count |
+| ----- | ------------ | ----- |
+| -éXer | -èXer;-éXer  | 188   |
+| -eXer | -èXer        | 34    |
+| -eler | -eller;-èler | 24    |
+| -eler | -èler        | 21    |
+| -eler | -eller       | 2     |
+| -eter | -etter;-èter | 21    |
+| -eter | -èter        | 12    |
+| -eter | -etter       | 4     |
+| -oyer | -oier        | 36    |
+| -uyer | -uier        | 5     |
+| -ayer | -ayer;-aier  | 27    |
+
+The remaining are irregular. First, almost all -oir verbs are irregular, except the following 5: dépourvoir, pourvoir, prévoir, surseoir, échoir. Then, there are 14 that all conjugate by removing -oir and adding -r: -cevoir (apercevoir, concevoir, décevoir, entrapercevoir, percevoir, recevoir, repercevoir), -devoir (devoir, redevoir), -mouvoir (mouvoir, promouvoir, émouvoir), -(pl)euvoir (pleuvoir, repleuvoir). Finally, there are 95 truly irregular verbs.
+
+| Inf              | Future root                             | Count |
+| ---------------- | --------------------------------------- | ----- |
+| faire            | fer-                                    | 8     |
+| être             | ser-                                    | 1     |
+| envoyer          | enverr-                                 | 2     |
+| faillir          | faudr-                                  | 1     |
+| cueillir/saillir | cueillir-;cueiller- / saillir-;sailler- | 6     |
+| venir/tenir      | viendr-/tiendr-                         | 28    |
+| seoir            | siér-                                   | 1     |
+| asseoir          | assoir-;assiér                          | 2     |
+| choir (déchoir)  | choir-;cherr-                           | 2     |
+| valoir           | vaudr-                                  | 3     |
+| falloir          | faudr-                                  | 1     |
+| vouloir          | voudr-                                  | 2     |
+| voir             | verr-                                   | 3     |
+| avoir/savoir     | aur-/saur-                              | 2     |
+| aller            | ir-                                     | 1     |
+| pouvoir          | pourr-                                  | 2     |
+| quérir           | querr-                                  | 6     |
+| courir/mourir    | courr-/mourr-                           | 9     |
+| ouïr             | ouïr-;oir                               | 1     |
+
+The conditional is formed by taking the future root and appending the imperfect endings.
+
+| 1sg  | 2sg  | 3sg  | 1pl   | 2pl  | 3pl  | Count |
+| ---- | ---- | ---- | ----- | ---- | ---- | ----- |
+| -ais | -ais | -ait | -ions | -iez | -ent | 5344  |
+
+## Subjunctive
+
+The subjunctive piggybacks on the present conjugation rules. There are two roots: one from the 3pl (remove -ent) for 1sg/2sg/3sg/3pl, and one from the 1pl (remove -ons) for 1pl/2pl. The endings are:
+
+| 1pl (present) | 3pl (present) | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| -ons | -ent | -e | -es | -e | -ions | -iez | -ent | 5069 |
+| -geons | -gent | -ge | -ges | -ge | -gions | -giez | -gent | 155 |
+| -çons | -cent | -ce | -ces | -ce | -cions | -ciez | -cent | 100 |
+
+The remaining are irregular.
+
+{/* prettier-ignore */}
+<table>
+  <thead>
+    <tr><th>Inf</th><th>1sg</th><th>2sg</th><th>3sg</th><th>3pl</th><th>1pl</th><th>2pl</th><th>Count</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>valoir</td><td colSpan="4">vaill-</td><td colSpan="2">val-</td><td>3</td></tr>
+    <tr><td>vouloir</td><td colSpan="4">veuill-</td><td colSpan="2">voul-</td><td>2</td></tr>
+    <tr><td>falloir</td><td colSpan="2"></td><td>faill-</td><td colSpan="3"></td><td>1</td></tr>
+    <tr><td>savoir</td><td colSpan="6">sach-</td><td>1</td></tr>
+    <tr><td>pouvoir</td><td colSpan="6">puiss-</td><td>2</td></tr>
+    <tr><td>avoir</td><td>aie</td><td>aie</td><td>ait</td><td>aient</td><td>ayons</td><td>ayez</td><td>1</td></tr>
+    <tr><td>faire</td><td colSpan="6">fass-</td><td>8</td></tr>
+    <tr><td>être</td><td>sois</td><td>sois</td><td>soit</td><td>soient</td><td>soyons</td><td>soyez</td><td>1</td></tr>
+    <tr><td>aller</td><td colSpan="4">aill-</td><td colSpan="2">all-</td><td>1</td></tr>
+  </tbody>
+</table>
+
+## Imperative
+
+Generally, the imperative forms are just the present forms. For 2sg, if the present 2sg form ends in -es, the -s is dropped. This includes -er and -ir infinitives. Specially, "vas" (aller) also becomes "va".
+
+| 2sg (present) | 2sg | Count |
+| ------------- | --- | ----- |
+| -es           | -e  | 4710  |
+| -             | -   | 630   |
+| vas           | va  | 1     |
+
+There are 3 exceptions:
+
+| Inf    | 2sg   | 1pl     | 2pl    |
+| ------ | ----- | ------- | ------ |
+| être   | sois  | soyons  | soyez  |
+| avoir  | aie   | ayons   | ayez   |
+| savoir | sache | sachons | sachez |
+
+## Present participle
+
+The present participle is formed based on the present 1pl form.
+
+| 1pl (present) | PP   | Count |
+| ------------- | ---- | ----- |
+| -ons          | -ant | 5339  |
+
+There are 5 irregular present participles. être again uses the suppletive "ét-" (seen in imperfect). avoir and savoir again use the suppletive "ay-" and "sach-" (seen in subjunctive and imperative). seoir may use the regular "seyant", but can also use "séant". échoir uses "échéant" (other -choir verbs have no present participle).
+
+| Inf    | PP           |
+| ------ | ------------ |
+| être   | étant        |
+| avoir  | ayant        |
+| savoir | sachant      |
+| seoir  | séant;seyant |
+| échoir | échéant      |
+
+## Past participle
+
+Like simple present, this is derived from the infinitive. I will discuss each ending separately.
+
+For -er verbs, the past participle is always -é, without exception.
+
+| Inf | PP  | Count |
+| --- | --- | ----- |
+| -er | -é  | 4694  |
+
+For -ir verbs, the regular form is -i:
+
+| Inf | PP  | Count |
+| --- | --- | ----- |
+| -ir | -i  | 304   |
+| -ïr | -ï  | 2     |
+
+We have the following exceptions:
+
+| Inf     | PP    | Count | Words                           |
+| ------- | ----- | ----- | ------------------------------- |
+| -ir     | -u    | 40    | -venir, -tenir, -courir, -vêtir |
+| -quérir | -quis | 6     | -quérir                         |
+| -rir    | -ert  | 9     | -frir, -ouvrir                  |
+| mourrir | mort  | 1     |                                 |
+
+For -oir verbs, the regular form is -u. This applies to -(c)hoir, -loir, voir, -revoir, (pr)évoir, -(pou)rvoir.
+
+| Inf  | PP  | Count |
+| ---- | --- | ----- |
+| -oir | -u  | 15    |
+
+We have the following root modifications:
+
+| Inf           | PP       | Count | Words                          |
+| ------------- | -------- | ----- | ------------------------------ |
+| **av**oir     | **e**u   | 1     |                                |
+| **sav**oir    | **s**u   | 1     |                                |
+| -**cev**oir   | -**ç**u  | 7     |                                |
+| -**pleuv**oir | -**pl**u | 2     |                                |
+| -**ouv**oir   | -u       | 4     | émouvoir, promouvoir, -pouvoir |
+| -**dev**oir   | -**d**û  | 2     |                                |
+| **mouv**oir   | **m**û   | 1     |                                |
+
+Only a single group doesn't use -u: -seoir.
+
+| Inf    | PP   | Count |
+| ------ | ---- | ----- |
+| -seoir | -sis | 4     |
+
+Finally, for -re verbs, the regular form is -u. In this group are regular -dre, -(vain)cre, -battre, -rompre, and foutre.
+
+| Inf | PP  | Count |
+| --- | --- | ----- |
+| -re | -u  | 56    |
+
+Then there are other cases with more modifications:
+
+| Inf        | PP        | Count | Words                            |
+| ---------- | --------- | ----- | -------------------------------- |
+| -**d**re   | -**s**u   | 3     | -coudre                          |
+| -**d**re   | -**l**u   | 3     | -moudre                          |
+| -**ud**re  | -**l**u   | 1     | résoudre                         |
+| -**ai**re  | -u        | 4     | -plaire, taire                   |
+| -**li**re  | -**l**u   | 4     |                                  |
+| -**oi**re  | -u        | 4     | -boire, -croire                  |
+| -**ait**re | -u        | 10    | -connaitre, repaitre, -paraitre  |
+| -**aît**re | -u        | 12    | -connaître, -paître, -paraître   |
+| -**oît**re | -u        | 4     | -connoître, accroître, décroître |
+| -**oît**re | -û        | 2     | croître, recroître               |
+| -**u**re   | -u        | 2     | conclure, exclure                |
+| -**viv**re | -**véc**u | 3     |                                  |
+
+Note that résoudre is different from the other two -soudre words. From [Wikitionary](https://en.wiktionary.org/wiki/r%C3%A9soudre):
+
+> This verb also has a rare past participle résous.
+
+Finally there's a whole load of irregular -re verbs.
+
+| Inf | PP | Count | Words |
+| --- | --- | --- | --- |
+| -prendre | -pris | 9 |  |
+| -indre | -int | 28 |  |
+| -oudre | -ous;-out | 2 | absoudre, dissoudre |
+| -re | -t | 64 | -faire, -raire, -dire, -(co)nfire, -crire, frire, -cuire, -duire, -truire |
+| -re | -s | 9 | (circon)cire, -(cl)ore, (o)cclure, inclure, (tran)sclure |
+| -re | - | 7 | (su)ffire, rire, (so)urire, -luire, nuire, bruire |
+| être | été | 1 |  |
+| -naitre | -né | 2 | naitre, renaitre |
+| -naître | -né | 2 | naître, renaître |
+| -mettre | -mis | 16 |  |
+| -suivre | -suivi | 3 |  |
+
+Note that -clure has two different patterns: -clu for conclure and exclure, but -clus for inclure, occlure, and transclure.
+
+## Past historic
+
+The past historic is derived from the past participle. (There's a single word, gésir, with no PP, but it has no past historic either.) Like present, there are three groups.
+
+If PP is -é, then past historic is group 1. Forward direction exceptions: né (naitre), rené (renaitre), été (être). Reverse direction exceptions: -rait (-raire).
+
+| PP | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -é | -ai | -as | -a | -âmes | -âtes | -èrent | 4439 |
+| -**g**é | -**ge**ai | -**ge**as | -**ge**a | -**ge**âmes | -**ge**âtes | -**g**èrent | 155 |
+| -**c**é | -**ç**ai | -**ç**as | -**ç**a | -**ç**âmes | -**ç**âtes | -**c**èrent | 100 |
+| né (rené) | **naqu**is | **naqu**is | **naqu**it | **naqu**îmes | **naqu**îtes | **naqu**irent | 2 |
+| été | **f**us | **f**us | **f**ut | **f**ûmes | **f**ûtes | **f**urent | 1 |
+
+If PP is -i, -ï, -is, -it (other than -rait), or -(i)nt, then past historic is group 2. Forward direction exceptions: -rait. Reverse direction exceptions: né, rené, plus some -u PPs (see below).
+
+- nui (nuire) is the only -i PP with root alternation; it adds -is-.
+- -lui (-luire) may also optionally add -is- (except for 3sg).
+- -fait (-faire) remove -a-.
+- -rit (-crire) add -iv-.
+- -uit (-cuire, -duire, -truire) add -is-.
+- -int (-indre) add -gn-.
+
+| PP | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -i | -is | -is | -it | -îmes | -îtes | -irent | 312 |
+| -ï | -ïs | -ïs | -ït | -ïmes | -ïtes | -ïrent | 2 |
+| **nu**i | **nuis**is | **nuis**is | **nuis**it | **nuis**îmes | **nuis**îtes | **nuis**irent | 1 |
+| -**lu**i | -**lu**is;-**luis**is | -**lu**is;-**luis**is | -**lu**it | -**lu**îmes;-**luis**îmes | -**lu**îtes;-**luis**îtes | -**lu**irent;-**luis**irent | 2 |
+| -is | -is | -is | -it | -îmes | -îtes | -irent | 36 |
+| -**fa**it | -**f**is | -**f**is | -**f**it | -**f**îmes | -**f**îtes | -**f**irent | 8 |
+| -it | -it | -it | -it | -îmes | -îtes | -irent | 11 |
+| -**r**it | -**riv**is | -**riv**is | -**riv**it | -**riv**îmes | -**riv**îtes | -**riv**irent | 14 |
+| -**u**it | -**uis**is | -**uis**is | -**uis**it | -**uis**îmes | -**uis**îtes | -**uis**irent | 24 |
+| -int | -**ign**is | -**ign**is | -**ign**it | -**ign**îmes | -**ign**îtes | -**ign**irent | 28 |
+| -**rai**t | -**ray**ai | -**ray**as | -**ray**a | -**ray**âmes | -**ray**âtes | -**ray**èrent | 7 |
+
+If PP is -u, -û, -us, -ut, then past historic is group 3. Reverse direction exceptions: été. Forward direction exceptions:
+
+- the 56 regular -re → -u verbs (-vaincu, -du, -battu, -rompu, -foutu),
+- the 4 regular -voir verbs (vu, -(r)evu, (pr)évu),
+- 3 -cousu,
+- 4 -vêtu.
+- -enu (-tenir, -venir) are also "group 2" but with different suffixes.
+
+For -û:
+
+- -dû (-devoir), mû (mouvoir): no extra circumflex on suffix.
+- -(c)rû (croître, recroître): extra circumflex on all forms.
+
+| PP | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count | Words |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| -u | -us | -us | -ut | -ûmes | -ûtes | -urent | 79 |  |
+| -us | -us | -us | -us | -ûmes | -ûtes | -urent | 3 | -(cl)us |
+| -us;-ut | -**l**us | -**l**us | -**l**us | -**l**ûmes | -**l**ûtes | -**l**urent | 2 | absous, dissous |
+| -û | -us | -us | -ut | -ûmes | -ûtes | -urent | 3 | -dû, mû |
+| -û | -ûs | -ûs | -ût | -ûmes | -ûtes | -ûrent | 2 | -(c)rû |
+| -u | -is | -is | -it | -îmes | -îtes | -irent | 65 | -du, -(ro)mpu, -(co)usu, -(v)êtu, -(ba)ttu, (fo)utu, vu, -(r)evu, (pr)évu |
+| -**c**u | -**qu**is | -**qu**is | -**qu**it | -**qu**îmes | -**qu**îtes | -**qu**irent | 2 | -(vai)ncu |
+| -**en**u | -ins | -ins | -int | -înmes | -întes | -inrent | 28 | -(te)nir, -(ve)nir |
+
+The only remaining PPs: -ert (from -ffrir and -ouvrir) are group 2. mort is group 3.
+
+| PP | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -ert | -**r**is | -**r**is | -**r**it | -**r**îmes | -**r**îtes | -**r**irent | 9 |
+| mort | mourus | mourus | mourut | mourûmes | mourûtes | moururent | 1 |
+
+## Subjunctive imperfect
+
+The subjunctive imperfect is formed by taking the past historic 3sg form, and doing one of the following:
+
+| 3pl (past historic) | 1sg | 2sg | 3sg | 1pl | 2pl | 3pl | Count |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| -a | -asse | -asses | -ât | -assions | -assiez | -assent | 4701 |
+| -it | -isse | -isses | -ît | -issions | -issiez | -issent | 511 |
+| -**lu**it | -**luis**isse | -**luis**sse | -**luis**ît | -**luis**issions | -**luis**siez | -**luis**sent | 2 |
+| -ït | -ïsse | -ïsses | -ït | -ïssions | -ïssiez | -ïssent | 2 |
+| -int | -insse | -insses | -înt | -inssions | -inssiez | -inssent | 28 |
+| -ut | -usse | -usses | -ût | -ussions | -ussiez | -ussent | 90 |
+| -ût | -ûsse | -ûsses | -ût | -ussions | -ussiez | -ussent | 2 |
+
+Remaining defective verbs without a 3sg past historic also have no subjunctive imperfect.
