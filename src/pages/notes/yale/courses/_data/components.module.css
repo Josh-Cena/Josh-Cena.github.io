@@ -12,3 +12,15 @@
   line-height: 1;
   font-style: italic;
 }
+
+.pdf {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  padding: 0 0.25em;
+}
+
+.pdf svg path {
+  fill: var(--color-primary);
+  color: var(--color-primary);
+}

@@ -101,6 +101,8 @@ export default function About(): ReactNode {
           </span>
           <br />
           Joshua Chen
+          <br />
+          Sida Chen
         </div>
       </div>
       <Tooltip id={nameId} className="tooltip" disableStyleInjection clickable>
@@ -143,7 +145,9 @@ export default function About(): ReactNode {
               Certificate
             </li>
             <li>
-              <Link href="/notes/yale/courses/">Courses taken</Link>
+              <Link href="/notes/yale/courses/">
+                Courses taken & papers written
+              </Link>
             </li>
           </ul>
         </Timeline.Item>
