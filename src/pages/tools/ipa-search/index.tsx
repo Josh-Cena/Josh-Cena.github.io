@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useMemo, useState, useRef, type ReactNode } from "react";
 import useSWR from "swr";
 import Link from "@/components/Link";
 import IPAKeyboard from "./_IPAKeyboard";
@@ -86,6 +86,7 @@ export default function IpaSearch(): ReactNode {
 
   const entries = useMemo(() => (data ? parseDatabase(data) : []), [data]);
   const filtered = useMemo(() => filter(query, entries), [query, entries]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   if (error) {
     return (
@@ -124,6 +125,7 @@ export default function IpaSearch(): ReactNode {
       <h1>IPA Search</h1>
 
       <input
+        ref={inputRef}
         className={styles.input}
         value={query}
         onChange={(e) => {
@@ -135,9 +137,29 @@ export default function IpaSearch(): ReactNode {
       />
 
       <IPAKeyboard
+        // eslint-disable-next-line react/jsx-no-bind
         onInput={(text) => {
-          setQuery((q) => q + text);
+          const input = inputRef.current;
+
+          if (!input) {
+            setQuery((q) => q + text);
+            return;
+          }
+
+          const start = input.selectionStart ?? query.length;
+          const end = input.selectionEnd ?? query.length;
+
+          const next = query.slice(0, start) + text + query.slice(end);
+
+          setQuery(next);
           setExpanded(false);
+
+          requestAnimationFrame(() => {
+            input.focus();
+
+            const cursor = start + text.length;
+            input.setSelectionRange(cursor, cursor);
+          });
         }}
       />
       <small>

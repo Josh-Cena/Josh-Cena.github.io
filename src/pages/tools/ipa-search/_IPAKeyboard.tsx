@@ -44,12 +44,12 @@ export const VOWEL_KEYS: IpaKeySpec[] = [
   { symbol: "ʊ", row: 0, col: 2 },
 
   { symbol: "eɪ", row: 1, col: 0 },
+  { symbol: "aɪ", row: 1, col: 0 },
   { symbol: "ɔɪ", row: 1, col: 1 },
   { symbol: "oʊ", row: 1, col: 2 },
   { symbol: "aʊ", row: 1, col: 2 },
 
   { symbol: "ɛ", row: 2, col: 0 },
-  { symbol: "aɪ", row: 2, col: 0 },
   { symbol: "ɚ", row: 2, col: 1 },
   { symbol: "ə", row: 2, col: 1 },
   { symbol: "ʌ", row: 2, col: 2 },
