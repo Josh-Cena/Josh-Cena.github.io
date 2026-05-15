@@ -1,0 +1,46 @@
+.ipaKeyboard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.consonantChart {
+  display: grid;
+  grid-template-columns: repeat(5, 5.5rem);
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #bbb;
+}
+
+.chartCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  gap: 0.35rem;
+}
+
+.vowelChart {
+  display: grid;
+  grid-template-columns: repeat(3, 5.5rem);
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #bbb;
+}
+
+.ipaKey {
+  min-width: 2.25rem;
+  min-height: 2rem;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid #bbb;
+  border-radius: 0.35rem;
+  background: white;
+  font: inherit;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ipaKey:hover {
+  background: #f4f4f4;
+}

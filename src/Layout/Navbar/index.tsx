@@ -28,6 +28,7 @@ const links: LinkConfig[] = [
     children: [
       { name: "Color converter", path: "/tools/color-converter/" },
       { name: "Keyboard visualizer", path: "/tools/keyboard-visualizer/" },
+      { name: "IPA search", path: "/tools/ipa-search/" },
       { name: "Star Rail damage calculator", path: "/tools/starrail-damage/" },
     ],
   },
@@ -65,7 +66,7 @@ function NavbarLink({ name, path, children }: LinkConfig) {
       </Link>
       <span className={styles.arrowDown} />
       <ul className={styles.subLinks}>
-        {/* eslint-disable-next-line @typescript-eslint/no-shadow */}
+        { }
         {children.map(({ name, path }, i) => (
           <li key={name}>
             <Link

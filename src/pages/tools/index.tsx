@@ -11,6 +11,9 @@ export default function Tools(): ReactNode {
         <Link href="/tools/keyboard-visualizer/">Keyboard visualizer</Link>
       </li>
       <li>
+        <Link href="/tools/ipa-search/">IPA search</Link>
+      </li>
+      <li>
         <Link href="/tools/starrail-damage/">Star Rail damage calculator</Link>
       </li>
     </ul>
