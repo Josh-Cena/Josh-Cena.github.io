@@ -6,7 +6,7 @@
 
 .consonantChart {
   display: grid;
-  grid-template-columns: repeat(5, 5.5rem);
+  grid-template-columns: repeat(5, 4.75rem);
   margin: 0.5rem;
   padding: 0.5rem;
   border: 1px solid #bbb;
@@ -16,31 +16,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 3rem;
+  height: 2.5rem;
   gap: 0.35rem;
 }
 
 .vowelChart {
   display: grid;
-  grid-template-columns: repeat(3, 5.5rem);
+  grid-template-columns: repeat(3, 4.75rem);
   margin: 0.5rem;
   padding: 0.5rem;
   border: 1px solid #bbb;
 }
 
 .ipaKey {
-  min-width: 2.25rem;
-  min-height: 2rem;
-  padding: 0.2rem 0.45rem;
+  min-width: 2rem;
+  min-height: 1.75rem;
+  padding: 0.1rem 0.2rem;
   border: 1px solid #bbb;
-  border-radius: 0.35rem;
-  background: white;
+  border-radius: var(--border-radius-small);
   font: inherit;
-  font-size: 1.15rem;
   line-height: 1;
   cursor: pointer;
 }
 
 .ipaKey:hover {
-  background: #f4f4f4;
+  background: var(--color-shadow);
 }

@@ -1,14 +1,13 @@
-import { useMemo, useState, useRef, type ReactNode } from "react";
+import { useMemo, useState, useRef, useEffect, type ReactNode } from "react";
 import useSWR from "swr";
 import Link from "@/components/Link";
 import IPAKeyboard from "./_IPAKeyboard";
+import { fetchTextWithProgress } from "./fetcher";
 import { filter, type Entry } from "./filter";
 import styles from "./index.module.css";
 
-const URL =
+const gistURL =
   "https://gist.githubusercontent.com/Josh-Cena/f834b677a6bc0d0fc594d91d26627e7d/raw/a61f41236d20c69148b2f089e6f5d7a5da946b66/CMU.in.IPA.txt";
-
-const CACHE_KEY = "cmu-ipa-db-v1";
 
 function parseDatabase(text: string): Entry[] {
   return text
@@ -20,61 +19,19 @@ function parseDatabase(text: string): Entry[] {
     .filter((x): x is Entry => x !== null);
 }
 
-async function fetchTextWithProgress(
-  url: string,
-  onProgress: (progress: number | null) => void,
-): Promise<string> {
-  const cached = localStorage.getItem(CACHE_KEY);
-  if (cached) {
-    onProgress(1);
-    return cached;
-  }
-
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to fetch database: ${res.status}`);
-
-  const total = Number(res.headers.get("Content-Length"));
-  const reader = res.body?.getReader();
-
-  if (!reader) {
-    const text = await res.text();
-    localStorage.setItem(CACHE_KEY, text);
-    onProgress(1);
-    return text;
-  }
-
-  const chunks: Uint8Array[] = [];
-  let received = 0;
-
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-
-    chunks.push(value);
-    received += value.length;
-
-    onProgress(total ? received / total : null);
-  }
-
-  const text = new TextDecoder().decode(
-    new Uint8Array(chunks.flatMap((chunk) => Array.from(chunk))),
-  );
-
-  localStorage.setItem(CACHE_KEY, text);
-  onProgress(1);
-
-  return text;
-}
-
 export default function IpaSearch(): ReactNode {
   const [progress, setProgress] = useState<number | null>(0);
   const [query, setQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
 
+  // Legacy localStorage caching
+  useEffect(() => {
+    localStorage.removeItem("cmu-ipa-db-v1");
+  }, []);
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data, error, isLoading } = useSWR(
-    URL,
+    typeof window === "undefined" ? null : gistURL,
     (url) => fetchTextWithProgress(url, setProgress),
     {
       revalidateOnFocus: false,
