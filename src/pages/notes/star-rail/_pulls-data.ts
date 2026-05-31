@@ -11,6 +11,8 @@ export const sources = {
   刃: "https://patchwiki.biligame.com/images/sr/a/ab/q0p2dy291y5guxviw7ohvh1k0si4v9g.png",
   克拉拉:
     "https://patchwiki.biligame.com/images/sr/2/21/8ikkgm8plh2suoyymqwl4ulw19e12u4.png",
+  不死途:
+    "https://patchwiki.biligame.com/images/sr/b/b5/27uvdsg6vzbwmhfm3rgjfg0l06qpquk.png",
   Archer:
     "https://patchwiki.biligame.com/images/sr/8/83/7mlkui6jgn26yzemmbxt25nfgj7ncy0.png",
   飞霄: "https://patchwiki.biligame.com/images/sr/5/57/9whvvbuzpn7ige8w1ybm51sqwx10j48.png",
@@ -77,6 +79,10 @@ export const sources = {
   遐蝶: "https://patchwiki.biligame.com/images/sr/e/e1/tos184s9j5zerllgte1mmm6kga5nwu8.png",
   阿格莱雅:
     "https://patchwiki.biligame.com/images/sr/0/0a/ivg2yhva7casg1ap5txx6fjbz8ewlgp.png",
+  绯英: "https://patchwiki.biligame.com/images/sr/4/46/blyj7i21xariq8azp1cgsihuhlo1e35.png",
+  "银狼LV.999":
+    "https://patchwiki.biligame.com/images/sr/4/49/7misyh42qtkatgc0q7pqld6r4lcqd3g.png",
+  火花: "https://patchwiki.biligame.com/images/sr/c/cb/0af60e8zn7er114z1c5odeelk46di1c.png",
   爻光: "https://patchwiki.biligame.com/images/sr/c/cc/73yudj56bngt0ipyotsb81ggjx42mqh.png",
   没有回报的加冕:
     "https://patchwiki.biligame.com/images/sr/thumb/8/89/9dqp2rydhm9xg2bnzqdp4dzmqirwqge.png/120px-%E6%B2%A1%E6%9C%89%E5%9B%9E%E6%8A%A5%E7%9A%84%E5%8A%A0%E5%86%95-%E6%97%A0%E8%83%8C%E6%99%AF.png",
@@ -96,6 +102,8 @@ export const sources = {
     "https://patchwiki.biligame.com/images/sr/thumb/a/a4/eg1h0zmkiqnyl6a7gwydus10i2gheuo.png/120px-%E5%88%B0%E4%B8%8D%E4%BA%86%E7%9A%84%E5%BD%BC%E5%B2%B8-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   无可取代的东西:
     "https://patchwiki.biligame.com/images/sr/thumb/d/da/phg1t8l122ihwz8vcszcvfanjsqsovw.png/120px-%E6%97%A0%E5%8F%AF%E5%8F%96%E4%BB%A3%E7%9A%84%E4%B8%9C%E8%A5%BF-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  一场谎言的终幕:
+    "https://patchwiki.biligame.com/images/sr/thumb/b/bb/gpjfwoukeiq7u70zw4zd5mk15uj29ei.png/120px-%E4%B8%80%E5%9C%BA%E8%B0%8E%E8%A8%80%E7%9A%84%E7%BB%88%E5%B9%95-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   理想燃烧的地狱:
     "https://patchwiki.biligame.com/images/sr/thumb/4/44/2tzcvy0a1f2ljg87ymr0kzqyee8376w.png/120px-%E7%90%86%E6%83%B3%E7%87%83%E7%83%A7%E7%9A%84%E5%9C%B0%E7%8B%B1-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   "我将，巡征追猎":
@@ -184,6 +192,12 @@ export const sources = {
     "https://patchwiki.biligame.com/images/sr/thumb/8/8a/j5n87ml7x08jhu903ss0xt7fs4cbzv1.png/120px-%E8%AE%A9%E5%91%8A%E5%88%AB%EF%BC%8C%E6%9B%B4%E7%BE%8E%E4%B8%80%E4%BA%9B-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   将光阴织成黄金:
     "https://patchwiki.biligame.com/images/sr/thumb/8/8c/8wtgz98tx9qn2ezkmk2ohtgyhvwv1nk.png/120px-%E5%B0%86%E5%85%89%E9%98%B4%E7%BB%87%E6%88%90%E9%BB%84%E9%87%91-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  邂逅于下一个花季:
+    "https://patchwiki.biligame.com/images/sr/thumb/3/32/p57r36bmzv9xcaqk92ohsta2r3hrp06.png/120px-%E9%82%82%E9%80%85%E4%BA%8E%E4%B8%8B%E4%B8%80%E4%B8%AA%E8%8A%B1%E5%AD%A3-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  欢迎来到银河城:
+    "https://patchwiki.biligame.com/images/sr/thumb/8/83/b7xtcoq5jvgze2kmwuvq0lggxrwwf1c.png/120px-%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E9%93%B6%E6%B2%B3%E5%9F%8E-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  花花世界迷人眼:
+    "https://patchwiki.biligame.com/images/sr/thumb/7/7b/pc5p3xixdz2luxady7bbiwc5syex3vz.png/120px-%E8%8A%B1%E8%8A%B1%E4%B8%96%E7%95%8C%E8%BF%B7%E4%BA%BA%E7%9C%BC-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   当她决定看见:
     "https://patchwiki.biligame.com/images/sr/thumb/3/37/17xgxjsr42oril6n300q2h8q7gazu4n.png/120px-%E5%BD%93%E5%A5%B9%E5%86%B3%E5%AE%9A%E7%9C%8B%E8%A7%81-%E6%97%A0%E8%83%8C%E6%99%AF.png",
 };
@@ -243,6 +257,11 @@ export const 专武: { [char: string]: string } = {
   遐蝶: "让告别，更美一些",
   阿格莱雅: "将光阴织成黄金",
   爻光: "当她决定看见",
+  火花: "花花世界迷人眼",
+  不死途: "一场谎言的终幕",
+  "银狼LV.999": "欢迎来到银河城",
+  绯英: "邂逅于下一个花季",
+  "千冶·刃": "灼尽炼狱的新骸",
 };
 
 export type PullRecordData = {
@@ -351,6 +370,19 @@ export const 角色: { [version: string]: PullRecordData[] } = {
   "4.0上": [
     { name: "希儿", offBanner: true, pulls: 25 },
     { name: "黑天鹅", offBanner: false, pulls: 77 },
+    { name: "彦卿", offBanner: true, pulls: 77 },
+    { name: "爻光", offBanner: false, pulls: 76 },
+  ],
+  "4.2下": [
+    { name: "绯英", offBanner: false, pulls: 84 },
+    { name: "刃", offBanner: true, pulls: 66 },
+    { name: "绯英", offBanner: false, pulls: 1 },
+    { name: "绯英", offBanner: false, pulls: 5 },
+    { name: "彦卿", offBanner: true, pulls: 14 },
+    { name: "绯英", offBanner: false, pulls: 14 },
+    { name: "绯英", offBanner: false, pulls: 76 },
+    { name: "绯英", offBanner: false, pulls: 82 },
+    { name: "绯英", offBanner: false, pulls: 78 },
   ],
 };
 
@@ -379,6 +411,8 @@ export const 光锥: { [version: string]: PullRecordData[] } = {
   "3.7上": [{ name: "如果时间是一朵花", offBanner: false, pulls: 67 }],
   "3.7下": [{ name: "血火啊，燃烧前路", offBanner: false, pulls: 46 }],
   "3.8额外": [{ name: "但战斗还未结束", offBanner: true, pulls: 70 }],
+  "4.0上": [{ name: "当她决定看见", offBanner: false, pulls: 68 }],
+  "4.2下": [{ name: "邂逅于下一个花季", offBanner: false, pulls: 13 }],
 };
 
 export const 常驻: PullRecordData[] = [
@@ -398,6 +432,7 @@ export const 常驻: PullRecordData[] = [
   { name: "如泥酣眠", offBanner: false, pulls: 6 },
   { name: "瓦尔特", offBanner: false, pulls: 75 },
   { name: "姬子", offBanner: false, pulls: 5 },
+  { name: "时节不居", offBanner: false, pulls: 54 },
 ];
 
 export const 赠送: (PullRecordData & { note: string })[] = [
@@ -466,4 +501,11 @@ export const 卡池: { [version: string]: string[] } = {
   "3.8下": ["忘归人", "灵砂"],
   "3.8额外": ["阿格莱雅", "星期日"],
   "4.0上": ["爻光", "长夜月", "海瑟音", "黑天鹅"],
+  "4.0下": ["火花", "刻律德菈", "乱破", "花火"],
+  "4.1上": ["不死途", "风堇"],
+  "4.1下": ["波提欧"],
+  "4.2上": ["银狼LV.999", "大丽花", "遐蝶", "流萤"],
+  "4.2下": ["绯英", "缇宝", "星期日", "飞霄"],
+  "4.3上": ["千冶·刃", "爻光"],
+  "4.3下": ["昔涟", "白厄"],
 };

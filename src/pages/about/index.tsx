@@ -149,6 +149,20 @@ export default function About(): ReactNode {
                 Courses taken & papers written
               </Link>
             </li>
+            <li>
+              <Link href="https://pbk.yalecollege.yale.edu/">
+                Phi Beta Kappa
+              </Link>
+              ; <em>magna cum laude</em>;{" "}
+              <Link href="https://statistics.yale.edu/posts/2026-05-20-congratulations-to-statistics-and-data-science-class-of-2026">
+                S&DS Outstanding Thesis Award
+              </Link>
+              ;{" "}
+              <Link href="https://french.yale.edu/the-montaigne-prize">
+                Montaigne Prize
+              </Link>{" "}
+              for French proficiency
+            </li>
           </ul>
         </Timeline.Item>
         <Timeline.Item
