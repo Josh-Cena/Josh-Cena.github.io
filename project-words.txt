@@ -7,12 +7,14 @@ agentic
 allomorphicity
 allowtransparency
 Angleterre
+ANOVA
 antinodes
 argmin
 aria-roledescription
 articulatorily
 Arun
 Ausbau
+autoencoders
 Avoiuli
 backness
 backquote
@@ -36,6 +38,7 @@ changefreq
 charis
 chartjs
 chsh
+cloc
 closedness
 cmyk
 codomain
@@ -101,6 +104,7 @@ foldr
 forceable
 formants
 fragmenter
+frequentist
 frozenset
 functools
 garcía
@@ -169,6 +173,7 @@ metastring
 microlp
 mmdc
 mult
+multivariable
 naclo
 naïvely
 nanoka
@@ -227,6 +232,8 @@ rehype
 remark-supersub
 renv
 retroflexes
+RLHF
+RMSE
 rocq
 Romatzyh
 Rscript
@@ -265,6 +272,7 @@ subgrid
 subgrids
 subplayer
 subproblems
+subregular
 substack
 subtags
 surjectivity
@@ -286,6 +294,7 @@ tseslint
 uext
 uncurry
 underlyingly
+Unif
 unlines
 unlist
 uppercases

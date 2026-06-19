@@ -1,0 +1,74 @@
+---
+description: Which courses helped?
+---
+
+# On the <abbr title="Statistics & Data Science">S&DS</abbr> courses at Yale
+
+'Tis the graduation season! Over the next few days, I'll reflect on the [courses I've taken at Yale](../notes/yale/courses/index.mdx).
+
+I start with my first major, Statistics & Data Science. I don't work as a professional statistician or data scientist, and I probably won't ever (beyond the extent useful for normal scientific research). My impression is that this is fairly common among S&DS majors, so what I say here is probably not malarkey.
+
+In total, I've taken 15 S&DS courses. 3 (LING 380 _Topics in Computational Linguistics: Subregular Linguistics_, CPSC 454 _Software Analysis and Verification_, CPSC 447 _Introduction to Quantum Computing_) are practically unrelated to S&DS as a whole and I convinced the department to count these towards the major for various reasons. One is the senior thesis. I'll only recount the other 11 courses here.
+
+## Mathematical foundation
+
+I took three courses for the mathematical foundation: MATH 120 _Calculus of Functions of Several Variables_ (semester 1), MATH 226 _Linear Algebra (Intensive)_ (semester 1), MATH 244 _Discrete Mathematics_ (semester 2). I consider myself a very mathy person, so none of these were real challenges for me.
+
+MATH 120 _Calculus of Functions of Several Variables_: I was advised before the semester that I should go for a higher-level substitute, such as _Vector Analysis and Integration on Manifolds_, but I didn't want to risk it. It did end up being extremely easy, especially when fresh out of the calculus abyss in high school. Practically, about 2 weeks' worth of material was useful later on: partial derivatives, gradients, and multiple integrals. I don't study physics, and I've never needed to work with curls, divergences, or line/surface integrals. Nevertheless, this is a required course and I can't skip it anyway, having never studied multivariable calculus before. The upside? This class made me a "calculus student", which gave me a part-time gig as an advisor for new graduate student teachers.
+
+Usefulness: 4/10; Difficulty: 2/10; Recommendation: 5/10.
+
+MATH 226 _Linear Algebra (Intensive)_: This was supposedly a hard course and most linear algebra students dare not take it, instead turning to the easier alternatives MATH 225 _Linear Algebra_ and MATH 222 _Linear Algebra with Applications_. Realistically, the only difference from the regular linear algebra course was that we had to do more proofs, and ability to write proofs were assumed and not taught. I spent my entire secondary education doing proofs, so this was not a problem for me. The course was a bit mind-bending in the beginning fumbling around with new definitions, but it got easier later with more computation (determinant, Gaussian elimination, eigenvalues, Gram–Schmidt). About 90% of the concepts and techniques had come back some point in the future, but I think the challenge I signed up for didn't pay off: I'm not a math major, so flexing proof-writing did not prepare me for anything to come. Had the course instead focused on the span of materials, it would have been more practical for S&DS. The benefit of 226 over 225 is again soft: I get to meet the most mathy and try-hard people of my year, and we form very meaningful ties.
+
+Usefulness: 9/10; Difficulty: 5/10; Recommendation: 10/10.
+
+MATH 244 _Discrete Mathematics_: I took the course at a point where there was a slim chance I could switch to <abbr title="Computer Science">CS</abbr>, so this course can be counted towards either. The course did not feel like a university-level math course; it felt more like high/middle school competitive math. Having done exactly that for ~6 years, I again found it not challenging. It gave me a systematic introduction to graph theory, which was somewhat useful for algorithms classes; I also learned many factoids like partial orders, permutations, Hamiltonian paths, etc., but I don't think there's anything I couldn't have easily learned when I needed it for algorithms. Had I started over (knowing that I wouldn't do CS and that I could do well later without this course), I would have taken analysis instead, which is at least more rigorous and more useful for understanding the theoretical underpinnings of statistics.
+
+Usefulness: 3/10; Difficulty: 3/10; Recommendation: 4/10.
+
+## Core probability and statistics
+
+These two classes are required for every S&DS major: S&DS 241 _Probability Theory_ (semester 3) and S&DS 242 _Theory of Statistics_ (semester 4). I don't think I resonated with them very well the first time, but my understanding keeps deepening in later years.
+
+S&DS 241 _Probability Theory_: There are three probability courses offered: this one, S&DS 240 _An Introduction to Probability Theory_, and S&DS 238 _Probability and Bayesian Statistics_. Like the name suggests, 240 is the baby version and doesn't count towards the major; 238 covers some statistics, is more applied (in that it uses R more intensively), and most importantly uses the Bayesian view of probability. I decided to go the "canonical" route and take 241. This decision resulted in my ignorance of Bayesian statistics until the very end of my senior year, which was a bit embarrassing. The first half of the course was standard: conditional probability, independence, random variables, expectation, variance, etc. Then I think I lost it a bit when I get to joint vs. marginal distributions[^1]. To this day, I don't think I understand transformations of joint distributions well. <abbr title="Moment generating functions">MGFs</abbr> were also a bit of a blur.
+
+[^1]: I only had the revelation in my _senior_ year that the reason I didn't understand marginal distributions was this: in economics, "marginal" means "derivative"; but in probability, "marginal" means "integral". I keep having the tendency to do differentiation when I see "marginal".
+
+Usefulness: 10/10; Difficulty: 6/10; Recommendation: 9/10.
+
+S&DS 242 _Theory of Statistics_: I hate to say it, but somewhere in the course it got me questioning if I should go further with this. This feeling keeps coming back for every math-heavy statistics course I take. I think I only developed a visceral understanding of hypothesis testing and inference in my senior year, and before it was mostly rote memorization. I still don't think I understand the concept of "statistics" well (sufficient statistics, efficient estimators, Fisher information, etc.). Most of the stuff was frequentist, which I unlearned when I got to Bayesian anyway. I also really hated solving integrals by hand.
+
+Usefulness: 10/10; Difficulty: 8/10; Recommendation: 8/10.
+
+## Computational skills
+
+I took two courses for computational skills. This is a required category of the major, but since I already program at an advanced level, they weren't really useful in that regard. S&DS 230 _Data Exploration and Analysis_ (semester 2) was my first introduction to R (which I later used for [AoC 2023](../notes/aoc/2023/index.mdx)). CPSC 454 _Software Analysis and Verification_ (semester 5) was just a CS course I took for fun, and it gets counted because the courses that the department usually counts for (namely, introduction to CS, or data structures) were prerequisites for this course.
+
+S&DS 230 _Data Exploration and Analysis_: This course was notorious for its grading harshness, partly because it's so easy. Was it easy? Well I could copy and paste R code and generate all the plots and stats that I needed, but I didn't understand what they meant. I only truly understood ANOVA, model selection, etc. when I got to more [advanced statistics courses](#advanced-statistics-methods). It did teach useful tricks like Q-Q plots, pairwise correlation plots, bootstrapping, etc., which I couldn't have learned elsewhere. The R taught was very pragmatic and didn't please my PL-loving heart.
+
+Usefulness: 6/10; Difficulty: 3/10; Recommendation: 5/10.
+
+## Advanced statistics methods
+
+I took 3 classes that extend basic inference and modeling skills in various ways: S&DS 365 _Intermediate Machine Learning_ (semester 5), S&DS 312 _Linear Models_ (semester 7), S&DS 354 _Bayesian Modeling and Inference_ (semester 8). They were all connected yet all different enough to be worth taking separately, and they were all challenging in their own ways.
+
+S&DS 365 _Intermediate Machine Learning_: This is a required course for the BS. Somewhat misleadingly, S&DS 265 _Introductory Machine Learning_ is not a prerequisite for this course; they are mere complements of each other. About 70% of the time I spent in 365, I didn't really know what I was doing; I think there are a few prerequisites that I lack, but I don't know exactly what. For one thing, I don't know Bayesian, so Gibbs sampling and variational inference were both opaque to me at the time. <abbr title="Variational Autoencoders">VAEs</abbr> were also too much math and too little intuition. However, this is one of those classes that dump you with too many facts, and over time in your career you keep coming back to it and understand just a little bit more. The deep learning stuff in the last 1/3 of the class (Q-learning, <abbr title="Reinforcement Learning from Human Feedback">RLHF</abbr>, transformers) was very useful and exactly what I wanted to learn in 2024.
+
+Usefulness: 8/10; Difficulty: 9/10; Recommendation: 8/10.
+
+S&DS 312 _Linear Models_: I took this class thinking it would be a "gut" in a supposedly busy semester. It wasn't hard per se, but the class was open-AI (to the extent that AI usage was encouraged and expected for exams and quizzes) and as a result every question was as tricky as possible to trip up AI. About 1/2 of the materials I already learned from one of 242, 365, and 230. The remaining ones, I don't think I fully grasped (for example, how do you weight between <abbr title="Variation Inflation Factor">VIF</abbr>, <abbr title="Bayesian Information Criterion">BIC</abbr>, risk, etc.?). However, since research heavily hinges on linear regression, its interpretation, limitations, and extensions, this class was the most useful for my work. It became pivotal for my senior thesis, which is mostly based on <abbr title="Linear Mixed Effects">LME</abbr> models. The class could have been vastly more enjoyable if AI wasn't allowed to this extent.
+
+Usefulness: 9/10; Difficulty: 5/10; Recommendation: 7/10.
+
+S&DS 354 _Bayesian Modeling and Inference_: This was the grand finale of my S&DS curriculum, and I think it ended on a high note. As a new course, the way it was taught wasn't remarkable: the slides were uncannily reminiscent of LLM output (repetitive, verbose, incoherent), without any exam practice material, etc. Nevertheless, I learned exactly what I asked for: everything about Bayesian inference, from its probability theory to prior selection to computational methods. I got to use Stan and do a mind-numbing amount of integrals by hand. It's honestly surprising how I went thus far in my S&DS curriculum without learning any Bayesian statistics.
+
+Usefulness: 7/10; Difficulty: 6/10; Recommendation: 7/10.
+
+## Optimization
+
+I took two classes that aren't really statistics per se, but more the infrastructure: S&DS 431 _Optimization and Computation_ (semester 5), S&DS 432 _Advanced Optimization Techniques_ (semester 6).
+
+These two classes are supposedly a sequence, but in practice they are _really_ detached. The first one is very hands-on, real-world-relevant, computation-based. A lot of deep learning optimization techniques and models were covered (including diffusion). The second one was entirely theoretical and proof-based: I wrote zero lines of code in the whole class, and frankly I've seen very few real-world applications in the class. I was also so clueless about the homework that I had to do the graduate-level extra credit problem every time to ensure I still get a good grade (why didn't I just enroll in the grad-level version?) In hindsight, I should have devoted that time to something else, maybe information theory or stochastic processes.
+
+431 Usefulness: 7/10; Difficulty: 6/10; Recommendation: 9/10.  
+432 Usefulness: 3/10; Difficulty: 9/10; Recommendation: 4/10.
