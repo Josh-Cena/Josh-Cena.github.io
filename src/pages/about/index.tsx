@@ -330,7 +330,8 @@ export default function About(): ReactNode {
         </li>
       </ul>
       <aside style={{ textAlign: "right", fontStyle: "italic" }}>
-        Design ideas from: Nina Liu
+        Design ideas from:{" "}
+        <Link href="https://yurouninaliu.github.io/">Nina Liu</Link>
       </aside>
     </>
   );

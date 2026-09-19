@@ -1,6 +1,6 @@
 .pdf {
   position: absolute;
-  top: 0;
+  top: 0.5em;
   right: var(--margin-main-h);
   display: block;
   width: 3em;
