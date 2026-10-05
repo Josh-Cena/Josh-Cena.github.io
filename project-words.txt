@@ -6,6 +6,7 @@ aeson
 agentic
 allomorphicity
 allowtransparency
+Amodei
 Angleterre
 ANOVA
 antinodes
@@ -71,6 +72,7 @@ Diffie
 dirents
 disjointness
 dists
+doomers
 dopplerhq
 dotless
 downto
@@ -200,10 +202,12 @@ numpy
 nums
 Nyquist
 ocamlformat
+omnipotency
 opam
 optimizability
 Othmer
 overengineered
+overmarketed
 pandoc
 peaceiris
 perlbrew
@@ -232,6 +236,7 @@ rehype
 remark-supersub
 renv
 retroflexes
+Reve
 RLHF
 RMSE
 rocq
@@ -261,6 +266,7 @@ starrail
 statsmodels
 stdlib
 stoll
+Stonetoss
 stopifnot
 strsplit
 struct
@@ -276,6 +282,7 @@ subregular
 substack
 subtags
 surjectivity
+Sutter
 svgr
 Tetris
 texlive
@@ -295,6 +302,7 @@ uext
 uncurry
 underlyingly
 Unif
+unironically
 unlines
 unlist
 uppercases

@@ -192,6 +192,26 @@ export default function About(): ReactNode {
       <Heading level={2}>Experiences</Heading>
       <Timeline>
         <Timeline.Item
+          className={styles.reve}
+          href="https://app.reve.com/"
+          startDate="2026-08"
+          organization="Reve"
+          position="Software Engineer">
+          <ul>
+            <li>Building new products</li>
+          </ul>
+        </Timeline.Item>
+        <Timeline.Item
+          className={styles.shv}
+          href="https://shv.com/"
+          startDate="2026-08"
+          organization="Sutter Hill Ventures"
+          position="CodePoint fellow">
+          <ul>
+            <li>Working at portfolio companies</li>
+          </ul>
+        </Timeline.Item>
+        <Timeline.Item
           className={styles.bain}
           href="https://www.bain.com/"
           startDate="2025-06"
