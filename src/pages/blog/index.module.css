@@ -5,3 +5,12 @@
 .description {
   font-style: italic;
 }
+
+.substackEmbed {
+  display: block;
+  max-width: 100%;
+  margin-block: 1em;
+  margin-inline: auto;
+  border: none;
+  background: white;
+}

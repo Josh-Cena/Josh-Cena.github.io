@@ -9,6 +9,7 @@ const formatter = new Intl.DateTimeFormat("en-US", {
 export interface FrontMatter {
   title: string;
   description: string;
+  "substack-url"?: string;
 }
 
 export default function PostData({

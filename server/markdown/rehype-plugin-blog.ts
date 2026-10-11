@@ -18,6 +18,10 @@ const rehypeBlog: Plugin = () => (ast, vFile) => {
       { name: "date", value: `"${extractDate(vFile.path)}"` },
     ]),
   );
+  children.push(
+    createImportDeclaration("PostFooter", "@/components/PostFooter"),
+    createJSXElement("PostFooter", [{ name: "frontMatter", value: "props" }]),
+  );
 };
 
 export default rehypeBlog;

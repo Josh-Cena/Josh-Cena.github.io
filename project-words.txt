@@ -229,6 +229,7 @@ quickselect
 raco
 randcolor
 rbind
+rclone
 rebrands
 Recma
 regmatches

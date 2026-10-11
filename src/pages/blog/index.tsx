@@ -42,6 +42,22 @@ export default function Blog(): ReactNode {
         </Link>
         . If you have any thoughts on anything here, hit me up on Bluesky too!
       </p>
+      <p>
+        I also publish these articles on{" "}
+        <Link href="https://raisehightheabstraction.substack.com/">
+          Substack
+        </Link>
+        , but this site remains the canonical version.
+      </p>
+      {/* Substack's embed manages its own signup flow across origins. */}
+      {/* eslint-disable-next-line react/iframe-missing-sandbox */}
+      <iframe
+        title="Subscribe to Raise High the Abstraction on Substack"
+        src="https://raisehightheabstraction.substack.com/embed"
+        width="480"
+        height="160"
+        className={styles.substackEmbed}
+      />
       {posts}
     </>
   );
