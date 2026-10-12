@@ -13,6 +13,7 @@ antinodes
 argmin
 aria-roledescription
 articulatorily
+articulography
 Arun
 Ausbau
 autoencoders
@@ -153,6 +154,7 @@ kwargs
 languagetool
 lanternfish
 lapply
+LARP
 letterlike
 lext
 luo
@@ -187,6 +189,7 @@ neofetch
 nerdily
 nerfed
 networkx
+neurolinguistics
 newdata
 newtype
 nominalized
@@ -227,6 +230,7 @@ pyplot
 queenside
 quickselect
 raco
+Raffaella
 randcolor
 rbind
 rclone
@@ -317,6 +321,7 @@ verdana
 volturi
 vsrocq
 Weinreich
+Wernicke
 wfla
 Wikibooks
 wolframscript

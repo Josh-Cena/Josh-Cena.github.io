@@ -83,7 +83,7 @@ export default defineConfig({
       }),
     },
     mermaidPlugin(),
-    react({ include: /\.(?:mmd|js|jsx|ts|tsx)$/u }),
+    react({ include: /\.(?:mdx|mmd|js|jsx|ts|tsx)$/u }),
     svgr(),
     visualizer({ filename: "dist/static/bundle-map.html" }),
   ],
