@@ -4,6 +4,7 @@ import React, {
   useContext,
   useCallback,
   useMemo,
+  startTransition,
   type ReactNode,
 } from "react";
 
@@ -37,7 +38,10 @@ export function ColorModeProvider({
   useEffect(() => {
     const systemPreference = window.matchMedia("(prefers-color-scheme: dark)");
     const initialColorMode = document.documentElement.dataset.colorMode;
-    syncedSetColorMode(initialColorMode === "dark" ? "dark" : "light");
+    // Preserve server-rendered content while lazy routes finish hydrating.
+    startTransition(() => {
+      syncedSetColorMode(initialColorMode === "dark" ? "dark" : "light");
+    });
 
     const syncSystemPreference = (event: MediaQueryListEvent) => {
       syncedSetColorMode(event.matches ? "dark" : "light");
