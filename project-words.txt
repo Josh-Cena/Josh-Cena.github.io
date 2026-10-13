@@ -97,6 +97,7 @@ exonyms
 exposé
 façade
 failwith
+fgetc
 fianchetto
 figsize
 flattenable
@@ -128,6 +129,7 @@ hlint
 Hoare
 Holodeck
 Honkai
+horreur
 huayu
 igraph
 IMMC
@@ -228,6 +230,7 @@ prosgegrammeni
 purée
 pyplot
 queenside
+quelle
 quickselect
 raco
 Raffaella
@@ -260,6 +263,7 @@ scrolly
 seaborn
 seagreen
 setdefault
+Shao
 shellenv
 sida
 silw
@@ -336,3 +340,4 @@ yiwn
 ypogegrammeni
 yticklabels
 zhihu
+Zhong
