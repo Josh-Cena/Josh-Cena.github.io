@@ -13,4 +13,9 @@
   margin-inline: auto;
   border: none;
   background: white;
+  transition: filter 0.2s ease-out;
+}
+
+[data-color-mode="dark"] .substackEmbed {
+  filter: invert(0.9) hue-rotate(180deg);
 }
