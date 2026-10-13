@@ -36,17 +36,8 @@ export function ColorModeProvider({
 
   useEffect(() => {
     const systemPreference = window.matchMedia("(prefers-color-scheme: dark)");
-    let initialColorMode: ColorMode = systemPreference.matches
-      ? "dark"
-      : "light";
-    try {
-      const storedColorMode = localStorage.getItem("color-mode");
-      if (storedColorMode === "light" || storedColorMode === "dark")
-        initialColorMode = storedColorMode;
-    } catch {
-      // Fall back to the system preference when storage is unavailable.
-    }
-    syncedSetColorMode(initialColorMode);
+    const initialColorMode = document.documentElement.dataset.colorMode;
+    syncedSetColorMode(initialColorMode === "dark" ? "dark" : "light");
 
     const syncSystemPreference = (event: MediaQueryListEvent) => {
       syncedSetColorMode(event.matches ? "dark" : "light");
