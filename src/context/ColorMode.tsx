@@ -23,19 +23,39 @@ export function ColorModeProvider({
 }): ReactNode {
   const [colorMode, setColorMode] = useState<ColorMode>("light");
 
-  useEffect(() => {
-    const root = window.document.documentElement;
-    const initialColorValue = root.dataset.colorMode as ColorMode;
-    // TODO read from localStorage and system theme
-    setColorMode(initialColorValue);
-  }, []);
-
   const syncedSetColorMode = useCallback((newValue: ColorMode) => {
     const root = window.document.documentElement;
-    localStorage.setItem("color-mode", newValue);
     setColorMode(newValue);
     root.dataset.colorMode = newValue;
+    try {
+      localStorage.setItem("color-mode", newValue);
+    } catch {
+      // Keep color mode working when storage is unavailable.
+    }
   }, []);
+
+  useEffect(() => {
+    const systemPreference = window.matchMedia("(prefers-color-scheme: dark)");
+    let initialColorMode: ColorMode = systemPreference.matches
+      ? "dark"
+      : "light";
+    try {
+      const storedColorMode = localStorage.getItem("color-mode");
+      if (storedColorMode === "light" || storedColorMode === "dark")
+        initialColorMode = storedColorMode;
+    } catch {
+      // Fall back to the system preference when storage is unavailable.
+    }
+    syncedSetColorMode(initialColorMode);
+
+    const syncSystemPreference = (event: MediaQueryListEvent) => {
+      syncedSetColorMode(event.matches ? "dark" : "light");
+    };
+    systemPreference.addEventListener("change", syncSystemPreference);
+    return () => {
+      systemPreference.removeEventListener("change", syncSystemPreference);
+    };
+  }, [syncedSetColorMode]);
 
   const contextVal = useMemo(
     () => ({ colorMode, setColorMode: syncedSetColorMode }),
