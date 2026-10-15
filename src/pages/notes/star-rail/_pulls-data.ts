@@ -1,4 +1,6 @@
 export const sources = {
+  吉尔伽美什:
+    "https://patchwiki.biligame.com/images/sr/3/3a/ssqqvm2heg3nbmv8jgq4h1lx0q189pw.png",
   Saber:
     "https://patchwiki.biligame.com/images/sr/9/9b/dp8azb8e88r2lwfxqcmfk7rlhjkt7j2.png",
   白厄: "https://patchwiki.biligame.com/images/sr/f/f4/lhj7npf2f4jojmiq8an0psnbxpaxz9p.png",
@@ -24,6 +26,10 @@ export const sources = {
     "https://patchwiki.biligame.com/images/sr/e/ea/ih3iz9vzz1buoq7kkxix68h5whgp7fu.png",
   彦卿: "https://patchwiki.biligame.com/images/sr/8/87/lycr6wqt4ubcv7ksqfgz4j10mspht5i.png",
   希儿: "https://patchwiki.biligame.com/images/sr/9/98/4dcu8xbnhgudanbuv9jatnmbk0e6kmn.png",
+  远坂凛:
+    "https://patchwiki.biligame.com/images/sr/4/47/3r9h45192dqcgscuud1ibmzeyou94yt.png",
+  "姬子·启行":
+    "https://patchwiki.biligame.com/images/sr/1/1c/n238dudxxe70n8ku4d3dqjrymouyhza.png",
   那刻夏:
     "https://patchwiki.biligame.com/images/sr/8/8e/h151uzk54x0od8j4wmlkvgspw0yh7vb.png",
   大黑塔:
@@ -45,6 +51,8 @@ export const sources = {
     "https://patchwiki.biligame.com/images/sr/d/d9/j4bst2b62nhbdyv60ymvwlybo98ev34.png",
   布洛妮娅:
     "https://patchwiki.biligame.com/images/sr/8/86/9f1mpzvwuedtq5uamhl6bnl1zdjbjo8.png",
+  "千冶·刃":
+    "https://patchwiki.biligame.com/images/sr/2/20/676s6md8d2vhp0fxtg1fky34vh6u72t.png",
   大丽花:
     "https://patchwiki.biligame.com/images/sr/2/27/qbn7q9ya931niwne5zfccv8jnx6ngmh.png",
   海瑟音:
@@ -72,6 +80,8 @@ export const sources = {
   藿藿: "https://patchwiki.biligame.com/images/sr/3/38/8u9nrt2mti5cd5xt5kzw3z84wvahgtu.png",
   罗刹: "https://patchwiki.biligame.com/images/sr/0/0e/koyghnu5qdvitdnbb6orfevybf4i3y7.png",
   白露: "https://patchwiki.biligame.com/images/sr/d/dc/0uaaj3ehqdtmvolqfuxypytzsuj7f1w.png",
+  "知更鸟·晴歌":
+    "https://patchwiki.biligame.com/images/sr/9/94/mli68gt10a3e2eldzmkhkv5y5nk7wuv.png",
   昔涟: "https://patchwiki.biligame.com/images/sr/f/f7/l3ngxqnk6p7hhjjho1tuaixaljnyvgi.png",
   长夜月:
     "https://patchwiki.biligame.com/images/sr/3/35/7p93wsn32d4pnj3cwffbhcszkrc2l64.png",
@@ -79,11 +89,16 @@ export const sources = {
   遐蝶: "https://patchwiki.biligame.com/images/sr/e/e1/tos184s9j5zerllgte1mmm6kga5nwu8.png",
   阿格莱雅:
     "https://patchwiki.biligame.com/images/sr/0/0a/ivg2yhva7casg1ap5txx6fjbz8ewlgp.png",
+  真珠: "https://patchwiki.biligame.com/images/sr/a/a0/qqqabemgcm0ystys5wlfknukll0pzis.png",
+  "砂金·戏浪":
+    "https://patchwiki.biligame.com/images/sr/4/48/4wzv1gkpq7xof88aprrh6p41gjbs3j3.png",
   绯英: "https://patchwiki.biligame.com/images/sr/4/46/blyj7i21xariq8azp1cgsihuhlo1e35.png",
   "银狼LV.999":
     "https://patchwiki.biligame.com/images/sr/4/49/7misyh42qtkatgc0q7pqld6r4lcqd3g.png",
   火花: "https://patchwiki.biligame.com/images/sr/c/cb/0af60e8zn7er114z1c5odeelk46di1c.png",
   爻光: "https://patchwiki.biligame.com/images/sr/c/cc/73yudj56bngt0ipyotsb81ggjx42mqh.png",
+  所见即我:
+    "https://patchwiki.biligame.com/images/sr/thumb/2/27/2jizlwcaoh27y5n8mvzxnqnmj29455d.png/120px-%E6%89%80%E8%A7%81%E5%8D%B3%E6%88%91-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   没有回报的加冕:
     "https://patchwiki.biligame.com/images/sr/thumb/8/89/9dqp2rydhm9xg2bnzqdp4dzmqirwqge.png/120px-%E6%B2%A1%E6%9C%89%E5%9B%9E%E6%8A%A5%E7%9A%84%E5%8A%A0%E5%86%95-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   黎明恰如此燃烧:
@@ -118,6 +133,10 @@ export const sources = {
     "https://patchwiki.biligame.com/images/sr/thumb/a/af/ojl940ydtj64kjfxb9t2ev99zvckqu5.png/120px-%E5%A6%82%E6%B3%A5%E9%85%A3%E7%9C%A0-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   于夜色中:
     "https://patchwiki.biligame.com/images/sr/thumb/c/c9/t55mimejhh6e24r3yo5d0mbfarpgirs.png/120px-%E4%BA%8E%E5%A4%9C%E8%89%B2%E4%B8%AD-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  星火悄然闪耀:
+    "https://patchwiki.biligame.com/images/sr/thumb/a/a8/99bukvubfr1uyp2xjbr8lhtnt2fgfwg.png/120px-%E6%98%9F%E7%81%AB%E6%82%84%E7%84%B6%E9%97%AA%E8%80%80-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  当一颗星照亮夜空:
+    "https://patchwiki.biligame.com/images/sr/thumb/8/80/3aln45a9c4y05z6andepkp65tbvp81f.png/120px-%E5%BD%93%E4%B8%80%E9%A2%97%E6%98%9F%E7%85%A7%E4%BA%AE%E5%A4%9C%E7%A9%BA-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   生命当付之一炬:
     "https://patchwiki.biligame.com/images/sr/thumb/4/4b/exgtwm2fut8cfa5kq9ds7pejkavok6d.png/120px-%E7%94%9F%E5%91%BD%E5%BD%93%E4%BB%98%E4%B9%8B%E4%B8%80%E7%82%AC-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   向着不可追问处:
@@ -146,6 +165,8 @@ export const sources = {
     "https://patchwiki.biligame.com/images/sr/thumb/e/ee/a5wvjotmc21l8tok9ymkeu187jqk9m9.png/120px-%E9%95%9C%E4%B8%AD%E6%95%85%E6%88%91-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   但战斗还未结束:
     "https://patchwiki.biligame.com/images/sr/thumb/c/c0/bwh92g0xxnk0z08d6n9q6zo0acovk1v.png/120px-%E4%BD%86%E6%88%98%E6%96%97%E8%BF%98%E6%9C%AA%E7%BB%93%E6%9D%9F-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  灼尽炼狱的新骸:
+    "https://patchwiki.biligame.com/images/sr/thumb/4/4b/4t7nehs8u3rob4ef8czde5syjmm7e75.png/120px-%E7%81%BC%E5%B0%BD%E7%82%BC%E7%8B%B1%E7%9A%84%E6%96%B0%E9%AA%B8-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   勿忘她的火焰:
     "https://patchwiki.biligame.com/images/sr/thumb/7/79/61xwkf11nxydeyfgnj9bbs3kdof9r64.png/120px-%E5%8B%BF%E5%BF%98%E5%A5%B9%E7%9A%84%E7%81%AB%E7%84%B0-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   海洋为何而歌:
@@ -182,6 +203,8 @@ export const sources = {
     "https://patchwiki.biligame.com/images/sr/thumb/a/aa/raw2jsxtoaf3rt03zvrmy8dzb3yh2s3.png/120px-%E6%A3%BA%E7%9A%84%E5%9B%9E%E5%93%8D-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   时节不居:
     "https://patchwiki.biligame.com/images/sr/thumb/4/43/gne3g7jrsidc987i4qqlfs2uyzkwh8k.png/120px-%E6%97%B6%E8%8A%82%E4%B8%8D%E5%B1%85-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  你将起身歌唱:
+    "https://patchwiki.biligame.com/images/sr/thumb/d/d0/dtzwl4yuc45t35wtp2nkdkh9oxi7j14.png/120px-%E4%BD%A0%E5%B0%86%E8%B5%B7%E8%BA%AB%E6%AD%8C%E5%94%B1-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   爱如此刻永恒:
     "https://patchwiki.biligame.com/images/sr/thumb/0/0f/gm3aaxpweacvd0aeho5hjfyl5fykti6.png/120px-%E7%88%B1%E5%A6%82%E6%AD%A4%E5%88%BB%E6%B0%B8%E6%81%92-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   致长夜的星光:
@@ -192,6 +215,10 @@ export const sources = {
     "https://patchwiki.biligame.com/images/sr/thumb/8/8a/j5n87ml7x08jhu903ss0xt7fs4cbzv1.png/120px-%E8%AE%A9%E5%91%8A%E5%88%AB%EF%BC%8C%E6%9B%B4%E7%BE%8E%E4%B8%80%E4%BA%9B-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   将光阴织成黄金:
     "https://patchwiki.biligame.com/images/sr/thumb/8/8c/8wtgz98tx9qn2ezkmk2ohtgyhvwv1nk.png/120px-%E5%B0%86%E5%85%89%E9%98%B4%E7%BB%87%E6%88%90%E9%BB%84%E9%87%91-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  献给明日的色彩:
+    "https://patchwiki.biligame.com/images/sr/thumb/d/d4/hts3n2zafphx1y5sxl6k8602mosig50.png/120px-%E7%8C%AE%E7%BB%99%E6%98%8E%E6%97%A5%E7%9A%84%E8%89%B2%E5%BD%A9-%E6%97%A0%E8%83%8C%E6%99%AF.png",
+  向浪花掷下盛夏:
+    "https://patchwiki.biligame.com/images/sr/thumb/6/69/6rtap0hpsgyysjlo39chcwyf8hsdgc7.png/120px-%E5%90%91%E6%B5%AA%E8%8A%B1%E6%8E%B7%E4%B8%8B%E7%9B%9B%E5%A4%8F-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   邂逅于下一个花季:
     "https://patchwiki.biligame.com/images/sr/thumb/3/32/p57r36bmzv9xcaqk92ohsta2r3hrp06.png/120px-%E9%82%82%E9%80%85%E4%BA%8E%E4%B8%8B%E4%B8%80%E4%B8%AA%E8%8A%B1%E5%AD%A3-%E6%97%A0%E8%83%8C%E6%99%AF.png",
   欢迎来到银河城:
@@ -203,6 +230,7 @@ export const sources = {
 };
 
 export const 专武: { [char: string]: string } = {
+  吉尔伽美什: "所见即我",
   Saber: "没有回报的加冕",
   白厄: "黎明恰如此燃烧",
   万敌: "血火啊，燃烧前路",
@@ -212,6 +240,7 @@ export const 专武: { [char: string]: string } = {
   "丹恒·饮月": "比阳光更明亮的",
   刃: "到不了的彼岸",
   克拉拉: "无可取代的东西",
+  不死途: "一场谎言的终幕",
   Archer: "理想燃烧的地狱",
   飞霄: "我将，巡征追猎",
   波提欧: "驶向第二次生命",
@@ -219,6 +248,8 @@ export const 专武: { [char: string]: string } = {
   "托帕&账账": "烦恼着，幸福着",
   彦卿: "如泥酣眠",
   希儿: "于夜色中",
+  远坂凛: "星火悄然闪耀",
+  "姬子·启行": "当一颗星照亮夜空",
   那刻夏: "生命当付之一炬",
   大黑塔: "向着不可追问处",
   乱破: "忍法帖•缭乱破魔",
@@ -233,6 +264,7 @@ export const 专武: { [char: string]: string } = {
   花火: "游戏尘寰",
   "阮·梅": "镜中故我",
   布洛妮娅: "但战斗还未结束",
+  "千冶·刃": "灼尽炼狱的新骸",
   大丽花: "勿忘她的火焰",
   海瑟音: "海洋为何而歌",
   赛飞儿: "谎言在风中飘扬",
@@ -251,17 +283,18 @@ export const 专武: { [char: string]: string } = {
   藿藿: "惊魂夜",
   罗刹: "棺的回响",
   白露: "时节不居",
+  "知更鸟·晴歌": "你将起身歌唱",
   昔涟: "爱如此刻永恒",
   长夜月: "致长夜的星光",
   风堇: "愿虹光永驻天空",
   遐蝶: "让告别，更美一些",
   阿格莱雅: "将光阴织成黄金",
-  爻光: "当她决定看见",
-  火花: "花花世界迷人眼",
-  不死途: "一场谎言的终幕",
-  "银狼LV.999": "欢迎来到银河城",
+  真珠: "献给明日的色彩",
+  "砂金·戏浪": "向浪花掷下盛夏",
   绯英: "邂逅于下一个花季",
-  "千冶·刃": "灼尽炼狱的新骸",
+  "银狼LV.999": "欢迎来到银河城",
+  火花: "花花世界迷人眼",
+  爻光: "当她决定看见",
 };
 
 export type PullRecordData = {
@@ -384,6 +417,18 @@ export const 角色: { [version: string]: PullRecordData[] } = {
     { name: "绯英", offBanner: false, pulls: 82 },
     { name: "绯英", offBanner: false, pulls: 78 },
   ],
+  "4.3上": [
+    { name: "银枝", offBanner: true, pulls: 77 },
+    { name: "爻光", offBanner: false, pulls: 4 },
+    { name: "千冶·刃", offBanner: false, pulls: 76 },
+  ],
+  "4.3下": [
+    { name: "符玄", offBanner: true, pulls: 76 },
+    { name: "昔涟", offBanner: false, pulls: 66 },
+    { name: "昔涟", offBanner: false, pulls: 5 },
+  ],
+  "4.4下": [{ name: "刻律德菈", offBanner: false, pulls: 51 }],
+  "4.6上": [{ name: "真珠", offBanner: false, pulls: 75 }],
 };
 
 export const 光锥: { [version: string]: PullRecordData[] } = {
@@ -413,6 +458,10 @@ export const 光锥: { [version: string]: PullRecordData[] } = {
   "3.8额外": [{ name: "但战斗还未结束", offBanner: true, pulls: 70 }],
   "4.0上": [{ name: "当她决定看见", offBanner: false, pulls: 68 }],
   "4.2下": [{ name: "邂逅于下一个花季", offBanner: false, pulls: 13 }],
+  "4.4下": [
+    { name: "如泥酣眠", offBanner: true, pulls: 70 },
+    { name: "金血铭刻的时代", offBanner: false, pulls: 66 },
+  ],
 };
 
 export const 常驻: PullRecordData[] = [
@@ -432,7 +481,8 @@ export const 常驻: PullRecordData[] = [
   { name: "如泥酣眠", offBanner: false, pulls: 6 },
   { name: "瓦尔特", offBanner: false, pulls: 75 },
   { name: "姬子", offBanner: false, pulls: 5 },
-  { name: "时节不居", offBanner: false, pulls: 54 },
+  { name: "时节不居", offBanner: false, pulls: 24 },
+  { name: "但战斗还未结束", offBanner: false, pulls: 79 },
 ];
 
 export const 赠送: (PullRecordData & { note: string })[] = [
@@ -448,6 +498,13 @@ export const 赠送: (PullRecordData & { note: string })[] = [
   { name: "烦恼着，幸福着", offBanner: false, pulls: 0, note: "碎忆兑换" },
   { name: "于夜色中", offBanner: false, pulls: 0, note: "碎忆兑换" },
   { name: "卡芙卡", offBanner: false, pulls: 0, note: "4.0上赠送" },
+  { name: "Archer", offBanner: false, pulls: 0, note: "4.4上赠送" },
+  {
+    name: "理想燃烧的地狱",
+    offBanner: false,
+    pulls: 0,
+    note: "4.4下200抽赠送",
+  },
 ];
 
 export const 卡池: { [version: string]: string[] } = {
@@ -508,4 +565,10 @@ export const 卡池: { [version: string]: string[] } = {
   "4.2下": ["绯英", "缇宝", "星期日", "飞霄"],
   "4.3上": ["千冶·刃", "爻光"],
   "4.3下": ["昔涟", "白厄"],
+  "4.4上": ["姬子·启行", "火花", "丹恒·腾荒", "长夜月"],
+  "4.4下": ["刻律德菈", "那刻夏", "砂金"],
+  "4.5上": ["知更鸟·晴歌", "风堇"],
+  "4.5下": ["砂金·戏浪", "不死途"],
+  "4.6上": ["真珠", "绯英"],
+  "4.6下": ["千冶·刃"],
 };
